@@ -117,6 +117,9 @@
     <ClCompile Include="GameObjectManager.cpp">
       <Filter>gameObject</Filter>
     </ClCompile>
+    <ClCompile Include="SkinModelRender.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="math\Vector.h">
@@ -208,10 +211,14 @@
     <ClInclude Include="GameObjectManager.h">
       <Filter>gameObject</Filter>
     </ClInclude>
+    <ClInclude Include="SkinModelRender.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\chara.fbx" />
   </ItemGroup>
 </Project>

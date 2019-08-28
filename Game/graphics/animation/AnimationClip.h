@@ -61,7 +61,7 @@ public:
 	*@brief	アニメーションクリップをロード。
 	*@param[in]	filePath	ファイルパス。
 	*/
-	void Load(const wchar_t* filePath);
+	void Load(const wchar_t* filePath, bool isLoop = false);
 
 	/*!
 	*@brief	ループする？

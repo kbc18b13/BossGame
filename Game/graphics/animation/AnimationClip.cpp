@@ -15,7 +15,7 @@ AnimationClip::~AnimationClip()
 	}
 }
 
-void AnimationClip::Load(const wchar_t* filePath)
+void AnimationClip::Load(const wchar_t* filePath, bool isLoop)
 {
 	FILE* fp = _wfopen(filePath, L"rb");
 	if (fp == nullptr) {
@@ -77,5 +77,7 @@ void AnimationClip::Load(const wchar_t* filePath)
 			m_topBoneKeyFramList = &m_keyFramePtrListArray[keyframe->boneIndex];
 		}
 	}
+
+	m_isLoop = isLoop;
 }
 

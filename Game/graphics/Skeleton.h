@@ -191,6 +191,11 @@ public:
 	*@brief	ボーン行列の配列をGPUに転送。
 	*/
 	void SendBoneMatrixArrayToGPU();
+
+	auto& GetBones() {
+		return m_bones;
+	}
+
 public:
 	/*!
 	*@brief	ボーン行列のストラクチャードバッファを初期化。

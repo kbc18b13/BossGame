@@ -1,5 +1,6 @@
 #pragma once
 #include "character/CharacterController.h"
+#include "SkinModelRender.h"
 
 class Player : public IGameObject
 {
@@ -7,9 +8,14 @@ public:
 	Player();
 	~Player();
 	void Update() override;
-	void Draw() override;
 
 private:
-	SkinModel m_model;									//スキンモデル。
+	enum EnAnim{
+		enAnimWalk,
+		//enAnimRun,
+		enAnimNum
+	};
+	AnimationClip m_animClip[enAnimNum];
+	std::unique_ptr<SkinModelRender> m_model;	//スキンモデルレンダー。
 };
 
