@@ -47,10 +47,6 @@ Skeleton::~Skeleton()
 }
 void Skeleton::UpdateBoneWorldMatrix(Bone& bone, const CMatrix& parentMatrix)
 {
-	if (bone.GetNo() == 9) {
-		int i = 0;
-	}
-
 	//ワールド行列を計算する。
 	CMatrix mBoneWorld;
 	CMatrix localMatrix = bone.GetLocalMatrix();

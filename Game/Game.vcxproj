@@ -173,6 +173,10 @@
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\zikken.fbx" />
+    <MeshContentTask Include="Assets\modelData\zikken2.fbx" />
+    <MeshContentTask Include="Assets\modelData\zikken3.fbx" />
+    <MeshContentTask Include="Assets\modelData\zikken4.fbx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
