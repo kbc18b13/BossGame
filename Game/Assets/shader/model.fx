@@ -142,5 +142,9 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 //--------------------------------------------------------------------------------------
 float4 PSMain( PSInput In ) : SV_Target0
 {
-	return albedoTexture.Sample(Sampler, In.TexCoord);
+	float4 color = albedoTexture.Sample(Sampler, In.TexCoord);
+	float alpha = color.a;
+	color *= saturate(dot(In.Normal, float3(0, 1, 0)))*0.5f + 0.5f;
+	color.a = alpha;
+	return color;
 }
