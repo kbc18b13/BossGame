@@ -17,7 +17,7 @@ MeshCollider::~MeshCollider()
  * @brief	CSkinModelからメッシュコライダーを生成。
  *@param[in]	model		スキンモデル。
  */
-void MeshCollider::CreateFromSkinModel( const SkinModel& model, const CMatrix* offsetMatrix )
+void MeshCollider::CreateFromSkinModel( const SkinModel& model)
 {
 	CMatrix mBias;
 	mBias.MakeRotationX(CMath::PI * -0.5f);

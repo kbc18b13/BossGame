@@ -22,7 +22,7 @@ public:
 	 * @brief	CSkinModelからメッシュコライダーを生成。
 	 *@param[in]	model		スキンモデル。
 	 */
-	void CreateFromSkinModel( const SkinModel& model, const CMatrix* offsetMatrix );
+	void CreateFromSkinModel( const SkinModel& model);
 	btCollisionShape* GetBody() const override
 	{
 		return m_meshShape.get();

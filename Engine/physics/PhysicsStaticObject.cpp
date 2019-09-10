@@ -18,7 +18,7 @@ PhysicsStaticObject::~PhysicsStaticObject()
 void PhysicsStaticObject::CreateMeshObject(SkinModel& skinModel, CVector3 pos, CQuaternion rot)
 {
 	//メッシュコライダーを作成。
-	m_meshCollider.CreateFromSkinModel(skinModel, nullptr);
+	m_meshCollider.CreateFromSkinModel(skinModel);
 	//剛体を作成、
 	RigidBodyInfo rbInfo;
 	rbInfo.collider = &m_meshCollider; //剛体に形状(コライダー)を設定する。
