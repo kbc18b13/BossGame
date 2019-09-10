@@ -13,15 +13,18 @@ class CMatrix;
 
 class CVector2 {
 public:
-	CVector2()
-	{
+	CVector2() : x(0), y(0){}
 
+	CVector2(float x, float y) : x(x) ,y(y) {}
+
+	CVector2(const CVector2& v) : x(v.x), y(v.y) {}
+
+	CVector2& operator=(const CVector2& v) {
+		this->x = v.x;
+		this->y = v.y;
+		return *this;
 	}
-	CVector2(float x, float y)
-	{
-		this->x = x;
-		this->y = y;
-	}
+
 	union {
 		DirectX::XMFLOAT2 vec;
 		struct { float x, y; };
@@ -41,6 +44,11 @@ public:
 	{
 		static const CVector2 zero = { 0.0f,  0.0f };
 		return zero;
+	}
+
+	static CVector2 One() {
+		static const CVector2 one = { 1.0f,  1.0f };
+		return one;
 	}
 };
 /*!
@@ -69,7 +77,7 @@ public:
 		vec = _v.vec;
 		return *this;
 	}
-	CVector3() {}
+	CVector3() : x(0), y(0), z(0) {}
 	/*!
 	* @brief	コンストラクタ。
 	*/

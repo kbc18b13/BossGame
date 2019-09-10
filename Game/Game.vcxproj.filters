@@ -12,10 +12,12 @@
     <ClCompile Include="Game\Actor\Player\Player.cpp" />
     <ClCompile Include="Game\main.cpp" />
     <ClCompile Include="Game\stdafx.cpp" />
+    <ClCompile Include="Game\Scene\Title.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
     <ClInclude Include="Game\stdafx.h" />
+    <ClInclude Include="Game\Scene\Title.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestStage.fbx">
@@ -24,5 +26,8 @@
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\BLADERNL.JPG" />
   </ItemGroup>
 </Project>
