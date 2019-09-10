@@ -23,6 +23,5 @@ private:
 	Shader m_vsShader;
 	Shader m_psShader;
 	ID3D11ShaderResourceView* m_tex = nullptr;
-	/*ID3D11InputLayout* m_IA;*/
 	ID3D11SamplerState* m_sampler;
 };

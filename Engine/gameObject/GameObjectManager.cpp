@@ -15,49 +15,50 @@ GameObjectManager::~GameObjectManager() {
 void GameObjectManager::Init(UINT defArraySize, UINT defPrioSize) {
 	st_GoManager.m_goArray.resize(defPrioSize);
 	for (UINT i = 0; i < defPrioSize; i++) {
-		st_GoManager.m_goArray.reserve(defArraySize);
+		st_GoManager.m_goArray[i].reserve(defArraySize);
 	}
+	m_newGOArray.resize(defPrioSize);
 }
 
 void GameObjectManager::Update() {
-	for (std::vector<IGameObject*> prioArray : m_goArray) {
-		for (IGameObject* go : prioArray) {
-			if (!go->isStarted) {
+	{
+		UINT index = 0;
+		for (std::vector<IGameObject*>& prioArray : m_newGOArray) {
+			for (IGameObject* go : prioArray) {
 				go->Start();
-				go->isStarted = true;
+				m_goArray[index].push_back(go);
 			}
+			prioArray.clear();
+			index++;
 		}
 	}
 
-	for (std::vector<IGameObject*> prioArray : m_goArray) {
+	for (std::vector<IGameObject*>& prioArray : m_goArray) {
 		for (IGameObject* go : prioArray) {
-			if (!go->isRemoved && go->isStarted) {
+			if (!go->isRemoved) {
 				go->Update();
 			}
 		}
 	}
 
-	for (std::vector<IGameObject*> prioArray : m_goArray) {
+	for (std::vector<IGameObject*>& prioArray : m_goArray) {
 		for (IGameObject* go : prioArray) {
-			if (!go->isRemoved && go->isStarted) {
+			if (!go->isRemoved) {
 				go->Draw();
 			}
 		}
 	}
 
-	for (std::vector<IGameObject*> prioArray : m_goArray) {
-		auto endItr = std::remove_if(prioArray.begin(), prioArray.end(), [](IGameObject* go)->bool {
-			return go->isRemoved;
-		});
-
-		//deleteの必要があるものだけdelete
-		for (auto itr = endItr; itr != prioArray.end(); itr++) {
-			if ((*itr)->needDelete) {
-				delete (*itr);
+	for (std::vector<IGameObject*>& prioArray : m_goArray) {
+		for (auto itr = prioArray.begin(); itr != prioArray.end();) {
+			//ゲームオブジェクトを処分。
+			if ((*itr)->isRemoved) {
+				if((*itr)->needDelete)delete (*itr);//NewGOされたものはdeleteする。
+				itr = prioArray.erase(itr);
+			} else {
+				itr++;
 			}
 		}
-
-		prioArray.erase(endItr, prioArray.end());
 	}
 }
 

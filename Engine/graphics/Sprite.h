@@ -36,9 +36,9 @@ public:
 	}
 
 private:
-	SpriteEffect m_effect;
-	ID3D11Buffer* m_vertex;
+	SpriteEffect m_effect;                    //テクスチャやシェーダーなど
+	ID3D11Buffer* m_vertex;                   //頂点バッファ
 	CMatrix m_worldMat = CMatrix::Identity(); //ワールド行列(CPU)
-	ID3D11Buffer* m_worldMatBuf; //ワールド行列(GPU)
+	ID3D11Buffer* m_worldMatBuf;              //ワールド行列(GPU)
 };
 

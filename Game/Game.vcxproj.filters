@@ -13,11 +13,13 @@
     <ClCompile Include="Game\main.cpp" />
     <ClCompile Include="Game\stdafx.cpp" />
     <ClCompile Include="Game\Scene\Title.cpp" />
+    <ClCompile Include="Game\Scene\Stage1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
     <ClInclude Include="Game\stdafx.h" />
     <ClInclude Include="Game\Scene\Title.h" />
+    <ClInclude Include="Game\Scene\Stage1.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestStage.fbx">
@@ -29,5 +31,6 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\BLADERNL.JPG" />
+    <ImageContentTask Include="Assets\sprite\Title_back.png" />
   </ItemGroup>
 </Project>

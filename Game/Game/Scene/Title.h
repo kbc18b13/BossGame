@@ -8,9 +8,6 @@ public:
 	//XVŠÖ”
 	void Update();
 
-	//•`‰æŠÖ”
-	void Draw();
-
 private:
 	SpriteRender* backImage = nullptr;
 };

@@ -25,7 +25,7 @@ public:
 	/// <param name="go">ゲームオブジェクトのポインタ</param>
 	/// <param name="prio">優先度</param>
 	void AddGO(IGameObject* go, UINT prio) {
-		m_goArray[prio].push_back(go);
+		m_newGOArray[prio].push_back(go);
 	}
 
 	template<class T>
@@ -33,8 +33,9 @@ public:
 	/// ゲームオブジェクトを生成し、登録する。
 	/// </summary>
 	/// <param name="prio">優先度</param>
-	T* NewGO(UINT prio) {
+	decltype(T::This_is_IGameObject, new T) NewGO(UINT prio) {
 		T* goP = new T();
+		goP->needDelete = true;
 		AddGO(goP, prio);
 		return goP;
 	}
@@ -45,8 +46,9 @@ public:
 	/// </summary>
 	/// <param name="prio">優先度</param>
 	/// <param name="...args">コンストラクタ引数</param>
-	T* NewGO(UINT prio, Args... args) {
+	decltype(T::This_is_IGameObject, new T) NewGO(UINT prio, Args... args) {
 		T* goP = new T(args...);
+		goP->needDelete = true;
 		AddGO(goP, prio);
 		return goP;
 	}
@@ -58,6 +60,7 @@ public:
 	void DeleteGO(IGameObject* go);
 
 private:
+	std::vector<std::vector<IGameObject*>> m_newGOArray;
 	std::vector<std::vector<IGameObject*>> m_goArray;
 };
 

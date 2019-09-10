@@ -4,8 +4,10 @@ class GameObjectManager;
 
 class IGameObject {
 public:
+	static constexpr char This_is_IGameObject = 0; //NewGO‚ÅIGameObject‚ðŽ¯•Ê‚·‚é—p
+
 	IGameObject();
-	~IGameObject();
+	virtual ~IGameObject();
 
 	virtual void Start();
 	virtual void Update();
@@ -14,7 +16,6 @@ public:
 
 private:
 	friend GameObjectManager;
-	bool isStarted = false;
 	bool isRemoved = false;
 	bool needDelete = false;
 };

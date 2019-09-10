@@ -2,7 +2,7 @@
 #include "system/system.h"
 #include "Actor/Player/Player.h"
 #include "level/Level.h"
-#include "graphics/SpriteRender.h"
+#include "Scene/Title.h"
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
@@ -19,13 +19,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 	GOManager().Init(10, 5);
 
-	GOManager().NewGO<Player>(0);
-
-	SpriteRender* sp = GOManager().NewGO<SpriteRender>(0);
-	sp->Init(L"Assets/sprite/BLADERNL.dds", 600, 600);
-
-	CVector2 pos(0,0);
-	CQuaternion rot = CQuaternion::Identity();;
+	GOManager().NewGO<Title>(0);
 
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
@@ -43,15 +37,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 
 		//ゲームオブジェクトマネージャーの更新。
 		GOManager().Update();
-
-		pos.x += g_pad->GetLStickXF()*50;
-		pos.y += g_pad->GetLStickYF()*50;
-
-		CQuaternion r;
-		r.SetRotationDeg(CVector3::AxisZ(), g_pad->GetRStickXF()*2);
-		rot.Multiply(r);
-		sp->SetPos(pos);
-		sp->SetRot(rot);
 
 		//描画終了。
 		g_graphicsEngine->EndRender();

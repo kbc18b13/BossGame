@@ -15,14 +15,14 @@ Sprite::Sprite() {
 
 Sprite::~Sprite() {
 	m_vertex->Release();
-	//m_wvpMatrix->Release();
+	m_worldMatBuf->Release();
 }
 
 void Sprite::Init(const wchar_t * path, UINT width, UINT height) {
 	HRESULT result;
 
-	float w = width / 2;
-	float h = height / 2;
+	int w = width / 2;
+	int h = height / 2;
 
 	SpriteVertex vertexData[4]{
 		{CVector3( w, h, 0.5f),CVector2(1,0) },
@@ -83,8 +83,8 @@ void Sprite::UpdateWorldMatrix(const CVector2 & pos, const CVector2 & scale, con
 	m_worldMat.Mul(scaleMat, rotMat);
 	m_worldMat.Mul(m_worldMat, posMat);
 
-	CMatrix projMat;
-	projMat.MakeScaling({ 1 / FRAME_BUFFER_W, 1 / FRAME_BUFFER_H, 1 });
+	CMatrix projMat;//x -1 Å` 1, y -1 Å` 1ÇÃ2*2XYïΩñ Ç…é˚ÇﬂÇÈÇΩÇﬂÇÃçsóÒ
+	projMat.MakeScaling({ 2 / FRAME_BUFFER_W, 2 / FRAME_BUFFER_H, 1 });
 
 	m_worldMat.Mul(m_worldMat, projMat);
 

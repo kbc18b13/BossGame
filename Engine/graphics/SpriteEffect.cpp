@@ -24,7 +24,6 @@ SpriteEffect::SpriteEffect() {
 
 SpriteEffect::~SpriteEffect() {
 	m_tex->Release();
-	//m_IA->Release();
 	m_sampler->Release();
 }
 
