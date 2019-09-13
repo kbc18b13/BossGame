@@ -1,6 +1,5 @@
 #pragma once
 
-
 class RigidBody;
 
 class PhysicsWorld
@@ -11,10 +10,14 @@ class PhysicsWorld
 	btSequentialImpulseConstraintSolver*	constraintSolver = nullptr;		//!<コンストレイントソルバー。拘束条件の解決処理。
 	btDiscreteDynamicsWorld*				dynamicWorld = nullptr;			//!<ワールド。
 public:
+	PhysicsWorld();
 	~PhysicsWorld();
 	void Init();
 	void Update();
 	void Release();
+
+	void setDebugDraw(bool isDraw);
+
 	/*!
 	* @brief	ダイナミックワールドを取得。
 	*/

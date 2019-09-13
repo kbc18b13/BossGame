@@ -11,8 +11,7 @@ Player::Player()
 	//cmoファイルの読み込み。
 	m_model.reset(GOManager().NewGO<SkinModelRender>(0));
 	m_model->Init(L"Assets/modelData/TestChara.cmo",m_animClip,1);
-
-	m_charaCon.Init(14, 7, {0,30,0});//キャラコンの初期化
+	m_charaCon.Init(10, 20, {0,50,0});//キャラコンの初期化
 }
 
 

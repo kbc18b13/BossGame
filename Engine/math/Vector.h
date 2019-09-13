@@ -68,6 +68,12 @@ public:
 	{
 		return DirectX::XMLoadFloat3(&vec);
 	}
+
+	//btVector3への暗黙の変換。
+	operator btVector3() const {
+		return btVector3(x, y, z);
+	}
+
 	//operator D3DXVECTOR3(void) { return s_cast<D3DXVECTOR3>(*this); }
 	/*!
 	*@brief	代入演算子。
@@ -77,6 +83,12 @@ public:
 		vec = _v.vec;
 		return *this;
 	}
+
+	CVector3& operator=(const btVector3& _v) {
+		vec.x = _v.x(); vec.y = _v.y(); vec.z = _v.z();
+		return *this;
+	}
+
 	CVector3() : x(0), y(0), z(0) {}
 	/*!
 	* @brief	コンストラクタ。
@@ -84,6 +96,10 @@ public:
 	CVector3(float x, float y, float z)
 	{
 		Set(x, y, z);
+	}
+
+	CVector3(const btVector3& v) {
+		Set(v.x(), v.y(), v.z());
 	}
 	/*!
 	* @brief	線形補間。

@@ -12,15 +12,18 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//ゲームの初期化。
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
 
+	//デバッグ有効化
+	g_physics.setDebugDraw(true);
+
 	//カメラを初期化。
-	g_camera3D.SetPosition({ 0.0f, 50.0f,-50.0f });
-	g_camera3D.SetTarget({ 0.0f, 0.0f, 0.0f });
+	g_camera3D.SetPosition({ 0.0f, 100.0f,-100.0f });
+	g_camera3D.SetTarget({ 0.0f, 20.0f, 0.0f });
 	g_camera3D.SetFar(10000.0f);
 
 	GOManager().Init(10, 5);
 
 	GOManager().NewGO<Title>(0);
-
+	
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
 	{
@@ -30,10 +33,12 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		for (auto& pad : g_pad) {
 			pad.Update();
 		}
-		//物理エンジンの更新。
-		g_physics.Update();
+		
 		//カメラの更新。
 		g_camera3D.Update();
+
+		//物理エンジンの更新。
+		g_physics.Update();
 
 		//ゲームオブジェクトマネージャーの更新。
 		GOManager().Update();

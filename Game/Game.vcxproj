@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx" />
+    <MeshContentTask Include="Assets\modelData\TestCharaa.fbx" />
     <MeshContentTask Include="Assets\modelData\TestStage.fbx" />
   </ItemGroup>
   <ItemGroup>

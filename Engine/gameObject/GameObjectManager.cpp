@@ -13,9 +13,9 @@ GameObjectManager::~GameObjectManager() {
 }
 
 void GameObjectManager::Init(UINT defArraySize, UINT defPrioSize) {
-	st_GoManager.m_goArray.resize(defPrioSize);
+	m_goArray.resize(defPrioSize);
 	for (UINT i = 0; i < defPrioSize; i++) {
-		st_GoManager.m_goArray[i].reserve(defArraySize);
+		m_goArray[i].reserve(defArraySize);
 	}
 	m_newGOArray.resize(defPrioSize);
 }
