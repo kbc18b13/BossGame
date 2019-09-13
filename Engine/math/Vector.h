@@ -13,6 +13,8 @@ class CMatrix;
 
 class CVector2 {
 public:
+	static constexpr char This_is_Vector = 0;
+
 	CVector2() : x(0), y(0){}
 
 	CVector2(float x, float y) : x(x) ,y(y) {}
@@ -56,6 +58,8 @@ public:
  */
 class CVector3{
 public:
+	static constexpr char This_is_Vector = 0;
+
 	union{
 		DirectX::XMFLOAT3 vec;
 		float v[3];
@@ -355,6 +359,8 @@ public:
  */
 class CVector4{
 public:
+	static constexpr char This_is_Vector = 0;
+
 	union{
 		DirectX::XMFLOAT4 vec;
 		struct { float x, y, z, w; };
@@ -365,7 +371,6 @@ public:
 	{
 		return DirectX::XMLoadFloat4(&vec);
 	}
-	CVector4(){}
 	/*!
 	*@brief	代入演算子。
 	*/
@@ -374,6 +379,8 @@ public:
 		vec = _v.vec;
 		return *this;
 	}
+
+	CVector4() : v{0,0,0,1} {}
 	/*!
 	 *@brief	コンストラクタ
 	 */
@@ -507,7 +514,7 @@ public:
 
 class CQuaternion : public CVector4{
 public:
-	CQuaternion() {}
+	CQuaternion(){}
 	CQuaternion(float x, float y, float z, float w) :
 		CVector4(x, y, z, w)
 	{
@@ -610,6 +617,8 @@ public:
 //整数型のベクトルクラス。
 __declspec(align(16)) class CVector4i {
 public:
+	static constexpr char This_is_Vector = 0;
+
 	union {
 		struct { int x, y, z, w; };
 		int v[4];
@@ -619,7 +628,7 @@ public:
 *@brief	ベクトル同士の加算。
 */
 template<class TVector>
-static inline TVector operator+(const TVector& v0, const TVector& v1)
+static inline decltype(TVector::This_is_Vector, std::declval<TVector>()) operator+(const TVector& v0, const TVector& v1)
 {
 	TVector result;
 	result.Add(v0, v1);
@@ -629,7 +638,7 @@ static inline TVector operator+(const TVector& v0, const TVector& v1)
 *@brief	ベクトルのスケール倍。
 */
 template<class TVector>
-static inline TVector operator*(const TVector& v, float s)
+static inline decltype(TVector::This_is_Vector, std::declval<TVector>()) operator*(const TVector& v, float s)
 {
 	TVector result;
 	result = v;
@@ -640,7 +649,7 @@ static inline TVector operator*(const TVector& v, float s)
 *@brief	ベクトルの除算。
 */
 template<class TVector>
-static inline TVector operator/(const TVector& v, float s)
+static inline decltype(TVector::This_is_Vector, std::declval<TVector>()) operator/(const TVector& v, float s)
 {
 	TVector result;
 	result = v;
@@ -651,7 +660,7 @@ static inline TVector operator/(const TVector& v, float s)
 *@brief	ベクトル同士の減算。
 */
 template<class TVector>
-static inline TVector operator-(const TVector& v0, const TVector& v1)
+static inline decltype(TVector::This_is_Vector, std::declval<TVector>()) operator-(const TVector& v0, const TVector& v1)
 {
 	TVector result;
 	result.Subtract(v0, v1);
