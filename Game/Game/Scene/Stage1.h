@@ -1,4 +1,5 @@
 #include "Ground/Ground1.h"
+class Troll;
 class Player;
 class Stage1 : public IGameObject {
 public:
@@ -9,4 +10,5 @@ public:
 private:
 	Ground g;
 	Player* p = nullptr;
+	Troll* t = nullptr;
 };

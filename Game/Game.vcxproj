@@ -132,6 +132,7 @@
     <MeshContentTask Include="Assets\modelData\TestChara.fbx" />
     <MeshContentTask Include="Assets\modelData\TestCharaa.fbx" />
     <MeshContentTask Include="Assets\modelData\TestStage.fbx" />
+    <MeshContentTask Include="Assets\modelData\TestTroll.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
