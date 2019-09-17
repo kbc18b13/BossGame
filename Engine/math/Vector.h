@@ -543,6 +543,19 @@ public:
 		y = axis.y * s;
 		z = axis.z * s;
 	}
+
+	//クォータニオンに回転をプラス。
+	void AddRotation(const CVector3& axis, float angle) {
+		CQuaternion rot;
+		rot.SetRotation(axis, angle);
+		Multiply(rot);
+	}
+	void AddRotationDeg(const CVector3& axis, float angle) {
+		CQuaternion rot;
+		rot.SetRotationDeg(axis, angle);
+		Multiply(rot);
+	}
+
 	/*!
 	*@brief	行列からクォータニオンを作成。
 	*/

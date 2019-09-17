@@ -3,11 +3,11 @@
 #include "Actor/Player/Player.h"
 
 Stage1::Stage1() {
-	p = GOManager().NewGO<Player>(0);
+	p = NewGO<Player>(0);
 }
 
 Stage1::~Stage1() {
-	GOManager().DeleteGO(p);
+	DeleteGO(p);
 }
 
 void Stage1::Update() {

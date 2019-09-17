@@ -64,6 +64,40 @@ private:
 	std::vector<std::vector<IGameObject*>> m_goArray;
 };
 
-
-
 GameObjectManager& GOManager();
+
+/// <summary>
+/// 自分でメモリ確保したゲームオブジェクトを登録する。
+/// </summary>
+/// <param name="go">ゲームオブジェクトのポインタ</param>
+/// <param name="prio">優先度</param>
+static inline void AddGO(IGameObject* go, UINT prio) {
+	GOManager().AddGO(go, prio);
+}
+
+template<class T>
+/// <summary>
+/// ゲームオブジェクトを生成し、登録する。
+/// </summary>
+/// <param name="prio">優先度</param>
+inline decltype(T::This_is_IGameObject, new T) NewGO(UINT prio) {
+	return GOManager().NewGO<T>(prio);
+}
+
+template<class T, class... Args>
+/// <summary>
+/// ゲームオブジェクトを生成し、登録する。コンストラクタ引数付き。
+/// </summary>
+/// <param name="prio">優先度</param>
+/// <param name="...args">コンストラクタ引数</param>
+inline decltype(T::This_is_IGameObject, new T) NewGO(UINT prio, Args... args) {
+	return GOManager().NewGO<T, Args...>(prio);
+}
+
+/// <summary>
+/// ゲームオブジェクトを登録解除、NewGOで生成した物のみメモリを開放する。
+/// </summary>
+/// <param name="go"></param>
+static inline void DeleteGO(IGameObject* go) {
+	GOManager().DeleteGO(go);
+}

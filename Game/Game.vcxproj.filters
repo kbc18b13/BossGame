@@ -15,6 +15,10 @@
     <ClCompile Include="Game\Scene\Title.cpp" />
     <ClCompile Include="Game\Scene\Stage1.cpp" />
     <ClCompile Include="Game\Ground\Ground1.cpp" />
+    <ClCompile Include="Game\Camera\PlayerCamera.cpp" />
+    <ClCompile Include="Game\Actor\Actor.cpp" />
+    <ClCompile Include="Game\Util\ResistVector3.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -22,6 +26,10 @@
     <ClInclude Include="Game\Scene\Title.h" />
     <ClInclude Include="Game\Scene\Stage1.h" />
     <ClInclude Include="Game\Ground\Ground1.h" />
+    <ClInclude Include="Game\Camera\PlayerCamera.h" />
+    <ClInclude Include="Game\Actor\Actor.h" />
+    <ClInclude Include="Game\Util\ResistVector3.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestStage.fbx">

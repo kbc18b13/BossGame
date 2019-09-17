@@ -32,4 +32,11 @@ public:
 	{
 		return t0 + (t1 - t0)*rate;
 	}
+
+	
+	static inline float Clamp(float f, float min, float max) {
+		if (f < min)return min;
+		if (f > max)return max;
+		return f;
+	}
 };
