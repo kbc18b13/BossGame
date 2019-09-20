@@ -8,6 +8,8 @@ public:
 
 	void Update();
 
+	void SetPos(const CVector3& pos);
+
 private:
 	enum {
 		enAnimWalk,

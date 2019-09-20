@@ -12,8 +12,18 @@ public:
 	~Player();
 	void Update() override;
 
+	/// <summary>
+	/// ˆÊ’u‚ğæ“¾
+	/// </summary>
 	CVector3 GetPos() {
 		return m_charaCon.GetPosition();
+	}
+
+	/// <summary>
+	/// ˆÊ’u‚ğİ’è
+	/// </summary>
+	void SetPos(const CVector3& pos) {
+		m_charaCon.SetPosition(pos);
 	}
 
 private:

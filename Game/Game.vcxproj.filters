@@ -38,7 +38,6 @@
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\TestCharaa.fbx" />
     <MeshContentTask Include="Assets\modelData\TestTroll.fbx" />
   </ItemGroup>
   <ItemGroup>

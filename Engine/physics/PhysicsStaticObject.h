@@ -29,6 +29,13 @@ public:
 		*/
 	void CreateMeshObject(SkinModel& skinModel, CVector3 pos, CQuaternion rot);
 	
+	//位置を設定
+	void SetPos(const CVector3& pos) {
+		btTransform trans = m_rigidBody.GetBody()->getWorldTransform();
+		trans.setOrigin(pos);
+		m_rigidBody.GetBody()->setWorldTransform(trans);
+	}
+
 private:
 	MeshCollider m_meshCollider;		//!<メッシュコライダー。
 	RigidBody m_rigidBody;				//!<剛体。

@@ -44,6 +44,6 @@ void Player::Update()
 	}
 
 	m_model->SetRot(rot);
-	m_camera.Update(GetPos()+CVector3::Up()*20);
+	m_camera.Update(GetPos()+CVector3::Up()*50);
 	m_moveSpeed.Update(m_charaCon.IsOnGround() ? 3 : 0);
 }

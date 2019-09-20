@@ -11,3 +11,8 @@ Ground::Ground() {
 Ground::~Ground() {
 	DeleteGO(m_model);
 }
+
+void Ground::SetPos(const CVector3 & pos) {
+	m_model->SetPos(pos);
+	m_collider.SetPos(pos);
+}

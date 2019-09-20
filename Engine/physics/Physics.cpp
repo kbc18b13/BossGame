@@ -71,7 +71,6 @@ void PhysicsWorld::Update()
 	dynamicWorld->stepSimulation(1.0f/60.0f);
 	st_debugWire->DrawBegin();//ワイヤフレーム描画準備
 	dynamicWorld->debugDrawWorld();//デバッグワイヤーフレームの描画
-	int i = 0;
 }
 void PhysicsWorld::AddRigidBody(RigidBody& rb)
 {
