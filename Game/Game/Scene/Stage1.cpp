@@ -19,6 +19,11 @@ Stage1::Stage1() {
 		}
 		return true;
 	});
+	g_graphicsEngine->GetDirectionLight().SetColor(    0, { 1,1,1,1 });
+	g_graphicsEngine->GetDirectionLight().SetDirection(0, { -1,-1,-1});
+	g_graphicsEngine->GetDirectionLight().SetColor(    1, { 0.2f,0.2f,0.2f,1 });
+	g_graphicsEngine->GetDirectionLight().SetDirection(1, { 1,1,1 });
+	g_graphicsEngine->GetDirectionLight().Apply();
 }
 
 Stage1::~Stage1() {

@@ -1,4 +1,5 @@
 #pragma once
+#include "light/DirectionLight.h"
 /*!
  *@brief	グラフィックスエンジン。
  */
@@ -38,7 +39,13 @@ public:
 	 *@brief	描画終了。
 	 */
 	void EndRender();
+
+	DirectionLight& GetDirectionLight() {
+		return m_dirLight;
+	}
 private:
+	DirectionLight m_dirLight;
+
 	D3D_FEATURE_LEVEL		m_featureLevel;				//Direct3D デバイスのターゲットとなる機能セット。
 	ID3D11Device*			m_pd3dDevice = NULL;		//D3D11デバイス。
 	IDXGISwapChain*			m_pSwapChain = NULL;		//スワップチェイン。

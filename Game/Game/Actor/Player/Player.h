@@ -27,20 +27,24 @@ public:
 	}
 
 private:
-	static constexpr float WALK_SPEED = 20;
-	static constexpr float WALK_SPEED_AIR = 2;
-	static constexpr float JUMP_SPEED = 10;
+	static constexpr float WALK_MAX = 200;
+	static constexpr float WALK_ACCEL_AIR = 10;
+	static constexpr float WALK_ACCEL = 50;
+	static constexpr float WALK_BLAKE = 20;
+	static constexpr float JUMP_POWER = 350;
 
-	ResistVector3 m_moveSpeed;//移動速度
+	CVector3 m_walkSpeed;//移動速度
+	float jumpSpeed = 0;
 	CQuaternion rot;//回転
 
 	enum EnAnim {
 		enAnimWalk,
-		//enAnimRun,
+		enAnimSlash,
 		enAnimNum
 	};
 	AnimationClip m_animClip[enAnimNum];        //アニメーションクリップ
-	std::unique_ptr<SkinModelRender> m_model;	//スキンモデルレンダー。
+	SkinModelRender* m_model;                    //自分のモデル。
+	SkinModel m_swordModel;                    //剣のモデル。
 
 	CharacterController m_charaCon;             //キャラコン
 

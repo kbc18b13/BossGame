@@ -20,7 +20,6 @@ MeshCollider::~MeshCollider()
 void MeshCollider::CreateFromSkinModel( const SkinModel& model)
 {
 	CMatrix mBias;
-	//mBias.MakeRotationX(CMath::PI * -0.5f);
 	m_stridingMeshInterface = std::make_unique<btTriangleIndexVertexArray>();
 
 	model.FindMesh([&](const auto& mesh){

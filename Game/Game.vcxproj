@@ -129,6 +129,7 @@
     <ClInclude Include="Game\Util\ResistVector3.h" />
   </ItemGroup>
   <ItemGroup>
+    <MeshContentTask Include="Assets\modelData\Sword.fbx" />
     <MeshContentTask Include="Assets\modelData\TestChara.fbx" />
     <MeshContentTask Include="Assets\modelData\TestStage.fbx" />
     <MeshContentTask Include="Assets\modelData\TestTroll.fbx" />

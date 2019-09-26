@@ -22,12 +22,19 @@ sampler Sampler : register(s0);
 /*!
  * @brief	頂点シェーダーとピクセルシェーダー用の定数バッファ。
  */
-cbuffer VSPSCb : register(b0){
+cbuffer VSCb : register(b0){
 	float4x4 mWorld;
 	float4x4 mView;
 	float4x4 mProj;
 };
 
+/*!
+ * @brief	ディレクションライトの定数バッファ。
+ */
+cbuffer PSCb : register(b1) {
+	float4 mLightColor[4];
+	float4 mLightVec[4];
+};
 
 /////////////////////////////////////////////////////////////
 //各種構造体
@@ -143,8 +150,9 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 float4 PSMain( PSInput In ) : SV_Target0
 {
 	float4 color = albedoTexture.Sample(Sampler, In.TexCoord);
-	float alpha = color.a;
-	color *= saturate(dot(In.Normal, float3(0, 1, 0)))*0.5f + 0.5f;
-	color.a = alpha;
-	return color;
+	float4 sum = float4(0, 0, 0, 0);
+	for (int i = 0; i < 4; i++) {
+		sum += saturate(dot(In.Normal, -mLightVec[i].xyz)) * mLightColor[i] * color;
+	}
+	return sum;
 }

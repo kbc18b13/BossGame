@@ -187,6 +187,13 @@ public:
 	{
 		return m_bones[boneNo];
 	}
+	Bone* GetBone(const wchar_t* boneName) {
+		int num;
+		if ((num = FindBoneID(boneName)) == -1) {
+			abort();
+		}
+		return m_bones[num];
+	}
 	/*!
 	*@brief	ボーン行列の配列をGPUに転送。
 	*/
