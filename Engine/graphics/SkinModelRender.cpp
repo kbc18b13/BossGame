@@ -18,7 +18,7 @@ void SkinModelRender::Init(const wchar_t * filePath, AnimationClip animClipList[
 }
 
 void SkinModelRender::Update() {
-	m_animation.Update(0.02f);
+	m_animation.Update(GameTime::GetDeltaTime());
 	m_skinModel.UpdateWorldMatrix(m_pos, m_rot, m_scale);
 }
 
@@ -27,4 +27,13 @@ void SkinModelRender::Draw() {
 		g_camera3D.GetViewMatrix(),
 		g_camera3D.GetProjectionMatrix()
 	);
+}
+
+void SkinModelRender::SetWorldMatrix(const CMatrix & wMat) {
+	m_pos = CVector3(wMat.v[3]);
+	float x = wMat.v[0].Length();
+	float y = wMat.v[1].Length();
+	float z = wMat.v[2].Length();
+	m_scale = CVector3(x, y, z);
+	m_rot.SetRotation(wMat);
 }

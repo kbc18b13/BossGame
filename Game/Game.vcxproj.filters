@@ -19,6 +19,7 @@
     <ClCompile Include="Game\Actor\Actor.cpp" />
     <ClCompile Include="Game\Util\ResistVector3.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll.cpp" />
+    <ClCompile Include="Game\Actor\Player\Sword.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -30,6 +31,7 @@
     <ClInclude Include="Game\Actor\Actor.h" />
     <ClInclude Include="Game\Util\ResistVector3.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll.h" />
+    <ClInclude Include="Game\Actor\Player\Sword.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestStage.fbx">

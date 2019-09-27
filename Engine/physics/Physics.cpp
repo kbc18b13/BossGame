@@ -3,6 +3,7 @@
 #include "Physics/RigidBody.h"
 #include "graphics/Shader.h"
 #include "DebugWireframe.h"
+#include "ICollision.h"
 
 PhysicsWorld g_physics;
 static DebugWireframe* st_debugWire;
@@ -33,6 +34,11 @@ void PhysicsWorld::Release()
 void PhysicsWorld::setDebugDraw(bool isDraw) {
 	btIDebugDraw::DebugDrawModes mode = isDraw ? btIDebugDraw::DBG_DrawWireframe : btIDebugDraw::DBG_NoDebug;
 	st_debugWire->setDebugMode(mode);
+}
+
+void PhysicsWorld::DebugDraw() {
+	st_debugWire->DrawBegin();//ワイヤフレーム描画準備
+	dynamicWorld->debugDrawWorld();//デバッグワイヤーフレームの描画
 }
 
 void PhysicsWorld::Init()
@@ -69,8 +75,6 @@ void PhysicsWorld::Init()
 void PhysicsWorld::Update()
 {
 	dynamicWorld->stepSimulation(1.0f/60.0f);
-	st_debugWire->DrawBegin();//ワイヤフレーム描画準備
-	dynamicWorld->debugDrawWorld();//デバッグワイヤーフレームの描画
 }
 void PhysicsWorld::AddRigidBody(RigidBody& rb)
 {
@@ -79,4 +83,12 @@ void PhysicsWorld::AddRigidBody(RigidBody& rb)
 void PhysicsWorld::RemoveRigidBody(RigidBody& rb)
 {
 	dynamicWorld->removeRigidBody(rb.GetBody());
+}
+
+void PhysicsWorld::AddCollision(ICollision & cl) {
+	dynamicWorld->addCollisionObject(cl.GetBody(), cl.GetGroup(), cl.GetMask());
+}
+
+void PhysicsWorld::RemoveCollision(ICollision & cl) {
+	dynamicWorld->removeCollisionObject(cl.GetBody());
 }

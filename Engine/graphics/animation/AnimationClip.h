@@ -21,7 +21,15 @@ struct AnimClipHeader {
 */
 struct AnimationEventData {
 	float	invokeTime;					//!<アニメーションイベントが発生する時間(単位:秒)
-	std::uint32_t eventNameLength;		//!<イベント名の長さ。
+	char*   eventName;
+
+	AnimationEventData(float time, char* name) {
+		invokeTime = time;
+		eventName = name;
+	}
+	~AnimationEventData() {
+		delete[] eventName;
+	}
 };
 /*!
 *@brief	キーフレーム。
@@ -88,6 +96,14 @@ public:
 	{
 		return *m_topBoneKeyFramList;
 	}
+
+	int GetEventSize() const{
+		return m_eventList.size();
+	}
+
+	const AnimationEventData& GetEvent(int index) const {
+		return m_eventList[index];
+	}
 private:
 	
 	bool m_isLoop = false;									//!<ループフラグ。
@@ -96,5 +112,7 @@ private:
 															//例えば、m_keyFramePtrListArray[0]は0番目のボーンのキーフレームのリスト、
 															//m_keyFramePtrListArray[1]は1番目のボーンのキーフレームのリストといった感じ。
 	keyFramePtrList* m_topBoneKeyFramList = nullptr;
+
+	std::vector<AnimationEventData> m_eventList;
 };
 

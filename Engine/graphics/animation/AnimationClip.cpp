@@ -35,9 +35,19 @@ void AnimationClip::Load(const wchar_t* filePath, bool isLoop)
 	fread(&header, sizeof(header), 1, fp);
 		
 	if (header.numAnimationEvent > 0) {
-		//アニメーションイベントは未対応。
-		//就職作品でチャレンジしてみよう。
-		std::abort();
+		//アニメーションイベントは対応予定。
+		//就職作品でチャレンジ中。
+
+		for (int i = 0; i < header.numAnimationEvent; i++) {
+			float eventTime;
+			fread(&eventTime, sizeof(float), 1, fp);
+			UINT nameLength;
+			fread(&nameLength, sizeof(UINT), 1, fp);
+			char* name = new char[nameLength + 1];
+			fread(name, sizeof(char)*(nameLength + 1), 1, fp);
+
+			m_eventList.emplace_back(eventTime, name);
+		}
 	}
 
 

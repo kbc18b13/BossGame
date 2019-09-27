@@ -105,6 +105,7 @@ public:
 	CVector3(const btVector3& v) {
 		Set(v.x(), v.y(), v.z());
 	}
+
 	/*!
 	* @brief	線形補間。
 	*@details
@@ -371,6 +372,10 @@ public:
 	{
 		return DirectX::XMLoadFloat4(&vec);
 	}
+
+	operator CVector3() const {
+		return CVector3(x,y,z);
+	}
 	/*!
 	*@brief	代入演算子。
 	*/
@@ -482,7 +487,7 @@ public:
 	/*!
 	 * @brief	長さを取得
 	 */
-	float Length()
+	float Length() const
 	{
 		DirectX::XMVECTOR xmv = DirectX::XMLoadFloat4(&vec);
 		return DirectX::XMVector4Length(xmv).m128_f32[0];
@@ -490,7 +495,7 @@ public:
 	/*!
 	 * @brief	長さの二乗を取得
 	 */
-	float LengthSq()
+	float LengthSq() const
 	{
 		DirectX::XMVECTOR xmv = DirectX::XMLoadFloat4(&vec);
 		return DirectX::XMVector4LengthSq(xmv).m128_f32[0];
@@ -520,6 +525,10 @@ public:
 	{
 	}
 	
+	operator btQuaternion() const{
+		return btQuaternion(x, y, z, w);
+	}
+
 	/*!
 	 *@brief	任意の軸周りの回転クォータニオンを作成。
 	 */

@@ -12,11 +12,15 @@
 class Skeleton;
 class SkinModel;
 
-
 /*!
 * @brief	アニメーションクラス。
 */
 class Animation {
+	struct EventFunc {
+		const char* name;
+		std::function<void()> func;
+		EventFunc(const char* n, std::function<void()> f) : name(n), func(f){}
+	};
 public:
 	Animation();
 	~Animation();
@@ -29,6 +33,14 @@ public:
 	void Init(SkinModel& skinModel, AnimationClip animClipList[], int numAnimClip);
 
 		
+	void AddEventFunc(const char* name, std::function<void()> func) {
+		m_eventFuncList.emplace_back(name, func);
+	}
+
+	const std::vector<EventFunc>& GetEventList() {
+		return m_eventFuncList;
+	}
+
 	/*!
 	*@brief	アニメーションの再生。
 	*@param[in]	clipNo	アニメーションクリップの番号。Init関数に渡したanimClipListの並びとなる。
@@ -115,4 +127,5 @@ private:
 	float m_interpolateTimeEnd = 0.0f;
 	bool m_isInterpolate = false;				//!<補間中？
 
+	std::vector<EventFunc> m_eventFuncList;
 };

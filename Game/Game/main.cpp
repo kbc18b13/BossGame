@@ -33,15 +33,15 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		for (auto& pad : g_pad) {
 			pad.Update();
 		}
-		
-		//カメラの更新。
-		g_camera3D.Update();
 
 		//物理エンジンの更新。
 		g_physics.Update();
 
 		//ゲームオブジェクトマネージャーの更新。
 		GOManager().Update();
+		
+		//物理ワイヤーフレーム
+		g_physics.DebugDraw();
 
 		//描画終了。
 		g_graphicsEngine->EndRender();

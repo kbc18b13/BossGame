@@ -3,6 +3,7 @@
 #include "character/CharacterController.h"
 #include "Util/ResistVector3.h"
 
+class Sword;
 class SkinModelRender;
 
 class Player : public IGameObject
@@ -10,6 +11,7 @@ class Player : public IGameObject
 public:
 	Player();
 	~Player();
+
 	void Update() override;
 
 	/// <summary>
@@ -27,6 +29,8 @@ public:
 	}
 
 private:
+	void SlashEnd();
+
 	static constexpr float WALK_MAX = 200;
 	static constexpr float WALK_ACCEL_AIR = 10;
 	static constexpr float WALK_ACCEL = 50;
@@ -39,15 +43,25 @@ private:
 
 	enum EnAnim {
 		enAnimWalk,
+		enAnimIdle,
 		enAnimSlash,
+		enAnimSlash2,
+		enAnimSlash3,
+		enAnimSlash4,
 		enAnimNum
 	};
 	AnimationClip m_animClip[enAnimNum];        //アニメーションクリップ
 	SkinModelRender* m_model;                    //自分のモデル。
-	SkinModel m_swordModel;                    //剣のモデル。
+
+	Sword* m_sword = nullptr;
 
 	CharacterController m_charaCon;             //キャラコン
 
 	PlayerCamera m_camera;                      //カメラ
+
+
+	static constexpr int MAX_COMBO = 4;
+	int m_comboCount = -1;
+	bool m_comboContinue = false;
 };
 

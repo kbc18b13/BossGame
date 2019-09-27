@@ -41,6 +41,7 @@ public:
 		m_currentKeyFrameNo = 0;
 		m_time = 0.0f;
 		m_isPlaying = true;
+		m_nextEventNumber = 0;
 	}
 	void SetInterpolateTime(float interpolateTime)
 	{
@@ -91,6 +92,7 @@ private:
 	void StartLoop();
 private:
 	AnimationClip*			m_animationClip = nullptr;		//!<アニメーションクリップ。
+	int                     m_nextEventNumber = 0;
 	int						m_currentKeyFrameNo = 0;		//!<現在再生中のキーフレーム番号。
 	float					m_time = 0.0f;
 	std::vector<CMatrix>	m_boneMatrix;				//!<このコントローラで再生中のアニメーションのボーン行列。

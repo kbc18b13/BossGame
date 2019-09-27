@@ -81,11 +81,21 @@ public:
 	}
 
 	/// <summary>
+	/// ワールド行列を設定
+	/// </summary>
+	/// <param name="wMat">ワールド行列</param>
+	void SetWorldMatrix(const CMatrix& wMat);
+
+	/// <summary>
 	/// モデルを取得
 	/// </summary>
 	/// <returns></returns>
 	SkinModel& GetModel() {
 		return m_skinModel;
+	}
+
+	Animation& GetAnim() {
+		return m_animation;
 	}
 
 	/// <summary>

@@ -46,7 +46,7 @@ public:
 	/// </summary>
 	/// <param name="prio">優先度</param>
 	/// <param name="...args">コンストラクタ引数</param>
-	decltype(T::This_is_IGameObject, new T) NewGO(UINT prio, Args... args) {
+	auto NewGO(UINT prio, Args... args) -> decltype(T::This_is_IGameObject, new T(args...)) {
 		T* goP = new T(args...);
 		goP->needDelete = true;
 		AddGO(goP, prio);
@@ -90,8 +90,8 @@ template<class T, class... Args>
 /// </summary>
 /// <param name="prio">優先度</param>
 /// <param name="...args">コンストラクタ引数</param>
-inline decltype(T::This_is_IGameObject, new T) NewGO(UINT prio, Args... args) {
-	return GOManager().NewGO<T, Args...>(prio);
+inline auto NewGO(UINT prio, Args... args) -> decltype(T::This_is_IGameObject, new T(args...)) {
+	return GOManager().NewGO<T, Args...>(prio, args...);
 }
 
 /// <summary>

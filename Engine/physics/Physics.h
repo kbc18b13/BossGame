@@ -1,6 +1,7 @@
 #pragma once
 
 class RigidBody;
+class ICollision;
 
 class PhysicsWorld
 {
@@ -18,6 +19,8 @@ public:
 
 	void setDebugDraw(bool isDraw);
 
+	void DebugDraw();
+
 	/*!
 	* @brief	ダイナミックワールドを取得。
 	*/
@@ -33,6 +36,16 @@ public:
 	* @brief	剛体を破棄。
 	*/
 	void RemoveRigidBody(RigidBody& rb);
+
+	/*!
+	* @brief	コリジョンオブジェクトを登録。
+	*/
+	void AddCollision(ICollision& cl);
+	/*!
+	* @brief	コリジョンオブジェクトを登録。
+	*/
+	void RemoveCollision(ICollision& cl);
+
 	void ConvexSweepTest(
 		const btConvexShape* castShape,
 		const btTransform& convexFromWorld,

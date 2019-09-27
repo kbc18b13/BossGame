@@ -18,4 +18,7 @@ void PlayerCamera::Update(const CVector3 & playerPos) {
 	rot.AddRotationDeg(GetRightVec(), addRot);
 	//回転の実行
 	rot.Multiply(m_vec);
+
+	//カメラの更新。
+	g_camera3D.Update();
 }

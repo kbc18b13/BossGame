@@ -1,26 +1,37 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "graphics/SkinModelRender.h"
+#include "Sword.h"
 
 Player::Player()
 {
 	//アニメーションクリップ読み込み
 	m_animClip[enAnimWalk].Load(L"Assets/animData/TestChara_Run.tka", true);
+	m_animClip[enAnimIdle].Load(L"Assets/animData/TestChara_Idle.tka",true);
 	m_animClip[enAnimSlash].Load(L"Assets/animData/TestChara_Slash.tka");
+	m_animClip[enAnimSlash2].Load(L"Assets/animData/TestChara_Slash2.tka");
+	m_animClip[enAnimSlash3].Load(L"Assets/animData/TestChara_Slash3.tka");
+	m_animClip[enAnimSlash4].Load(L"Assets/animData/TestChara_Slash4.tka");
 
 	//cmoファイルの読み込み。
-	m_model = NewGO<SkinModelRender>(0);
+	m_model = NewGO<SkinModelRender>(1);
 	m_model->Init(L"Assets/modelData/TestChara.cmo",m_animClip,enAnimNum);
+	m_model->GetAnim().AddEventFunc("End", [&]() {
+		SlashEnd();
+	});
 
-	m_swordModel.Init(L"Assets/modelData/Sword.cmo",enFbxUpAxisY);
 	m_charaCon.Init(8, 24, {0,50,0});//キャラコンの初期化
 
 	m_camera.SetVec({ 0, 80, -80 });
+
+	m_sword = NewGO<Sword>(2, m_model->GetModel().GetSkeleton().GetBone(L"Hand_L"));
+	m_sword->SetOffset({ 12, 0, 0 });
 }
 
 
 Player::~Player()
 {
+	DeleteGO(m_sword);
 	DeleteGO(m_model);
 }
 
@@ -64,12 +75,6 @@ void Player::Update()
 			jumpSpeed += JUMP_POWER;
 		}
 	}
-	if (g_pad->IsTrigger(enButtonRB1)) {
-		m_model->Play(enAnimSlash, 0.1f);
-	}
-	if (!m_model->IsPlaying()) {
-		m_model->Play(enAnimWalk, 0.3f);
-	}
 	m_walkSpeed.y = jumpSpeed;
 
 	CVector3 pos = m_charaCon.Execute(GameTime::GetDeltaTime(), m_walkSpeed);
@@ -87,7 +92,38 @@ void Player::Update()
 
 	m_model->SetRot(rot);
 	m_camera.Update(GetPos()+CVector3::Up()*25);
-	m_swordModel.UpdateWorldMatrix(m_model->GetModel().GetSkeleton().GetBone(L"Hand_L")->GetWorldMatrix());
-	m_swordModel.Draw(g_camera3D.GetViewMatrix(), g_camera3D.GetProjectionMatrix());
-	//m_moveSpeed.Update(m_charaCon.IsOnGround() ? 3 : 0);
+
+	//アニメーション
+	if (g_pad->IsTrigger(enButtonRB1)) {
+		if (m_comboCount == -1) {
+			m_comboCount++;
+			m_model->Play(enAnimSlash, 0.1f);
+		} else {
+			m_comboContinue = true;
+		}
+	}else
+	if (m_comboCount == -1) {
+		if (m_walkSpeed.LengthSq() > 0.001f) {
+			m_model->Play(enAnimWalk, 0.1f);
+		} else {
+			m_model->Play(enAnimIdle, 0.3f);
+		}
+	}
+}
+
+void Player::SlashEnd() {
+	if (m_comboContinue) {//次のキー入力があれば
+
+		m_comboCount++;//コンボを進める
+		if (m_comboCount >= MAX_COMBO) {
+			m_comboCount = -1;//コンボ終了
+			m_model->Play(enAnimIdle, 0.3f);
+		} else {
+			m_model->Play(enAnimSlash + m_comboCount, 0.1f);//アニメーション
+		}
+	} else {
+		m_comboCount = -1;//コンボ終了
+		m_model->Play(enAnimIdle, 0.3f);
+	}
+	m_comboContinue = false;
 }

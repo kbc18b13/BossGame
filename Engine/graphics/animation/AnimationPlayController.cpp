@@ -24,6 +24,7 @@ void AnimationPlayController::StartLoop()
 {
 	m_currentKeyFrameNo = 0;
 	m_time = 0.0f;
+	m_nextEventNumber = 0;
 }
 void AnimationPlayController::Update(float deltaTime, Animation* animation)
 {
@@ -76,6 +77,19 @@ void AnimationPlayController::Update(float deltaTime, Animation* animation)
 				"もう一度tkaファイルを出力しなおしてください。", "error", MB_OK);
 			std::abort();
 #endif
+		}
+	}
+
+	//アニメーションイベントの処理
+	if (m_animationClip->GetEventSize() > m_nextEventNumber) {
+		const AnimationEventData& nowEvent = m_animationClip->GetEvent(m_nextEventNumber);
+		if (nowEvent.invokeTime < m_time) {
+			for (auto ev : animation->GetEventList()) {
+				if (strcmp(ev.name, nowEvent.eventName) == 0) {
+					ev.func();
+				}
+			}
+			m_nextEventNumber++;
 		}
 	}
 }
