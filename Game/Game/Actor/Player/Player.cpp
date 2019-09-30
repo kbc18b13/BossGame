@@ -2,8 +2,9 @@
 #include "Player.h"
 #include "graphics/SkinModelRender.h"
 #include "Sword.h"
+#include "physics/CollisionAttr.h"
 
-Player::Player()
+Player::Player() : Actor(10)
 {
 	//アニメーションクリップ読み込み
 	m_animClip[enAnimWalk].Load(L"Assets/animData/TestChara_Run.tka", true);
@@ -20,11 +21,11 @@ Player::Player()
 		SlashEnd();
 	});
 
-	m_charaCon.Init(8, 24, {0,50,0});//キャラコンの初期化
+	m_charaCon.Init(8, 24, {0,50,0},enCollisionAttr_Player, this);//キャラコンの初期化
 
 	m_camera.SetVec({ 0, 80, -80 });
 
-	m_sword = NewGO<Sword>(2, m_model->GetModel().GetSkeleton().GetBone(L"Hand_L"));
+	m_sword = NewGO<Sword>(2, m_model->GetModel().GetSkeleton().GetBone(L"Hand_L"), this);
 	m_sword->SetOffset({ 12, 0, 0 });
 }
 
@@ -98,6 +99,7 @@ void Player::Update()
 		if (m_comboCount == -1) {
 			m_comboCount++;
 			m_model->Play(enAnimSlash, 0.1f);
+			m_sword->SlashStart();
 		} else {
 			m_comboContinue = true;
 		}
@@ -118,12 +120,15 @@ void Player::SlashEnd() {
 		if (m_comboCount >= MAX_COMBO) {
 			m_comboCount = -1;//コンボ終了
 			m_model->Play(enAnimIdle, 0.3f);
+			m_sword->SlashEnd();
 		} else {
 			m_model->Play(enAnimSlash + m_comboCount, 0.1f);//アニメーション
+			m_sword->SlashStart();
 		}
 	} else {
 		m_comboCount = -1;//コンボ終了
 		m_model->Play(enAnimIdle, 0.3f);
+		m_sword->SlashEnd();
 	}
 	m_comboContinue = false;
 }

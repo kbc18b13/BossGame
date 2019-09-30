@@ -14,6 +14,14 @@ public:
 		return &m_collision;
 	}
 
+	void SetUserPointer(void* p) {
+		m_collision.setUserPointer(p);
+	}
+
+	void SetUserIndex(int index) {
+		m_collision.setUserIndex(index);
+	}
+
 	void SetMask(short mask){
 		m_mask = mask;
 	}

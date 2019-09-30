@@ -4,7 +4,6 @@
 
 #include "stdafx.h"
 #include "character/CharacterController.h"
-#include "Physics/CollisionAttr.h"
 
 
 
@@ -98,7 +97,7 @@ namespace {
 }
 
 
-void CharacterController::Init(float radius, float height, const CVector3& position)
+void CharacterController::Init(float radius, float height, const CVector3& position, int userIndex, void* userPointer)
 {
 	m_position = position;
 	//コリジョン作成。
@@ -115,7 +114,8 @@ void CharacterController::Init(float radius, float height, const CVector3& posit
 	//剛体の位置を更新。自分のポジションが足元にくるように調整する。
 	trans.setOrigin(btVector3(position.x, position.y + radius + height/2, position.z));
 	//@todo 未対応。trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
-	m_rigidBody.GetBody()->setUserIndex(enCollisionAttr_Character);
+	m_rigidBody.GetBody()->setUserIndex(userIndex);
+	m_rigidBody.GetBody()->setUserPointer(userPointer);
 	m_rigidBody.GetBody()->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
 	g_physics.AddRigidBody(m_rigidBody);
 

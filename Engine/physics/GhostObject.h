@@ -14,6 +14,15 @@ public:
 		return &m_ghost;
 	}
 
+	void SetUserPointer(void* p) {
+		m_ghost.setUserPointer(p);
+	}
+
+	void SetUserIndex(int index) {
+		m_ghost.setUserIndex(index);
+	}
+
+
 	void SetMask(short mask) {
 		m_mask = mask;
 	}

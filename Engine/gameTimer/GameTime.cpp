@@ -9,7 +9,8 @@ static float deltaTime = 0;//‘OƒtƒŒ[ƒ€‚Æ‚Ì·
 
 void UpdateTime() {
 	auto now = system_clock::now();
-	deltaTime = duration_cast<milliseconds>(now - beforeFrame).count() / 1000.0f;
+	long long mili = duration_cast<milliseconds>(now - beforeFrame).count();
+	deltaTime = mili / 1000.0f;
 	beforeFrame = now;
 }
 

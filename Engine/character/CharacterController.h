@@ -6,7 +6,7 @@
 
 #include "Physics/CapsuleCollider.h"
 #include "Physics/RigidBody.h"
-
+#include "physics/CollisionAttr.h"
 
 /*!
 * @brief	キャラクタコントローラー。
@@ -26,7 +26,7 @@ public:
 		*@param[in]	height		カプセルコライダーの高さ。
 		*@param[in]	position	初期位置。
 		*/
-	void Init(float radius, float height, const CVector3& position);
+	void Init(float radius, float height, const CVector3& position, int userIndex = enCollisionAttr_Character, void* userPointer = nullptr);
 	/*!
 		* @brief	実行。
 		*@param[in]	deltaTime		経過時間。単位は秒。

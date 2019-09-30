@@ -1,4 +1,5 @@
 #pragma once
+#include "Actor/Actor.h"
 #include "Camera/PlayerCamera.h"
 #include "character/CharacterController.h"
 #include "Util/ResistVector3.h"
@@ -6,7 +7,7 @@
 class Sword;
 class SkinModelRender;
 
-class Player : public IGameObject
+class Player : public Actor
 {
 public:
 	Player();
@@ -17,14 +18,14 @@ public:
 	/// <summary>
 	/// ˆÊ’u‚ğæ“¾
 	/// </summary>
-	CVector3 GetPos() {
+	CVector3 GetPos() const override{
 		return m_charaCon.GetPosition();
 	}
 
 	/// <summary>
 	/// ˆÊ’u‚ğİ’è
 	/// </summary>
-	void SetPos(const CVector3& pos) {
+	void SetPos(const CVector3& pos)  override {
 		m_charaCon.SetPosition(pos);
 	}
 
