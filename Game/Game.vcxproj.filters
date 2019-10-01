@@ -17,11 +17,11 @@
     <ClCompile Include="Game\Ground\Ground1.cpp" />
     <ClCompile Include="Game\Camera\PlayerCamera.cpp" />
     <ClCompile Include="Game\Actor\Actor.cpp" />
-    <ClCompile Include="Game\Util\ResistVector3.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll.cpp" />
     <ClCompile Include="Game\Actor\Player\Sword.cpp" />
     <ClCompile Include="Game\Damage\DamageManager.cpp" />
     <ClCompile Include="Game\Damage\Attack.cpp" />
+    <ClCompile Include="Game\Util\CharaConEx.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -31,11 +31,11 @@
     <ClInclude Include="Game\Ground\Ground1.h" />
     <ClInclude Include="Game\Camera\PlayerCamera.h" />
     <ClInclude Include="Game\Actor\Actor.h" />
-    <ClInclude Include="Game\Util\ResistVector3.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll.h" />
     <ClInclude Include="Game\Actor\Player\Sword.h" />
     <ClInclude Include="Game\Damage\DamageManager.h" />
     <ClInclude Include="Game\Damage\Attack.h" />
+    <ClInclude Include="Game\Util\CharaConEx.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestStage.fbx">

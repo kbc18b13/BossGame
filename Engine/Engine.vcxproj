@@ -146,6 +146,7 @@
     <ClInclude Include="graphics\Camera.h" />
     <ClInclude Include="graphics\CFont.h" />
     <ClInclude Include="graphics\GraphicsEngine.h" />
+    <ClInclude Include="graphics\light\AmbientLight.h" />
     <ClInclude Include="graphics\light\DirectionLight.h" />
     <ClInclude Include="graphics\Shader.h" />
     <ClInclude Include="graphics\ShaderResources.h" />
@@ -191,6 +192,7 @@
     <ClCompile Include="graphics\Camera.cpp" />
     <ClCompile Include="graphics\CFont.cpp" />
     <ClCompile Include="graphics\GraphicsEngine.cpp" />
+    <ClCompile Include="graphics\light\AmbientLight.cpp" />
     <ClCompile Include="graphics\light\DirectionLight.cpp" />
     <ClCompile Include="graphics\Shader.cpp" />
     <ClCompile Include="graphics\ShaderResources.cpp" />

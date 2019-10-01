@@ -32,6 +32,51 @@ public:
 		struct { float x, y; };
 		float v[2];
 	};
+
+	const CVector2& operator+=(const CVector2& _v) {
+		x += _v.x; y += _v.y;
+		return *this;
+	}
+
+	const CVector2& operator-=(const CVector2& _v) {
+		x -= _v.x; y -= _v.y;
+		return *this;
+	}
+
+	const CVector2& operator*=(float _v) {
+		x *= _v; y *= _v;
+		return *this;
+	}
+
+	const CVector2& operator/=(float _v) {
+		x /= _v; y /= _v;
+		return *this;
+	}
+
+	
+
+	CVector2 operator*(float _v) {
+		CVector2 prop;
+		return prop *= _v;
+	}
+
+	CVector2 operator/(float _v) {
+		CVector2 prop;
+		return prop /= _v;
+	}
+
+	float LengthSq() {
+		return x * x + y * y;
+	}
+
+	float Length() {
+		return sqrt(LengthSq());
+	}
+
+	float Dot(const CVector2& _v) {
+		return x * _v.x + y * _v.y;
+	}
+
 	/*!
 	* @brief	ê¸å`ï‚ä‘ÅB
 	*@details

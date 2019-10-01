@@ -8,23 +8,23 @@ DamageManager::~DamageManager() {
 }
 
 bool DamageManager::TryAttack(Attack& atk) {
-	for (Attack& a : coolTimeList) {
-		if (a.attackID == atk.attackID) {
+	for (CoolTimer& a : coolTimeList) {
+		if (a.id == atk.attackID) {
 			return false;
 		}
 	}
 
-	coolTimeList.emplace_back(atk);
+	coolTimeList.emplace_back(atk.attackID, atk.coolTime);
 	return true;
 }
 
 void DamageManager::Update() {
 	for (auto itr = coolTimeList.begin();  itr != coolTimeList.end();) {
 		//クールタイムを減らして
-		(*itr).coolTime -= GameTime::GetDeltaTime();
+		(*itr).time -= GameTime::GetDeltaTime();
 
 		//0以下なら削除
-		if ((*itr).coolTime <= 0) {
+		if ((*itr).time <= 0) {
 
 			itr = coolTimeList.erase(itr);
 		} else {

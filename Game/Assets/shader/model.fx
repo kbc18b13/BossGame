@@ -31,9 +31,13 @@ cbuffer VSCb : register(b0){
 /*!
  * @brief	ディレクションライトの定数バッファ。
  */
-cbuffer PSCb : register(b1) {
+cbuffer PSCbDir : register(b1) {
 	float4 mLightColor[4];
 	float4 mLightVec[4];
+};
+
+cbuffer PSCbAmb : register(b2) {
+	float4 mAmbColor;
 };
 
 /////////////////////////////////////////////////////////////
@@ -154,5 +158,6 @@ float4 PSMain( PSInput In ) : SV_Target0
 	for (int i = 0; i < 4; i++) {
 		sum += saturate(dot(In.Normal, -mLightVec[i].xyz)) * mLightColor[i] * color;
 	}
+	sum += color * mAmbColor;
 	return sum;
 }

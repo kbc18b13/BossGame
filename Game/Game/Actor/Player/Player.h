@@ -2,7 +2,6 @@
 #include "Actor/Actor.h"
 #include "Camera/PlayerCamera.h"
 #include "character/CharacterController.h"
-#include "Util/ResistVector3.h"
 
 class Sword;
 class SkinModelRender;

@@ -26,7 +26,7 @@ public:
 	}
 
 	/// <summary>
-	///ライトの方向を設定
+	///ライトの色を設定
 	/// </summary>
 	void SetColor(UINT lightNum, const CVector4& c) {
 		m_cbStruct.m_color[lightNum] = c;

@@ -1,5 +1,6 @@
 #pragma once
 #include "light/DirectionLight.h"
+#include "light/AmbientLight.h"
 /*!
  *@brief	グラフィックスエンジン。
  */
@@ -43,8 +44,13 @@ public:
 	DirectionLight& GetDirectionLight() {
 		return m_dirLight;
 	}
+
+	AmbientLight& GetAmbientLight() {
+		return m_ambientLight;
+	}
 private:
 	DirectionLight m_dirLight;
+	AmbientLight m_ambientLight;
 
 	D3D_FEATURE_LEVEL		m_featureLevel;				//Direct3D デバイスのターゲットとなる機能セット。
 	ID3D11Device*			m_pd3dDevice = NULL;		//D3D11デバイス。

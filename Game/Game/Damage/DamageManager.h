@@ -11,6 +11,10 @@ public:
 	void Update();
 
 private:
-
-	std::vector<Attack> coolTimeList;
+	struct CoolTimer {
+		UINT id;
+		float time;
+		CoolTimer(UINT id, float time) : id(id), time(time){}
+	};
+	std::vector<CoolTimer> coolTimeList;
 };

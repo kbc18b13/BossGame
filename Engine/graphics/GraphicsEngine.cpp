@@ -153,4 +153,5 @@ void GraphicsEngine::Init(HWND hWnd)
 	m_pd3dDeviceContext->RSSetState(m_rasterizerState);
 
 	m_dirLight.Init(1);
+	m_ambientLight.Init(2);
 }

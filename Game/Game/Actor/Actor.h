@@ -10,7 +10,7 @@ public:
 	virtual void SetPos(const CVector3& pos) = 0;
 	virtual CVector3 GetPos() const = 0;
 
-	virtual void Damage(Attack& atk);
+	void Damage(Attack& atk);
 
 	UINT GetNowHP() {
 		return m_nowHP;
