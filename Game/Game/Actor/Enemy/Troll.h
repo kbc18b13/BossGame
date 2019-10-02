@@ -1,6 +1,6 @@
 #include "Actor/Actor.h"
-#include "character/CharacterController.h"
 #include "graphics/CFont.h"
+#include "Util/CharaConEx.h"
 class SkinModelRender;
 
 class Troll: public Actor {
@@ -12,6 +12,7 @@ public:
 	void Draw() override;
 
 	void SetPos(const CVector3& pos) override;
+
 	CVector3 GetPos() const override {
 		return m_CharaCon.GetPosition();
 	}
@@ -21,7 +22,7 @@ private:
 		enAnimWalk,
 		enAnimNum
 	};
-	CharacterController m_CharaCon;
+	CharaConEx m_CharaCon;
 	AnimationClip m_animClip[enAnimNum];//アニメーションクリップ
 	SkinModelRender* m_model = nullptr;//モデル
 

@@ -28,11 +28,13 @@ CVector3 CharaConEx::Excecute(const CVector2& pad, bool jump) {
 		if (len > 0.1f) {//’â~‚µ‚Ä‚¢‚È‚¢ê‡
 
 			//Œ¸‘¬ˆ—
-			CVector2 norm = m_moveSpeedXZ / len;
-			CVector2 beforeSpeed = m_moveSpeedXZ;
-			m_moveSpeedXZ -= norm * m_walkBrake;
-			if (m_moveSpeedXZ.Dot(beforeSpeed) < 0) {//Œ¸‘¬‚ÌŒ‹‰Ê‹t•ûŒü‚És‚Á‚½‚ç’â~‚·‚éB
-				m_moveSpeedXZ = CVector2(0, 0);
+			if (m_charaCon.IsOnGround()) {
+				CVector2 norm = m_moveSpeedXZ / len;
+				CVector2 beforeSpeed = m_moveSpeedXZ;
+				m_moveSpeedXZ -= norm * m_walkBrake;
+				if (m_moveSpeedXZ.Dot(beforeSpeed) < 0) {//Œ¸‘¬‚ÌŒ‹‰Ê‹t•ûŒü‚És‚Á‚½‚ç’â~‚·‚éB
+					m_moveSpeedXZ = CVector2(0, 0);
+				}
 			}
 
 
