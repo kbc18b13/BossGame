@@ -55,14 +55,12 @@ public:
 
 	
 
-	CVector2 operator*(float _v) {
-		CVector2 prop;
-		return prop *= _v;
+	void Scale(float _v) {
+		operator*=(_v);
 	}
 
-	CVector2 operator/(float _v) {
-		CVector2 prop;
-		return prop /= _v;
+	void Div(float _v) {
+		operator/=(_v);
 	}
 
 	float LengthSq() {

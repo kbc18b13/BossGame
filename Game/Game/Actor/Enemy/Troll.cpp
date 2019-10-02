@@ -6,7 +6,7 @@
 Troll::Troll() : Actor(1000) , m_font(L"Assets/font/font.spritefont"){
 
 	m_model = NewGO<SkinModelRender>(0);
-	m_animClip[enAnimWalk].Load(L"Assets/animData/TestTroll_Crush.tka", true);
+	m_animClip[enAnimWalk].Load(L"Assets/animData/TestTroll_Attack.tka", true);
 	m_model->Init(L"Assets/modelData/TestTroll.cmo", m_animClip, enAnimNum);
 
 	m_CharaCon.Init(25 , 40, { 0,0,0 }, enCollisionAttr_Enemy, this);

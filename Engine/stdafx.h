@@ -23,11 +23,12 @@
 #include "DirectXTK/Inc/SpriteFont.h"
 #include "DirectXTK/Inc/DDSTextureLoader.h"
 
+#include "math/Vector.h"
+#include "math/Matrix.h"
+
 #include "physics/Physics.h"
 #include "HID/Pad.h"
 
-#include "math/Vector.h"
-#include "math/Matrix.h"
 #include "graphics/GraphicsEngine.h"
 
 #include "graphics/SkinModel.h"

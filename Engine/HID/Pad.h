@@ -151,6 +151,14 @@ public:
 	{
 		return m_lStickY;
 	}
+
+	/// <summary>
+	/// スティック入力をベクトルで返す
+	/// </summary>
+	CVector2 GetLStickVec() const {
+		return CVector2(m_lStickX, m_lStickY);
+	}
+
 	/*!
 	*@brief	右スティックのX軸の入力量を取得。
 	*@return	-1.0～1.0の正規化された値を返す。
@@ -177,6 +185,14 @@ public:
 	{
 		return m_rStickY;
 	}
+
+	/// <summary>
+	/// スティック入力をベクトルで返す
+	/// </summary>
+	CVector2 GetRStickVec() const {
+		return CVector2(m_rStickX, m_rStickY);
+	}
+
 private:
 	/*!
 	*@brief	ボタンの入力情報を更新。

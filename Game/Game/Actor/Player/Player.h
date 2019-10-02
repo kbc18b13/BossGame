@@ -1,7 +1,7 @@
 #pragma once
 #include "Actor/Actor.h"
 #include "Camera/PlayerCamera.h"
-#include "character/CharacterController.h"
+#include "Util/CharaConEx.h"
 
 class Sword;
 class SkinModelRender;
@@ -37,8 +37,6 @@ private:
 	static constexpr float WALK_BLAKE = 20;
 	static constexpr float JUMP_POWER = 350;
 
-	CVector3 m_walkSpeed;//移動速度
-	float jumpSpeed = 0;
 	CQuaternion rot;//回転
 
 	enum EnAnim {
@@ -55,7 +53,7 @@ private:
 
 	Sword* m_sword = nullptr;
 
-	CharacterController m_charaCon;             //キャラコン
+	CharaConEx m_charaCon;             //キャラコン
 
 	PlayerCamera m_camera;                      //カメラ
 

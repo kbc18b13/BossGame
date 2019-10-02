@@ -1,6 +1,16 @@
 #include "stdafx.h"
 #include "CharaConEx.h"
 
+void CharaConEx::Init(const CharaConDesc& desc) {
+	m_charaCon.Init(desc.radius, desc.height, desc.position, desc.userIndex, desc.userPointer);
+	m_walkAccel    = desc.walkAccel;
+	m_walkAccelAir = desc.walkAccelAir;
+	m_walkBrake    = desc.walkBrake;
+	m_walkMax      = desc.walkMax;
+	m_jumpPower    = desc.jumpPower;
+	m_gravity      = desc.gravity;
+}
+
 CVector3 CharaConEx::Excecute(const CVector2& pad, bool jump) {
 	//ï‡çs
 	{
@@ -35,7 +45,7 @@ CVector3 CharaConEx::Excecute(const CVector2& pad, bool jump) {
 
 	//è„â∫
 	{
-		m_jumpSpeed -= m_gravity;
+		m_jumpSpeed -= m_gravity * GameTime::GetDeltaTime();
 		if (jump) {
 			m_jumpSpeed += m_jumpPower;
 		}
