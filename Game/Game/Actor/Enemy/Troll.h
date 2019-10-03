@@ -22,6 +22,18 @@ private:
 		enAnimWalk,
 		enAnimNum
 	};
+
+	enum ActState {
+		enActWait,
+		enActChase,
+		enActAttack,
+		enActStep
+	};
+
+	ActState m_state;
+
+	float m_timer = 0.0f;
+
 	CharaConEx m_CharaCon;
 	AnimationClip m_animClip[enAnimNum];//アニメーションクリップ
 	SkinModelRender* m_model = nullptr;//モデル

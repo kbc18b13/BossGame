@@ -31,5 +31,10 @@ public:
 		}
 		return hash;
 	}
+
+	//ランダムなInt値を返す。範囲にendは含めない。
+	int RandomInt(int begine, int end);
+	//ランダムなfloat値を返す。範囲にendは含めない。
+	int RandomFloat(float begine, float end);
 };
 

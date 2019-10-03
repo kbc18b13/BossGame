@@ -35,6 +35,13 @@ Troll::~Troll() {
 }
 
 void Troll::Update() {
+
+	if (m_state == enActWait && m_timer <= 0) {
+		rand()
+	}
+
+	m_timer -= GameTime::GetDeltaTime();
+
 	CVector2 o;
 	CVector3 pos = m_CharaCon.Excecute(o, false);
 	m_model->SetPos(pos);

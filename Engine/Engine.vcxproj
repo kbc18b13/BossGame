@@ -224,6 +224,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="system\system.cpp" />
+    <ClCompile Include="util\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Game\Engine\bulletPhysics\src\BulletCollision\BulletCollision.vcxproj" />
