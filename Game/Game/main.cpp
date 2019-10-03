@@ -15,6 +15,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//デバッグ有効化
 	g_physics.setDebugDraw(true);
 
+	g_camera3D.Init();
 	g_camera3D.SetTarget({ 0.0f, 20.0f, 0.0f });
 	g_camera3D.SetFar(10000.0f);
 

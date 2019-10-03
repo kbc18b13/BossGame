@@ -28,6 +28,11 @@ cbuffer VSCb : register(b0){
 	float4x4 mProj;
 };
 
+
+cbuffer PSEye : register(b3) {
+	float3 eyePos;
+}
+
 /*!
  * @brief	ディレクションライトの定数バッファ。
  */
@@ -74,6 +79,7 @@ struct PSInput{
 	float3 Normal		: NORMAL;
 	float3 Tangent		: TANGENT;
 	float2 TexCoord 	: TEXCOORD0;
+	float3 worldPos : WORLD;
 };
 /*!
  *@brief	スキン行列を計算。
@@ -99,12 +105,15 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 {
 	PSInput psInput = (PSInput)0;
 	float4 pos = mul(mWorld, In.Position);
+
+	psInput.worldPos = pos.xyz;
+
 	pos = mul(mView, pos);
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
 	psInput.TexCoord = In.TexCoord;
-	psInput.Normal = normalize(mul(mWorld, In.Normal));
-	psInput.Tangent = normalize(mul(mWorld, In.Tangent));
+	psInput.Normal = normalize(mul(mWorld, float4(In.Normal,0))).xyz;
+	psInput.Tangent = normalize(mul(mWorld, float4(In.Tangent,0))).xyz;
 	return psInput;
 }
 
@@ -139,9 +148,11 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 		//mulは乗算命令。
 	    pos = mul(skinning, In.Position);
 	}
-	psInput.Normal = normalize( mul(skinning, In.Normal) );
-	psInput.Tangent = normalize( mul(skinning, In.Tangent) );
+	psInput.Normal = normalize( mul(skinning, float4(In.Normal,0)) ).xyz;
+	psInput.Tangent = normalize( mul(skinning, float4(In.Tangent,0)) ).xyz;
 	
+	psInput.worldPos = pos.xyz;
+
 	pos = mul(mView, pos);
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
@@ -155,9 +166,20 @@ float4 PSMain( PSInput In ) : SV_Target0
 {
 	float4 color = albedoTexture.Sample(Sampler, In.TexCoord);
 	float4 sum = float4(0, 0, 0, 0);
+
 	for (int i = 0; i < 4; i++) {
-		sum += saturate(dot(In.Normal, -mLightVec[i].xyz)) * mLightColor[i] * color;
+		float3 dir = normalize(mLightVec[i].xyz);
+
+		sum += max(dot(In.Normal, -dir), 0) * mLightColor[i] * color;
+		//鏡面反射光
+		{
+			float3 refVec = dir + 2 * (In.Normal * dot(In.Normal, -dir));
+			float3 eyeLine = normalize(In.worldPos - eyePos);
+			float specPower = max(dot(refVec, -eyeLine), 0);
+			sum += pow(specPower, 10) * (mLightColor[0]*0.5f);
+		}
 	}
+
 	sum += color * mAmbColor;
 	return sum;
 }
