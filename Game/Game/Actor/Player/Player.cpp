@@ -58,7 +58,7 @@ void Player::Update()
 {
 	//キャラコンの操作
 	CVector3 move = g_pad->GetLStickXF() * m_camera.GetRightVec() + g_pad->GetLStickYF() * m_camera.GetFrontVec_XZ();
-	CVector3 pos = m_charaCon.Excecute(CVector2(move.x,move.z), g_pad->IsTrigger(enButtonA));
+	CVector3 pos = m_charaCon.Excecute(move, g_pad->IsTrigger(enButtonA));
 	CVector3 speed = m_charaCon.GetVelocity();
 
 	//モデル位置

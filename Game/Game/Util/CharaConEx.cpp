@@ -11,7 +11,9 @@ void CharaConEx::Init(const CharaConDesc& desc) {
 	m_gravity      = desc.gravity;
 }
 
-CVector3 CharaConEx::Excecute(const CVector2& pad, bool jump) {
+CVector3 CharaConEx::Excecute(const CVector3& _pad, bool jump) {
+	CVector2 pad(_pad.x, _pad.z);
+
 	//歩行
 	{
 		//空中と接地でスピードを分ける
@@ -48,7 +50,7 @@ CVector3 CharaConEx::Excecute(const CVector2& pad, bool jump) {
 	//上下
 	{
 		m_jumpSpeed -= m_gravity * GameTime::GetDeltaTime();
-		if (jump) {
+		if (jump && m_charaCon.IsOnGround()) {
 			m_jumpSpeed += m_jumpPower;
 		}
 	}

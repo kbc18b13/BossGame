@@ -17,11 +17,15 @@
     <ClCompile Include="Game\Ground\Ground1.cpp" />
     <ClCompile Include="Game\Camera\PlayerCamera.cpp" />
     <ClCompile Include="Game\Actor\Actor.cpp" />
-    <ClCompile Include="Game\Actor\Enemy\Troll.cpp" />
     <ClCompile Include="Game\Actor\Player\Sword.cpp" />
     <ClCompile Include="Game\Damage\DamageManager.cpp" />
     <ClCompile Include="Game\Damage\Attack.cpp" />
     <ClCompile Include="Game\Util\CharaConEx.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActAttack.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActChase.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActStep.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll\Troll.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActIdle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -31,11 +35,17 @@
     <ClInclude Include="Game\Ground\Ground1.h" />
     <ClInclude Include="Game\Camera\PlayerCamera.h" />
     <ClInclude Include="Game\Actor\Actor.h" />
-    <ClInclude Include="Game\Actor\Enemy\Troll.h" />
     <ClInclude Include="Game\Actor\Player\Sword.h" />
     <ClInclude Include="Game\Damage\DamageManager.h" />
     <ClInclude Include="Game\Damage\Attack.h" />
     <ClInclude Include="Game\Util\CharaConEx.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\Act\Act.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActAttack.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActChase.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActStep.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\Troll.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\TrollAnimEnum.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActIdle.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestStage.fbx">

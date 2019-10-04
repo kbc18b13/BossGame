@@ -23,7 +23,7 @@ class CharaConEx {
 public:
 	void Init(const CharaConDesc& desc);
 
-	CVector3 Excecute(const CVector2& moveXZ, bool jump);
+	CVector3 Excecute(const CVector3& moveXZ, bool jump);
 
 	void SetPosition(const CVector3& pos) {
 		m_charaCon.SetPosition(pos);
@@ -35,6 +35,10 @@ public:
 
 	CVector3 GetVelocity() const {
 		return CVector3(m_moveSpeedXZ.x, m_jumpSpeed, m_moveSpeedXZ.y);
+	}
+
+	bool OnGround() const {
+		return m_charaCon.IsOnGround();
 	}
 
 private:

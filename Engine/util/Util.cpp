@@ -9,7 +9,7 @@ static std::mt19937& getRand() {
 }
 
 int Util::RandomInt(int begine, int end) {
-	std::uniform_real_distribution<int> l_rand(begine, end);
+	std::uniform_int_distribution<int> l_rand(begine, end);
 	return l_rand(getRand());
 }
 
