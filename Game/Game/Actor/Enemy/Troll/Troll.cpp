@@ -10,17 +10,18 @@
 #include "Act/ActChase.h"
 
 Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/font.spritefont"){
-
+    //モデル
 	{
 		m_model = NewGO<SkinModelRender>(0);
-		m_animClip[enAnimWalk].Load(L"Assets/animData/TestTroll_Walk.tka", true);
-		m_animClip[enAnimAttack].Load(L"Assets/animData/TestTroll_Attack.tka", false);
-		m_animClip[enAnimJumpUp].Load(L"Assets/animData/TestTroll_JumpUp.tka", false);
-		m_animClip[enAnimJumpDown].Load(L"Assets/animData/TestTroll_JumpDown.tka", false);
-		m_animClip[enAnimIdle].Load(L"Assets/animData/TestTroll_Idle.tka", true);
-		m_model->Init(L"Assets/modelData/TestTroll.cmo", m_animClip, enAnimNum);
+		m_animClip[int(AnimState::Walk)].Load(L"Assets/animData/TestTroll_Walk.tka", true);
+		m_animClip[int(AnimState::Attack)].Load(L"Assets/animData/TestTroll_Attack.tka", false);
+		m_animClip[int(AnimState::JumpUp)].Load(L"Assets/animData/TestTroll_JumpUp.tka", false);
+		m_animClip[int(AnimState::JumpDown)].Load(L"Assets/animData/TestTroll_JumpDown.tka", false);
+		m_animClip[int(AnimState::Idle)].Load(L"Assets/animData/TestTroll_Idle.tka", true);
+		m_model->Init(L"Assets/modelData/TestTroll.cmo", m_animClip, int(AnimState::Num));
 	}
 
+    //キャラコン
 	CharaConDesc desc;
 	{
 		desc.radius = 25;
@@ -41,28 +42,31 @@ Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/f
 	}
 	m_CharaCon.Init(desc);
 
+    //ステート変更関数
+    m_stateChangeFunc = [&](ActState state) {
+        m_activeAction = m_actionArray[int(state)].get();
+        m_activeAction->Start();
+    };
 }
 
 Troll::~Troll() {
 }
 
 void Troll::Start() {
-	m_actionArray[enActAttack].reset(new ActAttack());
-	m_actionArray[enActChase].reset(new ActChase(stage->GetPlayer()));
-	m_actionArray[enActWait].reset(new ActIdle());
-	m_actionArray[enActStep].reset(new ActStep(stage->GetPlayer()));
-	m_activeAction = m_actionArray[enActWait].get();
-	m_activeAction->Start();
+	m_actionArray[int(ActState::Attack)].reset(new ActAttack());
+	m_actionArray[int(ActState::Chase)].reset(new ActChase());
+	m_actionArray[int(ActState::Wait)].reset(new ActIdle());
+	m_actionArray[int(ActState::Step)].reset(new ActStep());
+    m_stateChangeFunc(ActState::Wait);
 }
 
 void Troll::Update() {
-
-	if (! m_activeAction->Continue(m_CharaCon, m_model)) {
-		int i = Util::RandomInt(0, enActNum-1);
-		m_activeAction = m_actionArray[i].get();
-		m_activeAction->Start();
-	}
-
+	ActArg arg;
+	arg.charaCon = &m_CharaCon;
+	arg.model = m_model;
+	arg.player = stage->GetPlayer();
+    arg.changeAct = m_stateChangeFunc;
+    m_activeAction->Continue(arg);
 }
 
 void Troll::SetPos(const CVector3 & pos) {

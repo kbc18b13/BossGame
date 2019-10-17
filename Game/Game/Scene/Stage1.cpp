@@ -14,7 +14,7 @@ Stage1::Stage1() {
 			p = NewGO<Player>(0);
 			p->SetPos(objData.position);
 		} else if (wcscmp(objData.name, L"Troll")) {
-			t = NewGO<Troll>(0, this);
+			t = NewGO<Troll>(0,this);
 			t->SetPos(objData.position);
 		}
 		return true;
@@ -27,6 +27,7 @@ Stage1::Stage1() {
 
 	g_graphicsEngine->GetAmbientLight().SetColor({ 0.3f,0.3f,0.3f,1 });
 	g_graphicsEngine->GetAmbientLight().Apply();
+	
 }
 
 Stage1::~Stage1() {

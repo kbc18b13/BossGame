@@ -1,16 +1,23 @@
 #include "stdafx.h"
 #include "ActIdle.h"
 #include "graphics/SkinModelRender.h"
-#include "Util/CharaConEx.h"
+#include "..\Troll.h"
+using AnimState = Troll::AnimState;
+using ActState = Troll::ActState;
+
+ActIdle::ActIdle(){
+}
 
 void ActIdle::Start() {
 	m_timer = 1.0f;
 }
 
-bool ActIdle::Continue(CharaConEx & chara, SkinModelRender * model) {
-	model->Play(enAnimIdle, 0.2f);
+void ActIdle::Continue(ActArg& arg) {
+	arg.model->Play(int(AnimState::Idle), 0.2f);
 	m_timer -= GameTime::GetDeltaTime();
-	model->SetPos(chara.Excecute(CVector3::Zero(), false));
+	arg.model->SetPos(arg.charaCon->Excecute(CVector3::Zero(), false));
 	//タイマーが0より大きい間は続行
-	return m_timer > 0;
+    if (m_timer <= 0) {
+        arg.changeAct(ActState::Chase);
+    }
 }

@@ -2,9 +2,9 @@
 #include "Act.h"
 class ActIdle : public Act {
 public:
-
+	ActIdle();
 	void Start() override;
-	bool Continue(CharaConEx& chara, SkinModelRender* model) override;
+    void Continue(ActArg& arg) override;
 private:
 	float m_timer = 0;
 };

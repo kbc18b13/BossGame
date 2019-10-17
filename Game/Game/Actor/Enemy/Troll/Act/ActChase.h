@@ -5,12 +5,11 @@ class Player;
 
 class ActChase : public Act {
 public:
-	ActChase(Player* player);
+	ActChase();
 
 	void Start() override;
-	bool Continue(CharaConEx& chara, SkinModelRender* model);
+    void Continue(ActArg& arg);
 
 private:
-	Player* player;
 	float m_timer = 0.0f;
 };

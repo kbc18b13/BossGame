@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "ActStep.h"
+#include "ActTackle.h"
 #include "graphics/SkinModelRender.h"
 #include "Actor/Player/Player.h"
 #include "Scene/Stage1.h"
@@ -8,16 +8,16 @@ using AnimState = Troll::AnimState;
 using ActState = Troll::ActState;
 
 
-ActStep::ActStep() : font(L"Assets/font/font.spritefont"){
+ActTackle::ActTackle(){
 	
 }
 
-void ActStep::Start(){
+void ActTackle::Start(){
 	onJump = false;
 	first = true;
 }
 
-void ActStep::Continue(ActArg& arg) {
+void ActTackle::Continue(ActArg& arg) {
 	CharaConEx* chara = arg.charaCon;
 
 	CVector3 pVec = arg.player->GetPos() - chara->GetPosition();

@@ -3,9 +3,9 @@
 #include "graphics/CFont.h"
 class Player;
 
-class ActStep : public Act {
+class ActTackle : public Act {
 public:
-	ActStep();
+    ActTackle();
 
 	void Start() override;
     void Continue(ActArg& arg);
@@ -13,6 +13,4 @@ public:
 private:
 	bool first = true;
 	bool onJump = false;
-
-	CFont font;
 };

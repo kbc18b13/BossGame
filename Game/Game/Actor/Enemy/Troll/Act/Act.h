@@ -1,6 +1,15 @@
 #pragma once
-class CharaConEx;
-class SkinModelRender;
+#include "..\Troll.h"
+class Act;
+class Player;
+
+struct ActArg {
+	CharaConEx* charaCon = nullptr;
+	SkinModelRender* model = nullptr;
+	Player* player = nullptr;
+    std::function<void(Troll::ActState)> changeAct;
+};
+
 class Act {
 public:
 	virtual ~Act() {}
@@ -16,8 +25,5 @@ public:
 	/// <param name="chara">キャラコン</param>
 	/// <param name="model">モデル</param>
 	/// <returns>Actを続行する場合はtrue</returns>
-	virtual bool Continue(CharaConEx& chara, SkinModelRender* model) = 0;
-
-protected:
-#include "..\TrollAnimEnum.h"
+	virtual void Continue(ActArg& arg) = 0;
 };

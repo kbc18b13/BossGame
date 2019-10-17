@@ -3,8 +3,9 @@
 
 class ActAttack : public Act {
 public:
+	ActAttack();
 	void Start() override;
-	bool Continue(CharaConEx& chara, SkinModelRender* model);
+	void Continue(ActArg& arg) override;
 
 private:
 	float m_timer = 0.0f;

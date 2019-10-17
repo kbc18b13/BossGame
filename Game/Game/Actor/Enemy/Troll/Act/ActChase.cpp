@@ -1,18 +1,22 @@
 #include "stdafx.h"
 #include "ActChase.h"
-#include "Actor/Player/Player.h"
 #include "graphics/SkinModelRender.h"
+#include "Actor/Player/Player.h"
+#include "Scene/Stage1.h"
+#include "..\Troll.h"
+using AnimState = Troll::AnimState;
+using ActState = Troll::ActState;
 
-ActChase::ActChase(Player* player) : player(player) {
+ActChase::ActChase(){
 }
 
 void ActChase::Start() {
 	m_timer = 5.0f;
 }
 
-bool ActChase::Continue(CharaConEx & chara, SkinModelRender * model) {
+void ActChase::Continue(ActArg& arg) {
 	
-	CVector3 move = player->GetPos() - chara.GetPosition();
+	CVector3 move = arg.player->GetPos() - arg.charaCon->GetPosition();
 	move.y = 0;
 	float moveLength = move.Length();
 	if (moveLength < 100) {
@@ -21,9 +25,11 @@ bool ActChase::Continue(CharaConEx & chara, SkinModelRender * model) {
 	} else {
 		move /= moveLength;
 	}
-	model->Play(enAnimWalk, 0.2f);
-	model->SetPos(chara.Excecute(move, false));
+	arg.model->Play(int(AnimState::Walk), 0.2f);
+	arg.model->SetPos(arg.charaCon->Excecute(move, false));
 
-	//タイマーが0より大きい場合続行
-	return m_timer > 0;
+	//タイマーが0を下回ったら終了
+    if (m_timer <= 0) {
+        arg.changeAct(ActState::Attack);
+    }
 }

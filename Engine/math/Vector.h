@@ -132,7 +132,7 @@ public:
 	}
 
 	CVector3& operator=(const btVector3& _v) {
-		vec.x = _v.x(); vec.y = _v.y(); vec.z = _v.z();
+		x = _v.x(); y = _v.y(); z = _v.z();
 		return *this;
 	}
 

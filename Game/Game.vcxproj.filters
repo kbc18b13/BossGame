@@ -26,6 +26,8 @@
     <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActStep.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\Troll.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActIdle.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActHip.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActTackle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -39,13 +41,14 @@
     <ClInclude Include="Game\Damage\DamageManager.h" />
     <ClInclude Include="Game\Damage\Attack.h" />
     <ClInclude Include="Game\Util\CharaConEx.h" />
-    <ClInclude Include="Game\Actor\Enemy\Troll\Act\Act.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActAttack.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActChase.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActStep.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\Troll.h" />
-    <ClInclude Include="Game\Actor\Enemy\Troll\TrollAnimEnum.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActIdle.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\Act\Act.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActHip.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActTackle.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestStage.fbx">
