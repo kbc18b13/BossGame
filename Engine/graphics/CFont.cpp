@@ -21,5 +21,14 @@ void CFont::End() {
 }
 
 void CFont::DrawStr(const wchar_t * str) {
-	m_font.DrawString(GetSpriteBatch(), str, DirectX::XMFLOAT2(0, 0));
+    CVector2 pos = m_pos;
+
+    CVector2 pivot;
+    DirectX::XMStoreFloat2(&pivot.vec , m_font.MeasureString(str));
+    pivot.x *= (m_pivot.x + 0.5f);
+    pivot.y *= (m_pivot.y + 0.5f);
+
+    pos -= pivot;
+
+	m_font.DrawString(GetSpriteBatch(), str, pos.vec);
 }

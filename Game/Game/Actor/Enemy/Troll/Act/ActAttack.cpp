@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ActAttack.h"
 #include "graphics/SkinModelRender.h"
+#include "Actor/Player/Player.h"
 #include "..\Troll.h"
 using AnimState = Troll::AnimState;
 using ActState = Troll::ActState;
@@ -16,11 +17,14 @@ void ActAttack::Continue(ActArg& arg) {
 	SkinModelRender* model = arg.model;
 	CharaConEx* chara = arg.charaCon;
 
+    CVector3 toP = arg.player->GetPos() - chara->GetPosition();
+
 	model->Play(int(AnimState::Attack), 0.2f);
 	model->SetPos(chara->Excecute(CVector3::Zero(), false));
+    model->SetRot(Util::LookRotXZ(toP));
 
 	m_timer -= GameTime::GetDeltaTime();
     if (m_timer < 0) {
-        arg.changeAct(ActState::Step);
+        arg.changeAct(toP.Length());
     }
 }

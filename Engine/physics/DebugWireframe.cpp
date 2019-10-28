@@ -70,9 +70,6 @@ void DebugWireframe::drawLine(const btVector3 & from, const btVector3 & to, cons
 	vecMapRes[1].pos = to;
 	vecMapRes[1].col = color;
 
-     CVector3(0,0,0);
-     CVector3 a(0,0,0);
-
 	dc->Unmap(m_vBuf, 0);
 
 	dc->Draw(2, 0);

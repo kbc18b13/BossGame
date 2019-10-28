@@ -8,6 +8,8 @@
 #include "Act/ActIdle.h"
 #include "Act/ActStep.h"
 #include "Act/ActChase.h"
+#include "Act/ActTackle.h"
+#include "Act/ActHip.h"
 
 Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/font.spritefont"){
     //モデル
@@ -41,12 +43,7 @@ Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/f
 		desc.userPointer = this;
 	}
 	m_CharaCon.Init(desc);
-
-    //ステート変更関数
-    m_stateChangeFunc = [&](ActState state) {
-        m_activeAction = m_actionArray[int(state)].get();
-        m_activeAction->Start();
-    };
+    m_font.SetPos({500.0f, 500.0f});
 }
 
 Troll::~Troll() {
@@ -57,7 +54,45 @@ void Troll::Start() {
 	m_actionArray[int(ActState::Chase)].reset(new ActChase());
 	m_actionArray[int(ActState::Wait)].reset(new ActIdle());
 	m_actionArray[int(ActState::Step)].reset(new ActStep());
-    m_stateChangeFunc(ActState::Wait);
+    m_actionArray[int(ActState::Tackle)].reset(new ActTackle());
+    m_actionArray[int(ActState::Hip)].reset(new ActHip());
+
+    //ステート変更関数
+    m_stateChangeFunc = [&](float toPLength) {
+        int ran = Util::RandomInt(0, 6);
+
+        if (ran == 0) {
+            //確率でステップ
+            m_activeAction = m_actionArray[int(ActState::Step)].get();
+
+        } else if (ran == 1) {
+            //確率で休む
+            m_activeAction = m_actionArray[int(ActState::Wait)].get();
+
+        }else{
+
+            if (toPLength < 300.0f) {
+                //近い時
+                //ヒップドロップか攻撃
+                if(ran == 3){
+                    m_activeAction = m_actionArray[int(ActState::Hip)].get();
+                } else {
+                    m_activeAction = m_actionArray[int(ActState::Attack)].get();
+                }
+            } else {
+                //遠い時
+                //タックルか追跡
+                if(ran == 3){
+                    m_activeAction = m_actionArray[int(ActState::Tackle)].get();
+                } else {
+                    m_activeAction = m_actionArray[int(ActState::Chase)].get();
+                }
+            }
+        }
+        m_activeAction->Start();
+    };
+
+    m_stateChangeFunc(1000.0f);
 }
 
 void Troll::Update() {

@@ -20,16 +20,16 @@ void ActChase::Continue(ActArg& arg) {
 	move.y = 0;
 	float moveLength = move.Length();
 	if (moveLength < 100) {
-		move = CVector3::Zero();
 		m_timer = 0;
 	} else {
 		move /= moveLength;
 	}
 	arg.model->Play(int(AnimState::Walk), 0.2f);
 	arg.model->SetPos(arg.charaCon->Excecute(move, false));
+    arg.model->SetRot(Util::LookRotXZ(move));
 
 	//タイマーが0を下回ったら終了
     if (m_timer <= 0) {
-        arg.changeAct(ActState::Attack);
+        arg.changeAct(moveLength);
     }
 }

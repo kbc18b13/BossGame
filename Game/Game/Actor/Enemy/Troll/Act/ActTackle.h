@@ -11,6 +11,5 @@ public:
     void Continue(ActArg& arg);
 
 private:
-	bool first = true;
-	bool onJump = false;
+    float m_timer = 0.0f;
 };

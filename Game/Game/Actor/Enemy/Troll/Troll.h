@@ -37,6 +37,8 @@ public:
 		Chase,
 		Attack,
 		Step,
+        Tackle,
+        Hip,
 		Num,
 	};
 
@@ -46,7 +48,7 @@ private:
 
     Act* m_activeAction;
     std::unique_ptr<Act> m_actionArray[int(ActState::Num)];
-	std::function<void(ActState)> m_stateChangeFunc;
+	std::function<void(float toPLength)> m_stateChangeFunc;
 
 	int m_state;
 
