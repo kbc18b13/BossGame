@@ -36,5 +36,7 @@ public:
 	static int RandomInt(int begine, int end);
 	//ランダムなfloat値を返す。範囲にendは含めない。
 	static int RandomFloat(float begine, float end);
+
+	static CQuaternion LookRotXZ(CVector3 lookVec, CVector3 nowFront = CVector3::AxisZ());
 };
 
