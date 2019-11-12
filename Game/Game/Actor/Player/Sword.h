@@ -21,7 +21,6 @@ private:
 
 	Bone* m_hand; //手のボーン
 
-	btGhostObject m_col;
 	SkinModelRender* m_model = nullptr;
 	BoxCollider		 m_collider;				//コライダー。
 	CollisionObject  m_collision;              //コリジョン。

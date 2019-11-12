@@ -103,6 +103,7 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Util\ActorResultCB.cpp" />
     <ClCompile Include="Game\Actor\Actor.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActAttack.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActChase.cpp" />
@@ -127,6 +128,7 @@
     <ClCompile Include="Game\Util\CharaConEx.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Util\ActorResultCB.h" />
     <ClInclude Include="Game\Actor\Actor.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\Act.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActAttack.h" />
