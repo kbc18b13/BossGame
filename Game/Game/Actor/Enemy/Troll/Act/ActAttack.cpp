@@ -21,7 +21,7 @@ void ActAttack::Continue(ActArg& arg) {
 
 	model->Play(int(AnimState::Attack), 0.2f);
 	model->SetPos(chara->Excecute(CVector3::Zero(), false));
-    model->SetRot(Util::LookRotXZ(toP));
+    //model->SetRot(Util::LookRotXZ(toP));
 
 	m_timer -= GameTime::GetDeltaTime();
     if (m_timer < 0) {

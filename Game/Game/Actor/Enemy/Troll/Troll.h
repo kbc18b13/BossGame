@@ -2,6 +2,7 @@
 #include "Actor/Actor.h"
 #include "graphics/CFont.h"
 #include "Util/CharaConEx.h"
+#include "TrollArmCollision.h"
 class SkinModelRender;
 class Stage1;
 class Act;
@@ -60,5 +61,5 @@ private:
 
 	CFont m_font;
 
-	friend class Act;
+    TrollArmCollision armCollision;
 };

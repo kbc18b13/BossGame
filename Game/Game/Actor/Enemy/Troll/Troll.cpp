@@ -44,6 +44,9 @@ Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/f
 	}
 	m_CharaCon.Init(desc);
     m_font.SetPos({500.0f, 500.0f});
+
+    Bone* arm = m_model->GetModel().GetSkeleton().GetBone(3);
+    armCollision.Init(this, arm);
 }
 
 Troll::~Troll() {
@@ -102,6 +105,8 @@ void Troll::Update() {
 	arg.player = stage->GetPlayer();
     arg.changeAct = m_stateChangeFunc;
     m_activeAction->Continue(arg);
+
+    armCollision.Update();
 }
 
 void Troll::SetPos(const CVector3 & pos) {

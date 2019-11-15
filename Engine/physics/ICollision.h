@@ -2,11 +2,6 @@
 
 class btCollisionObject;
 
-enum CollisionFlag {
-    Zero,
-    Ghost
-};
-
 class ICollision {
 public:
 	virtual ~ICollision() {};

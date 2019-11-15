@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "ActorResultCB.h"
+#include "ActorHitCollision.h"
 
 ActorContactResult::ActorContactResult(){
 }
@@ -19,21 +19,35 @@ btScalar	ActorContactResult::addSingleResult(btManifoldPoint& cp, const btCollis
     return 0.0f;
 }
 
-ActorCollision::ActorCollision() {
+ActorHitCollision::ActorHitCollision() {
 }
 
-ActorCollision::~ActorCollision() {
+ActorHitCollision::~ActorHitCollision() {
+    g_physics.RemoveCollision(m_collision);
 }
 
-void ActorCollision::Init(ICollider & collider, void* userPointer) {
+void ActorHitCollision::Init(ICollider & collider, EnCollisionAttr target, void* userPointer) {
     m_collision.Create(collider);
-    m_collision.SetGroup(CollisionFlag::Ghost);
-    m_collision.SetMask(CollisionFlag::);
+    m_collision.SetGroup(btCollisionObject::CF_NO_CONTACT_RESPONSE);
+    m_collision.SetMask(0);
+    m_collision.SetUserIndex(enCollisionAttr_Ghost);
     m_collision.SetUserPointer(userPointer);
     g_physics.AddCollision(m_collision);
+    contactCB.setTarget(target);
 }
 
-std::vector<Actor*>& ActorCollision::ContactTest() {
+std::vector<Actor*>& ActorHitCollision::ContactTest() {
+    //ˆÊ’uXV
+    {
+        m_collision.GetBody()->getWorldTransform().setRotation(m_rot);
+
+        CVector3 offset = m_offset;
+        m_rot.Multiply(offset);
+        CVector3 position = m_pos + offset;
+        m_collision.GetBody()->getWorldTransform().setOrigin(position);
+    }
+
+    //”»’è
     contactCB.eraseHits();
     g_physics.ContactText(m_collision.GetBody(), contactCB);
     return contactCB.getHits();

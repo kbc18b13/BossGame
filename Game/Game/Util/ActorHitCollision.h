@@ -31,18 +31,32 @@ private:
 #include "physics/ICollider.h"
 #include "physics/CollisionObject.h"
 
-class ActorCollision {
+class ActorHitCollision {
 public:
-    ActorCollision();
-    ~ActorCollision();
+    ActorHitCollision();
+    ~ActorHitCollision();
 
-    void Init(ICollider& collider, void* userPointer);
+    void Init(ICollider& collider, EnCollisionAttr target ,void* userPointer);
+
+    void SetPos(CVector3 pos){
+        m_pos = pos;
+    }
+
+    void SetRot(CQuaternion rot) {
+        m_rot = rot;
+    }
+
+    void SetOffset(CVector3 offset) {
+        m_offset = offset;
+    }
 
     std::vector<Actor*>& ContactTest();
 
 private:
     ActorContactResult contactCB;
     CollisionObject  m_collision;              //コリジョン。
-    CVector3 m_offset; //位置オフセット
+    CVector3 m_pos; //位置
+    CVector3 m_offset; //オフセット
+    CQuaternion m_rot; //回転
 };
 
