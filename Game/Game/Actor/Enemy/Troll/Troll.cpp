@@ -15,12 +15,12 @@ Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/f
     //ƒ‚ƒfƒ‹
 	{
 		m_model = NewGO<SkinModelRender>(0);
-		m_animClip[int(AnimState::Walk)].Load(L"Assets/animData/TestTroll_Walk.tka", true);
-		m_animClip[int(AnimState::Attack)].Load(L"Assets/animData/TestTroll_Attack.tka", false);
-		m_animClip[int(AnimState::JumpUp)].Load(L"Assets/animData/TestTroll_JumpUp.tka", false);
-		m_animClip[int(AnimState::JumpDown)].Load(L"Assets/animData/TestTroll_JumpDown.tka", false);
-		m_animClip[int(AnimState::Idle)].Load(L"Assets/animData/TestTroll_Idle.tka", true);
-		m_model->Init(L"Assets/modelData/TestTroll.cmo", m_animClip, int(AnimState::Num));
+		m_animClip[int(AnimState::Walk)].Load(L"Assets/animData/Troll_Walk.tka", true);
+		m_animClip[int(AnimState::Attack)].Load(L"Assets/animData/Troll_Attack.tka", false);
+		m_animClip[int(AnimState::JumpUp)].Load(L"Assets/animData/Troll_Jump.tka", false);
+		m_animClip[int(AnimState::JumpDown)].Load(L"Assets/animData/Troll_Fall.tka", false);
+		m_animClip[int(AnimState::Idle)].Load(L"Assets/animData/Troll_Idle.tka", true);
+		m_model->Init(L"Assets/modelData/Troll.cmo", m_animClip, int(AnimState::Num));
 	}
 
     //ƒLƒƒƒ‰ƒRƒ“

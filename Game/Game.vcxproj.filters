@@ -63,6 +63,7 @@
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\TestTroll.fbx" />
     <MeshContentTask Include="Assets\modelData\Sword.fbx" />
+    <MeshContentTask Include="Assets\modelData\Troll.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\BLADERNL.JPG" />
