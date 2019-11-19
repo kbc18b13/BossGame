@@ -28,6 +28,13 @@ public:
 		m_charaCon.SetPosition(pos);
 	}
 
+    /// <summary>
+    /// ‰Á‘¬‚³‚¹‚é
+    /// </summary>
+    void AddVelocity(const CVector3& pos) override {
+        m_charaCon.AddVelocity(pos);
+    }
+
 private:
 	void SlashEnd();
 

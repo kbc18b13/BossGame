@@ -89,6 +89,8 @@ void Player::Update()
 			m_model->Play(enAnimIdle, 0.3f);
 		}
 	}
+
+    Actor::Update();
 }
 
 void Player::SlashEnd() {

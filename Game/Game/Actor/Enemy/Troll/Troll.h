@@ -23,6 +23,13 @@ public:
 		return m_CharaCon.GetPosition();
 	}
 
+    /// <summary>
+    /// ‰Á‘¬‚³‚¹‚é
+    /// </summary>
+    void AddVelocity(const CVector3& pos) override {
+        m_CharaCon.AddVelocity(pos);
+    }
+
 	//—ñ‹“
 	enum class AnimState {
 		Walk,
@@ -30,6 +37,8 @@ public:
 		JumpUp,
 		JumpDown,
 		Idle,
+        Tackle,
+        Hip,
 		Num
 	};
 
@@ -49,7 +58,7 @@ private:
 
     Act* m_activeAction;
     std::unique_ptr<Act> m_actionArray[int(ActState::Num)];
-	std::function<void(float toPLength)> m_stateChangeFunc;
+	std::function<void(ActState)> m_stateChangeFunc;
 
 	int m_state;
 

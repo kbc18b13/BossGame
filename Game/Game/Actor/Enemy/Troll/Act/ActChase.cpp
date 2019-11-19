@@ -23,6 +23,7 @@ void ActChase::Continue(ActArg& arg) {
 		m_timer = 0;
 	} else {
 		move /= moveLength;
+        move *= 0.11f;
 	}
 	arg.model->Play(int(AnimState::Walk), 0.2f);
 	arg.model->SetPos(arg.charaCon->Excecute(move, false));
@@ -30,6 +31,9 @@ void ActChase::Continue(ActArg& arg) {
 
 	//タイマーが0を下回ったら終了
     if (m_timer <= 0) {
-        arg.changeAct(moveLength);
+        arg.changeAct(ActState::Attack);
+        return;
     }
+
+    m_timer -= GameTime::GetDeltaTime();
 }

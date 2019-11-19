@@ -20,6 +20,8 @@ Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/f
 		m_animClip[int(AnimState::JumpUp)].Load(L"Assets/animData/Troll_Jump.tka", false);
 		m_animClip[int(AnimState::JumpDown)].Load(L"Assets/animData/Troll_Fall.tka", false);
 		m_animClip[int(AnimState::Idle)].Load(L"Assets/animData/Troll_Idle.tka", true);
+        m_animClip[int(AnimState::Tackle)].Load(L"Assets/animData/Troll_Tackle.tka", true);
+        m_animClip[int(AnimState::Hip)].Load(L"Assets/animData/Troll_Hip.tka", false);
 		m_model->Init(L"Assets/modelData/Troll.cmo", m_animClip, int(AnimState::Num));
 	}
 
@@ -45,7 +47,7 @@ Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/f
 	m_CharaCon.Init(desc);
     m_font.SetPos({500.0f, 500.0f});
 
-    Bone* arm = m_model->GetModel().GetSkeleton().GetBone(3);
+    Bone* arm = m_model->GetModel().GetSkeleton().GetBone(20);
     armCollision.Init(this, arm);
 }
 
@@ -53,7 +55,7 @@ Troll::~Troll() {
 }
 
 void Troll::Start() {
-	m_actionArray[int(ActState::Attack)].reset(new ActAttack());
+	m_actionArray[int(ActState::Attack)].reset(new ActAttack(armCollision));
 	m_actionArray[int(ActState::Chase)].reset(new ActChase());
 	m_actionArray[int(ActState::Wait)].reset(new ActIdle());
 	m_actionArray[int(ActState::Step)].reset(new ActStep());
@@ -61,41 +63,12 @@ void Troll::Start() {
     m_actionArray[int(ActState::Hip)].reset(new ActHip());
 
     //ステート変更関数
-    m_stateChangeFunc = [&](float toPLength) {
-        int ran = Util::RandomInt(0, 6);
-
-        if (ran == 0) {
-            //確率でステップ
-            m_activeAction = m_actionArray[int(ActState::Step)].get();
-
-        } else if (ran == 1) {
-            //確率で休む
-            m_activeAction = m_actionArray[int(ActState::Wait)].get();
-
-        }else{
-
-            if (toPLength < 300.0f) {
-                //近い時
-                //ヒップドロップか攻撃
-                if(ran == 3){
-                    m_activeAction = m_actionArray[int(ActState::Hip)].get();
-                } else {
-                    m_activeAction = m_actionArray[int(ActState::Attack)].get();
-                }
-            } else {
-                //遠い時
-                //タックルか追跡
-                if(ran == 3){
-                    m_activeAction = m_actionArray[int(ActState::Tackle)].get();
-                } else {
-                    m_activeAction = m_actionArray[int(ActState::Chase)].get();
-                }
-            }
-        }
+    m_stateChangeFunc = [&](ActState act) {
+        m_activeAction = m_actionArray[int(act)].get();
         m_activeAction->Start();
     };
 
-    m_stateChangeFunc(1000.0f);
+    m_stateChangeFunc(ActState::Wait);
 }
 
 void Troll::Update() {
@@ -107,6 +80,7 @@ void Troll::Update() {
     m_activeAction->Continue(arg);
 
     armCollision.Update();
+    Actor::Update();
 }
 
 void Troll::SetPos(const CVector3 & pos) {

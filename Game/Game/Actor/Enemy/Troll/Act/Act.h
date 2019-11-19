@@ -7,7 +7,7 @@ struct ActArg {
 	CharaConEx* charaCon = nullptr;
 	SkinModelRender* model = nullptr;
 	Player* player = nullptr;
-    std::function<void(float)> changeAct;
+    std::function<void(Troll::ActState)> changeAct;
 };
 
 class Act {

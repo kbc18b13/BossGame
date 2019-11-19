@@ -42,6 +42,10 @@ void ActHip::Continue(ActArg& arg) {
         first = false;
     }
 
+    if (chara->GetVelocity().y < 0) {
+        arg.model->Play(int(AnimState::Hip), 0.2f);
+    }
+
     arg.model->SetPos(chara->Excecute(CVector3::Zero(), false));
 
     //ƒWƒƒƒ“ƒvŒã‚É’…’n‚µ‚½‚çŽŸ‚Ö
@@ -50,6 +54,6 @@ void ActHip::Continue(ActArg& arg) {
             onJump = true;
         }
     } else if (chara->OnGround()) {
-        arg.changeAct(plength);
+        arg.changeAct(ActState::Wait);
     }
 }

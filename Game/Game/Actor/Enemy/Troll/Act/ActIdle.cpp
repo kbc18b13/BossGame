@@ -20,6 +20,22 @@ void ActIdle::Continue(ActArg& arg) {
 	//タイマーが0より大きい間は続行
     if (m_timer <= 0) {
         CVector3 toP = arg.player->GetPos() - arg.charaCon->GetPosition();
-        arg.changeAct(toP.Length());
+
+        //近い
+        if (toP.LengthSq() < 100 * 100) {
+            if (Util::RandomInt(0, 3) == 0) {
+                arg.changeAct(ActState::Hip);
+            } else {
+                arg.changeAct(ActState::Attack);
+            }
+
+        //遠い
+        } else {
+            if (Util::RandomInt(0, 3) == 0) {
+                arg.changeAct(ActState::Tackle);
+            } else {
+                arg.changeAct(ActState::Chase);
+            }
+        }
     }
 }

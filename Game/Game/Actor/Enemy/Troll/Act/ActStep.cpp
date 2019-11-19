@@ -37,6 +37,6 @@ void ActStep::Continue(ActArg& arg) {
 			onJump = true;
 		}
 	} else if(chara->OnGround()){
-		arg.changeAct(pVec.Length());
+        arg.changeAct(ActState::Wait);
 	}
 }

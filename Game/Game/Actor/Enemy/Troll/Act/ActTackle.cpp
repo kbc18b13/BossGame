@@ -27,12 +27,12 @@ void ActTackle::Continue(ActArg& arg) {
         move /= moveLength;
         move *= 2;
     }
-    arg.model->Play(int(AnimState::Walk), 0.2f);
+    arg.model->Play(int(AnimState::Tackle), 0.2f);
     arg.model->SetPos(arg.charaCon->Excecute(move, false));
     arg.model->SetRot(Util::LookRotXZ(move));
 
     //タイマーが0を下回ったら終了
     if (m_timer <= 0) {
-        arg.changeAct(moveLength);
+        arg.changeAct(ActState::Wait);
     }
 }
