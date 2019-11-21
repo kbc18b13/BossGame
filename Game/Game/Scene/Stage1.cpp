@@ -12,10 +12,10 @@ Stage1::Stage1() {
 			g.SetPos(objData.position);
 		} else if (wcscmp(objData.name, L"Chara")) {
 			p = NewGO<Player>(0);
-			p->SetPos(objData.position);
+			p->SetPos(objData.position + CVector3::Up() * 100);
 		} else if (wcscmp(objData.name, L"Troll")) {
 			t = NewGO<Troll>(0,this);
-			t->SetPos(objData.position);
+			t->SetPos(objData.position + CVector3::Up()*100);
 		}
 		return true;
 	});

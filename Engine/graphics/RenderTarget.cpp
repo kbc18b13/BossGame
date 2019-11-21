@@ -33,6 +33,10 @@ void RenderTarget::Release() {
 }
 
 void RenderTarget::Clear(CVector4 Color) {
+    auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
+    //レンダリングターゲットをクリア。
+    d3dDeviceContext->ClearRenderTargetView(m_renderTargetView, Color.v);
+    d3dDeviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
 void RenderTarget::Init(unsigned int w, unsigned int h, DXGI_FORMAT texFormat) {
@@ -147,4 +151,7 @@ void RenderTarget::Init(unsigned int w, unsigned int h, DXGI_FORMAT texFormat) {
 		m_viewport.MinDepth = 0.0f;
 		m_viewport.MaxDepth = 1.0f;
 	}
+}
+
+void RenderTarget::SetToContext(ID3D11DeviceContext * dc) {
 }

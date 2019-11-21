@@ -9,10 +9,10 @@ public:
 	IGameObject();
 	virtual ~IGameObject();
 
-	virtual void Start();
-	virtual void Update();
+    virtual void Start() {};
+    virtual void Update() {};
 
-	virtual void Draw();
+    virtual void Draw() {};
 
 private:
 	friend GameObjectManager;

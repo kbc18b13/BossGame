@@ -19,6 +19,8 @@ public:
     /// </summary>
     void Init(unsigned int w, unsigned int h, DXGI_FORMAT texFormat);
 
+    void SetToContext(ID3D11DeviceContext* dc);
+
     /// <summary>
     /// レンダリングターゲットビューを取得。
     /// </summary>

@@ -56,6 +56,11 @@ Player::~Player()
 
 void Player::Update()
 {
+    //シャドウマップの移動
+    {
+        g_graphicsEngine->GetShadowMap().UpdateLight(GetPos() + CVector3(400, 400, 400), CVector3(-1, -1, -1));
+    }
+
 	//キャラコンの操作
 	CVector3 move = g_pad->GetLStickXF() * m_camera.GetRightVec() + g_pad->GetLStickYF() * m_camera.GetFrontVec_XZ();
 	CVector3 pos = m_charaCon.Excecute(move, g_pad->IsTrigger(enButtonA));

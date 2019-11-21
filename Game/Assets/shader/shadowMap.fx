@@ -6,18 +6,8 @@
 /////////////////////////////////////////////////////////////
 // Shader Resource View
 /////////////////////////////////////////////////////////////
-//アルベドテクスチャ。
-Texture2D<float4> albedoTexture : register(t0);	
 //ボーン行列
 StructuredBuffer<float4x4> boneMatrix : register(t1);
-
-//シャドウマップ。
-Texture2D<float4> shadowMap : register(t2);
-
-/////////////////////////////////////////////////////////////
-// SamplerState
-/////////////////////////////////////////////////////////////
-sampler Sampler : register(s0);
 
 /////////////////////////////////////////////////////////////
 // 定数バッファ。
@@ -31,27 +21,6 @@ cbuffer VSCb : register(b0){
 	float4x4 mProj;
 };
 
-
-cbuffer PSEye : register(b3) {
-	float3 eyePos;
-}
-
-/*!
- * @brief	ディレクションライトの定数バッファ。
- */
-cbuffer PSCbDir : register(b1) {
-	float4 mLightColor[4];
-	float4 mLightVec[4];
-};
-
-cbuffer PSCbAmb : register(b2) {
-	float4 mAmbColor;
-};
-
-//シャドウマップ用行列
-cbuffer ShadowCamera : register(b6) {
-    float4x4 mShadowVP;
-}
 
 /////////////////////////////////////////////////////////////
 //各種構造体
@@ -84,11 +53,6 @@ struct VSInputNmTxWeights
  */
 struct PSInput{
 	float4 Position 	: SV_POSITION;
-	float3 Normal		: NORMAL;
-	float3 Tangent		: TANGENT;
-	float2 TexCoord 	: TEXCOORD0;
-	float3 worldPos     : WORLD;
-    float4 shadowPos     : SHADOW;
 };
 /*!
  *@brief	スキン行列を計算。
@@ -114,19 +78,9 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 {
 	PSInput psInput = (PSInput)0;
 	float4 pos = mul(mWorld, In.Position);
-
-	psInput.worldPos = pos.xyz;
-
-    //シャドウマップUV
-    float4 shadowPos = mul(mShadowVP, pos.xyz);
-    psInput.shadowPos = shadowPos / shadowPos.w;
-
 	pos = mul(mView, pos);
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
-	psInput.TexCoord = In.TexCoord;
-	psInput.Normal = normalize(mul(mWorld, float4(In.Normal,0))).xyz;
-	psInput.Tangent = normalize(mul(mWorld, float4(In.Tangent,0))).xyz;
 	return psInput;
 }
 
@@ -161,19 +115,10 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 		//mulは乗算命令。
 	    pos = mul(skinning, In.Position);
 	}
-	psInput.Normal = normalize( mul(skinning, float4(In.Normal,0)) ).xyz;
-	psInput.Tangent = normalize( mul(skinning, float4(In.Tangent,0)) ).xyz;
 	
-	psInput.worldPos = pos.xyz;
-
-    //シャドウマップUV
-    float4 shadowPos = mul(mShadowVP, pos.xyz);
-    psInput.shadowPos = shadowPos / shadowPos.w;
-
 	pos = mul(mView, pos);
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
-	psInput.TexCoord = In.TexCoord;
     return psInput;
 }
 //--------------------------------------------------------------------------------------
@@ -181,32 +126,6 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 //--------------------------------------------------------------------------------------
 float4 PSMain( PSInput In ) : SV_Target0
 {
-	float4 color = albedoTexture.Sample(Sampler, In.TexCoord);
-	float4 sum = float4(0, 0, 0, 0);
-
-	for (int i = 0; i < 4; i++) {
-		float3 dir = normalize(mLightVec[i].xyz);
-
-		sum += max(dot(In.Normal, -dir), 0) * mLightColor[i] * color;
-		//鏡面反射光
-		{
-			float3 refVec = dir + 2 * (In.Normal * dot(In.Normal, -dir));
-			float3 eyeLine = normalize(In.worldPos - eyePos);
-			float specPower = max(dot(refVec, -eyeLine), 0);
-			sum += pow(specPower, 10) * (mLightColor[0]*0.5f);
-		}
-	}
-
-	sum += color * mAmbColor;
-    //シャドウマップ
-    {
-        float mapDepth = shadowMap.Sample(Sampler, In.shadowPos.xy).r;
-        if (mapDepth <= In.shadowPos.z) {
-            sum.rgb = float3(0, 0, 0);
-        }
-        if (mapDepth > In.shadowPos.z) {
-            sum.rgb = float3(0, 0, 0);
-        }
-    }
-	return sum;
+    float depth = In.Position.z / In.Position.w;
+	return float4(depth,0,0,0);
 }

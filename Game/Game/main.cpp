@@ -28,8 +28,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	{
 		GameTime::UpdateTime();
 
-		//描画開始。
-		g_graphicsEngine->BegineRender();
 		//ゲームパッドの更新。	
 		for (auto& pad : g_pad) {
 			pad.Update();

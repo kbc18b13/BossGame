@@ -2,32 +2,33 @@
 
 #include "graphics/Shader.h"
 
+//レンダリングモード
+enum class EnRenderMode {
+    Default,
+    ShadowMap,
+    Num
+};
+
 /*!
 *@brief	モデルエフェクト。
 */
 class ModelEffect : public DirectX::IEffect {
 protected:
 	std::wstring m_materialName;	//!<マテリアル名。
-	Shader* m_pVSShader = nullptr;
-	Shader* m_pPSShader = nullptr;
+
 	Shader m_vsShader;
 	Shader m_psShader;
+
+    Shader m_vsShadow;		//シャドウマップ生成用の頂点シェーダー。
+    Shader m_psShadow;		//シャドウマップ生成用のピクセルシェーダー。
 	bool isSkining;
 	ID3D11ShaderResourceView* m_albedoTex = nullptr;
+    EnRenderMode m_renderMode = EnRenderMode::Default;	//レンダリングモード。
 
 public:
-	ModelEffect()
-	{
-		m_psShader.Load("Assets/shader/model.fx", "PSMain", Shader::EnType::PS);
-		
-		m_pPSShader = &m_psShader;
-	}
-	virtual ~ModelEffect()
-	{
-		if (m_albedoTex) {
-			m_albedoTex->Release();
-		}
-	}
+    ModelEffect();
+    ~ModelEffect();
+
 	void __cdecl Apply(ID3D11DeviceContext* deviceContext) override;
 
 	void __cdecl GetVertexShaderBytecode(void const** pShaderByteCode, size_t* pByteCodeLength) override
@@ -48,6 +49,10 @@ public:
 	{
 		return wcscmp(name, m_materialName.c_str()) == 0;
 	}
+
+    void SetRenderMode(EnRenderMode mode) {
+        m_renderMode = mode;
+    }
 	
 };
 /*!
@@ -58,9 +63,9 @@ class NonSkinModelEffect : public ModelEffect {
 public:
 	NonSkinModelEffect()
 	{
-		m_vsShader.Load("Assets/shader/model.fx", "VSMain", Shader::EnType::VS);
-		m_pVSShader = &m_vsShader;
-		isSkining = false;
+        m_vsShader.Load("Assets/shader/model.fx", "VSMain", Shader::EnType::VS);
+        m_vsShadow.Load("Assets/shader/shadowMap.fx", "VSMain", Shader::EnType::VS);
+        isSkining = false;
 	}
 };
 /*!
@@ -74,8 +79,8 @@ public:
 		wchar_t hoge[256];
 		GetCurrentDirectoryW(256, hoge);
 		m_vsShader.Load("Assets/shader/model.fx", "VSMainSkin", Shader::EnType::VS);
+        m_vsShadow.Load("Assets/shader/shadowMap.fx", "VSMainSkin", Shader::EnType::VS);
 		
-		m_pVSShader = &m_vsShader;
 		isSkining = true;
 	}
 };

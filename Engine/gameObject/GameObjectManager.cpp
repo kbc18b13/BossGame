@@ -21,7 +21,7 @@ void GameObjectManager::Init(UINT defArraySize, UINT defPrioSize) {
 }
 
 void GameObjectManager::Update() {
-	{
+	{//新しいオブジェクトを追加
 		UINT index = 0;
 		for (std::vector<IGameObject*>& prioArray : m_newGOArray) {
 			for (IGameObject* go : prioArray) {
@@ -33,6 +33,7 @@ void GameObjectManager::Update() {
 		}
 	}
 
+    //アップデート
 	for (std::vector<IGameObject*>& prioArray : m_goArray) {
 		for (IGameObject* go : prioArray) {
 			if (!go->isRemoved) {
@@ -41,6 +42,13 @@ void GameObjectManager::Update() {
 		}
 	}
 
+    //シャドウマップ書き込み
+    g_graphicsEngine->GetShadowMap().RenderToShadowMap(g_graphicsEngine->GetD3DDeviceContext());
+
+    //描画開始。
+    g_graphicsEngine->BegineRender();
+
+    //本描画
 	for (std::vector<IGameObject*>& prioArray : m_goArray) {
 		for (IGameObject* go : prioArray) {
 			if (!go->isRemoved) {

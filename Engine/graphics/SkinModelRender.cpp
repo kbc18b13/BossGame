@@ -15,6 +15,16 @@ void SkinModelRender::Init(const wchar_t * filePath, AnimationClip animClipList[
 	if (numAnimClip != 0) {
 		m_animation.Init(m_skinModel, animClipList, numAnimClip);
 	}
+    SetShadowCast(true);
+}
+
+void SkinModelRender::SetShadowCast(bool isCast) {
+    if (isCast) {
+        if(!m_isShadowCaster) g_graphicsEngine->GetShadowMap().AddShadowCaster(this);
+    } else {
+        if(m_isShadowCaster) g_graphicsEngine->GetShadowMap().RemoveShadowCaster(this);
+    }
+    m_isShadowCaster = isCast;
 }
 
 void SkinModelRender::Update() {

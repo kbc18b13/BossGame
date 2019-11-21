@@ -98,6 +98,18 @@ public:
 		return m_animation;
 	}
 
+    /// <summary>
+    /// シャドウを受けるかどうかを設定
+    /// </summary>
+    void SetShadowReceive(bool isReceive) {
+        m_isShadowReceive = isReceive;
+    }
+
+    /// <summary>
+    /// シャドウを出すかどうかを設定
+    /// </summary>
+    void SetShadowCast(bool isCast);
+
 	/// <summary>
 	/// 更新関数
 	/// </summary>
@@ -116,5 +128,8 @@ private:
 	CVector3 m_pos = CVector3::Zero();           //位置
 	CVector3 m_scale = CVector3::One();          //大きさ
 	CQuaternion m_rot = CQuaternion::Identity(); //回転
+
+    bool m_isShadowReceive = false;
+    bool m_isShadowCaster = false;
 };
 
