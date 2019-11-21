@@ -21,6 +21,9 @@ Sprite::~Sprite() {
 void Sprite::Init(const wchar_t * path, UINT width, UINT height) {
 	HRESULT result;
 
+    m_width = width;
+    m_height = height;
+
 	int w = width / 2;
 	int h = height / 2;
 
