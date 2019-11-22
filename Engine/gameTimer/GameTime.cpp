@@ -15,8 +15,7 @@ void UpdateTime() {
 }
 
 float GetDeltaTime() {
-    return 1 / 30.0f;
-	return deltaTime;
+	return min(deltaTime, 1.0f/20.0f);
 }
 
 }

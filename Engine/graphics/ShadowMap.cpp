@@ -14,7 +14,7 @@ void ShadowMap::Init(unsigned int w, unsigned int h) {
     m_renderTarget.Init(w, h, DXGI_FORMAT_R32_FLOAT);
     D3D11_BUFFER_DESC desc{};
     desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-    desc.ByteWidth = sizeof(CMatrix)*2;
+    desc.ByteWidth = sizeof(CMatrix);
     desc.CPUAccessFlags = 0;
     desc.Usage = D3D11_USAGE_DEFAULT;
 
@@ -23,7 +23,7 @@ void ShadowMap::Init(unsigned int w, unsigned int h) {
 
 void ShadowMap::UpdateLight(const CVector3 & pos, const CVector3 & dir) {
     m_lightViewMatrix = DirectX::XMMatrixLookToLH(pos, dir, CVector3::Up());
-    m_lightProjMatrix = DirectX::XMMatrixOrthographicLH(800, 800, 10, 1000);
+    m_lightProjMatrix = DirectX::XMMatrixOrthographicLH(800, 800, 10, 5000);
 }
 
 void ShadowMap::RemoveShadowCaster(SkinModelRender * render) {
@@ -51,8 +51,8 @@ void ShadowMap::RenderToShadowMap(ID3D11DeviceContext * dc) {
         //caster->Draw();
     }
 
-    CMatrix mat[2];
-    mat[0].Mul(m_lightViewMatrix, m_lightProjMatrix);
-    dc->UpdateSubresource(m_vpMatCB, 0, nullptr, mat, 0, 0);
+    CMatrix mat;
+    mat.Mul(m_lightViewMatrix, m_lightProjMatrix);
+    dc->UpdateSubresource(m_vpMatCB, 0, nullptr, &mat, 0, 0);
     dc->VSSetConstantBuffers(6, 1, &m_vpMatCB);
 }

@@ -47,6 +47,7 @@ Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/f
 	m_CharaCon.Init(desc);
     m_font.SetPos({500.0f, 500.0f});
 
+    //˜rƒRƒŠƒWƒ‡ƒ“
     Bone* arm = m_model->GetModel().GetSkeleton().GetBone(20);
     armCollision.Init(this, arm);
 }

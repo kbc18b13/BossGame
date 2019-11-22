@@ -61,6 +61,10 @@ void Player::Update()
         g_graphicsEngine->GetShadowMap().UpdateLight(GetPos() + CVector3(400, 400, 400), CVector3(-1, -1, -1));
     }
 
+    if (g_pad->IsPress(enButtonLB1)) {
+        m_charaCon.AddVelocity(CVector3::Up()*50);
+    }
+
 	//ƒLƒƒƒ‰ƒRƒ“‚Ì‘€ì
 	CVector3 move = g_pad->GetLStickXF() * m_camera.GetRightVec() + g_pad->GetLStickYF() * m_camera.GetFrontVec_XZ();
 	CVector3 pos = m_charaCon.Excecute(move, g_pad->IsTrigger(enButtonA));
