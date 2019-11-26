@@ -2,6 +2,7 @@
 #include "Actor/Actor.h"
 #include "Camera/PlayerCamera.h"
 #include "Util/CharaConEx.h"
+#include "Sword.h"
 
 class Sword;
 class SkinModelRender;
@@ -56,9 +57,9 @@ private:
 		enAnimNum
 	};
 	AnimationClip m_animClip[enAnimNum];        //アニメーションクリップ
-	SkinModelRender* m_model;                    //自分のモデル。
+	SkinModelRender m_model;                    //自分のモデル。
 
-	Sword* m_sword = nullptr;
+	Sword m_sword;
 
 	CharaConEx m_charaCon;             //キャラコン
 

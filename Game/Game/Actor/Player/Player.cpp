@@ -1,7 +1,5 @@
 #include "stdafx.h"
 #include "Player.h"
-#include "graphics/SkinModelRender.h"
-#include "Sword.h"
 #include "physics/CollisionAttr.h"
 
 Player::Player() : Actor(10)
@@ -15,9 +13,8 @@ Player::Player() : Actor(10)
 	m_animClip[enAnimSlash4].Load(L"Assets/animData/TestChara_Slash4.tka");
 
 	//cmoファイルの読み込み。
-	m_model = NewGO<SkinModelRender>(1);
-	m_model->Init(L"Assets/modelData/TestChara.cmo",m_animClip,enAnimNum);
-	m_model->GetAnim().AddEventFunc("End", [&]() {
+	m_model.Init(L"Assets/modelData/TestChara.cmo",m_animClip,enAnimNum);
+	m_model.GetAnim().AddEventFunc("End", [&]() {
 		SlashEnd();
 	});
 
@@ -43,15 +40,17 @@ Player::Player() : Actor(10)
 
 	m_camera.SetVec({ 0, 80, -80 });
 
-	m_sword = NewGO<Sword>(2, m_model->GetModel().GetSkeleton().GetBone(L"Hand_L"), this);
-	m_sword->SetOffset({ 12, 0, 0 });
+	/*m_sword = NewGO<Sword>(2, m_model.GetModel().GetSkeleton().GetBone(L"Hand_L"), this);*/
+    m_sword.Init(m_model.GetModel().GetSkeleton().GetBone(L"Hand_L"), this);
+	m_sword.SetOffset({ 12, 0, 0 });
+
+    m_model.AddFookFunc(m_sword);
 }
 
 
 Player::~Player()
 {
-	DeleteGO(m_sword);
-	DeleteGO(m_model);
+	//DeleteGO(m_sword);
 }
 
 void Player::Update()
@@ -71,35 +70,37 @@ void Player::Update()
 	CVector3 speed = m_charaCon.GetVelocity();
 
 	//モデル位置
-	m_model->SetPos(pos);
+	m_model.SetPos(pos);
 	//モデル回転
 	if (speed.x*speed.x + speed.z*speed.z > 1) {
 		float angle = atan2f(speed.x, speed.z);
 		rot.SetRotation(CVector3::AxisY(), angle);
 	}
 
-	m_model->SetRot(rot);
+	m_model.SetRot(rot);
 	m_camera.Update(GetPos()+CVector3::Up()*25);
 
 	//アニメーション
 	if (g_pad->IsTrigger(enButtonRB1)) {
 		if (m_comboCount == -1) {
 			m_comboCount++;
-			m_model->Play(enAnimSlash, 0.1f);
-			m_sword->SlashStart();
+			m_model.Play(enAnimSlash, 0.1f);
+			m_sword.SlashStart();
 		} else {
 			m_comboContinue = true;
 		}
 	}else
 	if (m_comboCount == -1) {
 		if (speed.LengthSq() > 0.001f) {
-			m_model->Play(enAnimWalk, 0.1f);
+			m_model.Play(enAnimWalk, 0.1f);
 		} else {
-			m_model->Play(enAnimIdle, 0.3f);
+			m_model.Play(enAnimIdle, 0.3f);
 		}
 	}
 
+
     Actor::Update();
+    m_model.Update();
 }
 
 void Player::SlashEnd() {
@@ -108,16 +109,16 @@ void Player::SlashEnd() {
 		m_comboCount++;//コンボを進める
 		if (m_comboCount >= MAX_COMBO) {
 			m_comboCount = -1;//コンボ終了
-			m_model->Play(enAnimIdle, 0.3f);
-			m_sword->SlashEnd();
+			m_model.Play(enAnimIdle, 0.3f);
+			m_sword.SlashEnd();
 		} else {
-			m_model->Play(enAnimSlash + m_comboCount, 0.1f);//アニメーション
-			m_sword->SlashStart();
+			m_model.Play(enAnimSlash + m_comboCount, 0.1f);//アニメーション
+			m_sword.SlashStart();
 		}
 	} else {
 		m_comboCount = -1;//コンボ終了
-		m_model->Play(enAnimIdle, 0.3f);
-		m_sword->SlashEnd();
+		m_model.Play(enAnimIdle, 0.3f);
+		m_sword.SlashEnd();
 	}
 	m_comboContinue = false;
 }

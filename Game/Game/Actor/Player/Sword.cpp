@@ -21,8 +21,8 @@ struct SwordContactResult : btCollisionWorld::ContactResultCallback {
 	}
 };
 
-Sword::Sword(Bone* handBone, Player* player) : m_atk(1, 1){
-	m_model = NewGO<SkinModelRender>(3);
+Sword::Sword(/*Bone* handBone, Player* player*/) : m_atk(1, 1){
+	/*m_model = NewGO<SkinModelRender>(1);
 	m_model->Init(L"Assets/modelData/Sword.cmo");
 
 	m_collider.Create({ 13,5,5 });
@@ -32,11 +32,23 @@ Sword::Sword(Bone* handBone, Player* player) : m_atk(1, 1){
 	m_collision.SetUserPointer(player);
 	g_physics.AddCollision(m_collision);
 	
-	m_hand = handBone;
+	m_hand = handBone;*/
 }
 
 Sword::~Sword() {
-	DeleteGO(m_model);
+}
+
+void Sword::Init(Bone* handBone, Player* player) {
+    m_model.Init(L"Assets/modelData/Sword.cmo");
+
+    m_collider.Create({ 13,5,5 });
+    m_collision.Create(m_collider);
+    m_collision.SetGroup(1);
+    m_collision.SetMask(0);
+    m_collision.SetUserPointer(player);
+    g_physics.AddCollision(m_collision);
+
+    m_hand = handBone;
 }
 
 void Sword::Update() {
@@ -53,7 +65,7 @@ void Sword::Update() {
 		CVector3 position = CVector3(worldMat.v[3]) + offset;
 		m_collision.GetBody()->getWorldTransform().setOrigin(position);
 
-		m_model->SetWorldMatrix(worldMat);
+		m_model.SetWorldMatrix(worldMat);
 	}
 
 	//“G‚Ö‚Ìƒ_ƒ[ƒWˆ—

@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Troll.h"
-#include "graphics/SkinModelRender.h"
 #include "physics/CollisionAttr.h"
 #include "Scene/Stage1.h"
 #include "Actor/Player/Player.h"
@@ -14,7 +13,6 @@
 Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/font.spritefont"){
     //モデル
 	{
-		m_model = NewGO<SkinModelRender>(0);
 		m_animClip[int(AnimState::Walk)].Load(L"Assets/animData/Troll_Walk.tka", true);
 		m_animClip[int(AnimState::Attack)].Load(L"Assets/animData/Troll_Attack.tka", false);
 		m_animClip[int(AnimState::JumpUp)].Load(L"Assets/animData/Troll_Jump.tka", false);
@@ -22,7 +20,7 @@ Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/f
 		m_animClip[int(AnimState::Idle)].Load(L"Assets/animData/Troll_Idle.tka", true);
         m_animClip[int(AnimState::Tackle)].Load(L"Assets/animData/Troll_Tackle.tka", true);
         m_animClip[int(AnimState::Hip)].Load(L"Assets/animData/Troll_Hip.tka", false);
-		m_model->Init(L"Assets/modelData/Troll.cmo", m_animClip, int(AnimState::Num));
+		m_model.Init(L"Assets/modelData/Troll.cmo", m_animClip, int(AnimState::Num));
 	}
 
     //キャラコン
@@ -48,7 +46,7 @@ Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/f
     m_font.SetPos({500.0f, 500.0f});
 
     //腕コリジョン
-    Bone* arm = m_model->GetModel().GetSkeleton().GetBone(20);
+    Bone* arm = m_model.GetModel().GetSkeleton().GetBone(20);
     armCollision.Init(this, arm);
 }
 
@@ -75,7 +73,7 @@ void Troll::Start() {
 void Troll::Update() {
 	ActArg arg;
 	arg.charaCon = &m_CharaCon;
-	arg.model = m_model;
+	arg.model = &m_model;
 	arg.player = stage->GetPlayer();
     arg.changeAct = m_stateChangeFunc;
     m_activeAction->Continue(arg);
@@ -86,7 +84,7 @@ void Troll::Update() {
 
 void Troll::SetPos(const CVector3 & pos) {
 	m_CharaCon.SetPosition(pos);
-	m_model->SetPos(pos);
+	m_model.SetPos(pos);
 }
 
 void Troll::Draw() {

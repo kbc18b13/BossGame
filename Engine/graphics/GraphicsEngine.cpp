@@ -26,6 +26,7 @@ void GraphicsEngine::EndRender()
     //フレームバッファに書き込み
     m_pd3dDeviceContext->OMSetRenderTargets(1, &m_backBuffer, m_depthStencilView);
     m_pd3dDeviceContext->RSSetViewports(1, &m_viewport);
+
     m_pd3dDeviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
     m_postEffect.DrawScreenRect((ID3D11PixelShader*)m_monoShader.GetBody(), m_defaultTarget.GetRenderTargetSRV());

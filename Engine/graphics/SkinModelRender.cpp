@@ -30,6 +30,9 @@ void SkinModelRender::SetShadowCast(bool isCast) {
 void SkinModelRender::Update() {
 	m_animation.Update(GameTime::GetDeltaTime());
 	m_skinModel.UpdateWorldMatrix(m_pos, m_rot, m_scale);
+    for (auto& func : m_fookFuncs) {
+        func->Update();
+    }
 }
 
 void SkinModelRender::Draw() {

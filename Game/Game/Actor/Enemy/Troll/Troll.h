@@ -66,7 +66,7 @@ private:
 
 	CharaConEx m_CharaCon;
 	AnimationClip m_animClip[int(AnimState::Num)];//アニメーションクリップ
-	SkinModelRender* m_model = nullptr;//モデル
+	SkinModelRender m_model;//モデル
 
 	CFont m_font;
 
