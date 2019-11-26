@@ -14,16 +14,22 @@ GraphicsEngine::~GraphicsEngine()
 
 void GraphicsEngine::BegineRender()
 {
-	float ClearColor[4] = { 0.5f, 0.5f, 0.5f, 1.0f }; //red,green,blue,alpha
-													  //描き込み先をバックバッファにする。
-	m_pd3dDeviceContext->OMSetRenderTargets(1, &m_backBuffer, m_depthStencilView);
-    m_pd3dDeviceContext->RSSetViewports(1, &m_viewport);
+	CVector4 ClearColor = { 0.5f, 0.5f, 0.5f, 1.0f }; //red,green,blue,alpha
+
+	//描き込み先をポストエフェクト前用ターゲットにする。
+    m_defaultTarget.SetToContext(m_pd3dDeviceContext);
 	//バックバッファを灰色で塗りつぶす。
-	m_pd3dDeviceContext->ClearRenderTargetView(m_backBuffer, ClearColor);
-	m_pd3dDeviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+    m_defaultTarget.Clear(ClearColor);
 }
 void GraphicsEngine::EndRender()
 {
+    //フレームバッファに書き込み
+    m_pd3dDeviceContext->OMSetRenderTargets(1, &m_backBuffer, m_depthStencilView);
+    m_pd3dDeviceContext->RSSetViewports(1, &m_viewport);
+    m_pd3dDeviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+
+    m_postEffect.DrawScreenRect((ID3D11PixelShader*)m_monoShader.GetBody(), m_defaultTarget.GetRenderTargetSRV());
+
 	//バックバッファとフロントバッファを入れ替える。
 	m_pSwapChain->Present(2, 0);
 }
@@ -155,6 +161,15 @@ void GraphicsEngine::Init(HWND hWnd)
 	m_dirLight.Init(1);
 	m_ambientLight.Init(2);
 
+
+    //ポストエフェクト前のデフォルトターゲット
+    m_defaultTarget.Init(FRAME_BUFFER_W, FRAME_BUFFER_H, sd.BufferDesc.Format);
+
+    //ポストエフェクト用描画機
+    m_postEffect.Init();
+
+    //モノクロシェーダー
+    m_monoShader.Load("Assets/shader/monochrome.fx", "PSMain", Shader::EnType::PS);
 
     //シャドウマップ作成
     m_shadowMap.Init(2048, 2048);

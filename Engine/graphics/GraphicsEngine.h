@@ -2,6 +2,8 @@
 #include "light/DirectionLight.h"
 #include "light/AmbientLight.h"
 #include "ShadowMap.h"
+#include "RenderTarget.h"
+#include "PostEffect/PostEffect.h"
 /*!
  *@brief	グラフィックスエンジン。
  */
@@ -58,6 +60,10 @@ private:
 	AmbientLight m_ambientLight;
 
     ShadowMap m_shadowMap;
+
+    RenderTarget m_defaultTarget;
+    Shader m_monoShader;
+    PostEffect m_postEffect;
 
 	D3D_FEATURE_LEVEL		m_featureLevel;				//Direct3D デバイスのターゲットとなる機能セット。
 	ID3D11Device*			m_pd3dDevice = NULL;		//D3D11デバイス。

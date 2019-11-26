@@ -154,4 +154,6 @@ void RenderTarget::Init(unsigned int w, unsigned int h, DXGI_FORMAT texFormat) {
 }
 
 void RenderTarget::SetToContext(ID3D11DeviceContext * dc) {
+    dc->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
+    dc->RSSetViewports(1, &m_viewport);
 }
