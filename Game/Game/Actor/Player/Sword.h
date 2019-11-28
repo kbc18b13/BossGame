@@ -5,9 +5,9 @@
 class SkinModelRender;
 class Player;
 
-class Sword : public IGameObject{
+class Sword{
 public:
-	Sword(/*Bone* handBone, Player* p*/);
+	Sword();
 	~Sword();
 
     void Init(Bone* handBone, Player* p);
@@ -15,7 +15,7 @@ public:
 	void SetOffset(const CVector3& offset) {
 		m_offset = offset;
 	}
-	void Update() override;
+	void Update();
 
 	void SlashStart();
 	void SlashEnd();

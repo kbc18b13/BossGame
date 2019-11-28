@@ -119,10 +119,6 @@ public:
         m_isShadowReceive = isReceive;
     }
 
-    void AddFookFunc( IGameObject& func ){
-        m_fookFuncs.push_back( &func );
-    }
-
 private:
     SkinModel m_skinModel; //スキンモデル
 
@@ -134,7 +130,5 @@ private:
 
     bool m_isShadowReceive = false;
     bool m_isShadowCaster = false;
-
-    std::vector<IGameObject*> m_fookFuncs; //モデルレンダーのUpdate後にUpdateを呼びたいクラス
 };
 

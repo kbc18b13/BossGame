@@ -44,8 +44,6 @@ Player::Player() : Actor(10)
 	/*m_sword = NewGO<Sword>(2, m_model.GetModel().GetSkeleton().GetBone(L"Hand_L"), this);*/
     m_sword.Init(m_model.GetModel().GetSkeleton().GetBone(L"Hand_L"), this);
 	m_sword.SetOffset({ 12, 0, 0 });
-
-    m_model.AddFookFunc(m_sword);
 }
 
 
@@ -102,6 +100,7 @@ void Player::Update()
 
     Actor::Update();
     m_model.Update();
+    m_sword.Update();
 }
 
 void Player::SlashEnd() {
