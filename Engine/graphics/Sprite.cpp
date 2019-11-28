@@ -28,10 +28,10 @@ void Sprite::Init(const wchar_t * path, UINT width, UINT height) {
 	int h = height / 2;
 
 	SpriteVertex vertexData[4]{
-		{CVector3( w, h, 0.5f),CVector2(1,0) },
-		{CVector3(-w, h, 0.5f),CVector2(0,0) },
-		{CVector3( w,-h, 0.5f),CVector2(1,1) },
-		{CVector3(-w,-h, 0.5f),CVector2(0,1) },
+		{CVector3( w, h, 0.0f),CVector2(1,0) },
+		{CVector3(-w, h, 0.0f),CVector2(0,0) },
+		{CVector3( w,-h, 0.0f),CVector2(1,1) },
+		{CVector3(-w,-h, 0.0f),CVector2(0,1) },
 	};
 
 	D3D11_BUFFER_DESC desc{};

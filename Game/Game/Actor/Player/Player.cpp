@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "physics/CollisionAttr.h"
+#include "graphics/RenderObjectManager.h"
 
 Player::Player() : Actor(10)
 {
@@ -57,7 +58,7 @@ void Player::Update()
 {
     //シャドウマップの移動
     {
-        g_graphicsEngine->GetShadowMap().UpdateLight(GetPos() + CVector3(400, 400, 400), CVector3(-1, -1, -1));
+        g_ROManager.GetShadowMap().UpdateLight(GetPos() + CVector3(400, 400, 400), CVector3(-1, -1, -1));
     }
 
     if (g_pad->IsPress(enButtonLB1)) {

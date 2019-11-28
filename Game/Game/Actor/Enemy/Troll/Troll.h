@@ -7,7 +7,7 @@ class SkinModelRender;
 class Stage1;
 class Act;
 
-class Troll: public Actor {
+class Troll: public Actor , public IRenderObject{
 public:
 	//ä÷êî
 	Troll(Stage1* stage);
@@ -15,7 +15,7 @@ public:
 
 	void Start() override;
 	void Update() override;
-	void Draw() override;
+	void Render() override;
 
 	void SetPos(const CVector3& pos) override;
 

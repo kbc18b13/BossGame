@@ -42,21 +42,6 @@ void GameObjectManager::Update() {
 		}
 	}
 
-    //シャドウマップ書き込み
-    g_graphicsEngine->GetShadowMap().RenderToShadowMap(g_graphicsEngine->GetD3DDeviceContext());
-
-    //描画開始。
-    g_graphicsEngine->BegineRender();
-
-    //本描画
-	for (std::vector<IGameObject*>& prioArray : m_goArray) {
-		for (IGameObject* go : prioArray) {
-			if (!go->isRemoved) {
-				go->Draw();
-			}
-		}
-	}
-
 	for (std::vector<IGameObject*>& prioArray : m_goArray) {
 		for (auto itr = prioArray.begin(); itr != prioArray.end();) {
 			//ゲームオブジェクトを処分。

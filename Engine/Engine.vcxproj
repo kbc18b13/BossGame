@@ -146,6 +146,7 @@
     <ClInclude Include="graphics\Camera.h" />
     <ClInclude Include="graphics\CFont.h" />
     <ClInclude Include="graphics\GraphicsEngine.h" />
+    <ClInclude Include="graphics\IRenderObject.h" />
     <ClInclude Include="graphics\light\AmbientLight.h" />
     <ClInclude Include="graphics\light\DirectionLight.h" />
     <ClInclude Include="graphics\Shader.h" />
@@ -180,6 +181,8 @@
     <ClInclude Include="graphics\RenderTarget.h" />
     <ClInclude Include="graphics\ShadowMap.h" />
     <ClInclude Include="graphics\PostEffect\PostEffect.h" />
+    <ClInclude Include="graphics\RenderMachine.h" />
+    <ClInclude Include="graphics\RenderObjectManager.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="system\system.h" />
     <ClInclude Include="util\Util.h" />
@@ -225,6 +228,8 @@
     <ClCompile Include="graphics\RenderTarget.cpp" />
     <ClCompile Include="graphics\ShadowMap.cpp" />
     <ClCompile Include="graphics\PostEffect\PostEffect.cpp" />
+    <ClCompile Include="graphics\RenderMachine.cpp" />
+    <ClCompile Include="graphics\RenderObjectManager.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

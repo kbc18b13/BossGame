@@ -1,49 +1,42 @@
 #pragma once
 #include "light/DirectionLight.h"
 #include "light/AmbientLight.h"
-#include "ShadowMap.h"
-#include "RenderTarget.h"
-#include "PostEffect/PostEffect.h"
-/*!
- *@brief	グラフィックスエンジン。
- */
+
+//主に描画の開始と終了をつかさどるオブジェクトにしたい
 class GraphicsEngine
 {
 public:
 	GraphicsEngine();
 	~GraphicsEngine();
-	/*!
-	 *@brief	初期化。
-	 *@param[in]	hWnd		ウィンドウハンドル。
-	 */
+
+	//初期化。
 	void Init(HWND hWnd);
-	/*!
-	 *@brief	解放。
-	 */
+
+	//解放。
 	void Release();
-	/*!
-	 *@brief	D3D11デバイスを取得。
-	 */
+
+    //描画開始。
+    void BegineRender();
+
+    //描画終了。
+    void EndRender();
+
+    //フレームバッファへの描画前準備。
+    void BegineFrameBuffer();
+
+	//D3D11デバイスを取得。
 	ID3D11Device* GetD3DDevice()
 	{
 		return m_pd3dDevice;
 	}
-	/*!
-	 *@brief	D3D11デバイスコンテキストを取得。
-	 */
+
+	//D3D11デバイスコンテキストを取得。
 	ID3D11DeviceContext* GetD3DDeviceContext()
 	{
 		return m_pd3dDeviceContext;
 	}
-	/*!
-	 *@brief	描画開始。
-	 */
-	void BegineRender();
-	/*!
-	 *@brief	描画終了。
-	 */
-	void EndRender();
 
+    //ディレクションライト。
 	DirectionLight& GetDirectionLight() {
 		return m_dirLight;
 	}
@@ -52,18 +45,9 @@ public:
 		return m_ambientLight;
 	}
 
-    ShadowMap& GetShadowMap() {
-        return m_shadowMap;
-    }
 private:
 	DirectionLight m_dirLight;
 	AmbientLight m_ambientLight;
-
-    ShadowMap m_shadowMap;
-
-    RenderTarget m_defaultTarget;
-    Shader m_monoShader;
-    PostEffect m_postEffect;
 
 	D3D_FEATURE_LEVEL		m_featureLevel;				//Direct3D デバイスのターゲットとなる機能セット。
 	ID3D11Device*			m_pd3dDevice = NULL;		//D3D11デバイス。

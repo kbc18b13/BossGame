@@ -1,12 +1,13 @@
+#pragma once
 #include "Sprite.h"
 
-class SpriteRender : public IGameObject {
+class SpriteRender : public IRenderObject {
 public:
 
 	/// <summary>
 	/// •`‰æŠÖ”
 	/// </summary>
-	void Draw() override;
+	void Render() override;
 
 	/// <summary>
 	/// ‰Šú‰»ŠÖ”

@@ -1,4 +1,4 @@
-class SpriteRender;
+#include "graphics/SpriteRender.h"
 
 class Title : public IGameObject{
 public:
@@ -9,5 +9,5 @@ public:
 	void Update();
 
 private:
-	SpriteRender* backImage = nullptr;
+	SpriteRender backImage;
 };

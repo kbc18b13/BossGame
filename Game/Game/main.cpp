@@ -3,6 +3,7 @@
 #include "Actor/Player/Player.h"
 #include "level/Level.h"
 #include "Scene/Title.h"
+#include "graphics/RenderObjectManager.h"
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
@@ -19,6 +20,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera3D.SetTarget({ 0.0f, 20.0f, 0.0f });
 	g_camera3D.SetFar(10000.0f);
 
+    //レンダーオブジェクトマネージャーの初期化
+    g_ROManager.Init();
+
+    //ゲームオブジェクトマネージャーの初期化
 	GOManager().Init(10, 5);
 
 	NewGO<Title>(0);
@@ -39,8 +44,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		//ゲームオブジェクトマネージャーの更新。
 		GOManager().Update();
 		
-		//物理ワイヤーフレーム
-		g_physics.DebugDraw();
+        //描画開始。
+        g_graphicsEngine->BegineRender();
+
+        //描画オブジェクトの描画。
+        g_ROManager.Render();
 
 		//描画終了。
 		g_graphicsEngine->EndRender();

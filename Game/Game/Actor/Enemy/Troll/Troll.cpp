@@ -9,6 +9,7 @@
 #include "Act/ActChase.h"
 #include "Act/ActTackle.h"
 #include "Act/ActHip.h"
+#include "graphics/RenderObjectManager.h"
 
 Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/font.spritefont"){
     //ƒ‚ƒfƒ‹
@@ -48,6 +49,8 @@ Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/f
     //˜rƒRƒŠƒWƒ‡ƒ“
     Bone* arm = m_model.GetModel().GetSkeleton().GetBone(20);
     armCollision.Init(this, arm);
+
+    g_ROManager.AddHUDRender( this );
 }
 
 Troll::~Troll() {
@@ -78,6 +81,7 @@ void Troll::Update() {
     arg.changeAct = m_stateChangeFunc;
     m_activeAction->Continue(arg);
 
+    m_model.Update();
     armCollision.Update();
     Actor::Update();
 }
@@ -87,7 +91,7 @@ void Troll::SetPos(const CVector3 & pos) {
 	m_model.SetPos(pos);
 }
 
-void Troll::Draw() {
+void Troll::Render() {
 	m_font.Begine();
 	wchar_t str[10];
 	swprintf(str, L"%d", m_nowHP);

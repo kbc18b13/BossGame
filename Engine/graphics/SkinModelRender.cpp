@@ -1,52 +1,51 @@
 #include "stdafx.h"
 #include "SkinModelRender.h"
+#include "RenderObjectManager.h"
+
+SkinModelRender::SkinModelRender(){}
 
 
-SkinModelRender::SkinModelRender() {
+SkinModelRender::~SkinModelRender(){
+    if(m_isShadowCaster)g_ROManager.RemoveShadowCaster( this );
 }
 
-
-SkinModelRender::~SkinModelRender() {
-}
-
-void SkinModelRender::Init(const wchar_t * filePath, AnimationClip animClipList[], int numAnimClip,
-						   EnFbxUpAxis enFbxUpAxis) {
-	m_skinModel.Init(filePath, enFbxUpAxis);
-	if (numAnimClip != 0) {
-		m_animation.Init(m_skinModel, animClipList, numAnimClip);
-	}
-    SetShadowCast(true);
-}
-
-void SkinModelRender::SetShadowCast(bool isCast) {
-    if (isCast) {
-        if(!m_isShadowCaster) g_graphicsEngine->GetShadowMap().AddShadowCaster(this);
-    } else {
-        if(m_isShadowCaster) g_graphicsEngine->GetShadowMap().RemoveShadowCaster(this);
+void SkinModelRender::Init( const wchar_t * filePath,
+                            AnimationClip animClipList[],
+                            int numAnimClip,
+                            EnFbxUpAxis enFbxUpAxis,
+                            bool isShadowCaster ){
+    m_skinModel.Init( filePath, enFbxUpAxis );
+    if( numAnimClip != 0 ){
+        m_animation.Init( m_skinModel, animClipList, numAnimClip );
     }
-    m_isShadowCaster = isCast;
+
+    if( isShadowCaster ){
+        g_ROManager.AddShadowCaster( this );
+        m_isShadowCaster = true;
+    }
+    g_ROManager.AddDefaultRender( this );
 }
 
-void SkinModelRender::Update() {
-	m_animation.Update(GameTime::GetDeltaTime());
-	m_skinModel.UpdateWorldMatrix(m_pos, m_rot, m_scale);
-    for (auto& func : m_fookFuncs) {
+void SkinModelRender::Update(){
+    m_animation.Update( GameTime::GetDeltaTime() );
+    m_skinModel.UpdateWorldMatrix( m_pos, m_rot, m_scale );
+    for( auto& func : m_fookFuncs ){
         func->Update();
     }
 }
 
-void SkinModelRender::Draw() {
-	m_skinModel.Draw(
-		g_camera3D.GetViewMatrix(),
-		g_camera3D.GetProjectionMatrix()
-	);
+void SkinModelRender::Render(){
+    m_skinModel.Draw(
+        g_camera3D.GetViewMatrix(),
+        g_camera3D.GetProjectionMatrix()
+    );
 }
 
-void SkinModelRender::SetWorldMatrix(const CMatrix & wMat) {
-	m_pos = CVector3(wMat.v[3]);
-	float x = wMat.v[0].Length();
-	float y = wMat.v[1].Length();
-	float z = wMat.v[2].Length();
-	m_scale = CVector3(x, y, z);
-	m_rot.SetRotation(wMat);
+void SkinModelRender::SetWorldMatrix( const CMatrix & wMat ){
+    m_pos = CVector3( wMat.v[3] );
+    float x = wMat.v[0].Length();
+    float y = wMat.v[1].Length();
+    float z = wMat.v[2].Length();
+    m_scale = CVector3( x, y, z );
+    m_rot.SetRotation( wMat );
 }

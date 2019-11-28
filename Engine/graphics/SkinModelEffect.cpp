@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "graphics/SkinModelEffect.h"
 #include "graphics/SkinModelShaderConst.h"
+#include "RenderObjectManager.h"
 
 ModelEffect::ModelEffect() {
     m_psShader.Load("Assets/shader/model.fx", "PSMain", Shader::EnType::PS);
@@ -20,7 +21,7 @@ void __cdecl ModelEffect::Apply(ID3D11DeviceContext* deviceContext)
         deviceContext->VSSetShader((ID3D11VertexShader*)m_vsShader.GetBody(), NULL, 0);
         deviceContext->PSSetShader((ID3D11PixelShader*)m_psShader.GetBody(), NULL, 0);
 
-        auto shadowMapTex = g_graphicsEngine->GetShadowMap().GetShadowMapSRV();
+        auto shadowMapTex = g_ROManager.GetShadowMap().GetShadowMapSRV();
         deviceContext->PSSetShaderResources(enSkinModelSRVReg_ShadowMap, 1, &shadowMapTex);
         deviceContext->PSSetShaderResources(enSkinModelSRVReg_AlbedoTexture, 1, &m_albedoTex);
         break;

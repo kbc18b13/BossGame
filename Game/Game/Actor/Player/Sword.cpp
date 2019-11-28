@@ -66,6 +66,7 @@ void Sword::Update() {
 		m_collision.GetBody()->getWorldTransform().setOrigin(position);
 
 		m_model.SetWorldMatrix(worldMat);
+        m_model.Update();
 	}
 
 	//“G‚Ö‚Ìƒ_ƒ[ƒWˆ—
