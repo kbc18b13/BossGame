@@ -41,7 +41,6 @@ Player::Player() : Actor(10)
 
 	m_camera.SetVec({ 0, 80, -80 });
 
-	/*m_sword = NewGO<Sword>(2, m_model.GetModel().GetSkeleton().GetBone(L"Hand_L"), this);*/
     m_sword.Init(m_model.GetModel().GetSkeleton().GetBone(L"Hand_L"), this);
 	m_sword.SetOffset({ 12, 0, 0 });
 }
@@ -49,7 +48,6 @@ Player::Player() : Actor(10)
 
 Player::~Player()
 {
-	//DeleteGO(m_sword);
 }
 
 void Player::Update()

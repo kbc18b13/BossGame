@@ -39,6 +39,7 @@ void PhysicsWorld::setDebugDraw(bool isDraw) {
 void PhysicsWorld::DebugDraw() {
 	st_debugWire->DrawBegin();//ワイヤフレーム描画準備
 	dynamicWorld->debugDrawWorld();//デバッグワイヤーフレームの描画
+    st_debugWire->DrawEnd();//ワイヤフレーム描画終了。
 }
 
 void PhysicsWorld::Init()

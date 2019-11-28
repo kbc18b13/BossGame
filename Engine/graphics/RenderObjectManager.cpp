@@ -16,7 +16,7 @@ void RenderObjectManager::Init(){
     m_defaultTarget.Init( FRAME_BUFFER_W, FRAME_BUFFER_H, DXGI_FORMAT_R8G8B8A8_UNORM );
 
     //モノクロシェーダー
-    m_monoShader.Load( "Assets/shader/monochrome.fx", "PSMain", Shader::EnType::PS );
+    m_monoShader.Load( "Assets/shader/PostEffect.fx", "PSDefault", Shader::EnType::PS );
 }
 
 void RenderObjectManager::Render(){
@@ -27,7 +27,7 @@ void RenderObjectManager::Render(){
 
     //描画先を通常ターゲットへ。
     m_defaultTarget.SetToContext( dc );
-    m_defaultTarget.Clear(CVector4(0, 0, 0, 1));
+    m_defaultTarget.Clear(CVector4(0, 54.f/255, 106.f/255, 1));
 
     //通常描画オブジェクトの描画
     m_defaultRender.Render();

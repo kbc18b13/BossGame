@@ -24,9 +24,14 @@ PSInput VSMain(VSInput input) {
     return output;
 }
 
-float4 PSMain(PSInput input) : SV_Target{
+float4 PSMonochrome(PSInput input) : SV_Target{
     float4 col = Texture.Sample(Sampler, input.uv);
     //0.299*R + 0.587*G + 0.114*B
     float gray = dot(col.rgb, float3(0.299f, 0.587f, 0.114f));
     return float4(gray, gray, gray, 1);
+}
+
+float4 PSDefault( PSInput input ) : SV_Target{
+    float4 col = Texture.Sample( Sampler, input.uv );
+    return col;
 }

@@ -32,7 +32,7 @@ void PostEffect::Init() {
 
     g_graphicsEngine->GetD3DDevice()->CreateBuffer(&desc, &data, &vertexBuf);
 
-    vsShader.Load("Assets/shader/monochrome.fx", "VSMain", Shader::EnType::VS);
+    vsShader.Load("Assets/shader/PostEffect.fx", "VSMain", Shader::EnType::VS);
 }
 
 void PostEffect::DrawScreenRect(ID3D11PixelShader* pixelShader, ID3D11ShaderResourceView* srv) {
