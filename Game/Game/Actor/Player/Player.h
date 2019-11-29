@@ -2,6 +2,7 @@
 #include "Actor/Actor.h"
 #include "Camera/PlayerCamera.h"
 #include "Util/CharaConEx.h"
+#include "Sword.h"
 
 class Sword;
 class SkinModelRender;
@@ -28,6 +29,13 @@ public:
 		m_charaCon.SetPosition(pos);
 	}
 
+    /// <summary>
+    /// 加速させる
+    /// </summary>
+    void AddVelocity(const CVector3& pos) override {
+        m_charaCon.AddVelocity(pos);
+    }
+
 private:
 	void SlashEnd();
 
@@ -49,9 +57,9 @@ private:
 		enAnimNum
 	};
 	AnimationClip m_animClip[enAnimNum];        //アニメーションクリップ
-	SkinModelRender* m_model;                    //自分のモデル。
+	SkinModelRender m_model;                    //自分のモデル。
 
-	Sword* m_sword = nullptr;
+	Sword m_sword;
 
 	CharaConEx m_charaCon;             //キャラコン
 

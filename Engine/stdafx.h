@@ -1,5 +1,6 @@
 #pragma once
 
+//標準ライブラリ
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory>
@@ -13,6 +14,7 @@
 #include <functional>
 #include <algorithm>
 
+//BulletPhysics
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision\CollisionDispatch\btGhostObject.h"
 
@@ -23,12 +25,14 @@
 #include "DirectXTK/Inc/SpriteFont.h"
 #include "DirectXTK/Inc/DDSTextureLoader.h"
 
+//数学系
 #include "math/Vector.h"
 #include "math/Matrix.h"
 
 #include "physics/Physics.h"
 #include "HID/Pad.h"
 
+//グラフィック系
 #include "graphics/GraphicsEngine.h"
 
 #include "graphics/SkinModel.h"
@@ -46,6 +50,8 @@
 #include "gameTimer/GameTime.h"
 
 #include "util/Util.h"
+
+#include "graphics/SkinModelRender.h"
 
 const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
 const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。

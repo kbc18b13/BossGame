@@ -13,29 +13,26 @@ ActTackle::ActTackle(){
 }
 
 void ActTackle::Start(){
-	onJump = false;
-	first = true;
+    m_timer = 5.0f;
 }
 
 void ActTackle::Continue(ActArg& arg) {
-	CharaConEx* chara = arg.charaCon;
 
-	CVector3 pVec = arg.player->GetPos() - chara->GetPosition();
-	CVector3 sideVec;
-	sideVec.Cross(pVec, CVector3::Up());
+    CVector3 move = arg.player->GetPos() - arg.charaCon->GetPosition();
+    move.y = 0;
+    float moveLength = move.Length();
+    if (moveLength < 100) {
+        m_timer = 0;
+    } else {
+        move /= moveLength;
+        move *= 2;
+    }
+    arg.model->Play(int(AnimState::Tackle), 0.2f);
+    arg.model->SetPos(arg.charaCon->Excecute(move, false));
+    arg.model->SetRot(Util::LookRotXZ(move));
 
-	sideVec.Normalize();
-
-	arg.model->SetPos( chara->Excecute(sideVec, first));
-
-	first = false;
-
-	if(!onJump){
-		//ジャンプして空中にいる
-		if (!chara->OnGround()) {
-			onJump = true;
-		}
-	} else if(!chara->OnGround()){
-		arg.changeAct(ActState::Wait);
-	}
+    //タイマーが0を下回ったら終了
+    if (m_timer <= 0) {
+        arg.changeAct(ActState::Wait);
+    }
 }

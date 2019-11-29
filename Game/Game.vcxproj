@@ -103,6 +103,7 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Util\ActorHitCollision.cpp" />
     <ClCompile Include="Game\Actor\Actor.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActAttack.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActChase.cpp" />
@@ -125,8 +126,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Game\Util\CharaConEx.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll\TrollArmCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Util\ActorHitCollision.h" />
     <ClInclude Include="Game\Actor\Actor.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\Act.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActAttack.h" />
@@ -146,12 +149,14 @@
     <ClInclude Include="Game\Scene\Title.h" />
     <ClInclude Include="Game\stdafx.h" />
     <ClInclude Include="Game\Util\CharaConEx.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\TrollArmCollision.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Sword.fbx" />
     <MeshContentTask Include="Assets\modelData\TestChara.fbx" />
     <MeshContentTask Include="Assets\modelData\TestStage.fbx" />
     <MeshContentTask Include="Assets\modelData\TestTroll.fbx" />
+    <MeshContentTask Include="Assets\modelData\Troll.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.vcxproj">

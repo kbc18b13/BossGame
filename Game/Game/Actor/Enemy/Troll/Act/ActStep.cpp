@@ -20,13 +20,14 @@ void ActStep::Start(){
 void ActStep::Continue(ActArg& arg) {
 	CharaConEx* chara = arg.charaCon;
 
-	CVector3 pVec = arg.player->GetPos() - chara->GetPosition();
+	const CVector3 pVec = arg.player->GetPos() - chara->GetPosition();
 	CVector3 sideVec;
 	sideVec.Cross(pVec, CVector3::Up());
 
 	sideVec.Normalize();
 
 	arg.model->SetPos( chara->Excecute(sideVec, first));
+    arg.model->SetRot(Util::LookRotXZ(pVec));
 
 	first = false;
 
@@ -35,7 +36,7 @@ void ActStep::Continue(ActArg& arg) {
 		if (!chara->OnGround()) {
 			onJump = true;
 		}
-	} else if(!chara->OnGround()){
-		arg.changeAct(ActState::Wait);
+	} else if(chara->OnGround()){
+        arg.changeAct(ActState::Wait);
 	}
 }

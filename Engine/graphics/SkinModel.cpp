@@ -104,7 +104,7 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 	//スケルトンの更新。
 	m_skeleton.Update(m_worldMatrix);
 }
-void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
+void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMatrix)
 {
 	if (!m_isDraw) {
 		return;
@@ -127,6 +127,11 @@ void SkinModel::Draw(CMatrix viewMatrix, CMatrix projMatrix)
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
 	//ボーン行列をGPUに転送。
 	m_skeleton.SendBoneMatrixArrayToGPU();
+
+    m_modelDx->UpdateEffects([&](DirectX::IEffect* material) {
+        auto modelMaterial = static_cast<ModelEffect*>(material);
+        modelMaterial->SetRenderMode(renderMode);
+    });
 
 	//描画。
 	m_modelDx->Draw(

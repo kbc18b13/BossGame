@@ -49,6 +49,11 @@ public:
 	{
 		mat = m;
 	}
+
+    CMatrix(const DirectX::XMMATRIX& m) {
+        DirectX::XMStoreFloat4x4(&mat, m);
+    }
+
 	/*!
 	*@brief	‘ã“ü‰‰ZqB
 	*/

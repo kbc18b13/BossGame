@@ -7,8 +7,11 @@ class Player;
 
 class Sword : public IGameObject{
 public:
-	Sword(Bone* handBone, Player* p);
+	Sword(/*Bone* handBone, Player* p*/);
 	~Sword();
+
+    void Init(Bone* handBone, Player* p);
+
 	void SetOffset(const CVector3& offset) {
 		m_offset = offset;
 	}
@@ -21,8 +24,7 @@ private:
 
 	Bone* m_hand; //手のボーン
 
-	btGhostObject m_col;
-	SkinModelRender* m_model = nullptr;
+	SkinModelRender m_model;
 	BoxCollider		 m_collider;				//コライダー。
 	CollisionObject  m_collision;              //コリジョン。
 	CVector3 m_offset; //位置オフセット

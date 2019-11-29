@@ -14,18 +14,20 @@ GraphicsEngine::~GraphicsEngine()
 
 void GraphicsEngine::BegineRender()
 {
-	float ClearColor[4] = { 0.5f, 0.5f, 0.5f, 1.0f }; //red,green,blue,alpha
-													  //描き込み先をバックバッファにする。
-	m_pd3dDeviceContext->OMSetRenderTargets(1, &m_backBuffer, m_depthStencilView);
-	//バックバッファを灰色で塗りつぶす。
-	m_pd3dDeviceContext->ClearRenderTargetView(m_backBuffer, ClearColor);
-	m_pd3dDeviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
+
 void GraphicsEngine::EndRender()
 {
 	//バックバッファとフロントバッファを入れ替える。
 	m_pSwapChain->Present(2, 0);
 }
+
+void GraphicsEngine::BegineFrameBuffer(){
+    m_pd3dDeviceContext->OMSetRenderTargets( 1, &m_backBuffer, m_depthStencilView );
+    m_pd3dDeviceContext->RSSetViewports( 1, &m_viewport );
+    m_pd3dDeviceContext->ClearDepthStencilView( m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0 );
+}
+
 void GraphicsEngine::Release()
 {
 	if (m_rasterizerState != NULL) {
@@ -57,6 +59,7 @@ void GraphicsEngine::Release()
 		m_pd3dDevice = NULL;
 	}
 }
+
 void GraphicsEngine::Init(HWND hWnd)
 {
 	//スワップチェインを作成するための情報を設定する。
@@ -142,14 +145,13 @@ void GraphicsEngine::Init(HWND hWnd)
 	//ラスタライザとビューポートを初期化。
 	m_pd3dDevice->CreateRasterizerState(&desc, &m_rasterizerState);
 
-	D3D11_VIEWPORT viewport;
-	viewport.Width = FRAME_BUFFER_W;
-	viewport.Height = FRAME_BUFFER_H;
-	viewport.TopLeftX = 0;
-	viewport.TopLeftY = 0;
-	viewport.MinDepth = 0.0f;
-	viewport.MaxDepth = 1.0f;
-	m_pd3dDeviceContext->RSSetViewports(1, &viewport);
+	m_viewport.Width = FRAME_BUFFER_W;
+	m_viewport.Height = FRAME_BUFFER_H;
+	m_viewport.TopLeftX = 0;
+	m_viewport.TopLeftY = 0;
+	m_viewport.MinDepth = 0.0f;
+	m_viewport.MaxDepth = 1.0f;
+	m_pd3dDeviceContext->RSSetViewports(1, &m_viewport);
 	m_pd3dDeviceContext->RSSetState(m_rasterizerState);
 
 	m_dirLight.Init(1);

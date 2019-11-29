@@ -1,46 +1,42 @@
 #pragma once
 #include "light/DirectionLight.h"
 #include "light/AmbientLight.h"
-/*!
- *@brief	グラフィックスエンジン。
- */
+
+//主に描画の開始と終了をつかさどるオブジェクトにしたい
 class GraphicsEngine
 {
 public:
 	GraphicsEngine();
 	~GraphicsEngine();
-	/*!
-	 *@brief	初期化。
-	 *@param[in]	hWnd		ウィンドウハンドル。
-	 */
+
+	//初期化。
 	void Init(HWND hWnd);
-	/*!
-	 *@brief	解放。
-	 */
+
+	//解放。
 	void Release();
-	/*!
-	 *@brief	D3D11デバイスを取得。
-	 */
+
+    //描画開始。
+    void BegineRender();
+
+    //描画終了。
+    void EndRender();
+
+    //フレームバッファへの描画前準備。
+    void BegineFrameBuffer();
+
+	//D3D11デバイスを取得。
 	ID3D11Device* GetD3DDevice()
 	{
 		return m_pd3dDevice;
 	}
-	/*!
-	 *@brief	D3D11デバイスコンテキストを取得。
-	 */
+
+	//D3D11デバイスコンテキストを取得。
 	ID3D11DeviceContext* GetD3DDeviceContext()
 	{
 		return m_pd3dDeviceContext;
 	}
-	/*!
-	 *@brief	描画開始。
-	 */
-	void BegineRender();
-	/*!
-	 *@brief	描画終了。
-	 */
-	void EndRender();
 
+    //ディレクションライト。
 	DirectionLight& GetDirectionLight() {
 		return m_dirLight;
 	}
@@ -48,6 +44,7 @@ public:
 	AmbientLight& GetAmbientLight() {
 		return m_ambientLight;
 	}
+
 private:
 	DirectionLight m_dirLight;
 	AmbientLight m_ambientLight;
@@ -60,6 +57,7 @@ private:
 	ID3D11RasterizerState*	m_rasterizerState = NULL;	//ラスタライザステート。
 	ID3D11Texture2D*		m_depthStencil = NULL;		//デプスステンシル。
 	ID3D11DepthStencilView* m_depthStencilView = NULL;	//デプスステンシルビュー。
+    D3D11_VIEWPORT m_viewport;
 
 };
 

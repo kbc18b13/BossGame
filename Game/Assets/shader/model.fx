@@ -11,6 +11,9 @@ Texture2D<float4> albedoTexture : register(t0);
 //ボーン行列
 StructuredBuffer<float4x4> boneMatrix : register(t1);
 
+//シャドウマップ。
+Texture2D<float4> shadowMap : register(t2);
+
 /////////////////////////////////////////////////////////////
 // SamplerState
 /////////////////////////////////////////////////////////////
@@ -44,6 +47,11 @@ cbuffer PSCbDir : register(b1) {
 cbuffer PSCbAmb : register(b2) {
 	float4 mAmbColor;
 };
+
+//シャドウマップ用行列
+cbuffer ShadowCamera : register(b6) {
+    float4x4 mShadowVP;
+}
 
 /////////////////////////////////////////////////////////////
 //各種構造体
@@ -79,7 +87,8 @@ struct PSInput{
 	float3 Normal		: NORMAL;
 	float3 Tangent		: TANGENT;
 	float2 TexCoord 	: TEXCOORD0;
-	float3 worldPos : WORLD;
+	float3 worldPos     : WORLD;
+    float4 shadowPos     : SHADOW;
 };
 /*!
  *@brief	スキン行列を計算。
@@ -107,6 +116,9 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 	float4 pos = mul(mWorld, In.Position);
 
 	psInput.worldPos = pos.xyz;
+
+    //シャドウマップUV
+    psInput.shadowPos = mul(mShadowVP, pos);
 
 	pos = mul(mView, pos);
 	pos = mul(mProj, pos);
@@ -153,6 +165,9 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 	
 	psInput.worldPos = pos.xyz;
 
+    //シャドウマップUV
+    psInput.shadowPos = mul(mShadowVP, pos);
+
 	pos = mul(mView, pos);
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
@@ -181,5 +196,17 @@ float4 PSMain( PSInput In ) : SV_Target0
 	}
 
 	sum += color * mAmbColor;
+    //シャドウマップ
+    {
+        float3 shadowPos2 = In.shadowPos.xyz / In.shadowPos.w;
+        shadowPos2.xy *= float2(0.5f, -0.5f);
+        shadowPos2.xy += 0.5f;
+        float mapDepth = shadowMap.Sample(Sampler, shadowPos2.xy).r;
+        if (0 <= shadowPos2.x && shadowPos2.x <= 1
+            && 0 <= shadowPos2.y && shadowPos2.y <= 1
+            && mapDepth + 0.001f < shadowPos2.z) {
+            sum.rgb /= 4;
+        }
+    }
 	return sum;
 }

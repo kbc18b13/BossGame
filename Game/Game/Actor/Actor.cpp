@@ -5,7 +5,7 @@ Actor::Actor(UINT maxHP) : m_maxHP(maxHP) , m_nowHP(maxHP){}
 
 Actor::~Actor() {}
 
-void Actor::Damage(Attack& atk) {
+bool Actor::Damage(Attack& atk) {
 	if (dmg.TryAttack(atk)) {
 
 		if (m_nowHP < atk.damage) {
@@ -13,5 +13,7 @@ void Actor::Damage(Attack& atk) {
 		} else {
 			m_nowHP -= atk.damage;
 		}
+        return true;
 	}
+    return false;
 }

@@ -21,7 +21,7 @@ void GameObjectManager::Init(UINT defArraySize, UINT defPrioSize) {
 }
 
 void GameObjectManager::Update() {
-	{
+	{//新しいオブジェクトを追加
 		UINT index = 0;
 		for (std::vector<IGameObject*>& prioArray : m_newGOArray) {
 			for (IGameObject* go : prioArray) {
@@ -33,18 +33,11 @@ void GameObjectManager::Update() {
 		}
 	}
 
+    //アップデート
 	for (std::vector<IGameObject*>& prioArray : m_goArray) {
 		for (IGameObject* go : prioArray) {
 			if (!go->isRemoved) {
 				go->Update();
-			}
-		}
-	}
-
-	for (std::vector<IGameObject*>& prioArray : m_goArray) {
-		for (IGameObject* go : prioArray) {
-			if (!go->isRemoved) {
-				go->Draw();
 			}
 		}
 	}

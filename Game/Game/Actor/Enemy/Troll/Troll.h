@@ -2,11 +2,12 @@
 #include "Actor/Actor.h"
 #include "graphics/CFont.h"
 #include "Util/CharaConEx.h"
+#include "TrollArmCollision.h"
 class SkinModelRender;
 class Stage1;
 class Act;
 
-class Troll: public Actor {
+class Troll: public Actor , public IRenderObject{
 public:
 	//関数
 	Troll(Stage1* stage);
@@ -14,13 +15,20 @@ public:
 
 	void Start() override;
 	void Update() override;
-	void Draw() override;
+	void Render() override;
 
 	void SetPos(const CVector3& pos) override;
 
 	CVector3 GetPos() const override {
 		return m_CharaCon.GetPosition();
 	}
+
+    /// <summary>
+    /// 加速させる
+    /// </summary>
+    void AddVelocity(const CVector3& pos) override {
+        m_CharaCon.AddVelocity(pos);
+    }
 
 	//列挙
 	enum class AnimState {
@@ -29,6 +37,8 @@ public:
 		JumpUp,
 		JumpDown,
 		Idle,
+        Tackle,
+        Hip,
 		Num
 	};
 
@@ -37,6 +47,8 @@ public:
 		Chase,
 		Attack,
 		Step,
+        Tackle,
+        Hip,
 		Num,
 	};
 
@@ -54,9 +66,9 @@ private:
 
 	CharaConEx m_CharaCon;
 	AnimationClip m_animClip[int(AnimState::Num)];//アニメーションクリップ
-	SkinModelRender* m_model = nullptr;//モデル
+	SkinModelRender m_model;//モデル
 
 	CFont m_font;
 
-	friend class Act;
+    TrollArmCollision armCollision;
 };

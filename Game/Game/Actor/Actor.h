@@ -6,11 +6,16 @@ class Actor : public IGameObject{
 public:
 	Actor(UINT maxHP = 1);
 	virtual ~Actor();
+    
+    void Update() {
+        dmg.Update();
+    }
 
 	virtual void SetPos(const CVector3& pos) = 0;
 	virtual CVector3 GetPos() const = 0;
+    virtual void AddVelocity(const CVector3& v) = 0;
 
-	void Damage(Attack& atk);
+	bool Damage(Attack& atk);
 
 	UINT GetNowHP() {
 		return m_nowHP;

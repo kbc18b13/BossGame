@@ -39,8 +39,8 @@ namespace {
 				isHit = true;
 				CVector3 hitPosTmp = *(CVector3*)&convexResult.m_hitPointLocal;
 				//衝突点の距離を求める。。
-				CVector3 vDist;
-				vDist.Subtract(hitPosTmp, startPos);
+                CVector3 vDist = hitPosTmp - startPos;
+
 				float distTmp = vDist.Length();
 				if (dist > distTmp) {
 					//この衝突点の方が近いので、最近傍の衝突点を更新する。
@@ -80,8 +80,7 @@ namespace {
 				CVector3 hitPosTmp;
 				hitPosTmp.Set(convexResult.m_hitPointLocal);
 				//交点との距離を調べる。
-				CVector3 vDist;
-				vDist.Subtract(hitPosTmp, startPos);
+				CVector3 vDist = hitPosTmp - startPos;
 				vDist.y = 0.0f;
 				float distTmp = vDist.Length();
 				if (distTmp < dist) {
@@ -142,8 +141,7 @@ const CVector3& CharacterController::Execute(float deltaTime, CVector3& moveSpee
 		int loopCount = 0;
 		while (true) {
 			//現在の座標から次の移動先へ向かうベクトルを求める。
-			CVector3 addPos;
-			addPos.Subtract(nextPosition, m_position);
+			CVector3 addPos = nextPosition - m_position;
 			CVector3 addPosXZ = addPos;
 			addPosXZ.y = 0.0f;
 			if (addPosXZ.Length() < FLT_EPSILON) {
@@ -228,8 +226,7 @@ const CVector3& CharacterController::Execute(float deltaTime, CVector3& moveSpee
 	m_position.z = nextPosition.z;
 	//下方向を調べる。
 	{
-		CVector3 addPos;
-		addPos.Subtract(nextPosition, m_position);
+		CVector3 addPos = nextPosition - m_position;
 
 		m_position = nextPosition;	//移動の仮確定。
 									//レイを作成する。
