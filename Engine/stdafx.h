@@ -55,5 +55,6 @@
 
 const float FRAME_BUFFER_W = 1280.0f;				//フレームバッファの幅。
 const float FRAME_BUFFER_H = 720.0f;				//フレームバッファの高さ。
+const DXGI_FORMAT FRAME_BUFFER_FORMAT = DXGI_FORMAT_R8G8B8A8_UNORM; //フレームバッファのフォーマット。
 
 static const int MAX_BONE = 512;	//!<ボーンの最大数。

@@ -136,6 +136,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="graphics\Parts\ConstantBuffer.h" />
+    <ClInclude Include="graphics\PostEffect\Blur.h" />
+    <ClInclude Include="graphics\PostEffect\Bloom.h" />
     <ClInclude Include="character\CharacterController.h" />
     <ClInclude Include="gameObject\GameObjectManager.h" />
     <ClInclude Include="gameObject\IGameObject.h" />
@@ -188,6 +191,9 @@
     <ClInclude Include="util\Util.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="graphics\Parts\ConstantBuffer.cpp" />
+    <ClCompile Include="graphics\PostEffect\Blur.cpp" />
+    <ClCompile Include="graphics\PostEffect\Bloom.cpp" />
     <ClCompile Include="character\CharacterController.cpp" />
     <ClCompile Include="gameObject\GameObjectManager.cpp" />
     <ClCompile Include="gameObject\IGameObject.cpp" />

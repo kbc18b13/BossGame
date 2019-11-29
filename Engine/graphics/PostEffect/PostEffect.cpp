@@ -35,7 +35,9 @@ void PostEffect::Init() {
     vsShader.Load("Assets/shader/PostEffect.fx", "VSMain", Shader::EnType::VS);
 }
 
-void PostEffect::DrawScreenRect(ID3D11PixelShader* pixelShader, ID3D11ShaderResourceView* srv) {
+void PostEffect::DrawScreenRect( ID3D11ShaderResourceView* srv,
+                                 ID3D11PixelShader* pixelShader,
+                                 ID3D11VertexShader* vertexShader = nullptr ) {
     ID3D11DeviceContext* dc = g_graphicsEngine->GetD3DDeviceContext();
     UINT stride = sizeof(float) * (2 + 2);
     UINT zero = 0;
@@ -43,7 +45,10 @@ void PostEffect::DrawScreenRect(ID3D11PixelShader* pixelShader, ID3D11ShaderReso
     dc->PSSetShader(pixelShader, nullptr, 0);
     dc->PSSetShaderResources(0, 1, &srv);
 
-    dc->VSSetShader((ID3D11VertexShader*)vsShader.GetBody(), nullptr, 0);
+    if( vertexShader == nullptr ){
+        vertexShader = (ID3D11VertexShader*)vsShader.GetBody();
+    }
+    dc->VSSetShader( vertexShader, nullptr, 0);
 
     dc->IASetInputLayout(vsShader.GetInputLayout());
     dc->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);

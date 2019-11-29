@@ -3,6 +3,7 @@
 #include "ShadowMap.h"
 #include "RenderMachine.h"
 #include "PostEffect/PostEffect.h"
+#include "PostEffect/Blur.h"
 
 class RenderObjectManager;
 
@@ -59,5 +60,6 @@ private:
     //ポストエフェクト
     PostEffect m_postEffect;
     Shader m_monoShader;
+    Blur m_blur;
 };
 
