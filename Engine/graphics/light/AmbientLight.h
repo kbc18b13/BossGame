@@ -1,4 +1,5 @@
 #pragma once
+#include "graphics\Parts\ConstantBuffer.h"
 
 class AmbientLight {
 public:
@@ -12,7 +13,7 @@ public:
 	void Apply();
 
 private:
-	ID3D11Buffer* m_CBuf;
+	ConstantBuffer m_CBuf;
 	UINT m_bufferNum;
 	CVector4 m_color;
 };

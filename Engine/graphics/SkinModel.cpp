@@ -4,10 +4,6 @@
 
 SkinModel::~SkinModel()
 {
-	if (m_cb != nullptr) {
-		//定数バッファを解放。
-		m_cb->Release();
-	}
 	if (m_samplerState != nullptr) {
 		//サンプラステートを解放。
 		m_samplerState->Release();
@@ -55,18 +51,8 @@ void SkinModel::InitConstantBuffer()
 {
 	//作成するバッファのサイズをsizeof演算子で求める。
 	int bufferSize = sizeof(SVSConstantBuffer);
-	//どんなバッファを作成するのかをせてbufferDescに設定する。
-	D3D11_BUFFER_DESC bufferDesc;
-	ZeroMemory(&bufferDesc, sizeof(bufferDesc));				//０でクリア。
-	bufferDesc.Usage = D3D11_USAGE_DEFAULT;						//バッファで想定されている、読み込みおよび書き込み方法。
-	bufferDesc.ByteWidth = (((bufferSize - 1) / 16) + 1) * 16;	//バッファは16バイトアライメントになっている必要がある。
-																//アライメントって→バッファのサイズが16の倍数ということです。
-	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;			//バッファをどのようなパイプラインにバインドするかを指定する。
-																//定数バッファにバインドするので、D3D11_BIND_CONSTANT_BUFFERを指定する。
-	bufferDesc.CPUAccessFlags = 0;								//CPU アクセスのフラグです。
-																//CPUアクセスが不要な場合は0。
-	//作成。
-	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_cb);
+	bufferSize = ( ( ( bufferSize - 1 ) / 16 ) + 1 ) * 16;
+	m_cb.Init( bufferSize, false );
 }
 void SkinModel::InitSamplerState()
 {
@@ -119,10 +105,10 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 	vsCb.mWorld = m_worldMatrix;
 	vsCb.mProj = projMatrix;
 	vsCb.mView = viewMatrix;
-	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
+	m_cb.UpdateData( &vsCb );
 	//定数バッファをGPUに転送。
-	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
-	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
+	m_cb.SetToContext( ShaderType::VS, 0 );
+	m_cb.SetToContext( ShaderType::PS, 0 );
 	//サンプラステートを設定。
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
 	//ボーン行列をGPUに転送。

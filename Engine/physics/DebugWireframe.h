@@ -1,4 +1,6 @@
+#pragma once
 #include "graphics/Shader.h"
+#include "graphics/Parts/ConstantBuffer.h"
 
 class DebugWireframe : public btIDebugDraw {
     struct Vertex{
@@ -6,7 +8,7 @@ class DebugWireframe : public btIDebugDraw {
         CVector3 col;
     };
 
-	ID3D11Buffer* m_cBuf;//定数バッファ
+	ConstantBuffer m_cBuf;//定数バッファ
 	ID3D11Buffer* m_vBuf;//頂点バッファ
 	Shader m_pShader;//ピクセルシェーダー
 	Shader m_vShader;//頂点シェーダー

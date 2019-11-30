@@ -1,5 +1,6 @@
 #pragma once
 #include "SpriteEffect.h"
+#include "Parts/ConstantBuffer.h"
 
 class Sprite {
 public:
@@ -47,7 +48,7 @@ private:
 	SpriteEffect m_effect;                    //テクスチャやシェーダーなど
 	ID3D11Buffer* m_vertex;                   //頂点バッファ
 	CMatrix m_worldMat = CMatrix::Identity(); //ワールド行列(CPU)
-	ID3D11Buffer* m_worldMatBuf;              //ワールド行列(GPU)
+	ConstantBuffer m_worldMatBuf;              //ワールド行列(GPU)
     UINT m_width = 0;
     UINT m_height = 0;
 };

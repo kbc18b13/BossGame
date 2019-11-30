@@ -60,6 +60,6 @@ private:
     //ポストエフェクト
     PostEffect m_postEffect;
     Shader m_monoShader;
-    Blur m_blur;
+    //Blur m_blur;
 };
 

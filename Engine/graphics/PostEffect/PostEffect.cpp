@@ -37,7 +37,7 @@ void PostEffect::Init() {
 
 void PostEffect::DrawScreenRect( ID3D11ShaderResourceView* srv,
                                  ID3D11PixelShader* pixelShader,
-                                 ID3D11VertexShader* vertexShader = nullptr ) {
+                                 ID3D11VertexShader* vertexShader) {
     ID3D11DeviceContext* dc = g_graphicsEngine->GetD3DDeviceContext();
     UINT stride = sizeof(float) * (2 + 2);
     UINT zero = 0;

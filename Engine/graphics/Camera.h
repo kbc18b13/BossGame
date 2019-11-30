@@ -1,4 +1,7 @@
 #pragma once
+
+#include "graphics/Parts/ConstantBuffer.h"
+
 class Camera
 {
 public:
@@ -102,7 +105,7 @@ private:
 	float m_far = 10000.0f;							//遠い平面までの距離。
 	float m_near = 1.0f;							//近平面までの距離。
 
-	ID3D11Buffer* m_cbuffer;
+	ConstantBuffer m_cbuffer;
 };
 
 extern Camera g_camera3D;		//!<3Dカメラ。

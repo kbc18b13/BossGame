@@ -15,7 +15,6 @@ Sprite::Sprite() {
 
 Sprite::~Sprite() {
 	m_vertex->Release();
-	m_worldMatBuf->Release();
 }
 
 void Sprite::Init(const wchar_t * path, UINT width, UINT height) {
@@ -56,12 +55,8 @@ void Sprite::Init(const wchar_t * path, UINT width, UINT height) {
 		abort();
 	}
 
-	desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	desc.ByteWidth = sizeof(CMatrix);
 	m_worldMat.MakeScaling({ 1 / FRAME_BUFFER_W, 1 / FRAME_BUFFER_H, 1 });
-	data.pSysMem = &m_worldMat;
-	result = g_graphicsEngine->GetD3DDevice()->CreateBuffer(&desc, &data, &m_worldMatBuf);
-	if (FAILED(result))abort();
+	m_worldMatBuf.Init( sizeof( CMatrix ), false , &m_worldMat);
 }
 
 void Sprite::Draw() {
@@ -71,7 +66,7 @@ void Sprite::Draw() {
 	m_effect.Apply(context);
 	context->IASetVertexBuffers(0, 1, &m_vertex, &stride, &zero);
 	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	context->VSSetConstantBuffers(0, 1, &m_worldMatBuf);
+	m_worldMatBuf.SetToContext( ShaderType::VS, 0 );
 	context->Draw(4, 0);
 }
 
@@ -91,5 +86,5 @@ void Sprite::UpdateWorldMatrix(const CVector2 & pos, const CVector2 & scale, con
 
 	m_worldMat.Mul(m_worldMat, projMat);
 
-	g_graphicsEngine->GetD3DDeviceContext()->UpdateSubresource(m_worldMatBuf, 0, nullptr, &m_worldMat, 0, 0);
+	m_worldMatBuf.UpdateData( &m_worldMat );
 }
