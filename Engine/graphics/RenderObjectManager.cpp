@@ -37,13 +37,14 @@ void RenderObjectManager::Render(){
     //物理ワイヤーフレーム
     g_physics.DebugDraw();
 
-    m_blur.ApplyEffect( m_defaultTarget.GetRenderTargetSRV(), m_postEffect );
+	m_blur.SetSource( m_defaultTarget.GetRenderTargetSRV() );
+    m_blur.ApplyEffect( m_postEffect );
 
     //描画先をフレームバッファへ。
     g_graphicsEngine->BegineFrameBuffer();
 
     //ポストエフェクト適用。
-    m_postEffect.DrawScreenRect( m_blur.GetSRV(), (ID3D11PixelShader*)m_monoShader.GetBody());
+    m_postEffect.DrawScreenRect( m_blur.GetResult(), (ID3D11PixelShader*)m_monoShader.GetBody());
 
     //HUD描画オブジェクトの描画。
     m_HUDRender.Render();

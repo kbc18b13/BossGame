@@ -38,7 +38,7 @@ void Blur::Init( UINT sourceWidth, UINT sourceHeight, DXGI_FORMAT format ){
 	m_weightCB.Init( Util::AlignSize( sizeof( data ), 16 ), false, &data );
 }
 
-void Blur::ApplyEffect( ID3D11ShaderResourceView* srv, PostEffect& postEffect ){
+void Blur::ApplyEffect(PostEffect& postEffect ){
 	ID3D11DeviceContext* dc = g_graphicsEngine->GetD3DDeviceContext();
 
 	using VS = ID3D11VertexShader;
@@ -50,7 +50,7 @@ void Blur::ApplyEffect( ID3D11ShaderResourceView* srv, PostEffect& postEffect ){
 	//横ブラー
 	m_widthBlurTarget.Clear( CVector4( 0, 0, 0, 1 ) );
 	m_widthBlurTarget.SetToContext( dc );
-	postEffect.DrawScreenRect( srv, (PS*)m_pShader.GetBody(), (VS*)m_vShaderX.GetBody() );
+	postEffect.DrawScreenRect( m_source, (PS*)m_pShader.GetBody(), (VS*)m_vShaderX.GetBody() );
 
 	//縦ブラー
 	m_lastBlurTarget.Clear( CVector4( 0, 0, 0, 1 ) );

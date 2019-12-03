@@ -1,5 +1,6 @@
 #pragma once
 #include "..\RenderTarget.h"
+#include "Blur.h"
 
 class Bloom{
 public:
@@ -7,11 +8,25 @@ public:
     ~Bloom();
 
     void Init();
-    void ApplyEffect();
+	void SetSource( ID3D11ShaderResourceView* srv ){
+		m_source = srv;
+	}
+    void ApplyEffect( PostEffect& postEffect );
 
 private:
-    static constexpr UINT progressNum = 4;
-    RenderTarget progressTargets[progressNum]; //ダウンサンプリング用ターゲット
-    RenderTarget lastPlusTarget; //最終加算合成用ターゲット
+	ID3D11ShaderResourceView* m_source; //ブルームの対象
+
+	RenderTarget luminanceTarget; //輝度抽出用ターゲット
+	Shader luminanceShader; //輝度抽出用シェーダー
+
+    static constexpr UINT downSumpleNum = 4;
+	ID3D11ShaderResourceView* downResources[downSumpleNum]; //ダウンサンプリングソース
+	Blur downSumples[downSumpleNum];//ダウンサンプリング用ブラーオブジェクト
+
+    RenderTarget hurfTarget; //ダウンサンプルの平均をフレームの半分サイズのターゲットに描く
+	Shader hurfShader; //それ用のシェーダー
+
+	ID3D11BlendState
+	Shader lastShader; //最後に加算合成をするシェーダー
 };
 

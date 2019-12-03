@@ -9,9 +9,13 @@ public:
     ~Blur();
 
     void Init( UINT sourceWidth, UINT sourceHeight, DXGI_FORMAT format);
-    void ApplyEffect(ID3D11ShaderResourceView* srv, PostEffect& postEffect);
+    void ApplyEffect(PostEffect& postEffect);
 
-    ID3D11ShaderResourceView* GetSRV(){
+	void SetSource( ID3D11ShaderResourceView* srv ){
+		m_source = srv;
+	}
+
+    ID3D11ShaderResourceView* GetResult(){
         return m_lastBlurTarget.GetRenderTargetSRV();
     }
 
@@ -30,5 +34,7 @@ private:
 		float height;
 	};
 	ConstantBuffer m_weightCB;
+
+	ID3D11ShaderResourceView* m_source; //ダウンサンプルの対象
 };
 
