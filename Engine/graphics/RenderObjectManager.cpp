@@ -18,7 +18,7 @@ void RenderObjectManager::Init(){
     //モノクロシェーダー
     m_monoShader.Load( "Assets/shader/PostEffect.fx", "PSDefault", Shader::EnType::PS );
 
-    //m_blur.Init( FRAME_BUFFER_W, FRAME_BUFFER_H, FRAME_BUFFER_FORMAT );
+    m_blur.Init( FRAME_BUFFER_W, FRAME_BUFFER_H, FRAME_BUFFER_FORMAT );
 }
 
 void RenderObjectManager::Render(){
@@ -37,13 +37,13 @@ void RenderObjectManager::Render(){
     //物理ワイヤーフレーム
     g_physics.DebugDraw();
 
-    //m_blur.ApplyEffect( m_defaultTarget.GetRenderTargetSRV(), m_postEffect );
+    m_blur.ApplyEffect( m_defaultTarget.GetRenderTargetSRV(), m_postEffect );
 
     //描画先をフレームバッファへ。
     g_graphicsEngine->BegineFrameBuffer();
 
     //ポストエフェクト適用。
-    m_postEffect.DrawScreenRect( m_defaultTarget.GetRenderTargetSRV(), (ID3D11PixelShader*)m_monoShader.GetBody());
+    m_postEffect.DrawScreenRect( m_blur.GetSRV(), (ID3D11PixelShader*)m_monoShader.GetBody());
 
     //HUD描画オブジェクトの描画。
     m_HUDRender.Render();

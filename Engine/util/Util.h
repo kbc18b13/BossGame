@@ -37,6 +37,11 @@ public:
 	//ランダムなfloat値を返す。範囲にendは含めない。
 	static int RandomFloat(float begine, float end);
 
+	//Yを無視して指定場所を向かせる回転を与える。
 	static CQuaternion LookRotXZ(CVector3 lookVec, CVector3 nowFront = CVector3::AxisZ());
+
+	static constexpr size_t AlignSize(size_t size , UINT multiple ){
+		return ( ( ( size - 1 ) / multiple ) + 1 ) * multiple;
+	}
 };
 

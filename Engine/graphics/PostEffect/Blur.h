@@ -1,6 +1,7 @@
 #pragma once
 #include "..\RenderTarget.h"
 #include "PostEffect.h"
+#include "graphics/Parts/ConstantBuffer.h"
 
 class Blur{
 public:
@@ -22,6 +23,12 @@ private:
     Shader m_vShaderY;
     Shader m_pShader;
 
-    ID3D11Buffer* m_weightCB;
+	static constexpr int blurRange = 8; //ƒuƒ‰[‚ÌL‚³
+	struct CBData{
+		float weights[blurRange];
+		float width;
+		float height;
+	};
+	ConstantBuffer m_weightCB;
 };
 

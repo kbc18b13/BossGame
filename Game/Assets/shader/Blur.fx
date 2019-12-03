@@ -15,7 +15,7 @@ struct VSInput
 };
 
 //ブラーの広さ
-static const int blurRange = 7;
+static const int blurRange = 8;
 //ピクセル入力
 struct PSInput
 {
@@ -24,20 +24,17 @@ struct PSInput
 	float2 uv[blurRange]: UV_ARRAY;
 };
 
-cbuffer Weight: register( b0 )
+cbuffer blurCB: register( b0 )
 {
-	float weight[blurRange];
+	float4 weight[blurRange/4];
+    float width;
+    float height;
 }
 
 PSInput VSBlurX( VSInput input )
 {
 	PSInput output;
 	output.pos = float4( input.pos, 0.5f, 1 );
-
-	float width;
-	float height;
-    //輝度テクスチャのサイズを取得する。
-	Texture.GetDimensions( width, height );
 	
 	output.center = input.uv;
 	
@@ -54,11 +51,6 @@ PSInput VSBlurY( VSInput input )
 	PSInput output;
 	output.pos = float4( input.pos, 0.5f, 1 );
 
-	float width;
-	float height;
-    //輝度テクスチャのサイズを取得する。
-	Texture.GetDimensions( width, height );
-
 	output.center = input.uv;
 	
     [unroll]
@@ -74,10 +66,13 @@ float4 PSBlur( PSInput input ): SV_Target
 	float4 col = float4( 0, 0, 0, 0 );
 	
 	[unroll]
-	for( int i = 0; i < blurRange; i++ )
+	for( int i = 0; i < blurRange/4; i++ )
 	{
-		col += weight[i] * ( Texture.Sample( Sampler, input.center + input.uv[i] ) +
-							 Texture.Sample( Sampler, input.center - input.uv[i] ) );
+        [unroll]
+        for(int j = 0; j < 4; j++){
+		    col += weight[i][j] * ( Texture.Sample( Sampler, input.center + input.uv[i*4+j] ) +
+							     Texture.Sample( Sampler, input.center - input.uv[i*4+j] ) );
+        }
 	}
 	
 	return col;
