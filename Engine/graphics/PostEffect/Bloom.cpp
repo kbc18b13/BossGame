@@ -12,7 +12,7 @@ void Bloom::Init(){
     UINT h = FRAME_BUFFER_H;
 
 	//輝度抽出用ターゲットを初期化
-	luminanceTarget.Init( w, h, FRAME_BUFFER_FORMAT );
+	luminanceTarget.Init( w, h, DXGI_FORMAT_R16G16B16A16_FLOAT );
 	//輝度抽出用シェーダーを初期化
 	luminanceShader.Load( "Assets/shader/Bloom.fx", "PSluminance", Shader::EnType::PS );
 
@@ -24,7 +24,7 @@ void Bloom::Init(){
     //ダウンサンプリング用ターゲットを初期化
 	ID3D11ShaderResourceView* srv = luminanceTarget.GetRenderTargetSRV();
     for( Blur& bl : downSumples ){
-		bl.Init( w, h, FRAME_BUFFER_FORMAT );
+		bl.Init( w, h, DXGI_FORMAT_R16G16B16A16_FLOAT );
 		bl.SetSource( srv );
 		srv = bl.GetResult();
         w /= 2;

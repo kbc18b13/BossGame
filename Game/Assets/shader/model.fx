@@ -29,6 +29,7 @@ cbuffer VSCb : register(b0){
 	float4x4 mWorld;
 	float4x4 mView;
 	float4x4 mProj;
+    float3 mEmissionColor;
 };
 
 
@@ -191,11 +192,12 @@ float4 PSMain( PSInput In ) : SV_Target0
 			float3 refVec = dir + 2 * (In.Normal * dot(In.Normal, -dir));
 			float3 eyeLine = normalize(In.worldPos - eyePos);
 			float specPower = max(dot(refVec, -eyeLine), 0);
-			sum += pow(specPower, 10) * (mLightColor[0]);
+			sum += pow(specPower, 10) * (mLightColor[0]*0.5f);
 		}
 	}
-
+    //環境光
 	sum += color * mAmbColor;
+    
     //シャドウマップ
     {
         float3 shadowPos2 = In.shadowPos.xyz / In.shadowPos.w;
@@ -208,5 +210,9 @@ float4 PSMain( PSInput In ) : SV_Target0
             sum.rgb /= 4;
         }
     }
+    
+    //自己発光色
+    sum.xyz += mEmissionColor;
+    
 	return sum;
 }

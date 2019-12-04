@@ -20,6 +20,9 @@ struct PSInput {
 float4 PSluminance( PSInput input ): SV_Target
 {
 	float4 color = Texture0.Sample(Sampler, input.uv ) - float4(1, 1, 1, 0);
+    color.r = max(0, color.r);
+    color.g = max(0, color.g);
+    color.b = max(0, color.b);
 	return color;
 }
 

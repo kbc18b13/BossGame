@@ -44,7 +44,7 @@ Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/f
 		desc.userPointer = this;
 	}
 	m_CharaCon.Init(desc);
-    m_font.SetPos({500.0f, 500.0f});
+    m_font.SetPos({640.0f, 360.0f});
 
     //˜rƒRƒŠƒWƒ‡ƒ“
     Bone* arm = m_model.GetModel().GetSkeleton().GetBone(20);

@@ -15,7 +15,7 @@ struct VSInput
 };
 
 //ブラーの広さ
-static const int blurRange = 12;
+static const int blurRange = 8;
 //ピクセル入力
 struct PSInput
 {

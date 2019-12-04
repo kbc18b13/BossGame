@@ -51,8 +51,7 @@ void SkinModel::InitConstantBuffer()
 {
 	//作成するバッファのサイズをsizeof演算子で求める。
 	int bufferSize = sizeof(SVSConstantBuffer);
-	bufferSize = ( ( ( bufferSize - 1 ) / 16 ) + 1 ) * 16;
-	m_cb.Init( bufferSize, false );
+	m_cb.Init(Util::AlignSize(bufferSize, 16), false );
 }
 void SkinModel::InitSamplerState()
 {
@@ -105,6 +104,7 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 	vsCb.mWorld = m_worldMatrix;
 	vsCb.mProj = projMatrix;
 	vsCb.mView = viewMatrix;
+	vsCb.mEmissionColor = m_emissionColor;
 	m_cb.UpdateData( &vsCb );
 	//定数バッファをGPUに転送。
 	m_cb.SetToContext( ShaderType::VS, 0 );

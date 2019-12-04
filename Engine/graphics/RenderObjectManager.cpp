@@ -37,9 +37,8 @@ void RenderObjectManager::Render(){
 
     //物理ワイヤーフレーム
     g_physics.DebugDraw();
-
-	/*m_blur.SetSource( m_defaultTarget.GetRenderTargetSRV() );
-    m_blur.ApplyEffect( m_postEffect );*/
+	//BulletPhysicsに描画を任せたらブレンドステート変えられてたんでデフォルトに戻す。
+	dc->OMSetBlendState( nullptr, nullptr, 0xffffffff );
 
 	//ブルーム
 	m_bloom.SetSource( m_defaultTarget.GetRenderTargetSRV() );
@@ -49,7 +48,7 @@ void RenderObjectManager::Render(){
 	//描画先をフレームバッファへ。
 	g_graphicsEngine->BegineFrameBuffer();
 
-    //ポストエフェクト適用。
+    //メインターゲットをフレームバッファへ
     m_postEffect.DrawScreenRect(m_defaultTarget.GetRenderTargetSRV() , (ID3D11PixelShader*)m_monoShader.GetBody());
 
     //HUD描画オブジェクトの描画。

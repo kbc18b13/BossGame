@@ -30,5 +30,5 @@ void CFont::DrawStr(const wchar_t * str) {
 
     pos -= pivot;
 
-	m_font.DrawString(GetSpriteBatch(), str, pos.vec, CVector4(1,0.5f, 0, 1));
+	m_font.DrawString(GetSpriteBatch(), str, pos.vec, CVector4(1,1.f, 1.0f, 1));
 }

@@ -22,7 +22,7 @@ void Blur::Init( UINT sourceWidth, UINT sourceHeight, DXGI_FORMAT format ){
 	data.height = sourceHeight;
 
 	//ガウス関数でウェイトを計算
-	static constexpr float a = 3.0f; //分散。大きいほどまんべんなく、小さいほど中心に集まる。
+	static constexpr float a = 1.8f; //分散。大きいほどまんべんなく、小さいほど中心に集まる。
 	float sum = 0;
 	for( int i = 0; i < blurRange; i++ ){
 		data.weights[i] = expf( -( i * i ) / ( 2 * a * a ) );
@@ -48,13 +48,13 @@ void Blur::ApplyEffect(PostEffect& postEffect ){
 	m_weightCB.SetToContext( ShaderType::PS, 0 );
 
 	//横ブラー
-	m_widthBlurTarget.Clear( CVector4( 0, 0, 0, 1 ) );
 	m_widthBlurTarget.SetToContext( dc );
+	m_widthBlurTarget.Clear( CVector4( 0, 0, 0, 1 ) );
 	postEffect.DrawScreenRect( m_source, (PS*)m_pShader.GetBody(), (VS*)m_vShaderX.GetBody() );
 
 	//縦ブラー
-	m_lastBlurTarget.Clear( CVector4( 0, 0, 0, 1 ) );
 	m_lastBlurTarget.SetToContext( dc );
+	m_lastBlurTarget.Clear( CVector4( 0, 0, 0, 1 ) );
 	postEffect.DrawScreenRect( m_widthBlurTarget.GetRenderTargetSRV()
 							   , (PS*)m_pShader.GetBody(), (VS*)m_vShaderY.GetBody() );
 

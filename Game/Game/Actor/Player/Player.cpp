@@ -18,6 +18,7 @@ Player::Player() : Actor(10)
 	m_model.GetAnim().AddEventFunc("End", [&]() {
 		SlashEnd();
 	});
+	m_model.GetModel().setEmissionColor( CVector3( 20, 0, 0 ) );
 
 	CharaConDesc desc;
 	{

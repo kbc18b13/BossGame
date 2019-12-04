@@ -100,6 +100,14 @@ public:
 		m_isDraw = isDraw;
 	}
 
+	/// <summary>
+	/// 自己発光色を設定
+	/// </summary>
+	/// <param name="isDraw">色</param>
+	void setEmissionColor( const CVector4& color ){
+		m_emissionColor = color;
+	}
+
 	/*!
 	*@brief	SRVのレジスタ番号。
 	*/
@@ -128,6 +136,7 @@ private:
 		CMatrix mWorld;
 		CMatrix mView;
 		CMatrix mProj;
+		CVector4 mEmissionColor;
 	};
 	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;	//!<FBXの上方向。
 	ConstantBuffer		m_cb;							//!<定数バッファ。
@@ -136,5 +145,6 @@ private:
 	DirectX::Model*		m_modelDx;						//!<DirectXTKが提供するモデルクラス。
 	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
 	bool                m_isDraw = true;                //!<trueなら描画する
+	CVector3 m_emissionColor = CVector3( 0, 0, 0);
 };
 
