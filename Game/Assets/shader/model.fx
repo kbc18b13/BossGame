@@ -191,7 +191,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 			float3 refVec = dir + 2 * (In.Normal * dot(In.Normal, -dir));
 			float3 eyeLine = normalize(In.worldPos - eyePos);
 			float specPower = max(dot(refVec, -eyeLine), 0);
-			sum += pow(specPower, 10) * (mLightColor[0]*0.5f);
+			sum += pow(specPower, 10) * (mLightColor[0]);
 		}
 	}
 

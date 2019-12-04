@@ -13,12 +13,13 @@ void RenderObjectManager::Init(){
     m_postEffect.Init();
 
     //ポストエフェクト前に書き込むレンダリングターゲット
-    m_defaultTarget.Init( FRAME_BUFFER_W, FRAME_BUFFER_H, /*DXGI_FORMAT_R16G16B16A16_FLOAT*/ FRAME_BUFFER_FORMAT );
+    m_defaultTarget.Init( FRAME_BUFFER_W, FRAME_BUFFER_H, DXGI_FORMAT_R16G16B16A16_FLOAT);
 
     //モノクロシェーダー
     m_monoShader.Load( "Assets/shader/PostEffect.fx", "PSDefault", Shader::EnType::PS );
 
-    m_blur.Init( FRAME_BUFFER_W, FRAME_BUFFER_H, FRAME_BUFFER_FORMAT );
+	m_bloom.Init();
+    //m_blur.Init( FRAME_BUFFER_W, FRAME_BUFFER_H, FRAME_BUFFER_FORMAT );
 }
 
 void RenderObjectManager::Render(){
@@ -37,14 +38,19 @@ void RenderObjectManager::Render(){
     //物理ワイヤーフレーム
     g_physics.DebugDraw();
 
-	m_blur.SetSource( m_defaultTarget.GetRenderTargetSRV() );
-    m_blur.ApplyEffect( m_postEffect );
+	/*m_blur.SetSource( m_defaultTarget.GetRenderTargetSRV() );
+    m_blur.ApplyEffect( m_postEffect );*/
 
-    //描画先をフレームバッファへ。
-    g_graphicsEngine->BegineFrameBuffer();
+	//ブルーム
+	m_bloom.SetSource( m_defaultTarget.GetRenderTargetSRV() );
+	m_bloom.SetTarget( &m_defaultTarget );
+	m_bloom.ApplyEffect( m_postEffect );
+
+	//描画先をフレームバッファへ。
+	g_graphicsEngine->BegineFrameBuffer();
 
     //ポストエフェクト適用。
-    m_postEffect.DrawScreenRect( m_blur.GetResult(), (ID3D11PixelShader*)m_monoShader.GetBody());
+    m_postEffect.DrawScreenRect(m_defaultTarget.GetRenderTargetSRV() , (ID3D11PixelShader*)m_monoShader.GetBody());
 
     //HUD描画オブジェクトの描画。
     m_HUDRender.Render();

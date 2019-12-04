@@ -22,7 +22,7 @@ void Blur::Init( UINT sourceWidth, UINT sourceHeight, DXGI_FORMAT format ){
 	data.height = sourceHeight;
 
 	//ガウス関数でウェイトを計算
-	static constexpr float a = 1.8f; //分散。大きいほどまんべんなく、小さいほど中心に集まる。
+	static constexpr float a = 3.0f; //分散。大きいほどまんべんなく、小さいほど中心に集まる。
 	float sum = 0;
 	for( int i = 0; i < blurRange; i++ ){
 		data.weights[i] = expf( -( i * i ) / ( 2 * a * a ) );

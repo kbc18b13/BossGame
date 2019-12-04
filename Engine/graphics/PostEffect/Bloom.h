@@ -11,6 +11,9 @@ public:
 	void SetSource( ID3D11ShaderResourceView* srv ){
 		m_source = srv;
 	}
+	void SetTarget( RenderTarget* rtg ){
+		m_target = rtg;
+	}
     void ApplyEffect( PostEffect& postEffect );
 
 private:
@@ -26,7 +29,9 @@ private:
     RenderTarget hurfTarget; //ダウンサンプルの平均をフレームの半分サイズのターゲットに描く
 	Shader hurfShader; //それ用のシェーダー
 
-	ID3D11BlendState
+	ID3D11BlendState* blendState;
 	Shader lastShader; //最後に加算合成をするシェーダー
+
+	RenderTarget* m_target;//対象のターゲット
 };
 

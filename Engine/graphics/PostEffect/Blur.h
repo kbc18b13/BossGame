@@ -27,7 +27,7 @@ private:
     Shader m_vShaderY;
     Shader m_pShader;
 
-	static constexpr int blurRange = 8; //ブラーの広さ
+	static constexpr int blurRange = 12; //ブラーの広さ
 	struct CBData{
 		float weights[blurRange];
 		float width;
