@@ -14,8 +14,9 @@ Stage1::Stage1() {
 			p = NewGO<Player>(0);
 			p->SetPos(objData.position + CVector3::Up() * 100);
 		} else if (wcscmp(objData.name, L"Troll")) {
-			t = NewGO<Troll>(0,this);
+			Actor* t = NewGO<Troll>(0,this);
 			t->SetPos(objData.position + CVector3::Up()*100);
+			enemyArray.push_back( t );
 		}
 		return true;
 	});
@@ -32,7 +33,6 @@ Stage1::Stage1() {
 
 Stage1::~Stage1() {
 	DeleteGO(p);
-	DeleteGO(t);
 }
 
 void Stage1::Update() {

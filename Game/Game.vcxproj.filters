@@ -30,6 +30,8 @@
     <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActTackle.cpp" />
     <ClCompile Include="Game\Util\ActorHitCollision.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\TrollArmCollision.cpp" />
+    <ClCompile Include="Game\Util\BarGauge.cpp" />
+    <ClCompile Include="Game\Scene\IStage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -53,6 +55,8 @@
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActTackle.h" />
     <ClInclude Include="Game\Util\ActorHitCollision.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\TrollArmCollision.h" />
+    <ClInclude Include="Game\Util\BarGauge.h" />
+    <ClInclude Include="Game\Scene\IStage.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestStage.fbx">
@@ -66,7 +70,8 @@
     <MeshContentTask Include="Assets\modelData\Troll.fbx" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\BLADERNL.JPG" />
     <ImageContentTask Include="Assets\sprite\Title_back.png" />
+    <ImageContentTask Include="Assets\sprite\HpOut.png" />
+    <ImageContentTask Include="Assets\sprite\HpIn.png" />
   </ItemGroup>
 </Project>

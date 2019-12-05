@@ -61,5 +61,7 @@ private:
     PostEffect m_postEffect;
     Shader m_monoShader;
 	Bloom m_bloom;
+
+	ID3D11DepthStencilState* m_noDepth; //深度無し深度ステンシルステート
 };
 

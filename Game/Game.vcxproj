@@ -103,6 +103,7 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Util\BarGauge.cpp" />
     <ClCompile Include="Game\Util\ActorHitCollision.cpp" />
     <ClCompile Include="Game\Actor\Actor.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActAttack.cpp" />
@@ -127,8 +128,10 @@
     </ClCompile>
     <ClCompile Include="Game\Util\CharaConEx.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\TrollArmCollision.cpp" />
+    <ClCompile Include="Game\Scene\IStage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Util\BarGauge.h" />
     <ClInclude Include="Game\Util\ActorHitCollision.h" />
     <ClInclude Include="Game\Actor\Actor.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\Act.h" />
@@ -150,6 +153,7 @@
     <ClInclude Include="Game\stdafx.h" />
     <ClInclude Include="Game\Util\CharaConEx.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\TrollArmCollision.h" />
+    <ClInclude Include="Game\Scene\IStage.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Sword.fbx" />
@@ -164,10 +168,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\BLADERNL.JPG" />
+    <ImageContentTask Include="Assets\sprite\Title_back.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\Title_back.png" />
+    <ImageContentTask Include="Assets\sprite\HpIn.png" />
+    <ImageContentTask Include="Assets\sprite\HpOut.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -19,7 +19,12 @@ void RenderObjectManager::Init(){
     m_monoShader.Load( "Assets/shader/PostEffect.fx", "PSDefault", Shader::EnType::PS );
 
 	m_bloom.Init();
-    //m_blur.Init( FRAME_BUFFER_W, FRAME_BUFFER_H, FRAME_BUFFER_FORMAT );
+    
+	//2D用深度ステンシルステート
+	D3D11_DEPTH_STENCIL_DESC dpDesc{};
+	dpDesc.DepthEnable = false;
+	dpDesc.StencilEnable = false;
+	g_graphicsEngine->GetD3DDevice()->CreateDepthStencilState( &dpDesc, &m_noDepth );
 }
 
 void RenderObjectManager::Render(){
@@ -40,6 +45,9 @@ void RenderObjectManager::Render(){
 	//BulletPhysicsに描画を任せたらブレンドステート変えられてたんでデフォルトに戻す。
 	dc->OMSetBlendState( nullptr, nullptr, 0xffffffff );
 
+	//深度を不使用に変更
+	dc->OMSetDepthStencilState( m_noDepth , 0);
+
 	//ブルーム
 	m_bloom.SetSource( m_defaultTarget.GetRenderTargetSRV() );
 	m_bloom.SetTarget( &m_defaultTarget );
@@ -53,4 +61,7 @@ void RenderObjectManager::Render(){
 
     //HUD描画オブジェクトの描画。
     m_HUDRender.Render();
+
+	//深度ステートをデフォルトに戻す
+	dc->OMSetDepthStencilState( nullptr, 0 );
 }

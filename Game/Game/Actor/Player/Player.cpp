@@ -44,6 +44,10 @@ Player::Player() : Actor(10)
 
     m_sword.Init(m_model.GetModel().GetSkeleton().GetBone(L"Hand_L"), this);
 	m_sword.SetOffset({ 12, 0, 0 });
+
+	//HPバーの初期化
+	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 1000, 25 );
+	m_hpBar.SetPosCenterZero( CVector2( 625, 325 ) );
 }
 
 
@@ -96,6 +100,8 @@ void Player::Update()
 		}
 	}
 
+	//HPバーの更新
+	m_hpBar.SetPercent( Actor::GetHPPer() );
 
     Actor::Update();
     m_model.Update();

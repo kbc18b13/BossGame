@@ -1,3 +1,8 @@
+#pragma once
+
+class IStage;
+class Actor;
+
 class PlayerCamera {
 public:
 
@@ -16,6 +21,8 @@ public:
 		vec.Normalize();
 		m_UpDownRot = CMath::RadToDeg(acosf(CVector3::AxisY().Dot(vec)));
 	}
+
+	void TargetEnemy(IStage& stage);
 
 	/// <summary>
 	/// カメラの前方向
@@ -47,4 +54,6 @@ private:
 
 	CVector3 m_vec = {0,0,-100};//プレイヤーからカメラへのベクトル
 	CVector3 m_pos;//カメラの位置
+
+	Actor* m_TargetEnemy;
 };

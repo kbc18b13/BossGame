@@ -11,7 +11,7 @@
 #include "Act/ActHip.h"
 #include "graphics/RenderObjectManager.h"
 
-Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/font.spritefont"){
+Troll::Troll(Stage1* stage) :stage(stage) , Actor(300){
     //モデル
 	{
 		m_animClip[int(AnimState::Walk)].Load(L"Assets/animData/Troll_Walk.tka", true);
@@ -43,14 +43,14 @@ Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/f
 		desc.userIndex = enCollisionAttr_Enemy;
 		desc.userPointer = this;
 	}
-	m_CharaCon.Init(desc);
-    m_font.SetPos({640.0f, 360.0f});
+	m_CharaCon.Init(desc); 
 
     //腕コリジョン
     Bone* arm = m_model.GetModel().GetSkeleton().GetBone(20);
     armCollision.Init(this, arm);
 
-    g_ROManager.AddHUDRender( this );
+	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 1000, 25);
+	m_hpBar.SetPosLikeTex( CVector2( 1144, 563 ) );
 }
 
 Troll::~Troll() {
@@ -81,6 +81,9 @@ void Troll::Update() {
     arg.changeAct = m_stateChangeFunc;
     m_activeAction->Continue(arg);
 
+	//HPバー更新
+	m_hpBar.SetPercent( Actor::GetHPPer() );
+
     m_model.Update();
     armCollision.Update();
     Actor::Update();
@@ -89,12 +92,4 @@ void Troll::Update() {
 void Troll::SetPos(const CVector3 & pos) {
 	m_CharaCon.SetPosition(pos);
 	m_model.SetPos(pos);
-}
-
-void Troll::Render() {
-	m_font.Begine();
-	wchar_t str[10];
-	swprintf(str, L"%d", m_nowHP);
-	m_font.DrawStr(str);
-	m_font.End();
 }

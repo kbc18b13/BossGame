@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "PlayerCamera.h"
+#include "Scene/IStage.h"
+#include "Actor/Actor.h"
 
 void PlayerCamera::Update(const CVector3 & playerPos) {
 	//位置の更新
@@ -21,4 +23,10 @@ void PlayerCamera::Update(const CVector3 & playerPos) {
 
 	//カメラの更新。
 	g_camera3D.Update();
+}
+
+void PlayerCamera::TargetEnemy( IStage & stage ){
+	for( Actor* e : stage.GetEnemys() ){
+		CVector3 pos = e->GetPos();
+	}
 }

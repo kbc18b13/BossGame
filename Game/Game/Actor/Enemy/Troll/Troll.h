@@ -1,13 +1,13 @@
 #pragma once
 #include "Actor/Actor.h"
-#include "graphics/CFont.h"
 #include "Util/CharaConEx.h"
 #include "TrollArmCollision.h"
+#include "Util/BarGauge.h"
 class SkinModelRender;
 class Stage1;
 class Act;
 
-class Troll: public Actor , public IRenderObject{
+class Troll: public Actor{
 public:
 	//関数
 	Troll(Stage1* stage);
@@ -15,7 +15,6 @@ public:
 
 	void Start() override;
 	void Update() override;
-	void Render() override;
 
 	void SetPos(const CVector3& pos) override;
 
@@ -68,7 +67,7 @@ private:
 	AnimationClip m_animClip[int(AnimState::Num)];//アニメーションクリップ
 	SkinModelRender m_model;//モデル
 
-	CFont m_font;
-
     TrollArmCollision armCollision;
+
+	BarGauge m_hpBar; //HPバー
 };

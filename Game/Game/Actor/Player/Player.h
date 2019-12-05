@@ -3,6 +3,7 @@
 #include "Camera/PlayerCamera.h"
 #include "Util/CharaConEx.h"
 #include "Sword.h"
+#include "Util/BarGauge.h"
 
 class Sword;
 class SkinModelRender;
@@ -65,6 +66,7 @@ private:
 
 	PlayerCamera m_camera;                      //ÉJÉÅÉâ
 
+	BarGauge m_hpBar;//HPÉoÅ[
 
 	static constexpr int MAX_COMBO = 4;
 	int m_comboCount = -1;
