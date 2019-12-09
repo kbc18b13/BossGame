@@ -63,5 +63,6 @@ private:
 	Bloom m_bloom;
 
 	ID3D11DepthStencilState* m_noDepth; //深度無し深度ステンシルステート
+	ID3D11BlendState* m_alphaBlend;
 };
 

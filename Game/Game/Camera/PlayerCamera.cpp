@@ -1,9 +1,36 @@
 #include "stdafx.h"
 #include "PlayerCamera.h"
 #include "Scene/IStage.h"
-#include "Actor/Actor.h"
+#include <numeric>
+
+PlayerCamera::PlayerCamera(){
+	m_lockOnSprite.Init(L"Assets/sprite/lockOn.dds", 80, 80);
+	m_lockOnSprite.SetIsDraw( false );
+}
 
 void PlayerCamera::Update(const CVector3 & playerPos) {
+	if( IsLockOn() ){
+		CVector3 ePos = GetLockOnPos();
+		ePos.y += 50;
+		//ターゲット画像の移動
+		m_lockOnSprite.SetPosNormalized( g_camera3D.GetProjectedPos( ePos ).xy());
+
+		ePos.y = playerPos.y;
+		m_vec = playerPos - ePos;
+		m_vec.Normalize();
+
+		CQuaternion::CreateRotDeg( GetRightVec(), 30 ).Multiply(m_vec);
+
+		m_vec *= 100;
+		m_pos = playerPos + m_vec;
+
+		//カメラの更新。
+		g_camera3D.SetTarget( playerPos );
+		g_camera3D.SetPosition( m_pos );
+		g_camera3D.Update();
+		return;
+	}
+
 	//位置の更新
 	m_pos = playerPos + m_vec;
 	g_camera3D.SetTarget(playerPos);
@@ -25,8 +52,35 @@ void PlayerCamera::Update(const CVector3 & playerPos) {
 	g_camera3D.Update();
 }
 
-void PlayerCamera::TargetEnemy( IStage & stage ){
-	for( Actor* e : stage.GetEnemys() ){
-		CVector3 pos = e->GetPos();
+void PlayerCamera::TurnLockOn( IStage* stage ){
+	if( IsLockOn() ){
+		m_lockOnEnemy = nullptr;
+		m_lockOnSprite.SetIsDraw( false );
+		return;
+	}
+
+	float distanceToCenter = std::numeric_limits<float>::max();
+	Actor* lockOn = nullptr;
+
+	for( Actor* e : stage->GetEnemys() ){
+		CVector3 ePos = e->GetPos();
+		CVector3 pPos = m_pos - m_vec;
+
+		//距離が範囲内の物だけを対象にする。
+		if( ( ePos - pPos ).LengthSq() < TARGET_RANGE*TARGET_RANGE ){
+			CVector2 screenPos = g_camera3D.GetProjectedPos( ePos ).xy();
+
+			//スクリーン座標が中央に一番近い物を選択する。
+			if( distanceToCenter > screenPos.LengthSq() ){
+				lockOn = e;
+				distanceToCenter = screenPos.LengthSq();
+			}
+		}
+	}
+
+	m_lockOnEnemy = lockOn;
+
+	if( lockOn ){
+		m_lockOnSprite.SetIsDraw( true );
 	}
 }

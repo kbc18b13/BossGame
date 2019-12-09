@@ -37,6 +37,11 @@ public:
         m_charaCon.AddVelocity(pos);
     }
 
+	//ステージをセット
+	void SetStage( IStage* stage ){
+		m_stage = stage;
+	}
+
 private:
 	void SlashEnd();
 
@@ -67,6 +72,8 @@ private:
 	PlayerCamera m_camera;                      //カメラ
 
 	BarGauge m_hpBar;//HPバー
+
+	IStage* m_stage;
 
 	static constexpr int MAX_COMBO = 4;
 	int m_comboCount = -1;

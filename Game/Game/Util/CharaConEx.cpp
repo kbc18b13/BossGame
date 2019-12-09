@@ -20,7 +20,7 @@ CVector3 CharaConEx::Excecute(const CVector3& _pad, bool jump) {
 		const float accel = m_charaCon.IsOnGround() ? m_walkAccel : m_walkAccelAir;
 
 		//最大速度。外因によってWALK_MAXを超過している場合、それを妨げない。
-		const float maxSpeed = max(m_walkMax, m_moveSpeedXZ.Length());
+		const float maxSpeed = std::max(m_walkMax, m_moveSpeedXZ.Length());
 
 		//加速処理
 		m_moveSpeedXZ += pad * accel;

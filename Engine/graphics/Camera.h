@@ -95,6 +95,10 @@ public:
 	{
 		m_viewAngle = angle;
 	}
+
+	//ビュープロジェクション行列をかけた座標にして返す
+	CVector3 GetProjectedPos(CVector3 pos );
+
 private:
 	CMatrix	m_viewMatrix = CMatrix::Identity();		//ビュー行列。
 	CMatrix m_projMatrix = CMatrix::Identity();		//プロジェクション行列。

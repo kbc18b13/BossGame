@@ -73,5 +73,6 @@
     <ImageContentTask Include="Assets\sprite\Title_back.png" />
     <ImageContentTask Include="Assets\sprite\HpOut.png" />
     <ImageContentTask Include="Assets\sprite\HpIn.png" />
+    <ImageContentTask Include="Assets\sprite\lockOn.png" />
   </ItemGroup>
 </Project>

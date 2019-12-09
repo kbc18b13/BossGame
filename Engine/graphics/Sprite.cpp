@@ -54,8 +54,9 @@ void Sprite::Init( const wchar_t * path, UINT width, UINT height ){
 		abort();
 	}
 
-	m_worldMat.MakeScaling( { 1 / FRAME_BUFFER_W, 1 / FRAME_BUFFER_H, 1 } );
-	m_worldMatBuf.Init( sizeof( CMatrix ), false, &m_worldMat );
+	m_CBStruct.worldMat.MakeScaling( { 1 / FRAME_BUFFER_W, 1 / FRAME_BUFFER_H, 1 } );
+	m_CBStruct.mulColor = CVector4( 1, 1, 1, 1 );
+	m_CBuf.Init( Util::AlignSize(sizeof( m_CBStruct ), 16), false, &m_CBStruct );
 }
 
 void Sprite::Draw(){
@@ -65,7 +66,8 @@ void Sprite::Draw(){
 	m_effect.Apply( context );
 	context->IASetVertexBuffers( 0, 1, &m_vertex, &stride, &zero );
 	context->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP );
-	m_worldMatBuf.SetToContext( ShaderType::VS, 0 );
+	m_CBuf.SetToContext( ShaderType::VS, 0 );
+	m_CBuf.SetToContext( ShaderType::PS, 0 );
 	context->Draw( 4, 0 );
 }
 
@@ -84,13 +86,13 @@ void Sprite::UpdateWorldMatrix( CVector2 pos, const CVector2 & scale,
 	CMatrix posMat;
 	posMat.MakeTranslation( { pos.x, pos.y, 0 } );
 
-	m_worldMat.Mul( scaleMat, rotMat );
-	m_worldMat.Mul( m_worldMat, posMat );
+	m_CBStruct.worldMat.Mul( scaleMat, rotMat );
+	m_CBStruct.worldMat.Mul( m_CBStruct.worldMat, posMat );
 
 	CMatrix projMat;//x -1 Å` 1, y -1 Å` 1ÇÃ2*2XYïΩñ Ç…é˚ÇﬂÇÈÇΩÇﬂÇÃçsóÒ
 	projMat.MakeScaling( { 2 / FRAME_BUFFER_W, 2 / FRAME_BUFFER_H, 1 } );
 
-	m_worldMat.Mul( m_worldMat, projMat );
+	m_CBStruct.worldMat.Mul( m_CBStruct.worldMat, projMat );
 
-	m_worldMatBuf.UpdateData( &m_worldMat );
+	m_CBuf.UpdateData( &m_CBStruct );
 }

@@ -13,6 +13,7 @@ Stage1::Stage1() {
 		} else if (wcscmp(objData.name, L"Chara")) {
 			p = NewGO<Player>(0);
 			p->SetPos(objData.position + CVector3::Up() * 100);
+			p->SetStage( this );
 		} else if (wcscmp(objData.name, L"Troll")) {
 			Actor* t = NewGO<Troll>(0,this);
 			t->SetPos(objData.position + CVector3::Up()*100);

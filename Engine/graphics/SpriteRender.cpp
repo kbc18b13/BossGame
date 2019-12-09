@@ -3,6 +3,9 @@
 #include "RenderObjectManager.h"
 
 void SpriteRender::Render() {
+	if(!m_isDraw || m_sprite.GetMulColor().w == 0 ){
+		return;
+	}
     m_sprite.UpdateWorldMatrix(m_pos, m_scale, m_rot, m_pivot);
 	m_sprite.Draw();
 }

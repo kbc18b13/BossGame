@@ -1,5 +1,8 @@
 #pragma once
 
+//MINとMAXのマクロなんて消してしまう
+#define NOMINMAX
+
 //標準ライブラリ
 #include <stdio.h>
 #include <stdlib.h>

@@ -62,9 +62,9 @@ void Player::Update()
         g_ROManager.GetShadowMap().UpdateLight(GetPos() + CVector3(400, 400, 400), CVector3(-1, -1, -1));
     }
 
-    if (g_pad->IsPress(enButtonLB1)) {
-        m_charaCon.AddVelocity(CVector3::Up()*50);
-    }
+	if( g_pad->IsTrigger( enButtonRB3 )){
+		m_camera.TurnLockOn(m_stage);
+	}
 
 	//キャラコンの操作
 	CVector3 move = g_pad->GetLStickXF() * m_camera.GetRightVec() + g_pad->GetLStickYF() * m_camera.GetFrontVec_XZ();
@@ -74,13 +74,19 @@ void Player::Update()
 	//モデル位置
 	m_model.SetPos(pos);
 	//モデル回転
+
+	if( m_camera.IsLockOn() ){
+		rot = Util::LookRotXZ(m_camera.GetLockOnPos() - GetPos() );
+	}else 
 	if (speed.x*speed.x + speed.z*speed.z > 1) {
 		float angle = atan2f(speed.x, speed.z);
 		rot.SetRotation(CVector3::AxisY(), angle);
 	}
 
 	m_model.SetRot(rot);
-	m_camera.Update(GetPos()+CVector3::Up()*25);
+
+	//カメラの更新
+	m_camera.Update(GetPos()+CVector3::Up()*40);
 
 	//アニメーション
 	if (g_pad->IsTrigger(enButtonRB1)) {

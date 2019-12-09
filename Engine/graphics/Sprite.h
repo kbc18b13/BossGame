@@ -35,7 +35,16 @@ public:
 	*@param[in]	mat        モデルのワールド座標
 	*/
 	void UpdateWorldMatrix( const CMatrix& mat ){
-		m_worldMat = mat;
+		m_CBStruct.worldMat = mat;
+	}
+
+	void SetMulColor( const CVector4& color ){
+		m_CBStruct.mulColor = color;
+		m_CBuf.UpdateData( &m_CBStruct );
+	}
+
+	CVector4 GetMulColor(){
+		return m_CBStruct.mulColor;
 	}
 
 	UINT GetWidth(){
@@ -47,10 +56,15 @@ public:
 	}
 
 private:
-	SpriteEffect m_effect;                    //テクスチャやシェーダーなど
-	ID3D11Buffer* m_vertex;                   //頂点バッファ
-	CMatrix m_worldMat = CMatrix::Identity(); //ワールド行列(CPU)
-	ConstantBuffer m_worldMatBuf;              //ワールド行列(GPU)
+	struct CBStruct{
+		CMatrix worldMat;
+		CVector4 mulColor;
+	};
+
+	SpriteEffect m_effect;              //テクスチャやシェーダーなど
+	ID3D11Buffer* m_vertex;             //頂点バッファ
+	CBStruct m_CBStruct;            //定数バッファ構造体
+	ConstantBuffer m_CBuf;              //定数バッファ
 	UINT m_width = 0;
 	UINT m_height = 0;
 };

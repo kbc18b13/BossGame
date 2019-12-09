@@ -6,7 +6,10 @@ RenderObjectManager g_ROManager;
 RenderObjectManager::RenderObjectManager(){}
 
 
-RenderObjectManager::~RenderObjectManager(){}
+RenderObjectManager::~RenderObjectManager(){
+	m_alphaBlend->Release();
+	m_noDepth->Release();
+}
 
 void RenderObjectManager::Init(){
     m_shadowMap.Init( 2048, 2048 );
@@ -25,6 +28,20 @@ void RenderObjectManager::Init(){
 	dpDesc.DepthEnable = false;
 	dpDesc.StencilEnable = false;
 	g_graphicsEngine->GetD3DDevice()->CreateDepthStencilState( &dpDesc, &m_noDepth );
+
+	//アルファ有効ブレンドステート
+	D3D11_BLEND_DESC blDesc{};
+	auto& r0 = blDesc.RenderTarget[0];
+	r0.BlendEnable = true;
+	r0.BlendOp = D3D11_BLEND_OP_ADD;
+	r0.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	r0.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	r0.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	r0.SrcBlendAlpha = D3D11_BLEND_ZERO;
+	r0.DestBlendAlpha = D3D11_BLEND_ZERO;
+	r0.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	g_graphicsEngine->GetD3DDevice()->CreateBlendState( &blDesc, &m_alphaBlend );
 }
 
 void RenderObjectManager::Render(){
@@ -59,9 +76,13 @@ void RenderObjectManager::Render(){
     //メインターゲットをフレームバッファへ
     m_postEffect.DrawScreenRect(m_defaultTarget.GetRenderTargetSRV() , (ID3D11PixelShader*)m_monoShader.GetBody());
 
+	dc->OMSetBlendState( m_alphaBlend, nullptr, 0xffffffff );
+
     //HUD描画オブジェクトの描画。
     m_HUDRender.Render();
 
 	//深度ステートをデフォルトに戻す
 	dc->OMSetDepthStencilState( nullptr, 0 );
+	//ブレンドステートをデフォルトに戻す。
+	dc->OMSetBlendState( nullptr, nullptr, 0 );
 }
