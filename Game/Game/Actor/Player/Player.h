@@ -8,9 +8,8 @@
 
 class Sword;
 class SkinModelRender;
-namespace PlayerAct{
-class Act;
-}
+
+
 
 class Player : public Actor
 {
@@ -58,11 +57,12 @@ public:
 	};
 
 private:
-	void ChangeAnimation( Anim anim );
-	void SlashEnd();
+	void ChangeActDefault();
+	void ChangeAct( PlayerAct::Act* anim );
 
-	PlayerAct::Act* actArray[3];
-	PlayerAct::Act* nowAct;
+	std::unique_ptr<PlayerAct::Act> m_actArray[3];
+	PlayerAct::Act* m_nowAct;
+	PlayerAct::ActArg m_actArg;
 
 	static constexpr float WALK_MAX = 200;
 	static constexpr float WALK_ACCEL_AIR = 10;

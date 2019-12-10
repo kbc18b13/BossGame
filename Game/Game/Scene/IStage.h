@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>;
+#include <vector>
 #include "Actor/Actor.h"
 
 class IStage : public IGameObject{
