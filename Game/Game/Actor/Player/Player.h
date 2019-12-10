@@ -3,6 +3,7 @@
 #include "Camera/PlayerCamera.h"
 #include "Util/CharaConEx.h"
 #include "Sword.h"
+#include "Shield.h"
 #include "Util/BarGauge.h"
 
 class Sword;
@@ -60,12 +61,14 @@ private:
 		enAnimSlash2,
 		enAnimSlash3,
 		enAnimSlash4,
-		enAnimNum
+		enAnimGuard,
+		enAnimNum,
 	};
 	AnimationClip m_animClip[enAnimNum];        //アニメーションクリップ
 	SkinModelRender m_model;                    //自分のモデル。
 
 	Sword m_sword;
+	Shield m_shield;
 
 	CharaConEx m_charaCon;             //キャラコン
 

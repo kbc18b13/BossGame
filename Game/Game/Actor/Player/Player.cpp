@@ -12,13 +12,14 @@ Player::Player() : Actor(10)
 	m_animClip[enAnimSlash2].Load(L"Assets/animData/TestChara_Slash2.tka");
 	m_animClip[enAnimSlash3].Load(L"Assets/animData/TestChara_Slash3.tka");
 	m_animClip[enAnimSlash4].Load(L"Assets/animData/TestChara_Slash4.tka");
+	m_animClip[enAnimGuard].Load( L"Assets/animData/TestChara_Guard.tka" );
 
 	//cmoファイルの読み込み。
 	m_model.Init(L"Assets/modelData/TestChara.cmo",m_animClip,enAnimNum);
 	m_model.GetAnim().AddEventFunc("End", [&]() {
 		SlashEnd();
 	});
-	m_model.GetModel().setEmissionColor( CVector3( 20, 0, 0 ) );
+	//m_model.GetModel().setEmissionColor( CVector3( 20, 0, 0 ) );
 
 	CharaConDesc desc;
 	{
@@ -42,8 +43,12 @@ Player::Player() : Actor(10)
 
 	m_camera.SetVec({ 0, 80, -80 });
 
+	//剣の初期化
     m_sword.Init(m_model.GetModel().GetSkeleton().GetBone(L"Hand_L"), this);
 	m_sword.SetOffset({ 12, 0, 0 });
+
+	//盾の初期化
+	m_shield.Init( m_model.GetModel().GetSkeleton().GetBone( L"Hand_R" ), this );
 
 	//HPバーの初期化
 	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 1000, 25 );
@@ -89,21 +94,26 @@ void Player::Update()
 	m_camera.Update(GetPos()+CVector3::Up()*40);
 
 	//アニメーション
-	if (g_pad->IsTrigger(enButtonRB1)) {
-		if (m_comboCount == -1) {
-			m_comboCount++;
-			m_model.Play(enAnimSlash, 0.1f);
-			m_sword.SlashStart();
-		} else {
-			m_comboContinue = true;
-		}
-	}else
-	if (m_comboCount == -1) {
-		if (speed.LengthSq() > 0.001f) {
-			m_model.Play(enAnimWalk, 0.1f);
-		} else {
-			m_model.Play(enAnimIdle, 0.3f);
-		}
+	if(g_pad->IsPress(enButtonLB1)){
+		m_model.Play( enAnimGuard, 0.2f );
+	} else{
+
+		if( g_pad->IsTrigger( enButtonRB1 ) ){
+			if( m_comboCount == -1 ){
+				m_comboCount++;
+				m_model.Play( enAnimSlash, 0.1f );
+				m_sword.SlashStart();
+			} else{
+				m_comboContinue = true;
+			}
+		} else
+			if( m_comboCount == -1 ){
+				if( speed.LengthSq() > 0.001f ){
+					m_model.Play( enAnimWalk, 0.1f );
+				} else{
+					m_model.Play( enAnimIdle, 0.3f );
+				}
+			}
 	}
 
 	//HPバーの更新
@@ -112,6 +122,7 @@ void Player::Update()
     Actor::Update();
     m_model.Update();
     m_sword.Update();
+	m_shield.Update();
 }
 
 void Player::SlashEnd() {

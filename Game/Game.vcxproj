@@ -129,6 +129,7 @@
     <ClCompile Include="Game\Util\CharaConEx.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\TrollArmCollision.cpp" />
     <ClCompile Include="Game\Scene\IStage.cpp" />
+    <ClCompile Include="Game\Actor\Player\Shield.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Util\BarGauge.h" />
@@ -154,8 +155,10 @@
     <ClInclude Include="Game\Util\CharaConEx.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\TrollArmCollision.h" />
     <ClInclude Include="Game\Scene\IStage.h" />
+    <ClInclude Include="Game\Actor\Player\Shield.h" />
   </ItemGroup>
   <ItemGroup>
+    <MeshContentTask Include="Assets\modelData\Shield.fbx" />
     <MeshContentTask Include="Assets\modelData\Sword.fbx" />
     <MeshContentTask Include="Assets\modelData\TestChara.fbx" />
     <MeshContentTask Include="Assets\modelData\TestStage.fbx" />
