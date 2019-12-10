@@ -3,14 +3,18 @@
 #include "graphics/CFont.h"
 class Player;
 
-class ActHip : public Act {
+namespace TrollAct{
+
+class ActHip : public Act{
 public:
-    ActHip();
+	ActHip();
 
 	void Start() override;
-    void Continue(ActArg& arg);
+	void Continue( ActArg& arg );
 
 private:
 	bool first = true;
 	bool onJump = false;
 };
+
+}

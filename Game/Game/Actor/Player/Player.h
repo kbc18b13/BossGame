@@ -8,6 +8,9 @@
 
 class Sword;
 class SkinModelRender;
+namespace PlayerAct{
+class Act;
+}
 
 class Player : public Actor
 {
@@ -43,8 +46,23 @@ public:
 		m_stage = stage;
 	}
 
+	enum class Anim{
+		Walk,
+		Idle,
+		Slash,
+		Slash2,
+		Slash3,
+		Slash4,
+		Guard,
+		Num,
+	};
+
 private:
+	void ChangeAnimation( Anim anim );
 	void SlashEnd();
+
+	PlayerAct::Act* actArray[3];
+	PlayerAct::Act* nowAct;
 
 	static constexpr float WALK_MAX = 200;
 	static constexpr float WALK_ACCEL_AIR = 10;
@@ -54,17 +72,7 @@ private:
 
 	CQuaternion rot;//回転
 
-	enum EnAnim {
-		enAnimWalk,
-		enAnimIdle,
-		enAnimSlash,
-		enAnimSlash2,
-		enAnimSlash3,
-		enAnimSlash4,
-		enAnimGuard,
-		enAnimNum,
-	};
-	AnimationClip m_animClip[enAnimNum];        //アニメーションクリップ
+	AnimationClip m_animClip[int(Anim::Num)];        //アニメーションクリップ
 	SkinModelRender m_model;                    //自分のモデル。
 
 	Sword m_sword;

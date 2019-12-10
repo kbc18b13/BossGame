@@ -33,6 +33,11 @@
     <ClCompile Include="Game\Util\BarGauge.cpp" />
     <ClCompile Include="Game\Scene\IStage.cpp" />
     <ClCompile Include="Game\Actor\Player\Shield.cpp" />
+    <ClCompile Include="Game\Actor\Player\Act\Act.cpp" />
+    <ClCompile Include="Game\Actor\Player\Act\Guard.cpp" />
+    <ClCompile Include="Game\Actor\Player\Act\Idle.cpp" />
+    <ClCompile Include="Game\Actor\Player\Act\Walk.cpp" />
+    <ClCompile Include="Game\Actor\Player\Act\Attack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -59,6 +64,11 @@
     <ClInclude Include="Game\Util\BarGauge.h" />
     <ClInclude Include="Game\Scene\IStage.h" />
     <ClInclude Include="Game\Actor\Player\Shield.h" />
+    <ClInclude Include="Game\Actor\Player\Act\Act.h" />
+    <ClInclude Include="Game\Actor\Player\Act\Guard.h" />
+    <ClInclude Include="Game\Actor\Player\Act\Idle.h" />
+    <ClInclude Include="Game\Actor\Player\Act\Walk.h" />
+    <ClInclude Include="Game\Actor\Player\Act\Attack.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestStage.fbx">

@@ -200,14 +200,17 @@ float4 PSMain( PSInput In ) : SV_Target0
     
     //シャドウマップ
     {
+        //プロジェクション行列を経た座標をテクスチャ座標に変換する。
         float3 shadowPos2 = In.shadowPos.xyz / In.shadowPos.w;
         shadowPos2.xy *= float2(0.5f, -0.5f);
         shadowPos2.xy += 0.5f;
+        //シャドウマップの深度とピクセルの深度を比較する。
         float mapDepth = shadowMap.Sample(Sampler, shadowPos2.xy).r;
         if (0 <= shadowPos2.x && shadowPos2.x <= 1
             && 0 <= shadowPos2.y && shadowPos2.y <= 1
-            && mapDepth + 0.001f < shadowPos2.z) {
+            && mapDepth + 0.0003f < shadowPos2.z) {
             sum.rgb /= 4;
+            //sum.rbg = 1;
         }
     }
     

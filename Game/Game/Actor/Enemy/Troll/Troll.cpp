@@ -11,6 +11,8 @@
 #include "Act/ActHip.h"
 #include "graphics/RenderObjectManager.h"
 
+using namespace TrollAct;
+
 Troll::Troll(Stage1* stage) :stage(stage) , Actor(300){
     //ƒ‚ƒfƒ‹
 	{

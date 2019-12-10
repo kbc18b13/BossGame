@@ -7,9 +7,10 @@
 using AnimState = Troll::AnimState;
 using ActState = Troll::ActState;
 
+namespace TrollAct{
 
-ActStep::ActStep() : font(L"Assets/font/font.spritefont"){
-	
+ActStep::ActStep() : font( L"Assets/font/font.spritefont" ){
+
 }
 
 void ActStep::Start(){
@@ -17,26 +18,28 @@ void ActStep::Start(){
 	first = true;
 }
 
-void ActStep::Continue(ActArg& arg) {
+void ActStep::Continue( ActArg& arg ){
 	CharaConEx* chara = arg.charaCon;
 
 	const CVector3 pVec = arg.player->GetPos() - chara->GetPosition();
 	CVector3 sideVec;
-	sideVec.Cross(pVec, CVector3::Up());
+	sideVec.Cross( pVec, CVector3::Up() );
 
 	sideVec.Normalize();
 
-	arg.model->SetPos( chara->Excecute(sideVec, first));
-    arg.model->SetRot(Util::LookRotXZ(pVec));
+	arg.model->SetPos( chara->Excecute( sideVec, first ) );
+	arg.model->SetRot( Util::LookRotXZ( pVec ) );
 
 	first = false;
 
-	if(!onJump){
+	if( !onJump ){
 		//ƒWƒƒƒ“ƒv‚µ‚Ä‹ó’†‚É‚¢‚é
-		if (!chara->OnGround()) {
+		if( !chara->OnGround() ){
 			onJump = true;
 		}
-	} else if(chara->OnGround()){
-        arg.changeAct(ActState::Wait);
+	} else if( chara->OnGround() ){
+		arg.changeAct( ActState::Wait );
 	}
+}
+
 }

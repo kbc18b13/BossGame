@@ -5,49 +5,52 @@
 #include "Util/BarGauge.h"
 class SkinModelRender;
 class Stage1;
-class Act;
 
-class Troll: public Actor{
+namespace TrollAct{
+class Act;
+}
+
+class Troll : public Actor{
 public:
 	//関数
-	Troll(Stage1* stage);
+	Troll( Stage1* stage );
 	~Troll();
 
 	void Start() override;
 	void Update() override;
 
-	void SetPos(const CVector3& pos) override;
+	void SetPos( const CVector3& pos ) override;
 
-	CVector3 GetPos() const override {
+	CVector3 GetPos() const override{
 		return m_CharaCon.GetPosition();
 	}
 
-    /// <summary>
-    /// 加速させる
-    /// </summary>
-    void AddVelocity(const CVector3& pos) override {
-        m_CharaCon.AddVelocity(pos);
-    }
+	/// <summary>
+	/// 加速させる
+	/// </summary>
+	void AddVelocity( const CVector3& pos ) override{
+		m_CharaCon.AddVelocity( pos );
+	}
 
 	//列挙
-	enum class AnimState {
+	enum class AnimState{
 		Walk,
 		Attack,
 		JumpUp,
 		JumpDown,
 		Idle,
-        Tackle,
-        Hip,
+		Tackle,
+		Hip,
 		Num
 	};
 
-	enum class ActState {
+	enum class ActState{
 		Wait,
 		Chase,
 		Attack,
 		Step,
-        Tackle,
-        Hip,
+		Tackle,
+		Hip,
 		Num,
 	};
 
@@ -55,19 +58,19 @@ private:
 	//変数
 	Stage1* stage;
 
-    Act* m_activeAction;
-    std::unique_ptr<Act> m_actionArray[int(ActState::Num)];
-	std::function<void(ActState)> m_stateChangeFunc;
+	TrollAct::Act* m_activeAction;
+	std::unique_ptr<TrollAct::Act> m_actionArray[int( ActState::Num )];
+	std::function<void( ActState )> m_stateChangeFunc;
 
 	int m_state;
 
 	float m_timer = 0.0f;
 
 	CharaConEx m_CharaCon;
-	AnimationClip m_animClip[int(AnimState::Num)];//アニメーションクリップ
+	AnimationClip m_animClip[int( AnimState::Num )];//アニメーションクリップ
 	SkinModelRender m_model;//モデル
 
-    TrollArmCollision armCollision;
+	TrollArmCollision armCollision;
 
 	BarGauge m_hpBar; //HPバー
 };

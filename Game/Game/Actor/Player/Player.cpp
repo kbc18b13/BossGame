@@ -3,19 +3,21 @@
 #include "physics/CollisionAttr.h"
 #include "graphics/RenderObjectManager.h"
 
+using namespace PlayerAct;
+
 Player::Player() : Actor(10)
 {
 	//アニメーションクリップ読み込み
-	m_animClip[enAnimWalk].Load(L"Assets/animData/TestChara_Run.tka", true);
-	m_animClip[enAnimIdle].Load(L"Assets/animData/TestChara_Idle.tka",true);
-	m_animClip[enAnimSlash].Load(L"Assets/animData/TestChara_Slash.tka");
-	m_animClip[enAnimSlash2].Load(L"Assets/animData/TestChara_Slash2.tka");
-	m_animClip[enAnimSlash3].Load(L"Assets/animData/TestChara_Slash3.tka");
-	m_animClip[enAnimSlash4].Load(L"Assets/animData/TestChara_Slash4.tka");
-	m_animClip[enAnimGuard].Load( L"Assets/animData/TestChara_Guard.tka" );
+	m_animClip[int(Anim::Walk)].Load(L"Assets/animData/TestChara_Run.tka", true);
+	m_animClip[int(Anim::Idle)].Load(L"Assets/animData/TestChara_Idle.tka",true);
+	m_animClip[int(Anim::Slash)].Load(L"Assets/animData/TestChara_Slash.tka");
+	m_animClip[int(Anim::Slash2)].Load(L"Assets/animData/TestChara_Slash2.tka");
+	m_animClip[int(Anim::Slash3)].Load(L"Assets/animData/TestChara_Slash3.tka");
+	m_animClip[int(Anim::Slash4)].Load(L"Assets/animData/TestChara_Slash4.tka");
+	m_animClip[int(Anim::Guard)].Load( L"Assets/animData/TestChara_Guard.tka" );
 
 	//cmoファイルの読み込み。
-	m_model.Init(L"Assets/modelData/TestChara.cmo",m_animClip,enAnimNum);
+	m_model.Init(L"Assets/modelData/TestChara.cmo",m_animClip,int(Anim::Num));
 	m_model.GetAnim().AddEventFunc("End", [&]() {
 		SlashEnd();
 	});
@@ -74,8 +76,8 @@ void Player::Update()
 	//キャラコンの操作
 	CVector3 move = g_pad->GetLStickXF() * m_camera.GetRightVec() + g_pad->GetLStickYF() * m_camera.GetFrontVec_XZ();
 	CVector3 pos = m_charaCon.Excecute(move, g_pad->IsTrigger(enButtonA));
-	CVector3 speed = m_charaCon.GetVelocity();
 
+	CVector3 speed = m_charaCon.GetVelocity();
 	//モデル位置
 	m_model.SetPos(pos);
 	//モデル回転
@@ -95,13 +97,13 @@ void Player::Update()
 
 	//アニメーション
 	if(g_pad->IsPress(enButtonLB1)){
-		m_model.Play( enAnimGuard, 0.2f );
+		m_model.Play( int(Anim::Guard), 0.2f );
 	} else{
 
 		if( g_pad->IsTrigger( enButtonRB1 ) ){
 			if( m_comboCount == -1 ){
 				m_comboCount++;
-				m_model.Play( enAnimSlash, 0.1f );
+				m_model.Play( int(Anim::Slash), 0.1f );
 				m_sword.SlashStart();
 			} else{
 				m_comboContinue = true;
@@ -109,9 +111,9 @@ void Player::Update()
 		} else
 			if( m_comboCount == -1 ){
 				if( speed.LengthSq() > 0.001f ){
-					m_model.Play( enAnimWalk, 0.1f );
+					m_model.Play( int(Anim::Walk), 0.1f );
 				} else{
-					m_model.Play( enAnimIdle, 0.3f );
+					m_model.Play( int(Anim::Idle), 0.3f );
 				}
 			}
 	}
@@ -131,15 +133,15 @@ void Player::SlashEnd() {
 		m_comboCount++;//コンボを進める
 		if (m_comboCount >= MAX_COMBO) {
 			m_comboCount = -1;//コンボ終了
-			m_model.Play(enAnimIdle, 0.3f);
+			m_model.Play(int(Anim::Idle), 0.3f);
 			m_sword.SlashEnd();
 		} else {
-			m_model.Play(enAnimSlash + m_comboCount, 0.1f);//アニメーション
+			m_model.Play(int(Anim::Slash) + m_comboCount, 0.1f);//アニメーション
 			m_sword.SlashStart();
 		}
 	} else {
 		m_comboCount = -1;//コンボ終了
-		m_model.Play(enAnimIdle, 0.3f);
+		m_model.Play(int(Anim::Idle), 0.3f);
 		m_sword.SlashEnd();
 	}
 	m_comboContinue = false;

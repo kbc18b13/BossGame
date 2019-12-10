@@ -3,13 +3,17 @@
 #include "graphics/CFont.h"
 class Player;
 
-class ActTackle : public Act {
+namespace TrollAct{
+
+class ActTackle : public Act{
 public:
-    ActTackle();
+	ActTackle();
 
 	void Start() override;
-    void Continue(ActArg& arg);
+	void Continue( ActArg& arg );
 
 private:
-    float m_timer = 0.0f;
+	float m_timer = 0.0f;
 };
+
+}

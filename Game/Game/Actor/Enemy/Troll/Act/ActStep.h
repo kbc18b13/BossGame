@@ -3,12 +3,14 @@
 #include "graphics/CFont.h"
 class Player;
 
-class ActStep : public Act {
+namespace TrollAct{
+
+class ActStep : public Act{
 public:
 	ActStep();
 
 	void Start() override;
-    void Continue(ActArg& arg);
+	void Continue( ActArg& arg );
 
 private:
 	bool first = true;
@@ -16,3 +18,5 @@ private:
 
 	CFont font;
 };
+
+}

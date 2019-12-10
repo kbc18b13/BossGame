@@ -3,16 +3,18 @@
 class Act;
 class Player;
 
-struct ActArg {
+namespace TrollAct{
+
+struct ActArg{
 	CharaConEx* charaCon = nullptr;
 	SkinModelRender* model = nullptr;
 	Player* player = nullptr;
-    std::function<void(Troll::ActState)> changeAct;
+	std::function<void( Troll::ActState )> changeAct;
 };
 
-class Act {
+class Act{
 public:
-	virtual ~Act() {}
+	virtual ~Act(){}
 
 	/// <summary>
 	/// Act開始時に呼ぶ
@@ -25,5 +27,7 @@ public:
 	/// <param name="chara">キャラコン</param>
 	/// <param name="model">モデル</param>
 	/// <returns>Actを続行する場合はtrue</returns>
-	virtual void Continue(ActArg& arg) = 0;
+	virtual void Continue( ActArg& arg ) = 0;
 };
+
+}
