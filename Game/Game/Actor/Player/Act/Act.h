@@ -14,6 +14,10 @@ public:
 	virtual void Update(Player* p) = 0;
 
 protected:
+	CQuaternion& rot( Player* p ){
+		return p->rot;
+	}
+
 	PlayerCamera& camera( Player* p ){
 		return p->m_camera;
 	}

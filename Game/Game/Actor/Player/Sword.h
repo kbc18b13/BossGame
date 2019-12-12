@@ -24,11 +24,14 @@ private:
 
 	Bone* m_hand; //手のボーン
 
+	Player* m_player;
+
 	SkinModelRender m_model;
 	BoxCollider		 m_collider;				//コライダー。
 	CollisionObject  m_collision;              //コリジョン。
 	CVector3 m_offset; //位置オフセット
 
 	bool m_isSlash = false;  //攻撃中ならtrue
-	Attack m_atk;
+	UINT damage = 1;
+	float coolTime = 0.5f;
 };

@@ -5,6 +5,7 @@
 #include "Act/Attack.h"
 #include "Act/Idle.h"
 #include "Act/Walk.h"
+#include "Act/Guard.h"
 
 using namespace PlayerAct;
 
@@ -45,12 +46,13 @@ Player::Player() : Actor( 10 ){
 
 	//アクトステートの初期化
 	{
-		m_actArray[int(Anim::Slash4)].reset( new PlayerAct::Attack( Anim::Slash4 ) );
-		m_actArray[int(Anim::Slash3)].reset( new PlayerAct::Attack( Anim::Slash3, m_actArray[int( Anim::Slash4 )].get() ) );
-		m_actArray[int(Anim::Slash2)].reset( new PlayerAct::Attack( Anim::Slash2, m_actArray[int( Anim::Slash3 )].get() ) );
-		m_actArray[int(Anim::Slash1)].reset( new PlayerAct::Attack( Anim::Slash1, m_actArray[int( Anim::Slash2 )].get() ) );
-		m_actArray[int(Anim::Idle)].reset( new Idle() );
-		m_actArray[int(Anim::Walk)].reset( new Walk() );
+		m_actArray[int( Anim::Slash4 )].reset( new PlayerAct::Attack( Anim::Slash4 ) );
+		m_actArray[int( Anim::Slash3 )].reset( new PlayerAct::Attack( Anim::Slash3, m_actArray[int( Anim::Slash4 )].get() ) );
+		m_actArray[int( Anim::Slash2 )].reset( new PlayerAct::Attack( Anim::Slash2, m_actArray[int( Anim::Slash3 )].get() ) );
+		m_actArray[int( Anim::Slash1 )].reset( new PlayerAct::Attack( Anim::Slash1, m_actArray[int( Anim::Slash2 )].get() ) );
+		m_actArray[int( Anim::Idle )].reset( new Idle() );
+		m_actArray[int( Anim::Walk )].reset( new Walk() );
+		m_actArray[int( Anim::Guard )].reset( new Guard() );
 
 		ChangeActDefault();
 	}
@@ -93,11 +95,11 @@ void Player::Update(){
 
 	if( m_camera.IsLockOn() ){
 		rot = Util::LookRotXZ( m_camera.GetLockOnPos() - GetPos() );
-	} else
+	}/* else
 		if( speed.x*speed.x + speed.z*speed.z > 1 ){
 			float angle = atan2f( speed.x, speed.z );
 			rot.SetRotation( CVector3::AxisY(), angle );
-		}
+		}*/
 
 	m_model.SetRot( rot );
 
@@ -113,22 +115,41 @@ void Player::Update(){
 	m_shield.Update();
 }
 
+bool Player::Damage( UINT damage, float coolTime, Actor* source ){
+	if( m_nowAct == m_actArray[int( Anim::Guard )].get() ){
+		CVector3 v( 0, 0, 1 );
+		rot.Multiply( v );
+
+		CVector3 toSource = source->GetPos() - GetPos();
+		toSource.y = 0;
+		toSource.Normalize();
+
+		if( acosf( v.Dot( toSource ) ) < CMath::DegToRad( 30 ) ){
+			damage = 0;
+		}
+	}
+	return Actor::Damage( damage, coolTime , source);
+}
+
 void Player::ChangeActDefault(){
+	if( g_pad->IsPress( enButtonLB1 ) ){
+		ChangeAct( m_actArray[int( Anim::Guard )].get() );
+		return;
+	}
+
 	if( g_pad->IsTrigger( enButtonRB1 ) ){
-		m_nowAct = m_actArray[int(Anim::Slash1)].get();
-		m_nowAct->Start(this);
+		ChangeAct( m_actArray[int( Anim::Slash1 )].get());
 		return;
 	}
 
 	if( g_pad->GetLStickVec().LengthSq() > 0.01f ){
-		m_nowAct = m_actArray[int( Anim::Walk)].get();
+		ChangeAct( m_actArray[int( Anim::Walk )].get());
 	} else{
-		m_nowAct = m_actArray[int( Anim::Idle)].get();
+		ChangeAct( m_actArray[int( Anim::Idle )].get());
 	}
-	m_nowAct->Start(this);
 }
 
 void Player::ChangeAct( PlayerAct::Act * act ){
 	m_nowAct = act;
-	m_nowAct->Start(this);
+	m_nowAct->Start( this );
 }

@@ -4,7 +4,7 @@
 #include "Actor/Actor.h"
 #include "Actor/Enemy/Troll/Troll.h"
 
-TrollArmCollision::TrollArmCollision() : m_attack(1, 3){
+TrollArmCollision::TrollArmCollision(){
 }
 
 
@@ -38,7 +38,7 @@ void TrollArmCollision::Update() {
     std::vector<Actor*> hits = m_collision.ContactTest();
     CVector3 pos = m_master->GetPos();
     for (Actor* a : hits) {
-        if (a->Damage(m_attack)) {
+        if (a->Damage(damage , coolTime, m_master)) {
             CVector3 v = a->GetPos() - pos;
             v.Normalize();
             v.y += 2;

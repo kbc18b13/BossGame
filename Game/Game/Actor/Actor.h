@@ -8,14 +8,14 @@ public:
 	virtual ~Actor();
     
     void Update() {
-        dmg.Update();
+		m_damageCool = std::max(m_damageCool - GameTime::GetDeltaTime(), 0.0f);
     }
 
 	virtual void SetPos(const CVector3& pos) = 0;
 	virtual CVector3 GetPos() const = 0;
     virtual void AddVelocity(const CVector3& v) = 0;
 
-	bool Damage(Attack& atk);
+	virtual bool Damage(UINT damage, float coolTime, Actor* source);
 
 	UINT GetNowHP() {
 		return m_nowHP;
@@ -30,7 +30,7 @@ public:
 	}
 
 protected:
-	DamageManager dmg;
+	float m_damageCool = 0.0f;
 	UINT m_nowHP;
 	UINT m_maxHP;
 };

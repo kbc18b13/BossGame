@@ -14,7 +14,6 @@ public:
     void Update();
 
     void StartAttack() {
-        m_attack.UpdateAttackID();
         isAttack = true;
     }
     void EndAttack() {
@@ -22,11 +21,16 @@ public:
     }
 
 private:
+	UINT damage = 1;
+	float coolTime = 3.0f;
+
     bool isAttack = false;
-    Attack m_attack;
+
     Troll* m_master = nullptr;
+
     BoxCollider m_boxCol; //“–‚½‚è”»’è‚ÌŒ`
     Bone* m_hand; //è‚Ìƒ{[ƒ“
+
     ActorHitCollision m_collision;
 };
 

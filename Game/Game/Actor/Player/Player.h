@@ -42,6 +42,14 @@ public:
         m_charaCon.AddVelocity(pos);
     }
 
+	/// <summary>
+	/// ダメージを与える
+	/// </summary>
+	/// <param name="damage">ダメージ</param>
+	/// <param name="coolTime">ヒット後クールタイム</param>
+	/// <returns>クールタイム判定によるダメージの可否</returns>
+	bool Damage( UINT damage, float coolTime , Actor* source) override;
+
 	//ステージをセット
 	void SetStage( IStage* stage ){
 		m_stage = stage;
@@ -69,7 +77,7 @@ private:
 	/// </summary>
 	void ChangeAct( PlayerAct::Act* act );
 
-	std::unique_ptr<PlayerAct::Act> m_actArray[6];
+	std::unique_ptr<PlayerAct::Act> m_actArray[int(Anim::Num)];
 	PlayerAct::Act* m_nowAct;
 
 	static constexpr float WALK_MAX = 200;
@@ -93,10 +101,6 @@ private:
 	BarGauge m_hpBar;//HPバー
 
 	IStage* m_stage;
-
-	static constexpr int MAX_COMBO = 4;
-	int m_comboCount = -1;
-	bool m_comboContinue = false;
 
 	friend class PlayerAct::Act;
 };
