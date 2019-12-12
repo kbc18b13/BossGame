@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Guard.h"
-
+#include <vector>
 namespace PlayerAct{
 
 Guard::Guard(){}

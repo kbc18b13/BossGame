@@ -63,6 +63,7 @@ public:
 		Slash3,
 		Slash4,
 		Guard,
+		Roll,
 		Num,
 	};
 

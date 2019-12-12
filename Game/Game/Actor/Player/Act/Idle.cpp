@@ -13,7 +13,7 @@ void Idle::ChangeState( Player* p ){
 
 void Idle::Update( Player* p ){
 	model( p ).Play( int( Player::Anim::Idle ), 0.2f );
-	chara( p ).Excecute();
+	chara( p ).Excecute(CVector3::Zero(), g_pad->IsTrigger(enButtonA));
 }
 
 }

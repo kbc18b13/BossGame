@@ -38,6 +38,7 @@
     <ClCompile Include="Game\Actor\Player\Act\Idle.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\Walk.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\Attack.cpp" />
+    <ClCompile Include="Game\Actor\Player\Act\Roll.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -69,6 +70,7 @@
     <ClInclude Include="Game\Actor\Player\Act\Idle.h" />
     <ClInclude Include="Game\Actor\Player\Act\Walk.h" />
     <ClInclude Include="Game\Actor\Player\Act\Attack.h" />
+    <ClInclude Include="Game\Actor\Player\Act\Roll.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestStage.fbx">

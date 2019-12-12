@@ -6,6 +6,7 @@
 #include "Act/Idle.h"
 #include "Act/Walk.h"
 #include "Act/Guard.h"
+#include "Act/Roll.h"
 
 using namespace PlayerAct;
 
@@ -19,6 +20,7 @@ Player::Player() : Actor( 10 ){
 		m_animClip[int( Anim::Slash3 )].Load( L"Assets/animData/TestChara_Slash3.tka" );
 		m_animClip[int( Anim::Slash4 )].Load( L"Assets/animData/TestChara_Slash4.tka" );
 		m_animClip[int( Anim::Guard )].Load( L"Assets/animData/TestChara_Guard.tka" );
+		m_animClip[int( Anim::Roll )].Load( L"Assets/animData/TestChara_Roll.tka" );
 	}
 
 	//cmoファイルの読み込み。
@@ -53,6 +55,7 @@ Player::Player() : Actor( 10 ){
 		m_actArray[int( Anim::Idle )].reset( new Idle() );
 		m_actArray[int( Anim::Walk )].reset( new Walk() );
 		m_actArray[int( Anim::Guard )].reset( new Guard() );
+		m_actArray[int( Anim::Roll )].reset( new Roll() );
 
 		ChangeActDefault();
 	}
@@ -132,6 +135,11 @@ bool Player::Damage( UINT damage, float coolTime, Actor* source ){
 }
 
 void Player::ChangeActDefault(){
+	if( g_pad->IsPress( enButtonB ) ){
+		ChangeAct( m_actArray[int( Anim::Roll )].get() );
+		return;
+	}
+
 	if( g_pad->IsPress( enButtonLB1 ) ){
 		ChangeAct( m_actArray[int( Anim::Guard )].get() );
 		return;
@@ -144,9 +152,10 @@ void Player::ChangeActDefault(){
 
 	if( g_pad->GetLStickVec().LengthSq() > 0.01f ){
 		ChangeAct( m_actArray[int( Anim::Walk )].get());
-	} else{
-		ChangeAct( m_actArray[int( Anim::Idle )].get());
+		return;
 	}
+
+	ChangeAct( m_actArray[int( Anim::Idle )].get() );
 }
 
 void Player::ChangeAct( PlayerAct::Act * act ){
