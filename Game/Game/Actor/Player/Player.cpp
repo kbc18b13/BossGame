@@ -13,7 +13,7 @@ Player::Player() : Actor( 10 ){
 	{
 		m_animClip[int( Anim::Walk )].Load( L"Assets/animData/TestChara_Run.tka", true );
 		m_animClip[int( Anim::Idle )].Load( L"Assets/animData/TestChara_Idle.tka", true );
-		m_animClip[int( Anim::Slash )].Load( L"Assets/animData/TestChara_Slash.tka" );
+		m_animClip[int( Anim::Slash1 )].Load( L"Assets/animData/TestChara_Slash.tka" );
 		m_animClip[int( Anim::Slash2 )].Load( L"Assets/animData/TestChara_Slash2.tka" );
 		m_animClip[int( Anim::Slash3 )].Load( L"Assets/animData/TestChara_Slash3.tka" );
 		m_animClip[int( Anim::Slash4 )].Load( L"Assets/animData/TestChara_Slash4.tka" );
@@ -45,15 +45,14 @@ Player::Player() : Actor( 10 ){
 
 	//アクトステートの初期化
 	{
-		m_actArray[0].reset( new PlayerAct::Attack() );
-		m_actArray[1].reset( new Idle() );
-		m_actArray[2].reset( new Walk() );
-		
-		m_actArg.camera = &m_camera;
-		m_actArg.chara = &m_charaCon;
-		m_actArg.model = &m_model;
-		m_actArg.changeAct = std::bind( &Player::ChangeAct, this, std::placeholders::_1 );
-		m_actArg.changeActDefault = std::bind( &Player::ChangeActDefault, this );
+		m_actArray[int(Anim::Slash4)].reset( new PlayerAct::Attack( Anim::Slash4 ) );
+		m_actArray[int(Anim::Slash3)].reset( new PlayerAct::Attack( Anim::Slash3, m_actArray[int( Anim::Slash4 )].get() ) );
+		m_actArray[int(Anim::Slash2)].reset( new PlayerAct::Attack( Anim::Slash2, m_actArray[int( Anim::Slash3 )].get() ) );
+		m_actArray[int(Anim::Slash1)].reset( new PlayerAct::Attack( Anim::Slash1, m_actArray[int( Anim::Slash2 )].get() ) );
+		m_actArray[int(Anim::Idle)].reset( new Idle() );
+		m_actArray[int(Anim::Walk)].reset( new Walk() );
+
+		ChangeActDefault();
 	}
 
 	//カメラの初期化
@@ -84,8 +83,8 @@ void Player::Update(){
 		m_camera.TurnLockOn( m_stage );
 	}
 
-	m_nowAct->ChangeState(m_actArg);
-	m_nowAct->Update(m_actArg);
+	m_nowAct->ChangeState( this );
+	m_nowAct->Update( this );
 
 	CVector3 speed = m_charaCon.GetVelocity();
 	//モデル位置
@@ -114,6 +113,22 @@ void Player::Update(){
 	m_shield.Update();
 }
 
-void Player::ChangeActDefault(){}
+void Player::ChangeActDefault(){
+	if( g_pad->IsTrigger( enButtonRB1 ) ){
+		m_nowAct = m_actArray[int(Anim::Slash1)].get();
+		m_nowAct->Start(this);
+		return;
+	}
 
-void Player::ChangeAct( PlayerAct::Act * anim ){}
+	if( g_pad->GetLStickVec().LengthSq() > 0.01f ){
+		m_nowAct = m_actArray[int( Anim::Walk)].get();
+	} else{
+		m_nowAct = m_actArray[int( Anim::Idle)].get();
+	}
+	m_nowAct->Start(this);
+}
+
+void Player::ChangeAct( PlayerAct::Act * act ){
+	m_nowAct = act;
+	m_nowAct->Start(this);
+}

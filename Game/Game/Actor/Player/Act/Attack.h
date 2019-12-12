@@ -5,21 +5,23 @@ namespace PlayerAct{
 
 class Attack : public Act{
 public:
-	Attack();
+	Attack( Player::Anim animation_, Act* nextAttack_ = nullptr);
 	~Attack();
 
-	void ChangeState( ActArg& arg ) override;
+	void Start( Player* p ) override;
 
-	void Update( ActArg& arg ) override;
+	void ChangeState( Player* p ) override;
 
-	void Init( Player::Anim animation_, Attack* nextAttack_ = nullptr ){
+	void Update( Player* p ) override;
+
+	/*void Init( Player::Anim animation_, Act* nextAttack_ = nullptr ){
 		animation = animation_;
 		nextAttack = nextAttack_;
-	}
+	}*/
 
 private:
 	Player::Anim animation;
-	Attack* nextAttack;
+	Act* nextAttack;
 	bool pushedAtkButton = false;
 };
 

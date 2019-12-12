@@ -7,12 +7,13 @@ Idle::Idle(){}
 
 Idle::~Idle(){}
 
-void Idle::ChangeState( ActArg & arg ){
-	arg.changeActDefault();
+void Idle::ChangeState( Player* p ){
+	ChangeActDefault( p );
 }
 
-void Idle::Update( ActArg & arg ){
-	arg.model->Play( int( Player::Anim::Idle ), 0.2f );
+void Idle::Update( Player* p ){
+	model( p ).Play( int( Player::Anim::Idle ), 0.2f );
+	chara( p ).Excecute();
 }
 
 }

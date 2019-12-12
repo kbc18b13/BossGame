@@ -36,6 +36,13 @@ public:
     /// <returns></returns>
 	CVector3 Excecute(const CVector3& moveXZ, bool jump);
 
+	/// <summary>
+	/// moveƒ[ƒAjump–³‚µ‚ÌExecuteB
+	/// </summary>
+	CVector3 Excecute(){
+		return Excecute( CVector3::Zero(), false );
+	}
+
     //ˆÊ’u‚ğİ’è
 	void SetPosition(const CVector3& pos) {
 		m_charaCon.SetPosition(pos);

@@ -13,7 +13,7 @@
 
 using namespace TrollAct;
 
-Troll::Troll(Stage1* stage) :stage(stage) , Actor(300){
+Troll::Troll(Stage1* stage) :stage(stage) , Actor(20){
     //ƒ‚ƒfƒ‹
 	{
 		m_animClip[int(AnimState::Walk)].Load(L"Assets/animData/Troll_Walk.tka", true);

@@ -8,9 +8,9 @@ public:
 	Walk();
 	~Walk();
 
-	void ChangeState( ActArg& arg ) override;
+	void ChangeState( Player* p ) override;
 
-	void Update( ActArg& arg ) override;
+	void Update( Player* p ) override;
 
 };
 

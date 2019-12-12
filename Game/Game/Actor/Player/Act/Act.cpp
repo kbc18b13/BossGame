@@ -7,4 +7,6 @@ Act::Act(){}
 
 Act::~Act(){}
 
+void Act::Start( Player*){}
+
 }

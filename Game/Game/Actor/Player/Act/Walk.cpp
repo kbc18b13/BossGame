@@ -8,16 +8,16 @@ Walk::Walk(){}
 
 Walk::~Walk(){}
 
-void Walk::ChangeState( ActArg & arg ){
-	arg.changeActDefault();
+void Walk::ChangeState( Player* p ){
+	ChangeActDefault( p );
 }
 
-void Walk::Update( ActArg& arg ){
-	arg.model->Play( int( Player::Anim::Walk ), 0.2f );
+void Walk::Update( Player* p ){
+	model( p ).Play( int( Player::Anim::Walk ), 0.2f );
 	//ƒLƒƒƒ‰ƒRƒ“‚Ì‘€ì
-	CVector3 move = g_pad->GetLStickXF() * arg.camera->GetRightVec()+
-					g_pad->GetLStickYF() * arg.camera->GetFrontVec_XZ();
-	arg.chara->Excecute( move, g_pad->IsTrigger( enButtonA ) );
+	CVector3 move = g_pad->GetLStickXF() * camera( p ).GetRightVec() +
+		g_pad->GetLStickYF() * camera( p ).GetFrontVec_XZ();
+	chara( p ).Excecute( move, g_pad->IsTrigger( enButtonA ) );
 }
 
 }

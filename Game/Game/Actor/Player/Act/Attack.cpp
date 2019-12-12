@@ -3,24 +3,39 @@
 
 namespace PlayerAct{
 
-Attack::Attack(){}
+Attack::Attack( Player::Anim animation_, Act* nextAttack_ ){
+	animation = animation_;
+	nextAttack = nextAttack_;
+}
 
 
 Attack::~Attack(){}
 
-void Attack::ChangeState( ActArg & arg ){
+void Attack::Start( Player* p ){
+	sword( p ).SlashStart();
+	pushedAtkButton = false;
+}
+
+void Attack::ChangeState( Player* p ){
+	//攻撃ボタンを押したら、次の遷移先はコンボ攻撃
+	if( g_pad->IsTrigger( enButtonRB1 ) ){
+		pushedAtkButton = true;
+	}
+
 	//アニメーション終了後にしか遷移しない
-	if( !arg.model->IsPlaying() ){
-		if( pushedAtkButton ){
-			arg.changeAct( nextAttack );
+	if( !model( p ).IsPlaying() ){
+		sword( p ).SlashEnd();
+		if( nextAttack && pushedAtkButton ){
+			ChangeAct( p, nextAttack );
 		} else{
-			arg.changeActDefault();
+			ChangeActDefault( p );
 		}
 	}
 }
 
-void Attack::Update( ActArg & arg ){
-	arg.model->Play( int( animation ), 0.2f );
+void Attack::Update( Player* p ){
+	model( p ).Play( int( animation ), 0.2f );
+	chara( p ).Excecute();
 }
 
 }

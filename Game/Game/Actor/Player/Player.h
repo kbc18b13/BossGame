@@ -9,7 +9,9 @@
 class Sword;
 class SkinModelRender;
 
-
+namespace PlayerAct{
+class Act;
+}
 
 class Player : public Actor
 {
@@ -48,7 +50,7 @@ public:
 	enum class Anim{
 		Walk,
 		Idle,
-		Slash,
+		Slash1,
 		Slash2,
 		Slash3,
 		Slash4,
@@ -57,12 +59,18 @@ public:
 	};
 
 private:
+	/// <summary>
+	/// デフォルトのステート変更
+	/// </summary>
 	void ChangeActDefault();
-	void ChangeAct( PlayerAct::Act* anim );
 
-	std::unique_ptr<PlayerAct::Act> m_actArray[3];
+	/// <summary>
+	/// ステートを変更する
+	/// </summary>
+	void ChangeAct( PlayerAct::Act* act );
+
+	std::unique_ptr<PlayerAct::Act> m_actArray[6];
 	PlayerAct::Act* m_nowAct;
-	PlayerAct::ActArg m_actArg;
 
 	static constexpr float WALK_MAX = 200;
 	static constexpr float WALK_ACCEL_AIR = 10;
@@ -89,5 +97,7 @@ private:
 	static constexpr int MAX_COMBO = 4;
 	int m_comboCount = -1;
 	bool m_comboContinue = false;
+
+	friend class PlayerAct::Act;
 };
 
