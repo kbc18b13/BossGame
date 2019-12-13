@@ -1,16 +1,10 @@
 #pragma once
 #include "..\Troll.h"
+#include "Scene/IStage.h"
 class Act;
 class Player;
 
 namespace TrollAct{
-
-struct ActArg{
-	CharaConEx* charaCon = nullptr;
-	SkinModelRender* model = nullptr;
-	Player* player = nullptr;
-	std::function<void( Troll::ActState )> changeAct;
-};
 
 class Act{
 public:
@@ -19,7 +13,7 @@ public:
 	/// <summary>
 	/// Act開始時に呼ぶ
 	/// </summary>
-	virtual void Start() = 0;
+	virtual void Start( Troll* t ) = 0;
 
 	/// <summary>
 	/// 毎フレーム呼ぶ
@@ -27,7 +21,25 @@ public:
 	/// <param name="chara">キャラコン</param>
 	/// <param name="model">モデル</param>
 	/// <returns>Actを続行する場合はtrue</returns>
-	virtual void Continue( ActArg& arg ) = 0;
+	virtual void Continue( Troll* t ) = 0;
+
+protected:
+	void ChangeActDefault( Troll* t ){
+		t->ChangeActDefault();
+	}
+	void ChangeAct( Troll* t, Troll::ActState act ){
+		t->ChangeAct( act );
+	}
+	CharaConEx& chara( Troll* t ){
+		return t->m_CharaCon;
+	}
+	SkinModelRender& model( Troll* t ){
+		return t->m_model;
+	}
+	Player* player( Troll* t ){
+		return t->stage->GetPlayer();
+	}
+
 };
 
 }

@@ -8,11 +8,6 @@ public:
 	~Stage1();
 	void Update();
 
-	Player* GetPlayer() {
-		return p;
-	}
-
 private:
 	Ground g;
-	Player* p = nullptr;
 };

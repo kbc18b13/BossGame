@@ -55,12 +55,14 @@ public:
 	};
 
 private:
+	void ChangeActDefault();
+	void ChangeAct( ActState  act);
+
 	//ïœêî
 	Stage1* stage;
 
 	TrollAct::Act* m_activeAction;
 	std::unique_ptr<TrollAct::Act> m_actionArray[int( ActState::Num )];
-	std::function<void( ActState )> m_stateChangeFunc;
 
 	int m_state;
 
@@ -73,4 +75,6 @@ private:
 	TrollArmCollision armCollision;
 
 	BarGauge m_hpBar; //HPÉoÅ[
+
+	friend class TrollAct::Act;
 };

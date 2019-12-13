@@ -64,23 +64,10 @@ void Troll::Start() {
 	m_actionArray[int(ActState::Step)].reset(new ActStep());
     m_actionArray[int(ActState::Tackle)].reset(new ActTackle());
     m_actionArray[int(ActState::Hip)].reset(new ActHip());
-
-    //ステート変更関数
-    m_stateChangeFunc = [&](ActState act) {
-        m_activeAction = m_actionArray[int(act)].get();
-        m_activeAction->Start();
-    };
-
-    m_stateChangeFunc(ActState::Wait);
 }
 
 void Troll::Update() {
-	ActArg arg;
-	arg.charaCon = &m_CharaCon;
-	arg.model = &m_model;
-	arg.player = stage->GetPlayer();
-    arg.changeAct = m_stateChangeFunc;
-    m_activeAction->Continue(arg);
+    m_activeAction->Continue(this);
 
 	//HPバー更新
 	m_hpBar.SetPercent( Actor::GetHPPer() );
@@ -93,4 +80,33 @@ void Troll::Update() {
 void Troll::SetPos(const CVector3 & pos) {
 	m_CharaCon.SetPosition(pos);
 	m_model.SetPos(pos);
+}
+
+void Troll::ChangeActDefault(){
+	CVector3 toP = stage->GetPlayer()->GetPos() - m_CharaCon.GetPosition();
+
+	//近い
+	if( toP.LengthSq() < 100 * 100 ){
+		if( Util::RandomInt( 0, 3 ) == 0 ){
+			ChangeAct( ActState::Hip );
+		} else{
+			ChangeAct( ActState::Attack );
+		}
+
+		//遠い
+	} else{
+		if( Util::RandomInt( 0, 3 ) == 0 ){
+			ChangeAct( ActState::Tackle );
+		} else{
+			ChangeAct( ActState::Chase );
+		}
+	}
+}
+
+void Troll::ChangeAct( ActState act ){
+	TrollAct::Act* a = m_actionArray[int( act )].get();
+	if( a != m_activeAction ){
+		a->Start( this );
+		m_activeAction = a;
+	}
 }
