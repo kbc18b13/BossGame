@@ -12,7 +12,6 @@ struct CharaConDesc {
 
 	float walkAccel    = 0;
 	float walkAccelAir = 0;
-	float walkBrake    = 0;
 	float walkMax      = 0;
 
 	float jumpPower    = 0;
@@ -34,7 +33,11 @@ public:
     /// <param name="moveXZ">XZ平面を移動</param>
     /// <param name="jump">ジャンプの有無</param>
     /// <returns></returns>
-	CVector3 Excecute(const CVector3& moveXZ, bool jump);
+	CVector3 Excecute( const CVector3& moveXZ, bool jump ){
+		return Excecute( moveXZ, 1, 1, jump );
+	}
+
+	CVector3 Excecute( const CVector3& moveXZ, float maxSpeedScale, float accelScale ,bool jump );
 
 	/// <summary>
 	/// moveゼロ、jump無しのExecute。
@@ -85,7 +88,6 @@ public:
 private:
 	float m_walkAccel;
 	float m_walkAccelAir;
-	float m_walkBrake;
 	float m_walkMax;
 
 	float m_jumpPower;

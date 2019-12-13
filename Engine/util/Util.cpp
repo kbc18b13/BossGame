@@ -24,7 +24,7 @@ CQuaternion Util::LookRotXZ(CVector3 lookVec, CVector3 nowFront) {
 	lookVec.Normalize();
 	nowFront.Normalize();
 	float d = lookVec.Dot(nowFront);
-	float rot = acosf(lookVec.Dot(nowFront));
+	float rot = acosf(d);
 	lookVec.Cross(nowFront);
 	if (lookVec.y > 0) {
 		rot *= -1;

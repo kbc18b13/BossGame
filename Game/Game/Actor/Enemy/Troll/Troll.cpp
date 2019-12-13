@@ -34,10 +34,9 @@ Troll::Troll(Stage1* stage) :stage(stage) , Actor(20){
 
 		desc.position = CVector3(0, 0, 0);
 
-		desc.walkAccel = 100;
-		desc.walkAccelAir = 10;
-		desc.walkBrake = 10;
-		desc.walkMax = 150;
+		desc.walkAccel = 10;
+		desc.walkAccelAir = 1;
+		desc.walkMax = 100;
 
 		desc.gravity = 900;
 		desc.jumpPower = 500;

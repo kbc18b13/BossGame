@@ -49,6 +49,12 @@ public:
 	}
 
 	/// <summary>
+	/// カメラ側から見たパッド操作
+	/// </summary>
+	/// <returns>ワールド座標系のベクトル</returns>
+	CVector3 GetPadVec();
+
+	/// <summary>
 	/// ロックオン中ならTrue
 	/// </summary>
 	bool IsLockOn(){

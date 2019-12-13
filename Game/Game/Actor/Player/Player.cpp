@@ -33,9 +33,8 @@ Player::Player() : Actor( 10 ){
 
 		desc.position = CVector3( 0, 50, 0 );
 
-		desc.walkAccel = 100;
-		desc.walkAccelAir = 10;
-		desc.walkBrake = 10;
+		desc.walkAccel = 10;
+		desc.walkAccelAir = 1;
 		desc.walkMax = 150;
 
 		desc.gravity = 900;
@@ -135,7 +134,7 @@ bool Player::Damage( UINT damage, float coolTime, Actor* source ){
 }
 
 void Player::ChangeActDefault(){
-	if( g_pad->IsPress( enButtonB ) ){
+	if( g_pad->IsTrigger( enButtonB ) ){
 		ChangeAct( m_actArray[int( Anim::Roll )].get() );
 		return;
 	}

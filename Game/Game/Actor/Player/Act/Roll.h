@@ -14,6 +14,8 @@ public:
 
 	void Update( Player* p ) override;
 
+private:
+	CVector3 m_move;
 };
 
 }

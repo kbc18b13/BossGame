@@ -1,6 +1,7 @@
 /*ベクトル
  * @details
- * DirectMathを使いやすくしたベクトルクラス。 */
+ * DirectMathを使いやすくしたベクトルクラス。 */
+
 
 #pragma once
 
@@ -64,6 +65,10 @@ public:
 
 	float Dot( const CVector2& _v ){
 		return x * _v.x + y * _v.y;
+	}
+
+	void Normalize(){
+		*this /= Length();
 	}
 
 	//線形補間。
@@ -211,12 +216,14 @@ public:
 		DirectX::XMStoreFloat3( &temp.vec, xmvr );
 		return temp;
 	}
-	//長さを取得
+	//長さを取得
+
 	float Length() const{
 		DirectX::XMVECTOR xmv = DirectX::XMLoadFloat3( &vec );
 		return DirectX::XMVector3Length( xmv ).m128_f32[0];
 	}
-	//長さの二乗を取得
+	//長さの二乗を取得
+
 	float LengthSq() const{
 		DirectX::XMVECTOR xmv = DirectX::XMLoadFloat3( &vec );
 		return DirectX::XMVector3LengthSq( xmv ).m128_f32[0];
@@ -333,12 +340,14 @@ public:
 	}
 
 	CVector4() : v{ 0,0,0,1 }{}
-	//コンストラクタ
+	//コンストラクタ
+
 	CVector4( float x, float y, float z, float w ){
 		Set( x, y, z, w );
 	}
 
-	//コンストラクタ	//wには1.0が格納されます。
+	//コンストラクタ
+	//wには1.0が格納されます。
 	CVector4( const CVector3& v ){
 		Set( v );
 	}
@@ -456,6 +465,7 @@ public:
 		y = axis.y * s;
 		z = axis.z * s;
 	}
+	void SetRotationVec( CVector3 from, CVector3 to );
 
 	//クォータニオンに回転をプラス。
 	void AddRotation( const CVector3& axis, float angle ){
@@ -533,6 +543,12 @@ public:
 	static CQuaternion CreateRotDeg( const CVector3& axis, float angle ){
 		CQuaternion q;
 		q.SetRotationDeg( axis, angle );
+		return q;
+	}
+
+	static CQuaternion CreateRotVec(const CVector3& from, const CVector3& to ){
+		CQuaternion q;
+		q.SetRotationVec( from, to );
 		return q;
 	}
 

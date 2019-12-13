@@ -29,7 +29,7 @@ void ActTackle::Continue( ActArg& arg ){
 		move *= 2;
 	}
 	arg.model->Play( int( AnimState::Tackle ), 0.2f );
-	arg.model->SetPos( arg.charaCon->Excecute( move, false ) );
+	arg.model->SetPos( arg.charaCon->Excecute( move, 2, 1, false ) );
 	arg.model->SetRot( Util::LookRotXZ( move ) );
 
 	//タイマーが0を下回ったら終了

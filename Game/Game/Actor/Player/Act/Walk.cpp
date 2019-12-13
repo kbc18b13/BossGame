@@ -15,13 +15,15 @@ void Walk::ChangeState( Player* p ){
 void Walk::Update( Player* p ){
 	model( p ).Play( int( Player::Anim::Walk ), 0.2f );
 	//ƒLƒƒƒ‰ƒRƒ“‚Ì‘€ì
-	CVector3 move = g_pad->GetLStickXF() * camera( p ).GetRightVec() +
-		g_pad->GetLStickYF() * camera( p ).GetFrontVec_XZ();
-	chara( p ).Excecute( move, g_pad->IsTrigger( enButtonA ) );
+	CVector3 move = camera( p ).GetPadVec();
 
-	if( move.xz().LengthSq() > 0.01f){
-		float angle = atan2f( move.x, move.z );
-		rot(p).SetRotation( CVector3::AxisY(), angle );
+	float speed = ( g_pad->IsPress( enButtonX ) ) ? 1.5f : 1;
+
+	chara( p ).Excecute( move,speed, 1 /(speed*2) ,g_pad->IsTrigger( enButtonA ) );
+
+	//ƒ‚ƒfƒ‹‚ÌŒü‚«
+	if( move.LengthSq() > 0.01f){
+		rot(p).SetRotationVec( CVector3::AxisZ(), move);
 	}
 }
 
