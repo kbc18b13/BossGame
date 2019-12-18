@@ -13,7 +13,13 @@ public:
 	virtual void ChangeState(Player* p) = 0;
 	virtual void Update(Player* p) = 0;
 
+	bool ConsumeStamina(Stamina& stamina){
+		return stamina.Consume(m_needStamina);
+	}
+
 protected:
+	UINT m_needStamina = 0;
+
 	CQuaternion& rot( Player* p ){
 		return p->rot;
 	}
@@ -33,8 +39,8 @@ protected:
 	void ChangeActDefault( Player* p ){
 		p->ChangeActDefault();
 	}
-	void ChangeAct(Player* p , Act* a){
-		p->ChangeAct( a );
+	bool ChangeAct(Player* p , Player::Anim a){
+		return p->ChangeAct( a );
 	}
 };
 

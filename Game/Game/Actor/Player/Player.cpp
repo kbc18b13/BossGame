@@ -47,10 +47,10 @@ Player::Player() : Actor( 10 ){
 
 	//アクトステートの初期化
 	{
-		m_actArray[int( Anim::Slash4 )].reset( new PlayerAct::Attack( Anim::Slash4 ) );
-		m_actArray[int( Anim::Slash3 )].reset( new PlayerAct::Attack( Anim::Slash3, m_actArray[int( Anim::Slash4 )].get() ) );
-		m_actArray[int( Anim::Slash2 )].reset( new PlayerAct::Attack( Anim::Slash2, m_actArray[int( Anim::Slash3 )].get() ) );
-		m_actArray[int( Anim::Slash1 )].reset( new PlayerAct::Attack( Anim::Slash1, m_actArray[int( Anim::Slash2 )].get() ) );
+		m_actArray[int( Anim::Slash4 )].reset( new PlayerAct::Attack( Anim::Slash4, Anim::SlashEnd ) );
+		m_actArray[int( Anim::Slash3 )].reset( new PlayerAct::Attack( Anim::Slash3, Anim::Slash4 ) );
+		m_actArray[int( Anim::Slash2 )].reset( new PlayerAct::Attack( Anim::Slash2, Anim::Slash3 ) );
+		m_actArray[int( Anim::Slash1 )].reset( new PlayerAct::Attack( Anim::Slash1, Anim::Slash2 ) );
 		m_actArray[int( Anim::Idle )].reset( new Idle() );
 		m_actArray[int( Anim::Walk )].reset( new Walk() );
 		m_actArray[int( Anim::Guard )].reset( new Guard() );
@@ -111,6 +111,9 @@ void Player::Update(){
 	//HPバーの更新
 	m_hpBar.SetPercent( Actor::GetHPPer() );
 
+	//スタミナバーの更新
+	m_stamina.Update();
+
 	Actor::Update();
 	m_model.Update();
 	m_sword.Update();
@@ -130,34 +133,38 @@ bool Player::Damage( UINT damage, float coolTime, Actor* source ){
 			damage = 0;
 		}
 	}
-	return Actor::Damage( damage, coolTime , source);
+	return Actor::Damage( damage, coolTime, source );
 }
 
 void Player::ChangeActDefault(){
-	if( g_pad->IsTrigger( enButtonB ) ){
-		ChangeAct( m_actArray[int( Anim::Roll )].get() );
+	if( g_pad->IsTrigger( enButtonB ) && ChangeAct( Anim::Roll ) ){
 		return;
 	}
 
 	if( g_pad->IsPress( enButtonLB1 ) ){
-		ChangeAct( m_actArray[int( Anim::Guard )].get() );
+		ChangeAct( Anim::Guard);
 		return;
 	}
 
-	if( g_pad->IsTrigger( enButtonRB1 ) ){
-		ChangeAct( m_actArray[int( Anim::Slash1 )].get());
+	if( g_pad->IsTrigger( enButtonRB1 ) && ChangeAct( Anim::Slash1 ) ){
 		return;
 	}
 
 	if( g_pad->GetLStickVec().LengthSq() > 0.01f ){
-		ChangeAct( m_actArray[int( Anim::Walk )].get());
+		ChangeAct( Anim::Walk);
 		return;
 	}
 
-	ChangeAct( m_actArray[int( Anim::Idle )].get() );
+	ChangeAct( Anim::Idle);
 }
 
-void Player::ChangeAct( PlayerAct::Act * act ){
-	m_nowAct = act;
-	m_nowAct->Start( this );
+bool Player::ChangeAct( Anim act ){
+	Act* a = m_actArray[int( act )].get();
+	//スタミナが足りない場合は変更せずfalseを返す。
+	if( a->ConsumeStamina( m_stamina ) ){
+		m_nowAct = a;
+		m_nowAct->Start( this );
+		return true;
+	}
+	return false;
 }

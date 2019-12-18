@@ -20,7 +20,10 @@ void ActAttack::Continue( Troll* t ){
 
 	model( t ).Play( int( AnimState::Attack ), 0.2f );
 	model( t ).SetPos( chara( t ).Excecute( CVector3::Zero(), false ) );
-	model( t ).SetRot( Util::LookRotXZ( toP ) );
+
+	if( m_timer > 1.0f ){
+		model( t ).SetRot( Util::LookRotXZ( toP ) );
+	}
 
 	if( !m_isAttack && m_timer < 1.0f ){
 		m_arm.StartAttack();

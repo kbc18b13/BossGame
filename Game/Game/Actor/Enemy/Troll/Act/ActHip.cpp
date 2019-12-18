@@ -16,6 +16,7 @@ ActHip::ActHip(){
 void ActHip::Start( Troll* t ){
 	onJump = false;
 	first = true;
+	waitTime = 2.0f;
 }
 
 void ActHip::Continue( Troll* t ){
@@ -47,13 +48,16 @@ void ActHip::Continue( Troll* t ){
 
 	model( t ).SetPos( chara( t ).Excecute( CVector3::Zero(), false ) );
 
-	//ジャンプ後に着地したら次へ
+	//ジャンプ後に着地したら5秒待って次へ
 	if( !onJump ){
 		if( !chara( t ).OnGround() ){
 			onJump = true;
 		}
 	} else if( chara( t ).OnGround() ){
-		ChangeAct( t, ActState::Wait );
+		waitTime -= GameTime::GetDeltaTime();
+		if( waitTime <= 0 ){
+			ChangeAct( t, ActState::Wait );
+		}
 	}
 }
 

@@ -3,7 +3,9 @@
 
 namespace PlayerAct{
 
-Roll::Roll(){}
+Roll::Roll(){
+	m_needStamina = 10;
+}
 
 
 Roll::~Roll(){}
@@ -21,9 +23,9 @@ void Roll::ChangeState( Player * p ){
 }
 
 void Roll::Start( Player * p ){
-
 	//ˆÚ“®•ûŒü‚ÌŒˆ’è
 	m_move = camera( p ).GetPadVec();
+
 	//–¢“ü—Í‚Ìê‡‚Í‘O‚ÉB
 	if( m_move.LengthSq() < 0.01f ){
 		m_move = CVector3( 0, 0, 1 );

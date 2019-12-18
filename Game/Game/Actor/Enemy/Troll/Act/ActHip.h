@@ -15,6 +15,7 @@ public:
 private:
 	bool first = true;
 	bool onJump = false;
+	float waitTime;
 };
 
 }

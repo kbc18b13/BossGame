@@ -5,7 +5,7 @@ namespace PlayerAct{
 
 class Attack : public Act{
 public:
-	Attack( Player::Anim animation_, Act* nextAttack_ = nullptr);
+	Attack( Player::Anim animation_, Player::Anim nextAttack_);
 	~Attack();
 
 	void Start( Player* p ) override;
@@ -21,7 +21,7 @@ public:
 
 private:
 	Player::Anim animation;
-	Act* nextAttack;
+	Player::Anim nextAttack;
 	bool pushedAtkButton = false;
 };
 

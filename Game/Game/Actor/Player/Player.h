@@ -5,6 +5,7 @@
 #include "Sword.h"
 #include "Shield.h"
 #include "Util/BarGauge.h"
+#include "Stamina.h"
 
 class Sword;
 class SkinModelRender;
@@ -65,6 +66,7 @@ public:
 		Guard,
 		Roll,
 		Num,
+		SlashEnd, //攻撃終了のためのダミー
 	};
 
 private:
@@ -74,9 +76,10 @@ private:
 	void ChangeActDefault();
 
 	/// <summary>
-	/// ステートを変更する
+	/// ステート変更
 	/// </summary>
-	void ChangeAct( PlayerAct::Act* act );
+	/// <returns>変更に成功したかどうか。スタミナが足りないと失敗する。</returns>
+	bool ChangeAct( Anim act );
 
 	std::unique_ptr<PlayerAct::Act> m_actArray[int(Anim::Num)];
 	PlayerAct::Act* m_nowAct;
@@ -100,6 +103,8 @@ private:
 	PlayerCamera m_camera;                      //カメラ
 
 	BarGauge m_hpBar;//HPバー
+
+	Stamina m_stamina;//スタミナ
 
 	IStage* m_stage;
 
