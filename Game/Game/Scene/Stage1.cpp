@@ -33,7 +33,6 @@ Stage1::Stage1() {
 }
 
 Stage1::~Stage1() {
-	DeleteGO(p);
 }
 
 void Stage1::Update() {

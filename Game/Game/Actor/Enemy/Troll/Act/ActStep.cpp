@@ -13,32 +13,30 @@ ActStep::ActStep() : font( L"Assets/font/font.spritefont" ){
 
 }
 
-void ActStep::Start(){
+void ActStep::Start( Troll* t ){
 	onJump = false;
 	first = true;
 }
 
-void ActStep::Continue( ActArg& arg ){
-	CharaConEx* chara = arg.charaCon;
-
-	const CVector3 pVec = arg.player->GetPos() - chara->GetPosition();
+void ActStep::Continue( Troll* t ){
+	const CVector3 pVec = player( t )->GetPos() - chara( t ).GetPosition();
 	CVector3 sideVec;
 	sideVec.Cross( pVec, CVector3::Up() );
 
 	sideVec.Normalize();
 
-	arg.model->SetPos( chara->Excecute( sideVec, first ) );
-	arg.model->SetRot( Util::LookRotXZ( pVec ) );
+	model( t ).SetPos( chara( t ).Excecute( sideVec, first ) );
+	model( t ).SetRot( Util::LookRotXZ( pVec ) );
 
 	first = false;
 
 	if( !onJump ){
 		//ƒWƒƒƒ“ƒv‚µ‚Ä‹ó’†‚É‚¢‚é
-		if( !chara->OnGround() ){
+		if( !chara( t ).OnGround() ){
 			onJump = true;
 		}
-	} else if( chara->OnGround() ){
-		arg.changeAct( ActState::Wait );
+	} else if( chara( t ).OnGround() ){
+		ChangeAct( t, ActState::Wait );
 	}
 }
 

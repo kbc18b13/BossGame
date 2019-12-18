@@ -10,32 +10,32 @@ namespace TrollAct{
 
 ActIdle::ActIdle(){}
 
-void ActIdle::Start(){
+void ActIdle::Start( Troll* t ){
 	m_timer = 1.0f;
 }
 
-void ActIdle::Continue( ActArg& arg ){
-	arg.model->Play( int( AnimState::Idle ), 0.2f );
+void ActIdle::Continue( Troll* t ){
+	model( t ).Play( int( AnimState::Idle ), 0.2f );
 	m_timer -= GameTime::GetDeltaTime();
-	arg.model->SetPos( arg.charaCon->Excecute( CVector3::Zero(), false ) );
+	model( t ).SetPos( chara( t ).Excecute( CVector3::Zero(), false ) );
 	//タイマーが0より大きい間は続行
 	if( m_timer <= 0 ){
-		CVector3 toP = arg.player->GetPos() - arg.charaCon->GetPosition();
+		CVector3 toP = player( t )->GetPos() - chara( t ).GetPosition();
 
 		//近い
 		if( toP.LengthSq() < 100 * 100 ){
 			if( Util::RandomInt( 0, 3 ) == 0 ){
-				arg.changeAct( ActState::Hip );
+				ChangeAct( t, ActState::Hip );
 			} else{
-				arg.changeAct( ActState::Attack );
+				ChangeAct( t, ActState::Attack );
 			}
 
 			//遠い
 		} else{
 			if( Util::RandomInt( 0, 3 ) == 0 ){
-				arg.changeAct( ActState::Tackle );
+				ChangeAct( t, ActState::Tackle );
 			} else{
-				arg.changeAct( ActState::Chase );
+				ChangeAct( t, ActState::Chase );
 			}
 		}
 	}

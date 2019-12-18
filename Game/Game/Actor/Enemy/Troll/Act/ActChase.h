@@ -9,8 +9,8 @@ class ActChase : public Act{
 public:
 	ActChase();
 
-	void Start() override;
-	void Continue( ActArg& arg );
+	void Start(Troll* t) override;
+	void Continue( Troll* t );
 
 private:
 	float m_timer = 0.0f;

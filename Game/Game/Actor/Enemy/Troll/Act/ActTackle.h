@@ -9,8 +9,8 @@ class ActTackle : public Act{
 public:
 	ActTackle();
 
-	void Start() override;
-	void Continue( ActArg& arg );
+	void Start( Troll* t ) override;
+	void Continue( Troll* t ) override;
 
 private:
 	float m_timer = 0.0f;

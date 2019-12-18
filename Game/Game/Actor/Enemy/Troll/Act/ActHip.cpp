@@ -13,14 +13,12 @@ ActHip::ActHip(){
 
 }
 
-void ActHip::Start(){
+void ActHip::Start( Troll* t ){
 	onJump = false;
 	first = true;
 }
 
-void ActHip::Continue( ActArg& arg ){
-	CharaConEx* chara = arg.charaCon;
-
+void ActHip::Continue( Troll* t ){
 	CVector3 motion;
 	float plength = 0;
 	//最初の一回だけ実行
@@ -28,34 +26,34 @@ void ActHip::Continue( ActArg& arg ){
 		//ジャンプベクトル。ここにちょうどプレイヤー上に着地するように移動ベクトルを加える。
 		const float jumpPower = 600;
 
-		CVector3 motion = arg.player->GetPos() - chara->GetPosition();
+		CVector3 motion = player( t )->GetPos() - chara( t ).GetPosition();
 		plength = motion.Length();
 
 		//滞空時間
-		float airTime = ( jumpPower / chara->GetGravity() * 2 );
+		float airTime = ( jumpPower / chara( t ).GetGravity() * 2 );
 
 		motion /= airTime;
 
 		motion.y += jumpPower;
 
-		chara->SetVelocity( motion );
+		chara( t ).SetVelocity( motion );
 
 		first = false;
 	}
 
-	if( chara->GetVelocity().y < 0 ){
-		arg.model->Play( int( AnimState::Hip ), 0.2f );
+	if( chara( t ).GetVelocity().y < 0 ){
+		model( t ).Play( int( AnimState::Hip ), 0.2f );
 	}
 
-	arg.model->SetPos( chara->Excecute( CVector3::Zero(), false ) );
+	model( t ).SetPos( chara( t ).Excecute( CVector3::Zero(), false ) );
 
 	//ジャンプ後に着地したら次へ
 	if( !onJump ){
-		if( !chara->OnGround() ){
+		if( !chara( t ).OnGround() ){
 			onJump = true;
 		}
-	} else if( chara->OnGround() ){
-		arg.changeAct( ActState::Wait );
+	} else if( chara( t ).OnGround() ){
+		ChangeAct( t, ActState::Wait );
 	}
 }
 

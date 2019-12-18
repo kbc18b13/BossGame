@@ -13,13 +13,13 @@ ActTackle::ActTackle(){
 
 }
 
-void ActTackle::Start(){
+void ActTackle::Start( Troll* t ){
 	m_timer = 5.0f;
 }
 
-void ActTackle::Continue( ActArg& arg ){
+void ActTackle::Continue( Troll* t ){
 
-	CVector3 move = arg.player->GetPos() - arg.charaCon->GetPosition();
+	CVector3 move = player( t )->GetPos() - chara( t ).GetPosition();
 	move.y = 0;
 	float moveLength = move.Length();
 	if( moveLength < 100 ){
@@ -28,13 +28,13 @@ void ActTackle::Continue( ActArg& arg ){
 		move /= moveLength;
 		move *= 2;
 	}
-	arg.model->Play( int( AnimState::Tackle ), 0.2f );
-	arg.model->SetPos( arg.charaCon->Excecute( move, 2, 1, false ) );
-	arg.model->SetRot( Util::LookRotXZ( move ) );
+	model( t ).Play( int( AnimState::Tackle ), 0.2f );
+	model( t ).SetPos( chara( t ).Excecute( move, 2, 1, false ) );
+	model( t ).SetRot( Util::LookRotXZ( move ) );
 
 	//タイマーが0を下回ったら終了
 	if( m_timer <= 0 ){
-		arg.changeAct( ActState::Wait );
+		ChangeAct( t, ActState::Wait );
 	}
 }
 

@@ -4,7 +4,7 @@
 #include "TrollArmCollision.h"
 #include "Util/BarGauge.h"
 class SkinModelRender;
-class Stage1;
+class IStage;
 
 namespace TrollAct{
 class Act;
@@ -13,7 +13,7 @@ class Act;
 class Troll : public Actor{
 public:
 	//ä÷êî
-	Troll( Stage1* stage );
+	Troll( IStage* stage );
 	~Troll();
 
 	void Start() override;
@@ -59,7 +59,7 @@ private:
 	void ChangeAct( ActState  act);
 
 	//ïœêî
-	Stage1* stage;
+	IStage* stage;
 
 	TrollAct::Act* m_activeAction;
 	std::unique_ptr<TrollAct::Act> m_actionArray[int( ActState::Num )];

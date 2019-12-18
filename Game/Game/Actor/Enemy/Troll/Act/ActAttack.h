@@ -8,8 +8,8 @@ namespace TrollAct{
 class ActAttack : public Act{
 public:
 	ActAttack( TrollArmCollision& arm );
-	void Start() override;
-	void Continue( ActArg& arg ) override;
+	void Start(Troll* t) override;
+	void Continue( Troll* t ) override;
 
 private:
 	bool m_isAttack = false;

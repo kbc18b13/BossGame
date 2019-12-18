@@ -9,8 +9,8 @@ class ActHip : public Act{
 public:
 	ActHip();
 
-	void Start() override;
-	void Continue( ActArg& arg );
+	void Start(Troll* t) override;
+	void Continue( Troll* t );
 
 private:
 	bool first = true;

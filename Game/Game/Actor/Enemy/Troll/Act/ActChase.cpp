@@ -11,13 +11,13 @@ namespace TrollAct{
 
 ActChase::ActChase(){}
 
-void ActChase::Start(){
+void ActChase::Start( Troll* t ){
 	m_timer = 5.0f;
 }
 
-void ActChase::Continue( ActArg& arg ){
+void ActChase::Continue( Troll* t ){
 
-	CVector3 move = arg.player->GetPos() - arg.charaCon->GetPosition();
+	CVector3 move = player( t )->GetPos() - chara( t ).GetPosition();
 	move.y = 0;
 	float moveLength = move.Length();
 	if( moveLength < 100 ){
@@ -26,13 +26,13 @@ void ActChase::Continue( ActArg& arg ){
 		move /= moveLength;
 		move *= 0.11f;
 	}
-	arg.model->Play( int( AnimState::Walk ), 0.2f );
-	arg.model->SetPos( arg.charaCon->Excecute( move, false ) );
-	arg.model->SetRot( Util::LookRotXZ( move ) );
+	model( t ).Play( int( AnimState::Walk ), 0.2f );
+	model( t ).SetPos( chara( t ).Excecute( move, false ) );
+	model( t ).SetRot( Util::LookRotXZ( move ) );
 
 	//タイマーが0を下回ったら終了
 	if( m_timer <= 0 ){
-		arg.changeAct( ActState::Attack );
+		ChangeAct( t, ActState::Attack );
 		return;
 	}
 

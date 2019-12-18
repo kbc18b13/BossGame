@@ -13,7 +13,7 @@
 
 using namespace TrollAct;
 
-Troll::Troll(Stage1* stage) :stage(stage) , Actor(20){
+Troll::Troll(IStage* stage) :stage(stage) , Actor(20){
     //ƒ‚ƒfƒ‹
 	{
 		m_animClip[int(AnimState::Walk)].Load(L"Assets/animData/Troll_Walk.tka", true);
@@ -64,6 +64,8 @@ void Troll::Start() {
 	m_actionArray[int(ActState::Step)].reset(new ActStep());
     m_actionArray[int(ActState::Tackle)].reset(new ActTackle());
     m_actionArray[int(ActState::Hip)].reset(new ActHip());
+
+	ChangeAct( ActState::Wait );
 }
 
 void Troll::Update() {

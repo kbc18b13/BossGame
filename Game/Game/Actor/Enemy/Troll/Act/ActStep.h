@@ -9,8 +9,8 @@ class ActStep : public Act{
 public:
 	ActStep();
 
-	void Start() override;
-	void Continue( ActArg& arg );
+	void Start( Troll* t ) override;
+	void Continue( Troll* t ) override;
 
 private:
 	bool first = true;

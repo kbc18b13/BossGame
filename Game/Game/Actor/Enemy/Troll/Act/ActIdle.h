@@ -6,8 +6,8 @@ namespace TrollAct{
 class ActIdle : public Act{
 public:
 	ActIdle();
-	void Start() override;
-	void Continue( ActArg& arg ) override;
+	void Start( Troll* t ) override;
+	void Continue( Troll* t ) override;
 private:
 	float m_timer = 0;
 };
