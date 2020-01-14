@@ -2,7 +2,7 @@
 class SkinModelRender;
 class Ground {
 public:
-	Ground();
+	Ground(const wchar_t* modelPath);
 	~Ground();
 
 	void SetPos(const CVector3& pos);

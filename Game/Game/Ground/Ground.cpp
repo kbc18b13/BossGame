@@ -1,8 +1,8 @@
 #include "stdafx.h"
-#include "Ground1.h"
+#include "Ground.h"
 
-Ground::Ground() {
-	m_model.Init(L"Assets/modelData/TestStage.cmo");
+Ground::Ground( const wchar_t* modelPath ) {
+	m_model.Init(modelPath);
 	m_collider.CreateMeshObject(m_model.GetModel(), {0,0,0}, CQuaternion::Identity());
 }
 

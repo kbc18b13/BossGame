@@ -137,7 +137,7 @@ void GraphicsEngine::Init(HWND hWnd)
 		m_pd3dDevice->CreateDepthStencilView(m_depthStencil, &descDSV, &m_depthStencilView);
 	}
 	D3D11_RASTERIZER_DESC desc = {};
-	desc.CullMode = D3D11_CULL_NONE;
+	desc.CullMode = D3D11_CULL_FRONT;
 	desc.FillMode = D3D11_FILL_SOLID;
 	desc.DepthClipEnable = true;
 	desc.MultisampleEnable = true;

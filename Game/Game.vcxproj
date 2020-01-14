@@ -103,6 +103,7 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Util\DisplayText.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\Attack.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\Act.cpp" />
     <ClCompile Include="Game\Util\BarGauge.cpp" />
@@ -122,7 +123,7 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)Attack2.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="Game\Damage\DamageManager.cpp" />
-    <ClCompile Include="Game\Ground\Ground1.cpp" />
+    <ClCompile Include="Game\Ground\Ground.cpp" />
     <ClCompile Include="Game\main.cpp" />
     <ClCompile Include="Game\Scene\Stage1.cpp" />
     <ClCompile Include="Game\Scene\Title.cpp" />
@@ -141,6 +142,7 @@
     <ClCompile Include="Game\Actor\Player\Stamina.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Util\DisplayText.h" />
     <ClInclude Include="Game\Actor\Player\Act\Attack.h" />
     <ClInclude Include="Game\Actor\Player\Act\Act.h" />
     <ClInclude Include="Game\Util\BarGauge.h" />
@@ -159,7 +161,7 @@
     <ClInclude Include="Game\Camera\PlayerCamera.h" />
     <ClInclude Include="Game\Damage\Attack.h" />
     <ClInclude Include="Game\Damage\DamageManager.h" />
-    <ClInclude Include="Game\Ground\Ground1.h" />
+    <ClInclude Include="Game\Ground\Ground.h" />
     <ClInclude Include="Game\Scene\Stage1.h" />
     <ClInclude Include="Game\Scene\Title.h" />
     <ClInclude Include="Game\stdafx.h" />
@@ -175,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Shield.fbx" />
+    <MeshContentTask Include="Assets\modelData\StartStage.fbx" />
     <MeshContentTask Include="Assets\modelData\Sword.fbx" />
     <MeshContentTask Include="Assets\modelData\TestChara.fbx" />
     <MeshContentTask Include="Assets\modelData\TestStage.fbx" />
@@ -195,6 +198,9 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\lockOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\TextBack.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

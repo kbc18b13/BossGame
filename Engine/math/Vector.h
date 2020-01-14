@@ -33,6 +33,10 @@ public:
 		float v[2];
 	};
 
+	operator DirectX::XMVECTOR() const{
+		return DirectX::XMLoadFloat2( &vec );
+	}
+
 	//-------------‘ã“ü‰‰ŽZŽq--------------------//
 
 	const CVector2& operator+=( const CVector2& _v ){

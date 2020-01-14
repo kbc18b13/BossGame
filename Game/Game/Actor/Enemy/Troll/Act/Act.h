@@ -37,7 +37,7 @@ protected:
 		return t->m_model;
 	}
 	Player* player( Troll* t ){
-		return t->stage->GetPlayer();
+		return t->m_stage->GetPlayer();
 	}
 
 };

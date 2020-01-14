@@ -53,11 +53,15 @@ void PlayerCamera::Update( const CVector3 & playerPos ){
 }
 
 void PlayerCamera::TurnLockOn( IStage* stage ){
+	//ロックオン解除
 	if( IsLockOn() ){
+		m_lockOnEnemy->UnLockOn();
 		m_lockOnEnemy = nullptr;
 		m_lockOnSprite.SetIsDraw( false );
 		return;
 	}
+
+	//ロックオン
 
 	float distanceToCenter = std::numeric_limits<float>::max();
 	Actor* lockOn = nullptr;
@@ -79,6 +83,7 @@ void PlayerCamera::TurnLockOn( IStage* stage ){
 	}
 
 	m_lockOnEnemy = lockOn;
+	m_lockOnEnemy->LockOn( this );
 
 	if( lockOn ){
 		m_lockOnSprite.SetIsDraw( true );

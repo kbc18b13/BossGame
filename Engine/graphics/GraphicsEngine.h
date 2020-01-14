@@ -24,6 +24,11 @@ public:
     //フレームバッファへの描画前準備。
     void BegineFrameBuffer();
 
+	//ラスタライザステートをリセット
+	void ResetrRasterizerState(){
+		m_pd3dDeviceContext->RSSetState( m_rasterizerState );
+	}
+
 	//D3D11デバイスを取得。
 	ID3D11Device* GetD3DDevice()
 	{

@@ -76,6 +76,7 @@ void RenderObjectManager::Render(){
     //メインターゲットをフレームバッファへ
     m_postEffect.DrawScreenRect(m_defaultTarget.GetRenderTargetSRV() , (ID3D11PixelShader*)m_monoShader.GetBody());
 
+	//アルファ有効ブレンドに変更。
 	dc->OMSetBlendState( m_alphaBlend, nullptr, 0xffffffff );
 
     //HUD描画オブジェクトの描画。

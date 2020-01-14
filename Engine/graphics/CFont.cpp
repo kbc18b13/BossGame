@@ -13,11 +13,18 @@ CFont::~CFont() {
 }
 
 void CFont::Begine() {
-	GetSpriteBatch()->Begin();
+	ID3D11DeviceContext* dc = g_graphicsEngine->GetD3DDeviceContext();
+	ID3D11BlendState* blendState;
+	float dummy[4];
+	UINT dummy2;
+	dc->OMGetBlendState( &blendState, dummy, &dummy2 );
+	GetSpriteBatch()->Begin( DirectX::SpriteSortMode_Deferred , blendState);
+	blendState->Release();
 }
 
 void CFont::End() {
 	GetSpriteBatch()->End();
+	g_graphicsEngine->ResetrRasterizerState();
 }
 
 void CFont::DrawStr(const wchar_t * str) {
@@ -25,10 +32,8 @@ void CFont::DrawStr(const wchar_t * str) {
 
     CVector2 pivot;
     DirectX::XMStoreFloat2(&pivot.vec , m_font.MeasureString(str));
-    pivot.x *= (m_pivot.x + 0.5f);
-    pivot.y *= (m_pivot.y + 0.5f);
+    pivot.x *= m_pivot.x;
+    pivot.y *= m_pivot.y;
 
-    pos -= pivot;
-
-	m_font.DrawString(GetSpriteBatch(), str, pos.vec, CVector4(1,1.f, 1.0f, 1));
+	m_font.DrawString(GetSpriteBatch(), str, pos, m_color, 0.0f, pivot, m_scale);
 }

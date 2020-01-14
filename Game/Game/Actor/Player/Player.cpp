@@ -10,7 +10,7 @@
 
 using namespace PlayerAct;
 
-Player::Player() : Actor( 10 ){
+Player::Player(IStage* stage) : Actor( 10 , stage){
 	//アニメーションクリップ読み込み
 	{
 		m_animClip[int( Anim::Walk )].Load( L"Assets/animData/TestChara_Run.tka", true );

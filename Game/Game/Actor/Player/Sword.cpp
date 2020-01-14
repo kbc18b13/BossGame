@@ -23,7 +23,9 @@ struct SwordContactResult : btCollisionWorld::ContactResultCallback{
 
 Sword::Sword(){}
 
-Sword::~Sword(){}
+Sword::~Sword(){
+	g_physics.RemoveCollision( m_collision );
+}
 
 void Sword::Init( Bone* handBone, Player* player ){
     m_model.Init( L"Assets/modelData/Sword.cmo" );

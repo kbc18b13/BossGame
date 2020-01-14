@@ -3,17 +3,19 @@
 #include "physics/CollisionAttr.h"
 #include "Scene/Stage1.h"
 #include "Actor/Player/Player.h"
+
 #include "Act/ActAttack.h"
 #include "Act/ActIdle.h"
 #include "Act/ActStep.h"
 #include "Act/ActChase.h"
 #include "Act/ActTackle.h"
 #include "Act/ActHip.h"
+
 #include "graphics/RenderObjectManager.h"
 
 using namespace TrollAct;
 
-Troll::Troll(IStage* stage) :stage(stage) , Actor(20){
+Troll::Troll(IStage* stage) : Actor(10, stage ){
     //モデル
 	{
 		m_animClip[int(AnimState::Walk)].Load(L"Assets/animData/Troll_Walk.tka", true);
@@ -74,6 +76,12 @@ void Troll::Update() {
 	//HPバー更新
 	m_hpBar.SetPercent( Actor::GetHPPer() );
 
+	//死亡
+	if( m_nowHP == 0 ){
+		m_stage->EndStage();
+		DeleteGO( this );
+	}
+
     m_model.Update();
     armCollision.Update();
     Actor::Update();
@@ -85,7 +93,7 @@ void Troll::SetPos(const CVector3 & pos) {
 }
 
 void Troll::ChangeActDefault(){
-	CVector3 toP = stage->GetPlayer()->GetPos() - m_CharaCon.GetPosition();
+	CVector3 toP = m_stage->GetPlayer()->GetPos() - m_CharaCon.GetPosition();
 
 	//近い
 	if( toP.LengthSq() < 100 * 100 ){

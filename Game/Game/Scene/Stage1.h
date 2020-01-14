@@ -1,4 +1,4 @@
-#include "Ground/Ground1.h"
+#include "Ground/Ground.h"
 #include "IStage.h"
 class Troll;
 class Player;
@@ -8,6 +8,10 @@ public:
 	~Stage1();
 	void Update();
 
+	void EndStage() override;
+
 private:
-	Ground g;
+	float endTime = 0.0f;
+	bool isEndStage = false;
+	Ground ground;
 };

@@ -16,6 +16,8 @@ public:
 		return enemyArray;
 	}
 
+	virtual void EndStage() = 0;
+
 protected:
 	Player* player;
 	std::vector<Actor*> enemyArray;

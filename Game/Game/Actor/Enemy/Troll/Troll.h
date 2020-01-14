@@ -58,9 +58,6 @@ private:
 	void ChangeActDefault();
 	void ChangeAct( ActState  act);
 
-	//•Ï”
-	IStage* stage;
-
 	TrollAct::Act* m_activeAction;
 	std::unique_ptr<TrollAct::Act> m_actionArray[int( ActState::Num )];
 

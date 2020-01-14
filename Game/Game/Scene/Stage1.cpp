@@ -3,15 +3,17 @@
 #include "Stage1.h"
 #include "Actor/Player/Player.h"
 #include "Actor/Enemy/Troll/Troll.h"
+#include "Title.h"
 
+#include "Util/DisplayText.h"
 
-Stage1::Stage1() {
+Stage1::Stage1() : ground(L"Assets/modelData/StartStage.cmo"){
 	Level level;
 	level.Init(L"Assets/level/level.tkl", [&](LevelObjectData& objData) -> bool {
 		if (wcscmp(objData.name, L"Stage") == 0) {
-			g.SetPos(objData.position);
+			ground.SetPos(objData.position);
 		} else if (wcscmp(objData.name, L"Chara")) {
-			player = NewGO<Player>(0);
+			player = NewGO<Player>(0,this);
 			player->SetPos(objData.position + CVector3::Up() * 100);
 			player->SetStage( this );
 		} else if (wcscmp(objData.name, L"Troll")) {
@@ -36,4 +38,17 @@ Stage1::~Stage1() {
 }
 
 void Stage1::Update() {
+	if( isEndStage ){
+		endTime += GameTime::GetDeltaTime();
+
+		if( endTime >= 6 ){
+			DeleteGO( this );
+			NewGO<Title>( 0 );
+		}
+	}
+}
+
+void Stage1::EndStage(){
+	isEndStage = true;
+	DisplayText::display( L"VICTORY ARCHIVED" );
 }

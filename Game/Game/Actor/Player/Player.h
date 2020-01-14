@@ -17,7 +17,7 @@ class Act;
 class Player : public Actor
 {
 public:
-	Player();
+	Player(IStage* stage);
 	~Player();
 
 	void Update() override;
@@ -50,11 +50,6 @@ public:
 	/// <param name="coolTime">ヒット後クールタイム</param>
 	/// <returns>クールタイム判定によるダメージの可否</returns>
 	bool Damage( UINT damage, float coolTime , Actor* source) override;
-
-	//ステージをセット
-	void SetStage( IStage* stage ){
-		m_stage = stage;
-	}
 
 	enum class Anim{
 		Walk,
@@ -105,8 +100,6 @@ private:
 	BarGauge m_hpBar;//HPバー
 
 	Stamina m_stamina;//スタミナ
-
-	IStage* m_stage;
 
 	friend class PlayerAct::Act;
 };
