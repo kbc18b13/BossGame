@@ -8,6 +8,9 @@
 #include "Act/Guard.h"
 #include "Act/Roll.h"
 
+#include "Util/DisplayText.h"
+#include "Scene/IStage.h"
+
 using namespace PlayerAct;
 
 Player::Player(IStage* stage) : Actor( 10 , stage){
@@ -78,31 +81,31 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 Player::~Player(){}
 
 void Player::Update(){
+	if( m_isDeath ){
+		return;
+	}
+
 	//シャドウマップの移動
 	{
 		g_ROManager.GetShadowMap().UpdateLight( GetPos() + CVector3( 400, 400, 400 ), CVector3( -1, -1, -1 ) );
 	}
 
+	//敵のロックオン
 	if( g_pad->IsTrigger( enButtonRB3 ) ){
 		m_camera.TurnLockOn( m_stage );
 	}
 
+	//ステート
 	m_nowAct->ChangeState( this );
 	m_nowAct->Update( this );
 
-	CVector3 speed = m_charaCon.GetVelocity();
 	//モデル位置
 	m_model.SetPos( m_charaCon.GetPosition() );
-	//モデル回転
 
+	//モデル回転
 	if( m_camera.IsLockOn() ){
 		rot = Util::LookRotXZ( m_camera.GetLockOnPos() - GetPos() );
-	}/* else
-		if( speed.x*speed.x + speed.z*speed.z > 1 ){
-			float angle = atan2f( speed.x, speed.z );
-			rot.SetRotation( CVector3::AxisY(), angle );
-		}*/
-
+	}
 	m_model.SetRot( rot );
 
 	//カメラの更新
@@ -118,6 +121,17 @@ void Player::Update(){
 	m_model.Update();
 	m_sword.Update();
 	m_shield.Update();
+
+	//死亡
+	if( m_nowHP == 0 ){
+		m_stage->EndStage();
+		m_model.SetActive( false );
+		m_charaCon.SetActive( false );
+		m_sword.SetActive( false );
+		m_shield.SetActive( false );
+		m_isDeath = true;
+		DisplayText::display( L"YOU DIED", CVector3( 0.7f, 0, 0 ) );
+	}
 }
 
 bool Player::Damage( UINT damage, float coolTime, Actor* source ){

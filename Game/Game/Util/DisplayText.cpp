@@ -21,9 +21,10 @@ DisplayText& DisplayText::Me(){
 }
 
 
-void DisplayText::display( const wchar_t * text ){
+void DisplayText::display( const wchar_t * text, const CVector3& color ){
 	Me().m_text = text;
 	Me().m_dispTime = c_dispTime;
+	Me().m_color = CVector4(color.x, color.y, color.z, 1);
 }
 
 void DisplayText::Render(){
@@ -46,7 +47,8 @@ void DisplayText::Render(){
 
 	m_font.Begine();
 
-	m_font.SetColor( CVector4( 0.5f, 0.5f, 1, alpha) );
+	m_color.w = alpha;
+	m_font.SetColor( m_color );
 
 	m_font.DrawStr( m_text );
 

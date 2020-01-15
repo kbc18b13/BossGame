@@ -11,6 +11,7 @@
 #include "Act/ActTackle.h"
 #include "Act/ActHip.h"
 
+#include "Util/DisplayText.h"
 #include "graphics/RenderObjectManager.h"
 
 using namespace TrollAct;
@@ -93,6 +94,7 @@ void Troll::Update() {
 		m_bodyCollision.SetActive( false );
 		m_CharaCon.SetActive( false );
 		m_isDeath = true;
+		DisplayText::display( L"VICTORY ARCHIVED" , CVector3(0.5f, 0.5f, 1.0f));
 	}
 
 	//各種アップデート

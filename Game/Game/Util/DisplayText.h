@@ -14,7 +14,7 @@ public:
 	/// テキストを表示する。
 	/// </summary>
 	/// <param name="text"></param>
-	static void display( const wchar_t* text);
+	static void display( const wchar_t* text, const CVector3& color);
 
 	void Render() override;
 
@@ -33,6 +33,8 @@ private:
 	float m_dispTime = 0;
 	//テキスト
 	const wchar_t* m_text;
+	//色
+	CVector4 m_color;
 
 	CFont m_font;
 	Sprite m_backImage;

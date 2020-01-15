@@ -101,6 +101,8 @@ private:
 
 	Stamina m_stamina;//スタミナ
 
+	bool m_isDeath = false;
+
 	friend class PlayerAct::Act;
 };
 

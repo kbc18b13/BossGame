@@ -7,7 +7,7 @@ TrollBodyCollision::TrollBodyCollision(){}
 TrollBodyCollision::~TrollBodyCollision(){}
 
 void TrollBodyCollision::Init( Troll * troll){
-	m_shape.Create(55, 40);
+	m_shape.Create(60, 40);
 	m_collision.Init( m_shape, EnCollisionAttr::enCollisionAttr_Player, troll );
 	m_collision.SetOffset( CVector3( 0, 10, 0 ) );
 	m_master = troll;

@@ -5,7 +5,6 @@
 #include "Actor/Enemy/Troll/Troll.h"
 #include "Title.h"
 
-#include "Util/DisplayText.h"
 
 Stage1::Stage1() : ground(L"Assets/modelData/StartStage.cmo"){
 	Level level;
@@ -50,5 +49,4 @@ void Stage1::Update() {
 
 void Stage1::EndStage(){
 	isEndStage = true;
-	DisplayText::display( L"VICTORY ARCHIVED" );
 }
