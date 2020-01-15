@@ -52,3 +52,13 @@ std::vector<Actor*>& ActorHitCollision::ContactTest() {
     g_physics.ContactText(m_collision.GetBody(), contactCB);
     return contactCB.getHits();
 }
+
+void ActorHitCollision::SetActive( bool active ){
+	if( m_isActive && !active){
+		g_physics.RemoveCollision( m_collision );
+	}
+	if( !m_isActive && active ){
+		g_physics.AddCollision( m_collision );
+	}
+	m_isActive = active;
+}

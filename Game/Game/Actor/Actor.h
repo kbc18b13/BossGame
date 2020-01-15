@@ -8,7 +8,7 @@ public:
 	Actor(UINT maxHP, IStage* stage);
 	virtual ~Actor();
     
-    void Update() {
+    void Update() override{
 		m_damageCool = std::max(m_damageCool - GameTime::GetDeltaTime(), 0.0f);
     }
 

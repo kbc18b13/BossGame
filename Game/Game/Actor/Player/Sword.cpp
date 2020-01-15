@@ -43,6 +43,10 @@ void Sword::Init( Bone* handBone, Player* player ){
 }
 
 void Sword::Update(){
+	if( !m_isActive ){
+		return;
+	}
+
     //ˆÊ’u‚ÌXV
     {
         const CMatrix& worldMat = m_hand->GetWorldMatrix();
@@ -77,4 +81,14 @@ void Sword::SlashStart(){
 
 void Sword::SlashEnd(){
     m_isSlash = false;
+}
+
+void Sword::SetActive( bool active ){
+	if( m_isActive && !active ){
+		g_physics.RemoveCollision( m_collision );
+	}
+	if( !m_isActive && active ){
+		g_physics.AddCollision( m_collision );
+	}
+	m_isActive = active;
 }

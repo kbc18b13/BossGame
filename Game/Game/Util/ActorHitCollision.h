@@ -52,11 +52,15 @@ public:
 
     std::vector<Actor*>& ContactTest();
 
+	void SetActive( bool active );
+
 private:
     ActorContactResult contactCB;
     CollisionObject  m_collision;              //コリジョン。
     CVector3 m_pos; //位置
     CVector3 m_offset; //オフセット
     CQuaternion m_rot; //回転
+
+	bool m_isActive = true;
 };
 

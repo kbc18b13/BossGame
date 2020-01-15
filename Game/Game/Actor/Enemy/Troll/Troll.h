@@ -55,23 +55,31 @@ public:
 	};
 
 private:
+	/// <summary>
+	/// デフォルトのステート変更
+	/// </summary>
 	void ChangeActDefault();
+
+	/// <summary>
+	/// 指定式ステート変更
+	/// </summary>
+	/// <param name="act"></param>
 	void ChangeAct( ActState  act);
 
+	//現在のステート
 	TrollAct::Act* m_activeAction;
+	//ステート配列
 	std::unique_ptr<TrollAct::Act> m_actionArray[int( ActState::Num )];
 
-	int m_state;
-
-	float m_timer = 0.0f;
-
-	CharaConEx m_CharaCon;
+	CharaConEx m_CharaCon;//キャラクターコントローラー
 	AnimationClip m_animClip[int( AnimState::Num )];//アニメーションクリップ
 	SkinModelRender m_model;//モデル
 
-	TrollArmCollision armCollision;
+	TrollArmCollision m_armCollision;//腕の攻撃判定
 
 	BarGauge m_hpBar; //HPバー
+
+	bool m_isDeath = false; //死んでいるならtrue
 
 	friend class TrollAct::Act;
 };

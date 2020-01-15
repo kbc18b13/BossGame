@@ -42,7 +42,7 @@ public:
 	*/
 	void AddCollision(ICollision& cl);
 	/*!
-	* @brief	コリジョンオブジェクトを登録。
+	* @brief	コリジョンオブジェクトを削除。
 	*/
 	void RemoveCollision(ICollision& cl);
 

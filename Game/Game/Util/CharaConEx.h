@@ -85,6 +85,10 @@ public:
         return m_gravity;
     }
 
+	void SetActive( bool active ){
+		m_charaCon.SetActive( active );
+	}
+
 private:
 	float m_walkAccel;
 	float m_walkAccelAir;

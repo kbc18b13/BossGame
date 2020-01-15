@@ -20,6 +20,8 @@ public:
 	void SlashStart();
 	void SlashEnd();
 
+	void SetActive( bool active );
+
 private:
 
 	Bone* m_hand; //è‚Ìƒ{[ƒ“
@@ -34,4 +36,6 @@ private:
 	bool m_isSlash = false;  //UŒ‚’†‚È‚çtrue
 	UINT damage = 1;
 	float coolTime = 0.5f;
+
+	bool m_isActive = true;
 };

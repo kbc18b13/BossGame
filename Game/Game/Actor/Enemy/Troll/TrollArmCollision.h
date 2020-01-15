@@ -20,6 +20,11 @@ public:
         isAttack = false;
     }
 
+	void SetActive(bool active){
+		m_collision.SetActive( active );
+		isAttack = false;
+	}
+
 private:
 	UINT damage = 1;
 	float coolTime = 3.0f;

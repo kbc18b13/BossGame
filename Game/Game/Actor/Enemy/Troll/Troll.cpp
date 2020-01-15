@@ -50,7 +50,7 @@ Troll::Troll(IStage* stage) : Actor(10, stage ){
 
     //腕コリジョン
     Bone* arm = m_model.GetModel().GetSkeleton().GetBone(20);
-    armCollision.Init(this, arm);
+    m_armCollision.Init(this, arm);
 
 	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 1000, 25);
 	m_hpBar.SetPosLikeTex( CVector2( 1144, 563 ) );
@@ -60,7 +60,7 @@ Troll::~Troll() {
 }
 
 void Troll::Start() {
-	m_actionArray[int(ActState::Attack)].reset(new ActAttack(armCollision));
+	m_actionArray[int(ActState::Attack)].reset(new ActAttack(m_armCollision));
 	m_actionArray[int(ActState::Chase)].reset(new ActChase());
 	m_actionArray[int(ActState::Wait)].reset(new ActIdle());
 	m_actionArray[int(ActState::Step)].reset(new ActStep());
@@ -71,6 +71,12 @@ void Troll::Start() {
 }
 
 void Troll::Update() {
+	//死亡時、アップデートはしない。
+	if( m_isDeath ){
+		return;
+	}
+
+	//現在のステートのアクションを実行
     m_activeAction->Continue(this);
 
 	//HPバー更新
@@ -79,11 +85,15 @@ void Troll::Update() {
 	//死亡
 	if( m_nowHP == 0 ){
 		m_stage->EndStage();
-		DeleteGO( this );
+		m_model.SetActive( false );
+		m_armCollision.SetActive( false );
+		m_CharaCon.SetActive( false );
+		m_isDeath = true;
 	}
 
+	//各種アップデート
     m_model.Update();
-    armCollision.Update();
+    m_armCollision.Update();
     Actor::Update();
 }
 

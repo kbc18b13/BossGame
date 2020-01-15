@@ -38,8 +38,7 @@ void ShadowMap::RenderToShadowMap( ID3D11DeviceContext * dc ){
 
     //シャドウキャスターをシャドウマップにレンダリング。
     for( auto& caster : m_shadowCasters ){
-        caster->GetModel().Draw( EnRenderMode::ShadowMap, m_lightViewMatrix, m_lightProjMatrix );
-        //caster->Draw();
+        caster->Render( EnRenderMode::ShadowMap, m_lightViewMatrix, m_lightProjMatrix );
     }
 
     CMatrix mat;

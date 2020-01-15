@@ -28,7 +28,14 @@ public:
     /// <summary>
     /// 描画関数
     /// </summary>
-    void Render() override;
+	void Render() override{
+		Render( EnRenderMode::Default, g_camera3D.GetViewMatrix(), g_camera3D.GetProjectionMatrix() );
+	}
+
+	/// <summary>
+	/// 描画関数
+	/// </summary>
+	void Render( EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMatrix );
 
     /*!
     *@brief	アニメーションの再生。
@@ -112,6 +119,14 @@ public:
         return m_animation;
     }
 
+	/// <summary>
+	/// 描画するかどうかを設定
+	/// </summary>
+	/// <param name="active">描画するならtrue</param>
+	void SetActive( bool active ){
+		m_isActive = active;
+	}
+
     /// <summary>
     /// シャドウを受けるかどうかを設定
     /// </summary>
@@ -130,5 +145,7 @@ private:
 
     bool m_isShadowReceive = false;
     bool m_isShadowCaster = false;
+
+	bool m_isActive = true; //描画するかどうか
 };
 

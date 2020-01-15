@@ -287,11 +287,14 @@ const CVector3& CharacterController::Execute(float deltaTime, CVector3& moveSpee
 	//@todo ñ¢ëŒâûÅB trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
 	return m_position;
 }
-/*!
-* @brief	éÄñSÇµÇΩÇ±Ç∆Çí ímÅB
-*/
-void CharacterController::RemoveRigidBoby()
-{
-	g_physics.RemoveRigidBody(m_rigidBody);
+
+void CharacterController::SetActive( bool active ){
+	if( m_isActive && !active ){
+		g_physics.RemoveRigidBody( m_rigidBody );
+	}
+	if( !m_isActive && active ){
+		g_physics.AddRigidBody( m_rigidBody );
+	}
+	m_isActive = active;
 }
 
