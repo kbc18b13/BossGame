@@ -209,7 +209,7 @@ float4 PSMain( PSInput In ) : SV_Target0
         if (0 <= shadowPos2.x && shadowPos2.x <= 1
             && 0 <= shadowPos2.y && shadowPos2.y <= 1
             && mapDepth + 0.0003f < shadowPos2.z) {
-            sum.rgb /= 4;
+            sum.rgb /= 2;
             //sum.rbg = 1;
         }
     }

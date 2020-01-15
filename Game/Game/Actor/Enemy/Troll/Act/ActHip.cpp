@@ -9,11 +9,10 @@ using ActState = Troll::ActState;
 
 namespace TrollAct{
 
-ActHip::ActHip(){
-
-}
+ActHip::ActHip( TrollBodyCollision& col ) : bodyCol(col){}
 
 void ActHip::Start( Troll* t ){
+
 	onJump = false;
 	first = true;
 	waitTime = 2.0f;
@@ -31,7 +30,7 @@ void ActHip::Continue( Troll* t ){
 		plength = motion.Length();
 
 		//‘Ø‹óŽžŠÔ
-		float airTime = ( jumpPower / chara( t ).GetGravity() * 2 );
+		float airTime = ( jumpPower / chara( t ).GetGravity());
 
 		motion /= airTime;
 
@@ -43,6 +42,7 @@ void ActHip::Continue( Troll* t ){
 	}
 
 	if( chara( t ).GetVelocity().y < 0 ){
+		bodyCol.StartAttack();
 		model( t ).Play( int( AnimState::Hip ), 0.2f );
 	}
 
@@ -54,6 +54,7 @@ void ActHip::Continue( Troll* t ){
 			onJump = true;
 		}
 	} else if( chara( t ).OnGround() ){
+		bodyCol.EndAttack();
 		waitTime -= GameTime::GetDeltaTime();
 		if( waitTime <= 0 ){
 			ChangeAct( t, ActState::Wait );

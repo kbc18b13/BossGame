@@ -20,13 +20,18 @@ void ActStep::Start( Troll* t ){
 
 void ActStep::Continue( Troll* t ){
 	const CVector3 pVec = player( t )->GetPos() - chara( t ).GetPosition();
-	CVector3 sideVec;
-	sideVec.Cross( pVec, CVector3::Up() );
+	CVector3 sideVec = CVector3::Cross( pVec, CVector3::Up() );
 
 	sideVec.Normalize();
 
-	model( t ).SetPos( chara( t ).Excecute( sideVec, first ) );
+	model( t ).SetPos( chara( t ).Excecute() );
 	model( t ).SetRot( Util::LookRotXZ( pVec ) );
+
+	if( first ){
+		sideVec *= 500;
+		sideVec.y += 500;
+		chara( t ).AddVelocity( sideVec );
+	}
 
 	first = false;
 

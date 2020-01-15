@@ -41,6 +41,7 @@
     <ClCompile Include="Game\Actor\Player\Stamina.cpp" />
     <ClCompile Include="Game\Ground\Ground.cpp" />
     <ClCompile Include="Game\Util\DisplayText.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll\TrollBodyCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -75,6 +76,7 @@
     <ClInclude Include="Game\Actor\Player\Stamina.h" />
     <ClInclude Include="Game\Ground\Ground.h" />
     <ClInclude Include="Game\Util\DisplayText.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\TrollBodyCollision.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestStage.fbx">

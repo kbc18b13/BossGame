@@ -140,6 +140,7 @@
     <ClCompile Include="Game\Actor\Player\Act\Walk.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\Roll.cpp" />
     <ClCompile Include="Game\Actor\Player\Stamina.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll\TrollBodyCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Util\DisplayText.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Game\Actor\Player\Act\Walk.h" />
     <ClInclude Include="Game\Actor\Player\Act\Roll.h" />
     <ClInclude Include="Game\Actor\Player\Stamina.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\TrollBodyCollision.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Shield.fbx" />

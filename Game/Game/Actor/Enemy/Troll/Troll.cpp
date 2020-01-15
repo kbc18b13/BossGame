@@ -52,6 +52,9 @@ Troll::Troll(IStage* stage) : Actor(10, stage ){
     Bone* arm = m_model.GetModel().GetSkeleton().GetBone(20);
     m_armCollision.Init(this, arm);
 
+	//体コリジョン
+	m_bodyCollision.Init( this );
+
 	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 1000, 25);
 	m_hpBar.SetPosLikeTex( CVector2( 1144, 563 ) );
 }
@@ -65,7 +68,7 @@ void Troll::Start() {
 	m_actionArray[int(ActState::Wait)].reset(new ActIdle());
 	m_actionArray[int(ActState::Step)].reset(new ActStep());
     m_actionArray[int(ActState::Tackle)].reset(new ActTackle());
-    m_actionArray[int(ActState::Hip)].reset(new ActHip());
+    m_actionArray[int(ActState::Hip)].reset(new ActHip(m_bodyCollision));
 
 	ChangeAct( ActState::Wait );
 }
@@ -87,6 +90,7 @@ void Troll::Update() {
 		m_stage->EndStage();
 		m_model.SetActive( false );
 		m_armCollision.SetActive( false );
+		m_bodyCollision.SetActive( false );
 		m_CharaCon.SetActive( false );
 		m_isDeath = true;
 	}
@@ -94,6 +98,7 @@ void Troll::Update() {
 	//各種アップデート
     m_model.Update();
     m_armCollision.Update();
+	m_bodyCollision.Update();
     Actor::Update();
 }
 
@@ -103,11 +108,16 @@ void Troll::SetPos(const CVector3 & pos) {
 }
 
 void Troll::ChangeActDefault(){
+	if( Util::RandomInt( 0, 4 ) == 0 ){
+		ChangeAct( ActState::Step );
+		return;
+	}
+
 	CVector3 toP = m_stage->GetPlayer()->GetPos() - m_CharaCon.GetPosition();
 
 	//近い
 	if( toP.LengthSq() < 100 * 100 ){
-		if( Util::RandomInt( 0, 3 ) == 0 ){
+		if( Util::RandomInt( 0, 0 ) == 0 ){
 			ChangeAct( ActState::Hip );
 		} else{
 			ChangeAct( ActState::Attack );
@@ -115,7 +125,7 @@ void Troll::ChangeActDefault(){
 
 		//遠い
 	} else{
-		if( Util::RandomInt( 0, 3 ) == 0 ){
+		if( Util::RandomInt( 0, 2 ) == 0 ){
 			ChangeAct( ActState::Tackle );
 		} else{
 			ChangeAct( ActState::Chase );

@@ -16,7 +16,7 @@ void Stamina::Update(){
 	if( m_recoverCool > 0 ){
 		m_recoverCool -= GameTime::GetDeltaTime();
 	} else{
-		m_stamina = std::min(m_stamina + GameTime::GetDeltaTime() * 5 , m_maxStamina);
+		m_stamina = std::min(m_stamina + GameTime::GetDeltaTime() * 10 , m_maxStamina);
 	}
 	m_gauge.SetPercent( m_stamina / m_maxStamina );
 }

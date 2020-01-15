@@ -20,24 +20,7 @@ void ActIdle::Continue( Troll* t ){
 	model( t ).SetPos( chara( t ).Excecute( CVector3::Zero(), false ) );
 	//タイマーが0より大きい間は続行
 	if( m_timer <= 0 ){
-		CVector3 toP = player( t )->GetPos() - chara( t ).GetPosition();
-
-		//近い
-		if( toP.LengthSq() < 100 * 100 ){
-			if( Util::RandomInt( 0, 3 ) == 0 ){
-				ChangeAct( t, ActState::Hip );
-			} else{
-				ChangeAct( t, ActState::Attack );
-			}
-
-			//遠い
-		} else{
-			if( Util::RandomInt( 0, 3 ) == 0 ){
-				ChangeAct( t, ActState::Tackle );
-			} else{
-				ChangeAct( t, ActState::Chase );
-			}
-		}
+		ChangeActDefault( t );
 	}
 }
 

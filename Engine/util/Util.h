@@ -32,9 +32,9 @@ public:
 		return hash;
 	}
 
-	//ランダムなInt値を返す。範囲にendは含めない。
+	//ランダムなInt値を返す。範囲にendを含む。
 	static int RandomInt(int begine, int end);
-	//ランダムなfloat値を返す。範囲にendは含めない。
+	//ランダムなfloat値を返す。範囲にendを含まない。
 	static int RandomFloat(float begine, float end);
 
 	//Yを無視して指定場所を向かせる回転を与える。

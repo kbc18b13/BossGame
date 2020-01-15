@@ -2,6 +2,7 @@
 #include "Actor/Actor.h"
 #include "Util/CharaConEx.h"
 #include "TrollArmCollision.h"
+#include "TrollBodyCollision.h"
 #include "Util/BarGauge.h"
 class SkinModelRender;
 class IStage;
@@ -76,6 +77,7 @@ private:
 	SkinModelRender m_model;//ƒ‚ƒfƒ‹
 
 	TrollArmCollision m_armCollision;//˜r‚ÌUŒ‚”»’è
+	TrollBodyCollision m_bodyCollision;//‘Ì‚ÌUŒ‚”»’è
 
 	BarGauge m_hpBar; //HPƒo[
 

@@ -82,10 +82,10 @@ void PlayerCamera::TurnLockOn( IStage* stage ){
 		}
 	}
 
-	m_lockOnEnemy = lockOn;
-	m_lockOnEnemy->LockOn( this );
-
+	//ƒƒbƒNƒIƒ“‘ÎÛ‚ª‘¶Ý‚µ‚½ê‡
 	if( lockOn ){
+		m_lockOnEnemy = lockOn;
+		m_lockOnEnemy->LockOn( this );
 		m_lockOnSprite.SetIsDraw( true );
 	}
 }
