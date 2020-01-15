@@ -37,6 +37,12 @@ public:
 	//ランダムなfloat値を返す。範囲にendを含まない。
 	static int RandomFloat(float begine, float end);
 
+	//指定場所を向かせる回転を与える
+	static CQuaternion LookRot( CVector3 lookVec, CVector3 nowFront = CVector3::AxisZ() );
+
+	//指定場所を向かせる回転を与える。割合で回転量を指定できる。例えば0.5だと半分しか回転しない。
+	static CQuaternion LookRotSLerp( CVector3 lookVec, CVector3 nowFront, float lerp );
+
 	//Yを無視して指定場所を向かせる回転を与える。
 	static CQuaternion LookRotXZ(CVector3 lookVec, CVector3 nowFront = CVector3::AxisZ());
 

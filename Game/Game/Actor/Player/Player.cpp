@@ -109,7 +109,7 @@ void Player::Update(){
 	m_model.SetRot( rot );
 
 	//カメラの更新
-	m_camera.Update( GetPos() + CVector3::Up() * 40 );
+	m_camera.Update( GetPos() + CVector3::Up() * 40);
 
 	//HPバーの更新
 	m_hpBar.SetPercent( Actor::GetHPPer() );
