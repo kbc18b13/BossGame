@@ -15,7 +15,6 @@ public:
 	virtual void SetPos(const CVector3& pos) = 0;
 	virtual CVector3 GetPos() const = 0;
     virtual void AddVelocity(const CVector3& v) = 0;
-
 	virtual bool Damage(UINT damage, float coolTime, Actor* source);
 
 	UINT GetNowHP() {

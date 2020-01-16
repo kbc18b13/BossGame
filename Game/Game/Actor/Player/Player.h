@@ -2,7 +2,7 @@
 #include "Actor/Actor.h"
 #include "Camera/PlayerCamera.h"
 #include "Util/CharaConEx.h"
-#include "Sword.h"
+#include "Weapon/Sword.h"
 #include "Shield.h"
 #include "Util/BarGauge.h"
 #include "Stamina.h"

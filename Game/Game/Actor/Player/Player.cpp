@@ -63,7 +63,8 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 	}
 
 	//Œ•‚Ì‰Šú‰»
-	m_sword.Init( m_model.GetModel().GetSkeleton().GetBone( L"Hand_L" ), this );
+	m_sword.Init( m_model.GetModel().GetSkeleton().GetBone( L"Hand_L" ), this ,
+				  { 13,5,5 } , L"Assets/modelData/Sword.cmo" );
 	m_sword.SetOffset( { 12, 0, 0 } );
 
 	//‚‚Ì‰Šú‰»

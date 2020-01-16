@@ -2,7 +2,7 @@
 #include "Sword.h"
 #include "graphics/SkinModelRender.h"
 #include "physics/CollisionAttr.h"
-#include "Player.h"
+#include "Actor/Actor.h"
 
 struct SwordContactResult : btCollisionWorld::ContactResultCallback{
 
@@ -27,17 +27,16 @@ Sword::~Sword(){
 	g_physics.RemoveCollision( m_collision );
 }
 
-void Sword::Init( Bone* handBone, Player* player ){
-    m_model.Init( L"Assets/modelData/Sword.cmo" );
-
-    m_collider.Create( { 13,5,5 } );
+void Sword::Init( Bone* handBone, Actor* master , const CVector3& halfExtents, const wchar_t* modelpath ){
+    m_model.Init( modelpath );
+    m_collider.Create( halfExtents );
     m_collision.Create( m_collider );
     m_collision.SetGroup( 1 );
     m_collision.SetMask( 0 );
-    m_collision.SetUserPointer( player );
+    m_collision.SetUserPointer( master );
     g_physics.AddCollision( m_collision );
 
-	m_player = player;
+	m_master = master;
 
     m_hand = handBone;
 }
@@ -70,7 +69,7 @@ void Sword::Update(){
         g_physics.GetDynamicWorld()->contactTest( m_collision.GetBody(), result );
 
         for( Actor* a : result.hitEnemys ){
-            a->Damage(damage, coolTime, m_player);
+            a->Damage(m_damage, coolTime, m_master);
         }
     }
 }

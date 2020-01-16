@@ -16,7 +16,6 @@
     <ClCompile Include="Game\Scene\Stage1.cpp" />
     <ClCompile Include="Game\Camera\PlayerCamera.cpp" />
     <ClCompile Include="Game\Actor\Actor.cpp" />
-    <ClCompile Include="Game\Actor\Player\Sword.cpp" />
     <ClCompile Include="Game\Damage\DamageManager.cpp" />
     <ClCompile Include="Game\Damage\Attack.cpp" />
     <ClCompile Include="Game\Util\CharaConEx.cpp" />
@@ -42,6 +41,8 @@
     <ClCompile Include="Game\Ground\Ground.cpp" />
     <ClCompile Include="Game\Util\DisplayText.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\TrollBodyCollision.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Skeleton\SkeletonEnemy.cpp" />
+    <ClCompile Include="Weapon\Sword.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -50,7 +51,6 @@
     <ClInclude Include="Game\Scene\Stage1.h" />
     <ClInclude Include="Game\Camera\PlayerCamera.h" />
     <ClInclude Include="Game\Actor\Actor.h" />
-    <ClInclude Include="Game\Actor\Player\Sword.h" />
     <ClInclude Include="Game\Damage\DamageManager.h" />
     <ClInclude Include="Game\Damage\Attack.h" />
     <ClInclude Include="Game\Util\CharaConEx.h" />
@@ -77,6 +77,8 @@
     <ClInclude Include="Game\Ground\Ground.h" />
     <ClInclude Include="Game\Util\DisplayText.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\TrollBodyCollision.h" />
+    <ClInclude Include="Game\Actor\Enemy\Skeleton\SkeletonEnemy.h" />
+    <ClInclude Include="Weapon\Sword.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestStage.fbx">
@@ -90,6 +92,8 @@
     <MeshContentTask Include="Assets\modelData\Troll.fbx" />
     <MeshContentTask Include="Assets\modelData\Shield.fbx" />
     <MeshContentTask Include="Assets\modelData\StartStage.fbx" />
+    <MeshContentTask Include="Assets\modelData\Skeleton.fbx" />
+    <MeshContentTask Include="Assets\modelData\SkeSword.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Title_back.png" />

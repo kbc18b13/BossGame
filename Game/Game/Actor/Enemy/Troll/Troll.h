@@ -4,8 +4,6 @@
 #include "TrollArmCollision.h"
 #include "TrollBodyCollision.h"
 #include "Util/BarGauge.h"
-class SkinModelRender;
-class IStage;
 
 namespace TrollAct{
 class Act;
