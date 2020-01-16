@@ -43,7 +43,7 @@ void Idle::Update( SkeletonEnemy * s ){
 	toP.y = 0;
 	CVector3 front( 0, 0, 1 );
 	model( s ).GetRot().Multiply( front );
-	model( s ).AddRot( Util::LookRotSLerp( toP , front, 0.1f) );
+	model( s ).AddRot( Util::LookRotSLerp( toP , front, 0.2f) );
 	chara( s ).Excecute();
 }
 

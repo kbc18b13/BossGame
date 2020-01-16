@@ -81,7 +81,7 @@ void Troll::Update() {
 	}
 
 	//現在のステートのアクションを実行
-    //m_activeAction->Continue(this);
+    m_activeAction->Continue(this);
 
 	//HPバー更新
 	m_hpBar.SetPercent( Actor::GetHPPer() );

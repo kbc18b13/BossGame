@@ -41,6 +41,7 @@ CQuaternion Util::LookRotSLerp( CVector3 lookVec, CVector3 nowFront, float lerp 
 	lookVec.Normalize();
 	nowFront.Normalize();
 	float d = lookVec.Dot( nowFront );
+	d = CMath::Clamp( d, -1, 1 );
 	float rot = acosf( d ) * lerp;
 	lookVec.Cross( nowFront );
 	lookVec.Normalize();
