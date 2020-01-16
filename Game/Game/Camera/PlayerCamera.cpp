@@ -31,46 +31,33 @@ void PlayerCamera::Update( const CVector3 & playerPos){
 		return;
 	}
 
-	//位置の更新。いい感じにプレイヤーに追従する。
-	CQuaternion rot;
+	//回り込みカメラ
 	CVector3 PtoC = m_pos - playerPos;
+	PtoC.y = 0;
 	PtoC.Normalize();
-	//高さは指定する。移動量によって適用されていく。
-	float len = ( playerPos - m_oldPlayerPos ).Length();
-	PtoC.y += ( CtoPLength*0.4f - PtoC.y ) * len * 0.01f;
-	m_oldPlayerPos = playerPos;
-	//移動後のベクトルと前回のベクトルを合成。
-	PtoC.Normalize();
-	m_vec = m_vec * 0.5f + PtoC * 0.5f;
+	PtoC *= CtoPLength;
+	//移動後のベクトルと前回のベクトルを合成。yは無視。
+	float nowYRot = m_vec.y;
+	m_vec = m_vec * 0.3f + PtoC * 0.7f;
+	m_vec.y = nowYRot;
 	
-	//スティックによる回転
-	rot.AddRotationDeg( CVector3::AxisY(), g_pad->GetRStickXF() * ROT_SPEED * GameTime::GetDeltaTime() );
-	rot.AddRotationDeg( GetRightVec(), -g_pad->GetRStickYF() * ROT_SPEED * GameTime::GetDeltaTime() );
-
+	//スティックによる回転。ここは横回転。
+	CQuaternion rot = CQuaternion::CreateRotDeg( CVector3::AxisY(), g_pad->GetRStickXF() * ROT_SPEED * GameTime::GetDeltaTime() );
 	rot.Multiply( m_vec );
 
-	m_pos = playerPos + m_vec*CtoPLength;
+	//上下回転はfloatで保持して制限をかける。
+	m_upDownRot -= g_pad->GetRStickYF() * ROT_SPEED * GameTime::GetDeltaTime();
+	m_upDownRot = CMath::Clamp( m_upDownRot, -LIMIT_UP_DOWN_ROT, LIMIT_UP_DOWN_ROT );
+	rot.SetRotationDeg( GetRightVec(), m_upDownRot );
+	CVector3 upDownRoteteVec = m_vec;
+	rot.Multiply( upDownRoteteVec );
 
-	g_camera3D.SetTarget( playerPos );
-	g_camera3D.SetPosition( m_pos );
-
-	//m_pos = playerPos + m_vec;
-	//g_camera3D.SetTarget( playerPos );
-	//g_camera3D.SetPosition( m_pos );
-
-	////回転の更新
-	//CQuaternion rot;
-	//rot.SetRotationDeg( CVector3::AxisY(), g_pad->GetRStickXF() * ROT_SPEED * GameTime::GetDeltaTime() );
-	////上下回転を制限
-	//float addRot = -g_pad->GetRStickYF() * ROT_SPEED * GameTime::GetDeltaTime();
-	//float addedRot = m_UpDownRot + addRot;
-	//m_UpDownRot = CMath::Clamp( addedRot, -LIMIT_UP_DOWN_ROT, LIMIT_UP_DOWN_ROT );
-	//addRot -= addedRot - m_UpDownRot;
-	//rot.AddRotationDeg( GetRightVec(), addRot );
-	////回転の実行
-	//rot.Multiply( m_vec );
+	//ポジション更新
+	m_pos = playerPos + upDownRoteteVec;
 
 	//カメラの更新。
+	g_camera3D.SetTarget( playerPos );
+	g_camera3D.SetPosition( m_pos );
 	g_camera3D.Update();
 }
 

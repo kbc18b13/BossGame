@@ -91,4 +91,5 @@ void Sword::SetActive( bool active ){
 		g_physics.AddCollision( m_collision );
 	}
 	m_isActive = active;
+	m_model.SetActive( active );
 }

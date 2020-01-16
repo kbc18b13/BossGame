@@ -14,16 +14,6 @@ public:
 	/// <param name="playerPos">プレイヤーの位置</param>
 	void Update(const CVector3& playerPos);
 
-	/// <summary>
-	/// プレイヤーからカメラへのベクトルを設定する。
-	/// </summary>
-	/// <param name="vec">プレイヤーからカメラへのベクトル</param>
-	void SetVec(CVector3 vec) {
-		m_vec = vec;
-		vec.Normalize();
-		m_UpDownRot = CMath::RadToDeg(acosf(CVector3::AxisY().Dot(vec)));
-	}
-
 	void TurnLockOn(IStage* stage);
 
 	/// <summary>
@@ -74,9 +64,9 @@ private:
 	static constexpr int TARGET_RANGE = 400; //ターゲット可能な距離
 	static constexpr float CtoPLength = 100;
 
-	float m_UpDownRot = 0.0f; //上下の回転。度。
+	float m_upDownRot = 0.0f; //上下の回転。度。
 
-	CVector3 m_vec = {0,0,-1};//プレイヤーからカメラへのベクトル
+	CVector3 m_vec = {0,0,-100};//プレイヤーからカメラへのベクトル
 	CVector3 m_pos;//カメラの位置
 
 	CVector3 m_oldPlayerPos;

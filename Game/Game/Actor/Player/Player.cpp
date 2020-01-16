@@ -62,9 +62,6 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 		ChangeActDefault();
 	}
 
-	//ƒJƒƒ‰‚Ì‰Šú‰»
-	m_camera.SetVec( { 0, 80, -80 } );
-
 	//Œ•‚Ì‰Šú‰»
 	m_sword.Init( m_model.GetModel().GetSkeleton().GetBone( L"Hand_L" ), this );
 	m_sword.SetOffset( { 12, 0, 0 } );
