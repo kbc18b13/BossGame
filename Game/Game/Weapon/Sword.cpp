@@ -6,6 +6,14 @@
 
 struct SwordContactResult : btCollisionWorld::ContactResultCallback{
 
+	SwordContactResult(bool players){
+		if( players ){
+			target = enCollisionAttr_Enemy;
+		} else{
+			target = enCollisionAttr_Player;
+		}
+	}
+
     std::vector<Actor*> hitEnemys;
 
     btScalar	addSingleResult( btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap,
@@ -13,12 +21,15 @@ struct SwordContactResult : btCollisionWorld::ContactResultCallback{
                                  int partId1, int index1 ){
         //敵のコリジョンに当たった時、その敵のポインタを記憶する。
         const btCollisionObject* co = colObj1Wrap->getCollisionObject();
-        if( co->getUserIndex() == enCollisionAttr_Enemy ){
+        if( co->getUserIndex() == target ){
             Actor* enemy = static_cast<Actor*>( co->getUserPointer() );
             hitEnemys.push_back( enemy );
         }
         return 0.0f;
     }
+
+private:
+	EnCollisionAttr target;
 };
 
 Sword::Sword(){}
@@ -27,7 +38,8 @@ Sword::~Sword(){
 	g_physics.RemoveCollision( m_collision );
 }
 
-void Sword::Init( Bone* handBone, Actor* master , const CVector3& halfExtents, const wchar_t* modelpath ){
+void Sword::Init( Bone* handBone, Actor* master , const CVector3& halfExtents,
+				  const wchar_t* modelpath, bool playersSword){
     m_model.Init( modelpath );
     m_collider.Create( halfExtents );
     m_collision.Create( m_collider );
@@ -35,6 +47,8 @@ void Sword::Init( Bone* handBone, Actor* master , const CVector3& halfExtents, c
     m_collision.SetMask( 0 );
     m_collision.SetUserPointer( master );
     g_physics.AddCollision( m_collision );
+
+	m_isPlayers = playersSword;
 
 	m_master = master;
 
@@ -65,11 +79,11 @@ void Sword::Update(){
 
     //敵へのダメージ処理
     if( m_isSlash ){
-        SwordContactResult result;
+        SwordContactResult result(m_isPlayers);
         g_physics.GetDynamicWorld()->contactTest( m_collision.GetBody(), result );
 
         for( Actor* a : result.hitEnemys ){
-            a->Damage(m_damage, coolTime, m_master);
+            a->Damage(m_damage, m_coolTime, m_master);
         }
     }
 }

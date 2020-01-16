@@ -1,7 +1,6 @@
 #pragma once
 #include "physics/BoxCollider.h"
 #include "physics/CollisionObject.h"
-#include "Damage/DamageManager.h"
 class SkinModelRender;
 class Actor;
 
@@ -10,9 +9,10 @@ public:
 	Sword();
 	~Sword();
 
-    void Init(Bone* handBone, Actor* master, const CVector3& halfExtents , const wchar_t* modelpath);
+	void Init( Bone* handBone, Actor* master, const CVector3& halfExtents,
+			   const wchar_t* modelpath, bool playersSword);
 
-	void SetOffset(const CVector3& offset) {
+	void SetOffset( const CVector3& offset ){
 		m_offset = offset;
 	}
 	void Update();
@@ -20,11 +20,15 @@ public:
 	void SlashStart();
 	void SlashEnd();
 
-	void SetDamage(UINT damage){
+	void SetDamage( UINT damage ){
 		m_damage = damage;
 	}
 
 	void SetActive( bool active );
+
+	void SetCool( float cooltime ){
+		m_coolTime = cooltime;
+	}
 
 private:
 
@@ -39,7 +43,9 @@ private:
 
 	bool m_isSlash = false;  //çUåÇíÜÇ»ÇÁtrue
 	UINT m_damage = 1;
-	float coolTime = 0.5f;
+	float m_coolTime = 0.5f;
+
+	bool m_isPlayers;
 
 	bool m_isActive = true;
 };

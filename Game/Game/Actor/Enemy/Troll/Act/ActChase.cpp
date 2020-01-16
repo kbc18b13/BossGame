@@ -20,7 +20,7 @@ void ActChase::Continue( Troll* t ){
 	CVector3 move = player( t )->GetPos() - chara( t ).GetPosition();
 	move.y = 0;
 	float moveLength = move.Length();
-	if( moveLength < 100 ){
+	if( moveLength < 40 ){
 		m_timer = 0;
 	} else{
 		move /= moveLength;

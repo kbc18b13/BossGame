@@ -42,8 +42,8 @@ public:
     *@param[in]	clipNo	アニメーションクリップの番号。Init関数に渡したanimClipListの並びとなる。
     *@param[in]	interpolateTime		補完時間(単位：秒)
     */
-    void Play( int clipNo, float interpolateTime = 0.0f ){
-        m_animation.Play( clipNo, interpolateTime );
+    void Play( int clipNo, float interpolateTime = 0.0f, bool allowSameClip = false ){
+        m_animation.Play( clipNo, interpolateTime, allowSameClip );
     }
 
     /*!
@@ -92,6 +92,10 @@ public:
     void SetRot( const CQuaternion& rot ){
         m_rot = rot;
     }
+
+	void AddRot( const CQuaternion& rot ){
+		m_rot.Multiply( rot );
+	}
 
     /// <summary>
     /// 回転を取得

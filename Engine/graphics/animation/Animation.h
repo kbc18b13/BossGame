@@ -15,11 +15,11 @@ class SkinModel;
 /*!
 * @brief	アニメーションクラス。
 */
-class Animation {
-	struct EventFunc {
+class Animation{
+	struct EventFunc{
 		const char* name;
 		std::function<void()> func;
-		EventFunc(const char* n, std::function<void()> f) : name(n), func(f){}
+		EventFunc( const char* n, std::function<void()> f ) : name( n ), func( f ){}
 	};
 public:
 	Animation();
@@ -30,14 +30,14 @@ public:
 		*@param[in]	animeClipList	アニメーションクリップの配列。
 		*@param[in]	numAnimClip		アニメーションクリップの数。
 		*/
-	void Init(SkinModel& skinModel, AnimationClip animClipList[], int numAnimClip);
+	void Init( SkinModel& skinModel, AnimationClip animClipList[], int numAnimClip );
 
-		
-	void AddEventFunc(const char* name, std::function<void()> func) {
-		m_eventFuncList.emplace_back(name, func);
+
+	void AddEventFunc( const char* name, std::function<void()> func ){
+		m_eventFuncList.emplace_back( name, func );
 	}
 
-	const std::vector<EventFunc>& GetEventList() {
+	const std::vector<EventFunc>& GetEventList(){
 		return m_eventFuncList;
 	}
 
@@ -46,19 +46,18 @@ public:
 	*@param[in]	clipNo	アニメーションクリップの番号。Init関数に渡したanimClipListの並びとなる。
 	*@param[in]	interpolateTime		補完時間(単位：秒)
 	*/
-	void Play(int clipNo, float interpolateTime = 0.0f)
-	{
-		PlayCommon(m_animationClips[clipNo], interpolateTime);
+	void Play( int clipNo, float interpolateTime = 0.0f, bool allowSameClip = false ){
+		PlayCommon( m_animationClips[clipNo], interpolateTime, allowSameClip );
 	}
+
 	/*!
 	* @brief	アニメーションの再生中？
 	*/
-	bool IsPlaying() const
-	{
+	bool IsPlaying() const{
 		int lastIndex = GetLastAnimationControllerIndex();
 		return m_animationPlayController[lastIndex].IsPlaying();
 	}
-	
+
 	/*!
 	* @brief	アニメーションを進める。
 	*@details
@@ -66,55 +65,53 @@ public:
 	* ユーザーは使用しないでください。
 	*@param[in]	deltaTime		アニメーションを進める時間(単位：秒)。
 	*/
-	void Update(float deltaTime);
-	
+	void Update( float deltaTime );
+
 private:
-	void PlayCommon(AnimationClip* nextClip, float interpolateTime)
-	{
+	void PlayCommon( AnimationClip* nextClip, float interpolateTime, bool sameClip = false ){
+
 		int index = GetLastAnimationControllerIndex();
-		if (m_animationPlayController[index].GetAnimClip() == nextClip) {
+
+		if(!sameClip && m_animationPlayController[index].GetAnimClip() == nextClip ){
 			return;
 		}
-		if (interpolateTime == 0.0f) {
+		if( interpolateTime == 0.0f ){
 			//補完なし。
 			m_numAnimationPlayController = 1;
-		}
-		else {
+		} else{
 			//補完あり。
 			m_numAnimationPlayController++;
 		}
 		index = GetLastAnimationControllerIndex();
-		m_animationPlayController[index].ChangeAnimationClip(nextClip);
-		m_animationPlayController[index].SetInterpolateTime(interpolateTime);
+		m_animationPlayController[index].ChangeAnimationClip( nextClip );
+		m_animationPlayController[index].SetInterpolateTime( interpolateTime );
 		m_interpolateTime = 0.0f;
 		m_interpolateTimeEnd = interpolateTime;
 	}
 	/*!
 		* @brief	ローカルポーズの更新。
 		*/
-	void UpdateLocalPose(float deltaTime);
+	void UpdateLocalPose( float deltaTime );
 	/*!
 		* @brief	グローバルポーズの更新。
 		*/
 	void UpdateGlobalPose();
-		
+
 private:
-		
+
 	/*!
 		*@brief	最終ポーズになるアニメーションのリングバッファ上でのインデックスを取得。
 		*/
-	int GetLastAnimationControllerIndex() const
-	{
-		return GetAnimationControllerIndex(m_startAnimationPlayController, m_numAnimationPlayController - 1);
+	int GetLastAnimationControllerIndex() const{
+		return GetAnimationControllerIndex( m_startAnimationPlayController, m_numAnimationPlayController - 1 );
 	}
 	/*!
 	*@brief	アニメーションコントローラのリングバッファ上でのインデックスを取得。
 	*@param[in]	startIndex		開始インデックス。
 	*@param[in]	localIndex		ローカルインデックス。
 	*/
-	int GetAnimationControllerIndex(int startIndex, int localIndex) const
-	{
-		return (startIndex + localIndex) % ANIMATION_PLAY_CONTROLLER_NUM;
+	int GetAnimationControllerIndex( int startIndex, int localIndex ) const{
+		return ( startIndex + localIndex ) % ANIMATION_PLAY_CONTROLLER_NUM;
 	}
 private:
 	static const int ANIMATION_PLAY_CONTROLLER_NUM = 32;			//!<アニメーションコントローラの数。
