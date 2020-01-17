@@ -6,6 +6,7 @@
 #include "Shield.h"
 #include "Util/BarGauge.h"
 #include "Stamina.h"
+#include "graphics/FontRender.h"
 
 class Sword;
 class SkinModelRender;
@@ -16,6 +17,8 @@ class Act;
 
 class Player : public Actor
 {
+	wchar_t text[40];
+	FontRender fontren;
 public:
 	Player(IStage* stage);
 	~Player();

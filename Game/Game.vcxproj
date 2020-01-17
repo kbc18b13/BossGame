@@ -130,7 +130,7 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)Attack2.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="Game\Damage\DamageManager.cpp" />
-    <ClCompile Include="Game\Ground\Ground.cpp" />
+    <ClCompile Include="Game\Ground\CollisionModel.cpp" />
     <ClCompile Include="Game\main.cpp" />
     <ClCompile Include="Game\Scene\Stage1.cpp" />
     <ClCompile Include="Game\Scene\Title.cpp" />
@@ -174,7 +174,7 @@
     <ClInclude Include="Game\Camera\PlayerCamera.h" />
     <ClInclude Include="Game\Damage\Attack.h" />
     <ClInclude Include="Game\Damage\DamageManager.h" />
-    <ClInclude Include="Game\Ground\Ground.h" />
+    <ClInclude Include="Game\Ground\CollisionModel.h" />
     <ClInclude Include="Game\Scene\Stage1.h" />
     <ClInclude Include="Game\Scene\Title.h" />
     <ClInclude Include="Game\stdafx.h" />

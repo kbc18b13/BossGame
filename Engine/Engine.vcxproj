@@ -136,6 +136,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="graphics\FontRender.h" />
     <ClInclude Include="graphics\Parts\ConstantBuffer.h" />
     <ClInclude Include="graphics\PostEffect\Blur.h" />
     <ClInclude Include="graphics\PostEffect\Bloom.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="util\Util.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="graphics\FontRender.cpp" />
     <ClCompile Include="graphics\Parts\ConstantBuffer.cpp" />
     <ClCompile Include="graphics\PostEffect\Blur.cpp" />
     <ClCompile Include="graphics\PostEffect\Bloom.cpp" />

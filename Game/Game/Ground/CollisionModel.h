@@ -1,9 +1,9 @@
 #include "physics/PhysicsStaticObject.h"
 class SkinModelRender;
-class Ground {
+class CollisionModel {
 public:
-	Ground(const wchar_t* modelPath);
-	~Ground();
+	CollisionModel(const wchar_t* modelPath, const wchar_t* collisionModelPath = nullptr);
+	~CollisionModel();
 
 	void SetPos(const CVector3& pos);
 

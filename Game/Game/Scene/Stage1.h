@@ -1,4 +1,4 @@
-#include "Ground/Ground.h"
+#include "Ground/CollisionModel.h"
 #include "IStage.h"
 class Troll;
 class Player;
@@ -13,5 +13,5 @@ public:
 private:
 	float endTime = 0.0f;
 	bool isEndStage = false;
-	Ground ground;
+	CollisionModel ground;
 };
