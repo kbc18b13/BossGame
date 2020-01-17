@@ -11,11 +11,11 @@ Stage1::Stage1() : ground(L"Assets/modelData/StartStage.cmo"){
 	level.Init(L"Assets/level/level.tkl", [&](LevelObjectData& objData) -> bool {
 		if (wcscmp(objData.name, L"Stage") == 0) {
 			ground.SetPos(objData.position);
-		} else if (wcscmp(objData.name, L"Chara")) {
+		} else if (wcscmp(objData.name, L"Chara") == 0) {
 			player = NewGO<Player>(0,this);
 			player->SetPos(objData.position + CVector3::Up() * 100);
 			player->SetStage( this );
-		} else if (wcscmp(objData.name, L"Troll")) {
+		} else if (wcscmp(objData.name, L"Troll") == 0) {
 			Actor* t = NewGO<Troll>(0,this);
 			t->SetPos(objData.position + CVector3::Up()*100);
 			enemyArray.push_back( t );

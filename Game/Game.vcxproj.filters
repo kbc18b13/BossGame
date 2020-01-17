@@ -89,9 +89,6 @@
     <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\Chase.h" />
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Assets\modelData\TestStage.fbx">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>

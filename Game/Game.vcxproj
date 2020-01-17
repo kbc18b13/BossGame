@@ -198,7 +198,6 @@
     <MeshContentTask Include="Assets\modelData\StartStage.fbx" />
     <MeshContentTask Include="Assets\modelData\Sword.fbx" />
     <MeshContentTask Include="Assets\modelData\TestChara.fbx" />
-    <MeshContentTask Include="Assets\modelData\TestStage.fbx" />
     <MeshContentTask Include="Assets\modelData\TestTroll.fbx" />
     <MeshContentTask Include="Assets\modelData\Troll.fbx" />
   </ItemGroup>
