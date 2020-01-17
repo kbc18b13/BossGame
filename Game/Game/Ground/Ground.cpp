@@ -3,7 +3,8 @@
 
 Ground::Ground( const wchar_t* modelPath ) {
 	m_model.Init(modelPath);
-	m_collider.CreateMeshObject(m_model.GetModel(), {0,0,0}, CQuaternion::Identity());
+	//m_collider.CreateMeshObject(m_model.GetModel(), {0,0,0}, CQuaternion::Identity());
+	m_collider.CreateMeshObject( modelPath, { 0,0,0 }, CQuaternion::Identity() );
 }
 
 Ground::~Ground() {

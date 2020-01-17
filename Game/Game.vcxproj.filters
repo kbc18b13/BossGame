@@ -99,6 +99,8 @@
     <MeshContentTask Include="Assets\modelData\StartStage.fbx" />
     <MeshContentTask Include="Assets\modelData\Skeleton.fbx" />
     <MeshContentTask Include="Assets\modelData\SkeSword.fbx" />
+    <MeshContentTask Include="Assets\modelData\Carriage_col.fbx" />
+    <MeshContentTask Include="Assets\modelData\Carriage.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Title_back.png" />

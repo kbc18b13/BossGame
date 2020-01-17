@@ -192,6 +192,8 @@
     <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\Idle.h" />
   </ItemGroup>
   <ItemGroup>
+    <MeshContentTask Include="Assets\modelData\Carriage.fbx" />
+    <MeshContentTask Include="Assets\modelData\Carriage_col.fbx" />
     <MeshContentTask Include="Assets\modelData\Shield.fbx" />
     <MeshContentTask Include="Assets\modelData\Skeleton.fbx" />
     <MeshContentTask Include="Assets\modelData\SkeSword.fbx" />

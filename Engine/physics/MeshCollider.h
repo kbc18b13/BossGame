@@ -23,6 +23,13 @@ public:
 	 *@param[in]	model		スキンモデル。
 	 */
 	void CreateFromSkinModel( const SkinModel& model);
+
+	/// <summary>
+	/// cmoファイルからメッシュコライダーを生成。
+	/// </summary>
+	/// <param name="filePath"></param>
+	void CreateFromCMOFile( const wchar_t* filePath );
+
 	btCollisionShape* GetBody() const override
 	{
 		return m_meshShape.get();
