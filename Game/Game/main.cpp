@@ -5,6 +5,8 @@
 #include "Scene/Title.h"
 #include "graphics/RenderObjectManager.h"
 #include "graphics/FontRender.h"
+#include "Util/Fade.h"
+
 ///////////////////////////////////////////////////////////////////
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
@@ -23,9 +25,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 {
 	//ゲームの初期化。
 	InitGame(hInstance, hPrevInstance, lpCmdLine, nCmdShow, "Game");
-	
-	//デバッグ有効化
-	g_physics.setDebugDraw(true);
 
 	g_camera3D.Init();
 	g_camera3D.SetTarget({ 0.0f, 20.0f, 0.0f });
@@ -37,15 +36,19 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     //ゲームオブジェクトマネージャーの初期化
 	GOManager().Init(10, 5);
 
-#ifdef DEBUG
+#ifdef _DEBUG
 	FontRender fpsRender;
 	fpsRender.SetPos(CVector2(500,500) );
 	wchar_t fpsText[20];
 	fpsRender.SetText( fpsText );
+
+	g_physics.setDebugDraw( true );
 #endif
 
 	NewGO<Title>(0);
 	
+	Fade::Out();
+
 	//ゲームループ。
 	while (DispatchWindowMessage() == true)
 	{

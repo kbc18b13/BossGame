@@ -46,6 +46,12 @@ public:
 		m_rigidBody.GetBody()->setWorldTransform(trans);
 	}
 
+	void SetRot( const CQuaternion& rot ){
+		btTransform trans = m_rigidBody.GetBody()->getWorldTransform();
+		trans.setRotation( rot );
+		m_rigidBody.GetBody()->setWorldTransform( trans );
+	}
+
 private:
 	void CreateRigidBody( CVector3 pos, CQuaternion rot );
 	MeshCollider m_meshCollider;		//!<メッシュコライダー。

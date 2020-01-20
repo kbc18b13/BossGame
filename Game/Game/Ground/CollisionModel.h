@@ -7,6 +7,8 @@ public:
 
 	void SetPos(const CVector3& pos);
 
+	void SetRot( const CQuaternion& rot );
+
 private:
 	SkinModelRender m_model;
 	PhysicsStaticObject m_collider;

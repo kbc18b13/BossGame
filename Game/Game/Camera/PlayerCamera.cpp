@@ -79,14 +79,17 @@ void PlayerCamera::TurnLockOn( IStage* stage ){
 		CVector3 ePos = e->GetPos();
 		CVector3 pPos = m_pos - m_vec;
 
-		//距離が範囲内の物だけを対象にする。
-		if( ( ePos - pPos ).LengthSq() < TARGET_RANGE*TARGET_RANGE ){
-			CVector2 screenPos = g_camera3D.GetProjectedPos( ePos ).xy();
+		//死亡者以外
+		if( !e->IsDeath() ){
+			//距離が範囲内の物だけを対象にする。
+			if( ( ePos - pPos ).LengthSq() < TARGET_RANGE*TARGET_RANGE ){
+				CVector2 screenPos = g_camera3D.GetProjectedPos( ePos ).xy();
 
-			//スクリーン座標が中央に一番近い物を選択する。
-			if( distanceToCenter > screenPos.LengthSq() ){
-				lockOn = e;
-				distanceToCenter = screenPos.LengthSq();
+				//スクリーン座標が中央に一番近い物を選択する。
+				if( distanceToCenter > screenPos.LengthSq() ){
+					lockOn = e;
+					distanceToCenter = screenPos.LengthSq();
+				}
 			}
 		}
 	}

@@ -54,7 +54,7 @@ void Sprite::Init( const wchar_t * path, UINT width, UINT height ){
 		abort();
 	}
 
-	m_CBStruct.worldMat.MakeScaling( { 1 / FRAME_BUFFER_W, 1 / FRAME_BUFFER_H, 1 } );
+	m_CBStruct.worldMat.MakeScaling( { 2 / FRAME_BUFFER_W, 2 / FRAME_BUFFER_H, 1 } );
 	m_CBStruct.mulColor = CVector4( 1, 1, 1, 1 );
 	m_CBuf.Init( Util::AlignSize(sizeof( m_CBStruct ), 16), false, &m_CBStruct );
 }

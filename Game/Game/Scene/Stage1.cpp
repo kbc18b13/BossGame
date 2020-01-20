@@ -5,6 +5,7 @@
 #include "Actor/Enemy/Troll/Troll.h"
 #include "Actor/Enemy/Skeleton/SkeletonEnemy.h"
 #include "Title.h"
+#include "Util/Fade.h"
 
 Stage1::Stage1() : ground( L"Assets/modelData/FirstStage.cmo" ),
 carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo" ){
@@ -14,29 +15,31 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 			ground.SetPos( objData.position );
 		} else if( wcscmp( objData.name, L"Chara" ) == 0 ){
 			player = NewGO<Player>( 0, this );
-			player->SetPos( objData.position + CVector3::Up() * 100 );
+			player->SetPos( objData.position );
 			player->SetStage( this );
 		} else if( wcscmp( objData.name, L"Troll" ) == 0 ){
 			Actor* t = NewGO<Troll>( 0, this );
-			t->SetPos( objData.position + CVector3::Up() * 100 );
+			t->SetPos( objData.position );
 			enemyArray.push_back( t );
 		} else if( wcscmp( objData.name, L"Carriage" ) == 0 ){
 			carriage.SetPos( objData.position );
+			carriage.SetRot( objData.rotation );
+		} else if( wcscmp( objData.name, L"Skeleton" ) == 0 ){
+			Actor* t = NewGO<SkeletonEnemy>( 0, this );
+			t->SetPos( objData.position );
+			enemyArray.push_back( t );
 		}
 		return true;
 	} );
 
-	enemyArray.push_back( NewGO<SkeletonEnemy>( 0, this ) );
-
 	g_graphicsEngine->GetDirectionLight().SetColor( 0, { 1,1,1,1 } );
 	g_graphicsEngine->GetDirectionLight().SetDirection( 0, { -1,-1,-1 } );
-	//g_graphicsEngine->GetDirectionLight().SetColor(    1, { 0.2f,0.2f,0.2f,1 });
-	//g_graphicsEngine->GetDirectionLight().SetDirection(1, { 1,1,1 });
 	g_graphicsEngine->GetDirectionLight().Apply();
 
 	g_graphicsEngine->GetAmbientLight().SetColor( { 0.3f,0.3f,0.3f,1 } );
 	g_graphicsEngine->GetAmbientLight().Apply();
 
+	Fade::Out();
 }
 
 Stage1::~Stage1(){}
@@ -46,8 +49,10 @@ void Stage1::Update(){
 		endTime += GameTime::GetDeltaTime();
 
 		if( endTime >= 6 ){
-			DeleteGO( this );
-			NewGO<Title>( 0 );
+			Fade::In( [&](){
+				DeleteGO( this );
+				NewGO<Title>( 0 );
+			} );
 		}
 	}
 }

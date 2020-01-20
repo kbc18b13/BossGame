@@ -51,9 +51,6 @@ private:
 	//ステート変更関数
 	void ChangeAct( Anim state );
 
-	//死亡
-	bool isDeath = false; 
-
 	friend SkeletonAct::Act;
 };
 

@@ -59,7 +59,7 @@ SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 5, stage ){
 SkeletonEnemy::~SkeletonEnemy(){}
 
 void SkeletonEnemy::Update(){
-	if( isDeath ){
+	if( m_isDeath ){
 		return;
 	}
 
@@ -74,7 +74,7 @@ void SkeletonEnemy::Update(){
 		m_model.SetActive( false );
 		m_chara.SetActive( false );
 		m_sword.SetActive( false );
-		isDeath = true;
+		m_isDeath = true;
 	}
 
 	//各種アップデート

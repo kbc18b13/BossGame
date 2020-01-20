@@ -18,3 +18,9 @@ void CollisionModel::SetPos(const CVector3 & pos) {
 	m_model.Update();
 	m_collider.SetPos(pos);
 }
+
+void CollisionModel::SetRot( const CQuaternion & rot ){
+	m_model.SetRot( rot );
+	m_model.Update();
+	m_collider.SetRot( rot );
+}

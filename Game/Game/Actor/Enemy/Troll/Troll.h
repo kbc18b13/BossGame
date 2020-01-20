@@ -79,7 +79,5 @@ private:
 
 	BarGauge m_hpBar; //HPƒo[
 
-	bool m_isDeath = false; //€‚ñ‚Å‚¢‚é‚È‚çtrue
-
 	friend class TrollAct::Act;
 };

@@ -47,6 +47,7 @@
     <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\Chase.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\Idle.cpp" />
     <ClCompile Include="Game\Ground\CollisionModel.cpp" />
+    <ClCompile Include="Game\Util\Fade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -87,6 +88,7 @@
     <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\Attack.h" />
     <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\Chase.h" />
     <ClInclude Include="Game\Ground\CollisionModel.h" />
+    <ClInclude Include="Game\Util\Fade.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">
@@ -107,5 +109,8 @@
     <ImageContentTask Include="Assets\sprite\HpIn.png" />
     <ImageContentTask Include="Assets\sprite\lockOn.png" />
     <ImageContentTask Include="Assets\sprite\TextBack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\sprite\fade.png" />
   </ItemGroup>
 </Project>

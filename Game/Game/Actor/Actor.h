@@ -29,6 +29,10 @@ public:
 		return float(m_nowHP) / m_maxHP;
 	}
 
+	bool IsDeath(){
+		return m_isDeath;
+	}
+
 	//ステージをセット
 	void SetStage( IStage* stage ){
 		m_stage = stage;
@@ -45,10 +49,12 @@ public:
 	}
 
 protected:
-	float m_damageCool = 0.0f;
-	UINT m_nowHP;
-	UINT m_maxHP;
+	float m_damageCool = 0.0f; //無敵時間
+	UINT m_nowHP; //ヒットポイント
+	UINT m_maxHP; //最大ヒットポイント
 	PlayerCamera* lockCamera = nullptr;
 
-	IStage* m_stage = nullptr;
+	bool m_isDeath = false; //死亡していたらtrue
+
+	IStage* m_stage = nullptr; //所属するステージ
 };

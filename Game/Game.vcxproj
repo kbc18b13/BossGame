@@ -107,6 +107,7 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Util\Fade.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\Attack.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\Chase.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\Act.cpp" />
@@ -152,6 +153,7 @@
     <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\Idle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Util\Fade.h" />
     <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\Attack.h" />
     <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\Chase.h" />
     <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\Act.h" />
@@ -219,6 +221,9 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\TextBack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\fade.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
