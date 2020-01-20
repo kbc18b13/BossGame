@@ -92,15 +92,14 @@
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\TestTroll.fbx" />
     <MeshContentTask Include="Assets\modelData\Sword.fbx" />
     <MeshContentTask Include="Assets\modelData\Troll.fbx" />
     <MeshContentTask Include="Assets\modelData\Shield.fbx" />
-    <MeshContentTask Include="Assets\modelData\StartStage.fbx" />
     <MeshContentTask Include="Assets\modelData\Skeleton.fbx" />
     <MeshContentTask Include="Assets\modelData\SkeSword.fbx" />
     <MeshContentTask Include="Assets\modelData\Carriage_col.fbx" />
     <MeshContentTask Include="Assets\modelData\Carriage.fbx" />
+    <MeshContentTask Include="Assets\modelData\FirstStage.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Title_back.png" />

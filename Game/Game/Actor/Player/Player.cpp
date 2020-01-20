@@ -74,7 +74,7 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 1000, 25 );
 	m_hpBar.SetPosCenterZero( CVector2( 625, 325 ) );
 
-	text[0] = L'\0';
+	//text[0] = L'\0';
 }
 
 
@@ -132,9 +132,9 @@ void Player::Update(){
 		m_isDeath = true;
 		DisplayText::display( L"YOU DIED", CVector3( 0.7f, 0, 0 ) );
 	}
-	swprintf( text, L"%8f , %8f , %8f", GetPos().x, GetPos().y, GetPos().z );
+	/*swprintf( text, L"%8f , %8f , %8f", GetPos().x, GetPos().y, GetPos().z );
 	fontren.SetText( text );
-	fontren.SetPos( CVector2(150, 150) );
+	fontren.SetPos( CVector2(150, 150) );*/
 }
 
 bool Player::Damage( UINT damage, float coolTime, Actor* source ){

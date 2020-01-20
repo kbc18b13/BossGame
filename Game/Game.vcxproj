@@ -26,7 +26,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -194,13 +194,12 @@
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Carriage.fbx" />
     <MeshContentTask Include="Assets\modelData\Carriage_col.fbx" />
+    <MeshContentTask Include="Assets\modelData\FirstStage.fbx" />
     <MeshContentTask Include="Assets\modelData\Shield.fbx" />
     <MeshContentTask Include="Assets\modelData\Skeleton.fbx" />
     <MeshContentTask Include="Assets\modelData\SkeSword.fbx" />
-    <MeshContentTask Include="Assets\modelData\StartStage.fbx" />
     <MeshContentTask Include="Assets\modelData\Sword.fbx" />
     <MeshContentTask Include="Assets\modelData\TestChara.fbx" />
-    <MeshContentTask Include="Assets\modelData\TestTroll.fbx" />
     <MeshContentTask Include="Assets\modelData\Troll.fbx" />
   </ItemGroup>
   <ItemGroup>

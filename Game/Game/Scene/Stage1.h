@@ -14,4 +14,5 @@ private:
 	float endTime = 0.0f;
 	bool isEndStage = false;
 	CollisionModel ground;
+	CollisionModel carriage;
 };

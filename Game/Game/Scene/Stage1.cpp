@@ -6,10 +6,10 @@
 #include "Actor/Enemy/Skeleton/SkeletonEnemy.h"
 #include "Title.h"
 
-Stage1::Stage1() : ground( L"Assets/modelData/StartStage.cmo" ),
+Stage1::Stage1() : ground( L"Assets/modelData/FirstStage.cmo" ),
 carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo" ){
 	Level level;
-	level.Init( L"Assets/level/level.tkl", [&]( LevelObjectData& objData ) -> bool{
+	level.Init( L"Assets/level/level1.tkl", [&]( LevelObjectData& objData ) -> bool{
 		if( wcscmp( objData.name, L"Stage" ) == 0 ){
 			ground.SetPos( objData.position );
 		} else if( wcscmp( objData.name, L"Chara" ) == 0 ){
@@ -20,6 +20,8 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 			Actor* t = NewGO<Troll>( 0, this );
 			t->SetPos( objData.position + CVector3::Up() * 100 );
 			enemyArray.push_back( t );
+		} else if( wcscmp( objData.name, L"Carriage" ) == 0 ){
+			carriage.SetPos( objData.position );
 		}
 		return true;
 	} );

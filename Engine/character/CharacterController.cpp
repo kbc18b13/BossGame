@@ -144,7 +144,7 @@ const CVector3& CharacterController::Execute(float deltaTime, CVector3& moveSpee
 			CVector3 addPos = nextPosition - m_position;
 			CVector3 addPosXZ = addPos;
 			addPosXZ.y = 0.0f;
-			if (addPosXZ.Length() < FLT_EPSILON) {
+			if (addPosXZ.Length() < 0.0001f) {
 				//XZ平面で動きがないので調べる必要なし。
 				//FLT_EPSILONは1より大きい、最小の値との差分を表す定数。
 				//とても小さい値のことです。

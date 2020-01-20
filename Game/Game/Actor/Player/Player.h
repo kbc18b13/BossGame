@@ -17,8 +17,8 @@ class Act;
 
 class Player : public Actor
 {
-	wchar_t text[40];
-	FontRender fontren;
+	//wchar_t text[40];
+	//FontRender fontren;
 public:
 	Player(IStage* stage);
 	~Player();
