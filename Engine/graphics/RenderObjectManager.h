@@ -41,6 +41,11 @@ public:
         m_HUDRender.AddRenderObject( ro );
     }
 
+	//フェード描画オブジェクトの登録
+	void SetFadeRender( IRenderObject* ro ){
+		m_fadeRender = ro;
+	}
+
     //シャドウマップを取得
     ShadowMap& GetShadowMap(){
         return m_shadowMap;
@@ -56,6 +61,8 @@ private:
     //描画オブジェクト
     RenderMachine m_defaultRender;
     RenderMachine m_HUDRender;
+
+	IRenderObject* m_fadeRender = nullptr;
 
     //ポストエフェクト
     PostEffect m_postEffect;

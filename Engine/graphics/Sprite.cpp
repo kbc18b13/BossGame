@@ -55,6 +55,7 @@ void Sprite::Init( const wchar_t * path, UINT width, UINT height ){
 	}
 
 	m_CBStruct.worldMat.MakeScaling( { 2 / FRAME_BUFFER_W, 2 / FRAME_BUFFER_H, 1 } );
+	m_CBStruct.worldMat.m[3][2] = 0.5f;
 	m_CBStruct.mulColor = CVector4( 1, 1, 1, 1 );
 	m_CBuf.Init( Util::AlignSize(sizeof( m_CBStruct ), 16), false, &m_CBStruct );
 }
@@ -72,7 +73,7 @@ void Sprite::Draw(){
 }
 
 void Sprite::UpdateWorldMatrix( CVector2 pos, const CVector2 & scale,
-								const CQuaternion & rot, CVector2 pivot ){
+								const CQuaternion & rot, CVector2 pivot, float depth){
 	//ピボット計算
 	pivot.x *= GetWidth() * scale.x;
 	pivot.y *= GetHeight() * scale.y;
@@ -84,7 +85,7 @@ void Sprite::UpdateWorldMatrix( CVector2 pos, const CVector2 & scale,
 	CMatrix rotMat;
 	rotMat.MakeRotationFromQuaternion( rot );
 	CMatrix posMat;
-	posMat.MakeTranslation( { pos.x, pos.y, 0 } );
+	posMat.MakeTranslation( { pos.x, pos.y, depth } );
 
 	m_CBStruct.worldMat.Mul( scaleMat, rotMat );
 	m_CBStruct.worldMat.Mul( m_CBStruct.worldMat, posMat );

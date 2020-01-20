@@ -4,7 +4,9 @@
 
 Fade::Fade(){
 	m_sprite.Init( L"Assets/sprite/fade.dds", FRAME_BUFFER_W, FRAME_BUFFER_H );
-	g_ROManager.AddHUDRender(this);
+	m_sprite.UpdateWorldMatrix( CVector2::Zero(), CVector2::One(), CQuaternion::Identity(),
+								CVector2::Zero(), 0.0f );
+	g_ROManager.SetFadeRender(this);
 }
 
 Fade::~Fade(){}

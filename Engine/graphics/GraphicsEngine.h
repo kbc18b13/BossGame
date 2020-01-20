@@ -25,8 +25,13 @@ public:
     void BegineFrameBuffer();
 
 	//ラスタライザステートをリセット
-	void ResetrRasterizerState(){
+	void ResetRasterizerState(){
 		m_pd3dDeviceContext->RSSetState( m_rasterizerState );
+	}
+
+	//デプスステンシルステートをリセット
+	void ResetDepthStencilState(){
+		m_pd3dDeviceContext->OMSetDepthStencilState( m_depthStencilState, 0 );
 	}
 
 	//D3D11デバイスを取得。
@@ -62,6 +67,7 @@ private:
 	ID3D11RasterizerState*	m_rasterizerState = NULL;	//ラスタライザステート。
 	ID3D11Texture2D*		m_depthStencil = NULL;		//デプスステンシル。
 	ID3D11DepthStencilView* m_depthStencilView = NULL;	//デプスステンシルビュー。
+	ID3D11DepthStencilState* m_depthStencilState = NULL;//デプスステンシルステート
     D3D11_VIEWPORT m_viewport;
 
 };

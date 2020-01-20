@@ -62,9 +62,6 @@ void RenderObjectManager::Render(){
 	//BulletPhysicsに描画を任せたらブレンドステート変えられてたんでデフォルトに戻す。
 	dc->OMSetBlendState( nullptr, nullptr, 0xffffffff );
 
-	//深度を不使用に変更
-	dc->OMSetDepthStencilState( m_noDepth , 0);
-
 	//ブルーム
 	m_bloom.SetSource( m_defaultTarget.GetRenderTargetSRV() );
 	m_bloom.SetTarget( &m_defaultTarget );
@@ -78,9 +75,14 @@ void RenderObjectManager::Render(){
 
 	//アルファ有効ブレンドに変更。
 	dc->OMSetBlendState( m_alphaBlend, nullptr, 0xffffffff );
+	//深度ステートをリセット
+	g_graphicsEngine->ResetDepthStencilState();
 
     //HUD描画オブジェクトの描画。
     m_HUDRender.Render();
+
+	if( m_fadeRender )
+		m_fadeRender->Render();
 
 	//深度ステートをデフォルトに戻す
 	dc->OMSetDepthStencilState( nullptr, 0 );

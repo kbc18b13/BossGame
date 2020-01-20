@@ -28,7 +28,7 @@ public:
 	*@param[in]	pivot		モデルのピボット。
 	*/
 	void UpdateWorldMatrix( CVector2 pos, const CVector2& scale,
-							const CQuaternion& rot, CVector2 pivot = CVector2::Zero());
+							const CQuaternion& rot, CVector2 pivot = CVector2::Zero(), float depth = 0.5f);
 
 	/*!
 	*@brief	モデルをワールド座標系に変換するためのワールド行列を更新する。

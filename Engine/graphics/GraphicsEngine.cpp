@@ -154,6 +154,14 @@ void GraphicsEngine::Init(HWND hWnd)
 	m_pd3dDeviceContext->RSSetViewports(1, &m_viewport);
 	m_pd3dDeviceContext->RSSetState(m_rasterizerState);
 
+	D3D11_DEPTH_STENCIL_DESC depthDesc{};
+	depthDesc.DepthEnable = true;
+	depthDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+	depthDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+
+	m_pd3dDevice->CreateDepthStencilState( &depthDesc, &m_depthStencilState );
+	m_pd3dDeviceContext->OMSetDepthStencilState( m_depthStencilState, 0 );
+
 	m_dirLight.Init(1);
 	m_ambientLight.Init(2);
 }
