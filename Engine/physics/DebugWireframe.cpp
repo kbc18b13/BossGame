@@ -52,7 +52,7 @@ void DebugWireframe::drawLine(const btVector3 & from, const btVector3 & to, cons
     stockVertex[stockLineCount * 2] = Vertex{ from, color };
     stockVertex[stockLineCount * 2 + 1] = Vertex{ to, color };
     stockLineCount++;
-    if( stockLineCount == maxLine ){
+    if( stockLineCount >= maxLine ){
         DrawEnd();
     }
 }

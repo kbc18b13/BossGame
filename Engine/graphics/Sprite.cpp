@@ -63,6 +63,7 @@ void Sprite::Init( const wchar_t * path, UINT width, UINT height ){
 void Sprite::Draw(){
 	UINT zero = 0;
 	UINT stride = sizeof( SpriteVertex );
+	g_graphicsEngine->ResetDepthStencilState();
 	ID3D11DeviceContext* context = g_graphicsEngine->GetD3DDeviceContext();
 	m_effect.Apply( context );
 	context->IASetVertexBuffers( 0, 1, &m_vertex, &stride, &zero );

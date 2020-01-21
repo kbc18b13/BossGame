@@ -162,6 +162,20 @@ void GraphicsEngine::Init(HWND hWnd)
 	m_pd3dDevice->CreateDepthStencilState( &depthDesc, &m_depthStencilState );
 	m_pd3dDeviceContext->OMSetDepthStencilState( m_depthStencilState, 0 );
 
+	//アルファ有効ブレンドステート
+	D3D11_BLEND_DESC blDesc{};
+	auto& r0 = blDesc.RenderTarget[0];
+	r0.BlendEnable = true;
+	r0.BlendOp = D3D11_BLEND_OP_ADD;
+	r0.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	r0.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	r0.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	r0.SrcBlendAlpha = D3D11_BLEND_ZERO;
+	r0.DestBlendAlpha = D3D11_BLEND_ZERO;
+	r0.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	m_pd3dDevice->CreateBlendState( &blDesc, &m_alphaBlend );
+
 	m_dirLight.Init(1);
 	m_ambientLight.Init(2);
 }

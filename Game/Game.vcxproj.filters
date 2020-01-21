@@ -48,6 +48,7 @@
     <ClCompile Include="Game\Util\Fade.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\Damage.cpp" />
     <ClCompile Include="Game\Ground\TriggerCollision.cpp" />
+    <ClCompile Include="Game\Util\MiniBarGauge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -89,6 +90,7 @@
     <ClInclude Include="Game\Util\Fade.h" />
     <ClInclude Include="Game\Actor\Player\Act\Damage.h" />
     <ClInclude Include="Game\Ground\TriggerCollision.h" />
+    <ClInclude Include="Game\Util\MiniBarGauge.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">

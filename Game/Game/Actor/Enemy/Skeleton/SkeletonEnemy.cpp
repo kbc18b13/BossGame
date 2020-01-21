@@ -54,6 +54,8 @@ SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 5, stage ){
 		m_sword.SetOffset( { 12, 0, 0 } );
 		m_sword.SetCool( 1 );
 	}
+
+	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 50, 2 );
 }
 
 SkeletonEnemy::~SkeletonEnemy(){}
@@ -78,6 +80,8 @@ void SkeletonEnemy::Update(){
 	}
 
 	//各種アップデート
+	m_hpBar.SetPercent( GetHPPer() );
+	m_hpBar.SetPos( GetPos() + CVector3::Up() * 50 );
 	Actor::Update();
 	m_model.Update();
 	m_sword.Update();

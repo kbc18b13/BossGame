@@ -36,6 +36,7 @@ public:
 	*/
 	void UpdateWorldMatrix( const CMatrix& mat ){
 		m_CBStruct.worldMat = mat;
+		m_CBuf.UpdateData( &m_CBStruct );
 	}
 
 	void SetMulColor( const CVector4& color ){

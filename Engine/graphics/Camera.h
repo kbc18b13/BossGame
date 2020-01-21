@@ -53,6 +53,17 @@ public:
 	{
 		return m_up;
 	}
+
+	CVector3 GetFront(){
+		CVector3 v = m_target - m_position;
+		v.Normalize();
+		return v;
+	}
+
+	float GetViewAngle(){
+		return m_viewAngle;
+	}
+
 	/*!
 	 * @brief	‹“_‚ğİ’èB
 	 */
@@ -74,6 +85,7 @@ public:
 	{
 		m_up = up;
 	}
+
 	/*!
 	 * @brief	‰“•½–Ê‚ğİ’èB
 	 */

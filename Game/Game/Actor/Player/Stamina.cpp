@@ -7,7 +7,7 @@ Stamina::Stamina(){
 	m_stamina = m_maxStamina;
 
 	m_gauge.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 1000, 25 );
-	m_gauge.SetPosLikeTex( CVector2( 1255, 110 ) );
+	m_gauge.SetPosLikeTex( CVector2( 1265, 65 ) );
 	m_gauge.SetColor( CVector4( 1, 1, 0, 1 ) );
 }
 

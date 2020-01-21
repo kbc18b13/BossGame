@@ -34,6 +34,11 @@ public:
 		m_pd3dDeviceContext->OMSetDepthStencilState( m_depthStencilState, 0 );
 	}
 
+	//ブレンドステートをリセット
+	void ResetBlendState(){
+		m_pd3dDeviceContext->OMSetBlendState( m_alphaBlend, nullptr, 0xffffffff);
+	}
+
 	//D3D11デバイスを取得。
 	ID3D11Device* GetD3DDevice()
 	{
@@ -68,6 +73,7 @@ private:
 	ID3D11Texture2D*		m_depthStencil = NULL;		//デプスステンシル。
 	ID3D11DepthStencilView* m_depthStencilView = NULL;	//デプスステンシルビュー。
 	ID3D11DepthStencilState* m_depthStencilState = NULL;//デプスステンシルステート
+	ID3D11BlendState* m_alphaBlend = NULL;
     D3D11_VIEWPORT m_viewport;
 
 };

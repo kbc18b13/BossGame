@@ -410,8 +410,8 @@ public:
 
 	//œZ‘ã“ü‰‰ZqB
 	const CVector4& operator/=( float s ){
-		float div = 1.0 / s;
-		return operator*=( s );
+		float div = 1.0f / s;
+		return operator*=( div );
 	}
 
 	//“àÏ

@@ -3,6 +3,7 @@
 #include "graphics/SkinModelRender.h"
 #include "Util/CharaConEx.h"
 #include "Weapon/Sword.h"
+#include "Util/MiniBarGauge.h"
 
 namespace SkeletonAct{
 class Act;
@@ -26,6 +27,11 @@ public:
 		m_chara.AddVelocity( v );
 	}
 
+	bool Damage( UINT damage, float coolTime, Actor* source ) override{
+		m_hpBar.view();
+		return Actor::Damage( damage, coolTime, source );
+	}
+
 	//アニメーション兼ステート
 	enum class Anim{
 		Idle,
@@ -44,6 +50,8 @@ private:
 
 	//剣
 	Sword m_sword;
+
+	MiniBarGauge m_hpBar;
 
 	//ステート
 	std::unique_ptr<SkeletonAct::Act> stateArray[int( Anim::Num )];
