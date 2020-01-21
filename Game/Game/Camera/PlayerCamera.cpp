@@ -8,6 +8,25 @@ PlayerCamera::PlayerCamera(){
 	m_lockOnSprite.SetIsDraw( false );
 }
 
+void PlayerCamera::UpdateGCamera(const CVector3& look){
+
+	btCollisionWorld::ClosestRayResultCallback cb(look, m_pos);
+
+	g_physics.GetDynamicWorld()->rayTest( look, m_pos, cb );
+
+	if( cb.hasHit() ){
+		CVector3 hitPos = cb.m_hitPointWorld;
+		CVector3 toL = look - m_pos;
+		toL.Normalize();
+		hitPos += toL * 2;
+		g_camera3D.SetPosition( hitPos );
+	} else{
+		g_camera3D.SetPosition( m_pos );
+	}
+	g_camera3D.SetTarget( look );
+	g_camera3D.Update();
+}
+
 void PlayerCamera::Update( const CVector3 & playerPos){
 	if( IsLockOn() ){
 		CVector3 ePos = GetLockOnPos();
@@ -25,9 +44,7 @@ void PlayerCamera::Update( const CVector3 & playerPos){
 		m_pos = playerPos + m_vec;
 
 		//カメラの更新。
-		g_camera3D.SetTarget( playerPos );
-		g_camera3D.SetPosition( m_pos );
-		g_camera3D.Update();
+		UpdateGCamera( playerPos );
 		return;
 	}
 
@@ -56,9 +73,7 @@ void PlayerCamera::Update( const CVector3 & playerPos){
 	m_pos = playerPos + upDownRoteteVec;
 
 	//カメラの更新。
-	g_camera3D.SetTarget( playerPos );
-	g_camera3D.SetPosition( m_pos );
-	g_camera3D.Update();
+	UpdateGCamera( playerPos );
 }
 
 void PlayerCamera::TurnLockOn( IStage* stage ){

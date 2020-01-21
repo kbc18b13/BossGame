@@ -59,6 +59,8 @@ public:
 	}
 
 private:
+	void UpdateGCamera( const CVector3& look );
+
 	static constexpr float ROT_SPEED = 180;//カメラ回転スピード。度/秒。
 	static constexpr float LIMIT_UP_DOWN_ROT = 80;//上下回転の制限。度。0度～90度。
 	static constexpr int TARGET_RANGE = 400; //ターゲット可能な距離
