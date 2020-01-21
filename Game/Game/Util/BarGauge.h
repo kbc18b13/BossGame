@@ -26,12 +26,19 @@ public:
 		m_pos.y = -(pos.y - ( FRAME_BUFFER_H / 2 ));
 	}
 
+	void SetColor( const CVector4& color ){
+		m_in.SetMulColor( color );
+	}
+
 	void Render() override;
+
+	void SetActive( bool active );
 
 private:
 	Sprite m_out;//ŠO‘¤‰æ‘œ
 	Sprite m_in;//“à‘¤‰æ‘œ
 	float m_percent;//Š„‡
 	CVector2 m_pos;//ˆÊ’u
+	bool m_active = true;
 };
 

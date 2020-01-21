@@ -54,8 +54,10 @@ void ActHip::Continue( Troll* t ){
 			onJump = true;
 		}
 	} else if( chara( t ).OnGround() ){
-		bodyCol.EndAttack();
 		waitTime -= GameTime::GetDeltaTime();
+		if( waitTime <= 1.8f ){
+			bodyCol.EndAttack();
+		}
 		if( waitTime <= 0 ){
 			ChangeAct( t, ActState::Wait );
 		}

@@ -18,9 +18,7 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 			player->SetPos( objData.position );
 			player->SetStage( this );
 		} else if( wcscmp( objData.name, L"Troll" ) == 0 ){
-			Actor* t = NewGO<Troll>( 0, this );
-			t->SetPos( objData.position );
-			enemyArray.push_back( t );
+			trollPos = objData.position;
 		} else if( wcscmp( objData.name, L"Carriage" ) == 0 ){
 			carriage.SetPos( objData.position );
 			carriage.SetRot( objData.rotation );
@@ -28,6 +26,17 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 			Actor* t = NewGO<SkeletonEnemy>( 0, this );
 			t->SetPos( objData.position );
 			enemyArray.push_back( t );
+		} else if( wcscmp( objData.name, L"BossRoom" ) == 0 ){
+			std::function<void()> f = [&](){
+				Actor* t = NewGO<Troll>( 0, this );
+				t->SetPos( trollPos );
+				enemyArray.push_back( t );
+				DeleteGO( bossRoomTrigger );
+				bossRoomTrigger = nullptr;
+			};
+
+			bossRoomTrigger = NewGO<TriggerCollision>( 0 );
+			bossRoomTrigger->Init( f, CVector3( 125, 125, 125 ), objData.position, objData.rotation );
 		}
 		return true;
 	} );
@@ -42,7 +51,10 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 	Fade::Out();
 }
 
-Stage1::~Stage1(){}
+Stage1::~Stage1(){
+	if( bossRoomTrigger )
+		DeleteGO( bossRoomTrigger );
+}
 
 void Stage1::Update(){
 	if( isEndStage ){

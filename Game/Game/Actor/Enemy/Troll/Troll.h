@@ -4,6 +4,7 @@
 #include "TrollArmCollision.h"
 #include "TrollBodyCollision.h"
 #include "Util/BarGauge.h"
+#include "graphics/FontRender.h"
 
 namespace TrollAct{
 class Act;
@@ -78,6 +79,7 @@ private:
 	TrollBodyCollision m_bodyCollision;//ëÃÇÃçUåÇîªíË
 
 	BarGauge m_hpBar; //HPÉoÅ[
+	FontRender m_nameFont;
 
 	friend class TrollAct::Act;
 };

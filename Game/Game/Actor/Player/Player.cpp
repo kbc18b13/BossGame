@@ -7,6 +7,7 @@
 #include "Act/Walk.h"
 #include "Act/Guard.h"
 #include "Act/Roll.h"
+#include "Act/Damage.h"
 
 #include "Util/DisplayText.h"
 #include "Scene/IStage.h"
@@ -24,6 +25,7 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 		m_animClip[int( Anim::Slash4 )].Load( L"Assets/animData/TestChara_Slash4.tka" );
 		m_animClip[int( Anim::Guard )].Load( L"Assets/animData/TestChara_Guard.tka" );
 		m_animClip[int( Anim::Roll )].Load( L"Assets/animData/TestChara_Roll.tka" );
+		m_animClip[int( Anim::Damage )].Load( L"Assets/animData/TestChara_Damage.tka" );
 	}
 
 	//cmoファイルの読み込み。
@@ -58,6 +60,7 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 		m_actArray[int( Anim::Walk )].reset( new Walk() );
 		m_actArray[int( Anim::Guard )].reset( new Guard() );
 		m_actArray[int( Anim::Roll )].reset( new Roll() );
+		m_actArray[int( Anim::Damage )].reset( new PlayerAct::Damage() );
 
 		ChangeActDefault();
 	}
@@ -73,8 +76,7 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 	//HPバーの初期化
 	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 1000, 25 );
 	m_hpBar.SetPosCenterZero( CVector2( 625, 325 ) );
-
-	//text[0] = L'\0';
+	m_hpBar.SetColor( CVector4( 1, 0, 0, 1 ) );
 }
 
 
@@ -123,7 +125,7 @@ void Player::Update(){
 	m_shield.Update();
 
 	//死亡
-	if( m_nowHP == 0 ){
+	if( m_nowHP == 0){
 		m_stage->EndStage();
 		m_model.SetActive( false );
 		m_charaCon.SetActive( false );
@@ -132,22 +134,31 @@ void Player::Update(){
 		m_isDeath = true;
 		DisplayText::display( L"YOU DIED", CVector3( 0.7f, 0, 0 ) );
 	}
-	/*swprintf( text, L"%8f , %8f , %8f", GetPos().x, GetPos().y, GetPos().z );
-	fontren.SetText( text );
-	fontren.SetPos( CVector2(150, 150) );*/
+	if( GetPos().y < -100 && !m_fallDeath){
+		m_stage->EndStage();
+		DisplayText::display( L"YOU DIED", CVector3( 0.7f, 0, 0 ) );
+		m_fallDeath = true;
+	}
 }
 
 bool Player::Damage( UINT damage, float coolTime, Actor* source ){
-	if( m_nowAct == m_actArray[int( Anim::Guard )].get() ){
-		CVector3 v( 0, 0, 1 );
-		rot.Multiply( v );
+	if( m_damageCool <= 0.0f ){
+		if( m_nowAct == m_actArray[int( Anim::Guard )].get() ){
+			CVector3 v( 0, 0, 1 );
+			rot.Multiply( v );
 
-		CVector3 toSource = source->GetPos() - GetPos();
-		toSource.y = 0;
-		toSource.Normalize();
+			CVector3 toSource = source->GetPos() - GetPos();
+			toSource.y = 0;
+			toSource.Normalize();
 
-		if( acosf( v.Dot( toSource ) ) < CMath::DegToRad( 30 ) ){
-			damage = 0;
+			if( acosf( v.Dot( toSource ) ) < CMath::DegToRad( 50 ) ){
+				if( m_stamina.Consume( damage * 10 ) ){
+					damage = 0;
+				}
+			}
+		}
+		if( damage != 0 ){
+			ChangeAct( Anim::Damage );
 		}
 	}
 	return Actor::Damage( damage, coolTime, source );

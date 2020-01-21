@@ -58,6 +58,10 @@ Troll::Troll(IStage* stage) : Actor(10, stage ){
 
 	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 1000, 25);
 	m_hpBar.SetPosLikeTex( CVector2( 1144, 563 ) );
+	m_hpBar.SetColor( CVector4( 1, 0, 0, 1 ) );
+
+	m_nameFont.SetText( L"BOSSEnemy" );
+	m_nameFont.SetPos( CVector2( 150, 500 ) );
 }
 
 Troll::~Troll() {
@@ -93,6 +97,8 @@ void Troll::Update() {
 		m_armCollision.SetActive( false );
 		m_bodyCollision.SetActive( false );
 		m_CharaCon.SetActive( false );
+		m_hpBar.SetActive( false );
+		m_nameFont.SetActive( false );
 		m_isDeath = true;
 		DisplayText::display( L"VICTORY ARCHIVED" , CVector3(0.5f, 0.5f, 1.0f));
 	}

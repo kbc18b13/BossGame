@@ -7,4 +7,5 @@ IGameObject::IGameObject() {
 
 
 IGameObject::~IGameObject() {
+	DeleteGO( this );
 }

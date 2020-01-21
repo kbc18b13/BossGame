@@ -7,9 +7,9 @@ TrollBodyCollision::TrollBodyCollision(){}
 TrollBodyCollision::~TrollBodyCollision(){}
 
 void TrollBodyCollision::Init( Troll * troll){
-	m_shape.Create(60, 40);
+	m_shape.Create(45, 40);
 	m_collision.Init( m_shape, EnCollisionAttr::enCollisionAttr_Player, troll );
-	m_collision.SetOffset( CVector3( 0, 10, 0 ) );
+	m_collision.SetOffset( CVector3( 0, 40, 0 ) );
 	m_master = troll;
 }
 
@@ -28,8 +28,8 @@ void TrollBodyCollision::Update(){
 			CVector3 v = a->GetPos() - pos;
 			v.y = 0;
 			v.Normalize();
-			v *= 1000;
-			v.y = 100;
+			v *= 1500;
+			v.y = 200;
 			a->AddVelocity( v );
 		}
 	}

@@ -34,7 +34,7 @@ void ActTackle::Continue( Troll* t ){
 	move *= 5;
 
 	model( t ).Play( int( AnimState::Tackle ), 0.2f );
-	model( t ).SetPos( chara( t ).Excecute( move, 2, 1, false ) );
+	model( t ).SetPos( chara( t ).Excecute( move, 4, 0.5f, false ) );
 	model( t ).SetRot( Util::LookRotXZ( move ) );
 
 	//タイマーが0を下回ったら終了

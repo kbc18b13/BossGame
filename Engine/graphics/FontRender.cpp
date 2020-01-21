@@ -9,9 +9,15 @@ FontRender::FontRender() : m_font(L"Assets/font/font.spritefont"){
 FontRender::~FontRender(){}
 
 void FontRender::Render(){
-	m_font.Begine();
+	if( m_active ){
+		m_font.Begine();
 
-	m_font.DrawStr( m_text );
+		m_font.DrawStr( m_text );
 
-	m_font.End();
+		m_font.End();
+	}
+}
+
+void FontRender::SetActive( bool active ){
+	m_active = active;
 }

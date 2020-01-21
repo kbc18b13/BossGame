@@ -1,4 +1,5 @@
 #include "Ground/CollisionModel.h"
+#include "Ground/TriggerCollision.h"
 #include "IStage.h"
 class Troll;
 class Player;
@@ -13,6 +14,8 @@ public:
 private:
 	float endTime = 0.0f;
 	bool isEndStage = false;
+	CVector3 trollPos;
 	CollisionModel ground;
 	CollisionModel carriage;
+	TriggerCollision* bossRoomTrigger;
 };

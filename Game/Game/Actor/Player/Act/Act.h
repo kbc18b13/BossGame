@@ -36,6 +36,9 @@ protected:
 	Sword& sword( Player* p ){
 		return p->m_sword;
 	}
+	Stamina& stamina( Player* p ){
+		return p->m_stamina;
+	}
 	void ChangeActDefault( Player* p ){
 		p->ChangeActDefault();
 	}

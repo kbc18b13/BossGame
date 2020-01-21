@@ -6,7 +6,7 @@ public:
 	~Stamina();
 
 	void Update();
-	bool Consume( UINT amount );
+	bool Consume( float amount );
 
 private:
 	float m_maxStamina = 50;

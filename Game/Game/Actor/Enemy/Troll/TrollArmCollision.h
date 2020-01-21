@@ -1,7 +1,6 @@
 #pragma once
 #include "Util/ActorHitCollision.h"
 #include "physics/BoxCollider.h"
-#include "Damage/Attack.h"
 
 class Troll;
 

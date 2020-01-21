@@ -17,8 +17,6 @@ class Act;
 
 class Player : public Actor
 {
-	//wchar_t text[40];
-	//FontRender fontren;
 public:
 	Player(IStage* stage);
 	~Player();
@@ -63,6 +61,7 @@ public:
 		Slash4,
 		Guard,
 		Roll,
+		Damage,
 		Num,
 		SlashEnd, //攻撃終了のためのダミー
 	};
@@ -103,6 +102,8 @@ private:
 	BarGauge m_hpBar;//HPバー
 
 	Stamina m_stamina;//スタミナ
+
+	bool m_fallDeath = false; //落下死
 
 	friend class PlayerAct::Act;
 };

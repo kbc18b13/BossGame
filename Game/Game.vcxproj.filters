@@ -16,8 +16,6 @@
     <ClCompile Include="Game\Scene\Stage1.cpp" />
     <ClCompile Include="Game\Camera\PlayerCamera.cpp" />
     <ClCompile Include="Game\Actor\Actor.cpp" />
-    <ClCompile Include="Game\Damage\DamageManager.cpp" />
-    <ClCompile Include="Game\Damage\Attack.cpp" />
     <ClCompile Include="Game\Util\CharaConEx.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActAttack.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActChase.cpp" />
@@ -48,6 +46,8 @@
     <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\Idle.cpp" />
     <ClCompile Include="Game\Ground\CollisionModel.cpp" />
     <ClCompile Include="Game\Util\Fade.cpp" />
+    <ClCompile Include="Game\Actor\Player\Act\Damage.cpp" />
+    <ClCompile Include="Game\Ground\TriggerCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -56,8 +56,6 @@
     <ClInclude Include="Game\Scene\Stage1.h" />
     <ClInclude Include="Game\Camera\PlayerCamera.h" />
     <ClInclude Include="Game\Actor\Actor.h" />
-    <ClInclude Include="Game\Damage\DamageManager.h" />
-    <ClInclude Include="Game\Damage\Attack.h" />
     <ClInclude Include="Game\Util\CharaConEx.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActAttack.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActChase.h" />
@@ -89,6 +87,8 @@
     <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\Chase.h" />
     <ClInclude Include="Game\Ground\CollisionModel.h" />
     <ClInclude Include="Game\Util\Fade.h" />
+    <ClInclude Include="Game\Actor\Player\Act\Damage.h" />
+    <ClInclude Include="Game\Ground\TriggerCollision.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">
@@ -109,8 +109,6 @@
     <ImageContentTask Include="Assets\sprite\HpIn.png" />
     <ImageContentTask Include="Assets\sprite\lockOn.png" />
     <ImageContentTask Include="Assets\sprite\TextBack.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\sprite\fade.png" />
+    <ImageContentTask Include="Assets\sprite\fade.png" />
   </ItemGroup>
 </Project>

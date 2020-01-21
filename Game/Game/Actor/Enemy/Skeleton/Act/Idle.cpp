@@ -9,7 +9,7 @@ Idle::Idle(){}
 Idle::~Idle(){}
 
 void Idle::Start( SkeletonEnemy * s ){
-	m_timer = 1.0f;
+	m_timer = 1.5f;
 	model( s ).Play( int( SkeletonEnemy::Anim::Idle ), 0.5f );
 }
 
@@ -21,7 +21,7 @@ void Idle::Update( SkeletonEnemy * s ){
 		if( toP.LengthSq() > 300 * 300 ){
 
 			//‰“‚­‚É‚¢‚é‚Æ‚«‚Í‘Ò‹@
-			m_timer = 1;
+			m_timer = 1.5;
 
 		}else if( toP.LengthSq() < 40 * 40 ){
 
@@ -43,7 +43,7 @@ void Idle::Update( SkeletonEnemy * s ){
 	toP.y = 0;
 	CVector3 front( 0, 0, 1 );
 	model( s ).GetRot().Multiply( front );
-	model( s ).AddRot( Util::LookRotSLerp( toP , front, 0.2f) );
+	model( s ).AddRot( Util::LookRotSLerp( toP , front, 0.1f) );
 	chara( s ).Excecute();
 }
 

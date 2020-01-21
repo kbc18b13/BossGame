@@ -17,7 +17,7 @@ SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 5, stage ){
 
 		desc.walkAccel = 10;
 		desc.walkAccelAir = 1;
-		desc.walkMax = 150;
+		desc.walkMax = 100;
 
 		desc.gravity = 900;
 		desc.jumpPower = 500;

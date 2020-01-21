@@ -17,8 +17,11 @@ public:
 
 	void Render() override;
 
+	void SetActive(bool active);
+
 private:
 	const wchar_t* m_text = L"\0";
 	CFont m_font;
+	bool m_active = true;
 };
 
