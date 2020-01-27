@@ -24,8 +24,6 @@
     <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActIdle.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActHip.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActTackle.cpp" />
-    <ClCompile Include="Game\Util\ActorHitCollision.cpp" />
-    <ClCompile Include="Game\Actor\Enemy\Troll\TrollArmCollision.cpp" />
     <ClCompile Include="Game\Util\BarGauge.cpp" />
     <ClCompile Include="Game\Scene\IStage.cpp" />
     <ClCompile Include="Game\Actor\Player\Shield.cpp" />
@@ -40,7 +38,6 @@
     <ClCompile Include="Game\Actor\Enemy\Troll\TrollBodyCollision.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Skeleton\SkeletonEnemy.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\Act.cpp" />
-    <ClCompile Include="Game\Weapon\Sword.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\Attack.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\Chase.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\Idle.cpp" />
@@ -49,6 +46,10 @@
     <ClCompile Include="Game\Actor\Player\Act\Damage.cpp" />
     <ClCompile Include="Game\Ground\TriggerCollision.cpp" />
     <ClCompile Include="Game\Util\MiniBarGauge.cpp" />
+    <ClCompile Include="Game\Weapon\Weapon.cpp" />
+    <ClCompile Include="Game\Weapon\ActorHitCollision.cpp" />
+    <ClCompile Include="Game\Weapon\ModelArmWeapon.cpp" />
+    <ClCompile Include="Game\Weapon\ArmWeapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -66,8 +67,6 @@
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\Act.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActHip.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActTackle.h" />
-    <ClInclude Include="Game\Util\ActorHitCollision.h" />
-    <ClInclude Include="Game\Actor\Enemy\Troll\TrollArmCollision.h" />
     <ClInclude Include="Game\Util\BarGauge.h" />
     <ClInclude Include="Game\Scene\IStage.h" />
     <ClInclude Include="Game\Actor\Player\Shield.h" />
@@ -82,7 +81,6 @@
     <ClInclude Include="Game\Actor\Enemy\Troll\TrollBodyCollision.h" />
     <ClInclude Include="Game\Actor\Enemy\Skeleton\SkeletonEnemy.h" />
     <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\Act.h" />
-    <ClInclude Include="Game\Weapon\Sword.h" />
     <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\Idle.h" />
     <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\Attack.h" />
     <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\Chase.h" />
@@ -91,6 +89,10 @@
     <ClInclude Include="Game\Actor\Player\Act\Damage.h" />
     <ClInclude Include="Game\Ground\TriggerCollision.h" />
     <ClInclude Include="Game\Util\MiniBarGauge.h" />
+    <ClInclude Include="Game\Weapon\Weapon.h" />
+    <ClInclude Include="Game\Weapon\ActorHitCollision.h" />
+    <ClInclude Include="Game\Weapon\ModelArmWeapon.h" />
+    <ClInclude Include="Game\Weapon\ArmWeapon.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">

@@ -141,27 +141,25 @@ void Player::Update(){
 	}
 }
 
-bool Player::Damage( UINT damage, float coolTime, Actor* source ){
-	if( m_damageCool <= 0.0f ){
-		if( m_nowAct == m_actArray[int( Anim::Guard )].get() ){
-			CVector3 v( 0, 0, 1 );
-			rot.Multiply( v );
+bool Player::Damage( UINT damage, Actor* source ){
+	if( m_nowAct == m_actArray[int( Anim::Guard )].get() ){
+		CVector3 v( 0, 0, 1 );
+		rot.Multiply( v );
 
-			CVector3 toSource = source->GetPos() - GetPos();
-			toSource.y = 0;
-			toSource.Normalize();
+		CVector3 toSource = source->GetPos() - GetPos();
+		toSource.y = 0;
+		toSource.Normalize();
 
-			if( acosf( v.Dot( toSource ) ) < CMath::DegToRad( 50 ) ){
-				if( m_stamina.Consume( damage * 10 ) ){
-					damage = 0;
-				}
+		if( acosf( v.Dot( toSource ) ) < CMath::DegToRad( 50 ) ){
+			if( m_stamina.Consume( damage * 10 ) ){
+				damage = 0;
 			}
 		}
-		if( damage != 0 ){
-			ChangeAct( Anim::Damage );
-		}
 	}
-	return Actor::Damage( damage, coolTime, source );
+	if( damage != 0 ){
+		ChangeAct( Anim::Damage );
+	}
+	return Actor::Damage( damage, source);
 }
 
 void Player::ChangeActDefault(){

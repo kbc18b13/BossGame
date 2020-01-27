@@ -52,7 +52,6 @@ SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 5, stage ){
 		Bone* b = m_model.GetModel().GetSkeleton().GetBone( 4 );
 		m_sword.Init( b, this, { 13,5,5 }, L"Assets/modelData/SkeSword.cmo" , false);
 		m_sword.SetOffset( { 12, 0, 0 } );
-		m_sword.SetCool( 1 );
 	}
 
 	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 50, 2 );

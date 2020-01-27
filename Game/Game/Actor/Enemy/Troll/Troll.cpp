@@ -51,7 +51,7 @@ Troll::Troll(IStage* stage) : Actor(10, stage ){
 
     //腕コリジョン
     Bone* arm = m_model.GetModel().GetSkeleton().GetBone(20);
-    m_armCollision.Init(this, arm);
+	m_armCollision.Init( arm, this, CVector3( 10.0f, 20.0f, 10.0f ), false );
 
 	//体コリジョン
 	m_bodyCollision.Init( this );

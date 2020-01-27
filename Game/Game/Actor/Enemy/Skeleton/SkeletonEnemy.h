@@ -2,7 +2,7 @@
 #include "Actor/Actor.h"
 #include "graphics/SkinModelRender.h"
 #include "Util/CharaConEx.h"
-#include "Weapon/Sword.h"
+#include "Weapon/ModelArmWeapon.h"
 #include "Util/MiniBarGauge.h"
 
 namespace SkeletonAct{
@@ -27,9 +27,9 @@ public:
 		m_chara.AddVelocity( v );
 	}
 
-	bool Damage( UINT damage, float coolTime, Actor* source ) override{
+	bool Damage( UINT damage, Actor* source ) override{
 		m_hpBar.view();
-		return Actor::Damage( damage, coolTime, source );
+		return Actor::Damage( damage, source );
 	}
 
 	//アニメーション兼ステート
@@ -49,7 +49,7 @@ private:
 	SkinModelRender m_model;
 
 	//剣
-	Sword m_sword;
+	ModelArmWeapon m_sword;
 
 	MiniBarGauge m_hpBar;
 

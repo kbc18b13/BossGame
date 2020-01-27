@@ -22,7 +22,7 @@ protected:
 	Player* player( SkeletonEnemy* s ){
 		return s->m_stage->GetPlayer();
 	}
-	Sword& sword( SkeletonEnemy* s ){
+	ModelArmWeapon& sword( SkeletonEnemy* s ){
 		return s->m_sword;
 	}
 

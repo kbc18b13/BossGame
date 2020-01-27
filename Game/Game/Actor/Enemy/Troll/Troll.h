@@ -1,10 +1,10 @@
 #pragma once
 #include "Actor/Actor.h"
 #include "Util/CharaConEx.h"
-#include "TrollArmCollision.h"
 #include "TrollBodyCollision.h"
 #include "Util/BarGauge.h"
 #include "graphics/FontRender.h"
+#include "Weapon/ArmWeapon.h"
 
 namespace TrollAct{
 class Act;
@@ -75,7 +75,7 @@ private:
 	AnimationClip m_animClip[int( AnimState::Num )];//アニメーションクリップ
 	SkinModelRender m_model;//モデル
 
-	TrollArmCollision m_armCollision;//腕の攻撃判定
+	ArmWeapon m_armCollision;//腕の攻撃判定
 	TrollBodyCollision m_bodyCollision;//体の攻撃判定
 
 	BarGauge m_hpBar; //HPバー

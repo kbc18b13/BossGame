@@ -8,7 +8,7 @@ Damage::Damage(){}
 Damage::~Damage(){}
 
 void Damage::Start( Player * p ){
-	sword( p ).SlashEnd();
+	sword( p ).AttackEnd();
 	model( p ).Play( int(Player::Anim::Damage) , 0.2f);
 }
 

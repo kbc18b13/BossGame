@@ -2,7 +2,7 @@
 #include "Actor/Actor.h"
 #include "Camera/PlayerCamera.h"
 #include "Util/CharaConEx.h"
-#include "Weapon/Sword.h"
+#include "Weapon/ModelArmWeapon.h"
 #include "Shield.h"
 #include "Util/BarGauge.h"
 #include "Stamina.h"
@@ -50,7 +50,7 @@ public:
 	/// <param name="damage">ダメージ</param>
 	/// <param name="coolTime">ヒット後クールタイム</param>
 	/// <returns>クールタイム判定によるダメージの可否</returns>
-	bool Damage( UINT damage, float coolTime , Actor* source) override;
+	bool Damage( UINT damage, Actor* source ) override;
 
 	enum class Anim{
 		Walk,
@@ -92,7 +92,7 @@ private:
 	AnimationClip m_animClip[int(Anim::Num)];        //アニメーションクリップ
 	SkinModelRender m_model;                    //自分のモデル。
 
-	Sword m_sword;
+	ModelArmWeapon m_sword;
 	Shield m_shield;
 
 	CharaConEx m_charaCon;             //キャラコン

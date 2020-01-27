@@ -41,10 +41,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	fpsRender.SetPos(CVector2(500,500) );
 	wchar_t fpsText[20];
 	fpsRender.SetText( fpsText );
-
-	g_physics.setDebugDraw( true );
 #endif
 
+	bool debug = false;
 	NewGO<Title>(0);
 	
 	Fade::Out();
@@ -57,6 +56,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		//ゲームパッドの更新。	
 		for (auto& pad : g_pad) {
 			pad.Update();
+		}
+
+		if( g_pad->IsTrigger( enButtonY ) ){
+			debug = !debug;
+			g_physics.setDebugDraw( debug );
 		}
 
 		//物理エンジンの更新。

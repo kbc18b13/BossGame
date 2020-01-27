@@ -50,6 +50,12 @@ public:
         m_offset = offset;
     }
 
+	CMatrix GetWorldMatrix(){
+		CMatrix mat;
+		m_collision.GetBody()->getWorldTransform().getOpenGLMatrix( &mat._11 );
+		return mat;
+	}
+
     std::vector<Actor*>& ContactTest();
 
 	void SetActive( bool active );

@@ -23,6 +23,7 @@ private:
 	Player::Anim animation;
 	Player::Anim nextAttack;
 	bool pushedAtkButton = false;
+	float m_timer = 0;
 };
 
 }

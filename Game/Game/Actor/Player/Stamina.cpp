@@ -23,10 +23,12 @@ void Stamina::Update(){
 }
 
 bool Stamina::Consume( float amount ){
-	if( amount <= 0 ){
+	if( amount == 0 ){
 		return true;
-	}else if( m_stamina >= amount ){
-		m_stamina -= amount;
+	}
+
+	if( m_stamina > 0 ){
+		m_stamina = std::max(m_stamina - amount, 0.f);
 		m_recoverCool = c_recoverCool;
 		return true;
 	}

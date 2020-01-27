@@ -116,7 +116,7 @@
     <ClCompile Include="Game\Actor\Player\Act\Attack.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\Act.cpp" />
     <ClCompile Include="Game\Util\BarGauge.cpp" />
-    <ClCompile Include="Game\Util\ActorHitCollision.cpp" />
+    <ClCompile Include="Game\Weapon\ActorHitCollision.cpp" />
     <ClCompile Include="Game\Actor\Actor.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActAttack.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActChase.cpp" />
@@ -126,7 +126,7 @@
     <ClCompile Include="Game\Actor\Enemy\Troll\Act\ActTackle.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Troll\Troll.cpp" />
     <ClCompile Include="Game\Actor\Player\Player.cpp" />
-    <ClCompile Include="Game\Weapon\Sword.cpp" />
+    <ClCompile Include="Game\Weapon\ArmWeapon.cpp" />
     <ClCompile Include="Game\Camera\PlayerCamera.cpp" />
     <ClCompile Include="Game\Ground\CollisionModel.cpp" />
     <ClCompile Include="Game\main.cpp" />
@@ -137,7 +137,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Game\Util\CharaConEx.cpp" />
-    <ClCompile Include="Game\Actor\Enemy\Troll\TrollArmCollision.cpp" />
     <ClCompile Include="Game\Scene\IStage.cpp" />
     <ClCompile Include="Game\Actor\Player\Shield.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\Guard.cpp" />
@@ -150,6 +149,8 @@
     <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\Idle.cpp" />
     <ClCompile Include="Game\Ground\TriggerCollision.cpp" />
     <ClCompile Include="Game\Util\MiniBarGauge.cpp" />
+    <ClCompile Include="Game\Weapon\Weapon.cpp" />
+    <ClCompile Include="Game\Weapon\ModelArmWeapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Act\Damage.h" />
@@ -161,7 +162,7 @@
     <ClInclude Include="Game\Actor\Player\Act\Attack.h" />
     <ClInclude Include="Game\Actor\Player\Act\Act.h" />
     <ClInclude Include="Game\Util\BarGauge.h" />
-    <ClInclude Include="Game\Util\ActorHitCollision.h" />
+    <ClInclude Include="Game\Weapon\ActorHitCollision.h" />
     <ClInclude Include="Game\Actor\Actor.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\Act.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActAttack.h" />
@@ -172,14 +173,13 @@
     <ClInclude Include="Game\Actor\Enemy\Troll\Act\ActTackle.h" />
     <ClInclude Include="Game\Actor\Enemy\Troll\Troll.h" />
     <ClInclude Include="Game\Actor\Player\Player.h" />
-    <ClInclude Include="Game\Weapon\Sword.h" />
+    <ClInclude Include="Game\Weapon\ArmWeapon.h" />
     <ClInclude Include="Game\Camera\PlayerCamera.h" />
     <ClInclude Include="Game\Ground\CollisionModel.h" />
     <ClInclude Include="Game\Scene\Stage1.h" />
     <ClInclude Include="Game\Scene\Title.h" />
     <ClInclude Include="Game\stdafx.h" />
     <ClInclude Include="Game\Util\CharaConEx.h" />
-    <ClInclude Include="Game\Actor\Enemy\Troll\TrollArmCollision.h" />
     <ClInclude Include="Game\Scene\IStage.h" />
     <ClInclude Include="Game\Actor\Player\Shield.h" />
     <ClInclude Include="Game\Actor\Player\Act\Guard.h" />
@@ -192,6 +192,8 @@
     <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\Idle.h" />
     <ClInclude Include="Game\Ground\TriggerCollision.h" />
     <ClInclude Include="Game\Util\MiniBarGauge.h" />
+    <ClInclude Include="Game\Weapon\Weapon.h" />
+    <ClInclude Include="Game\Weapon\ModelArmWeapon.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Carriage.fbx" />

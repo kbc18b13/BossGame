@@ -1,6 +1,6 @@
 #pragma once
 #include "physics/CylinderCollider.h"
-#include "Util/ActorHitCollision.h"
+#include "Weapon/Weapon.h"
 
 class Troll;
 
@@ -13,26 +13,18 @@ public:
 	void Update();
 
 	void StartAttack(){
-		isAttack = true;
+		m_weapon.AttackStart();
 	}
 	void EndAttack(){
-		isAttack = false;
+		m_weapon.AttackEnd();
 	}
 
 	void SetActive( bool active ){
-		m_collision.SetActive( active );
-		isAttack = false;
+		m_weapon.SetActive( active );
 	}
 
 private:
-	UINT damage = 3;
-	float coolTime = 3.0f;
-
-	bool isAttack = false;
-
-	Troll* m_master = nullptr;
-
 	CylinderCollider m_shape; //“–‚½‚è”»’è‚ÌŒ`
-
-	ActorHitCollision m_collision;
+	Weapon m_weapon;
+	Troll* m_master = nullptr;
 };

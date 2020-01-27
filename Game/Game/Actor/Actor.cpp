@@ -6,15 +6,11 @@ Actor::Actor( UINT maxHP, IStage * stage ) : m_maxHP( maxHP ), m_nowHP( maxHP ),
 
 Actor::~Actor() {}
 
-bool Actor::Damage( UINT damage, float coolTime, Actor* source ) {
-	if( m_damageCool <= 0.0f ){
-		m_damageCool = coolTime;
-		m_nowHP = m_nowHP > damage ? m_nowHP - damage : 0;
+bool Actor::Damage( UINT damage, Actor* source ) {
+	m_nowHP = m_nowHP > damage ? m_nowHP - damage : 0;
 
-		if( m_nowHP == 0 && lockCamera){
-			lockCamera->TurnLockOn(m_stage);
-		}
-		return true;
+	if( m_nowHP == 0 && lockCamera){
+		lockCamera->TurnLockOn(m_stage);
 	}
-	return false;
+	return true;
 }

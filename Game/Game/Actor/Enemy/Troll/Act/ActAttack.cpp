@@ -8,7 +8,7 @@ using ActState = Troll::ActState;
 
 namespace TrollAct{
 
-ActAttack::ActAttack( TrollArmCollision& arm ) : m_arm( arm ){}
+ActAttack::ActAttack( ArmWeapon& arm ) : m_arm( arm ){}
 
 void ActAttack::Start( Troll* t ){
 	m_timer = 1.5f;
@@ -26,13 +26,13 @@ void ActAttack::Continue( Troll* t ){
 	}
 
 	if( !m_isAttack && m_timer < 1.0f ){
-		m_arm.StartAttack();
+		m_arm.AttackStart();
 		m_isAttack = true;
 	}
 
 	m_timer -= GameTime::GetDeltaTime();
 	if( m_timer < 0 ){
-		m_arm.EndAttack();
+		m_arm.AttackEnd();
 		ChangeAct(t,  ActState::Wait );
 	}
 }

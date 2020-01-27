@@ -33,7 +33,7 @@ protected:
 	CharaConEx& chara( Player* p ){
 		return p->m_charaCon;
 	}
-	Sword& sword( Player* p ){
+	ModelArmWeapon& sword( Player* p ){
 		return p->m_sword;
 	}
 	Stamina& stamina( Player* p ){
