@@ -19,19 +19,6 @@ public:
 	void Start() override;
 	void Update() override;
 
-	void SetPos( const CVector3& pos ) override;
-
-	CVector3 GetPos() const override{
-		return m_CharaCon.GetPosition();
-	}
-
-	/// <summary>
-	/// 加速させる
-	/// </summary>
-	void AddVelocity( const CVector3& pos ) override{
-		m_CharaCon.AddVelocity( pos );
-	}
-
 	//列挙
 	enum class AnimState{
 		Walk,
@@ -71,9 +58,7 @@ private:
 	//ステート配列
 	std::unique_ptr<TrollAct::Act> m_actionArray[int( ActState::Num )];
 
-	CharaConEx m_CharaCon;//キャラクターコントローラー
 	AnimationClip m_animClip[int( AnimState::Num )];//アニメーションクリップ
-	SkinModelRender m_model;//モデル
 
 	ArmWeapon m_armCollision;//腕の攻撃判定
 	TrollBodyCollision m_bodyCollision;//体の攻撃判定

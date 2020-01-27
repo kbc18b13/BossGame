@@ -33,7 +33,7 @@ public:
 		m_damage = damage;
 	}
 
-	void SetKnockBack( const CVector3 knock ){
+	void SetKnockBack( const CVector3& knock ){
 		m_knock = knock;
 	}
 

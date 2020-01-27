@@ -16,17 +16,6 @@ public:
 
 	void Update() override;
 
-	void SetPos( const CVector3& pos ) override{
-		m_chara.SetPosition( pos );
-		m_model.SetPos( pos );
-	}
-	CVector3 GetPos() const override{
-		return m_chara.GetPosition();
-	}
-	void AddVelocity( const CVector3& v ) override{
-		m_chara.AddVelocity( v );
-	}
-
 	bool Damage( UINT damage, Actor* source ) override{
 		m_hpBar.view();
 		return Actor::Damage( damage, source );
@@ -41,12 +30,9 @@ public:
 		Num,
 	};
 private:
-	//キャラコン
-	CharaConEx m_chara;
 
-	//アニメーションとモデル
+	//アニメーション
 	AnimationClip m_animClip [int( Anim::Num )];
-	SkinModelRender m_model;
 
 	//剣
 	ModelArmWeapon m_sword;

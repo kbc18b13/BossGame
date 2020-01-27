@@ -28,6 +28,10 @@ public:
 		m_weapon.SetDamage( damage );
 	}
 
+	void SetKnockBack( const CVector3& knock ){
+		m_weapon.SetKnockBack( knock );
+	}
+
 	void SetActive( bool active ){
 		m_weapon.SetActive( active );
 		m_model.SetActive( active );

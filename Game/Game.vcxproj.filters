@@ -50,6 +50,7 @@
     <ClCompile Include="Game\Weapon\ActorHitCollision.cpp" />
     <ClCompile Include="Game\Weapon\ModelArmWeapon.cpp" />
     <ClCompile Include="Game\Weapon\ArmWeapon.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Yowai\Yowai.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -93,6 +94,7 @@
     <ClInclude Include="Game\Weapon\ActorHitCollision.h" />
     <ClInclude Include="Game\Weapon\ModelArmWeapon.h" />
     <ClInclude Include="Game\Weapon\ArmWeapon.h" />
+    <ClInclude Include="Game\Actor\Enemy\Yowai\Yowai.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">
@@ -106,6 +108,7 @@
     <MeshContentTask Include="Assets\modelData\Carriage_col.fbx" />
     <MeshContentTask Include="Assets\modelData\Carriage.fbx" />
     <MeshContentTask Include="Assets\modelData\FirstStage.fbx" />
+    <MeshContentTask Include="Assets\modelData\Yowai.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Title_back.png" />

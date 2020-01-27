@@ -24,27 +24,6 @@ public:
 	void Update() override;
 
 	/// <summary>
-	/// 位置を取得
-	/// </summary>
-	CVector3 GetPos() const override{
-		return m_charaCon.GetPosition();
-	}
-
-	/// <summary>
-	/// 位置を設定
-	/// </summary>
-	void SetPos(const CVector3& pos)  override {
-		m_charaCon.SetPosition(pos);
-	}
-
-    /// <summary>
-    /// 加速させる
-    /// </summary>
-    void AddVelocity(const CVector3& pos) override {
-        m_charaCon.AddVelocity(pos);
-    }
-
-	/// <summary>
 	/// ダメージを与える
 	/// </summary>
 	/// <param name="damage">ダメージ</param>
@@ -90,12 +69,9 @@ private:
 	CQuaternion rot;//回転
 
 	AnimationClip m_animClip[int(Anim::Num)];        //アニメーションクリップ
-	SkinModelRender m_model;                    //自分のモデル。
 
 	ModelArmWeapon m_sword;
 	Shield m_shield;
-
-	CharaConEx m_charaCon;             //キャラコン
 
 	PlayerCamera m_camera;                      //カメラ
 

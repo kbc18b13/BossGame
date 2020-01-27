@@ -1,4 +1,6 @@
 #pragma once
+#include "Util/CharaConEx.h"
+#include "graphics/SkinModelRender.h"
 
 class PlayerCamera;
 class IStage;
@@ -12,9 +14,17 @@ public:
 		m_damageCool = std::max(m_damageCool - GameTime::GetDeltaTime(), 0.0f);
     }
 
-	virtual void SetPos(const CVector3& pos) = 0;
-	virtual CVector3 GetPos() const = 0;
-    virtual void AddVelocity(const CVector3& v) = 0;
+	void SetPos( const CVector3& pos ){
+		m_chara.SetPosition( pos );
+		m_model.SetPos( pos );
+	}
+	CVector3 GetPos() const{
+		return m_chara.GetPosition();
+	}
+	void AddVelocity( const CVector3& v ){
+		m_chara.AddVelocity( v );
+	}
+
 	virtual bool Damage(UINT damage, Actor* source);
 
 	UINT GetNowHP() {
@@ -57,4 +67,7 @@ protected:
 	bool m_isDeath = false; //死亡していたらtrue
 
 	IStage* m_stage = nullptr; //所属するステージ
+
+	SkinModelRender m_model;
+	CharaConEx m_chara;
 };

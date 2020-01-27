@@ -19,6 +19,13 @@ void Attack::Start( Player* p ){
 }
 
 void Attack::ChangeState( Player* p ){
+	//‰ñ”ð
+	if( g_pad->IsTrigger( enButtonB ) ){
+		sword( p ).AttackEnd();
+		ChangeAct( p, Player::Anim::Roll );
+		return;
+	}
+
 	//UŒ‚ƒ{ƒ^ƒ“‚ð‰Ÿ‚µ‚½‚çAŽŸ‚Ì‘JˆÚæ‚ÍƒRƒ“ƒ{UŒ‚
 	if( g_pad->IsTrigger( enButtonRB1 ) ){
 		pushedAtkButton = true;

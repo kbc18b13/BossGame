@@ -35,7 +35,7 @@ void Roll::Start( Player * p ){
 
 void Roll::Update( Player * p ){
 	model( p ).Play( int( Player::Anim::Roll ) );
-	chara( p ).Excecute(m_move, 2, 1,false);
+	chara( p ).Excecute(m_move, 1.5f, 2,false);
 }
 
 }

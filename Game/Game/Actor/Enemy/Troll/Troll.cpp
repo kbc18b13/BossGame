@@ -52,6 +52,8 @@ Troll::Troll(IStage* stage) : Actor(10, stage ){
     //腕コリジョン
     Bone* arm = m_model.GetModel().GetSkeleton().GetBone(20);
 	m_armCollision.Init( arm, this, CVector3( 10.0f, 20.0f, 10.0f ), false );
+	m_armCollision.SetDamage( 3 );
+	m_armCollision.SetKnockBack( CVector3( 0, 200, 300 ) );
 
 	//体コリジョン
 	m_bodyCollision.Init( this );
@@ -125,7 +127,7 @@ void Troll::ChangeActDefault(){
 
 	//近い
 	if( toP.LengthSq() < 100 * 100 ){
-		if( Util::RandomInt( 0, 0 ) == 0 ){
+		if( Util::RandomInt( 0, 2 ) == 0 ){
 			ChangeAct( ActState::Hip );
 		} else{
 			ChangeAct( ActState::Attack );
