@@ -8,6 +8,10 @@ public:
 	void Update();
 	bool Consume( float amount );
 
+	bool CanDo(){
+		return m_stamina > 0;
+	}
+
 private:
 	float m_maxStamina = 50;
 	float m_stamina;

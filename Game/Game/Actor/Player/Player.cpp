@@ -12,6 +12,8 @@
 #include "Util/DisplayText.h"
 #include "Scene/IStage.h"
 
+using namespace PlayerSpace;
+
 Player::Player(IStage* stage) : Actor( 10 , stage){
 	//アニメーションクリップ読み込み
 	{
@@ -50,19 +52,23 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 
 	//アクトステートの初期化
 	{
-		m_actArray[int( Anim::Slash4 )].reset( new PlayerAct::Attack( Anim::Slash4, Anim::SlashEnd ) );
-		m_actArray[int( Anim::Slash3 )].reset( new PlayerAct::Attack( Anim::Slash3, Anim::Slash4 ) );
-		m_actArray[int( Anim::Slash2 )].reset( new PlayerAct::Attack( Anim::Slash2, Anim::Slash3 ) );
-		m_actArray[int( Anim::Slash1 )].reset( new PlayerAct::Attack( Anim::Slash1, Anim::Slash2 ) );
+		m_actArray[int( Anim::Slash4 )].reset( new Attack( Anim::Slash4, Anim::SlashEnd ) );
+		m_actArray[int( Anim::Slash3 )].reset( new Attack( Anim::Slash3, Anim::Slash4 ) );
+		m_actArray[int( Anim::Slash2 )].reset( new Attack( Anim::Slash2, Anim::Slash3 ) );
+		m_actArray[int( Anim::Slash1 )].reset( new Attack( Anim::Slash1, Anim::Slash2 ) );
 		m_actArray[int( Anim::Idle )].reset( new Idle() );
 		m_actArray[int( Anim::Walk )].reset( new Walk() );
 		m_actArray[int( Anim::Guard )].reset( new Guard() );
 		m_actArray[int( Anim::Roll )].reset( new Roll() );
-		m_actArray[int( Anim::Damage )].reset( new PlayerAct::Damage() );
+		m_actArray[int( Anim::Damage )].reset( new PlayerSpace::Damage() );
 
-		ChangeActDefault();
+		//必要なものを注入
+		for( auto& a : m_actArray ){
+			a->Init( &m_model, &m_chara, &m_sword, &m_camera, &m_stamina );
+		}
+
+		m_nowAct = GetAct( int(Anim::Idle ));
 	}
-
 	//剣の初期化
 	m_sword.Init( m_model.GetModel().GetSkeleton().GetBone( L"Hand_L" ), this ,
 				  { 13,5,5 } , L"Assets/modelData/Sword.cmo" , true);
@@ -96,12 +102,8 @@ void Player::Update(){
 		m_camera.TurnLockOn( m_stage );
 	}
 
-	//ステート
-	m_nowAct->ChangeState( this );
-	m_nowAct->Update( this );
-
 	//モデル位置
-	m_model.SetPos( m_charaCon.GetPosition() );
+	m_model.SetPos( m_chara.GetPosition() );
 
 	//モデル回転
 	if( m_camera.IsLockOn() ){
@@ -127,7 +129,7 @@ void Player::Update(){
 	if( m_nowHP == 0){
 		m_stage->EndStage();
 		m_model.SetActive( false );
-		m_charaCon.SetActive( false );
+		m_chara.SetActive( false );
 		m_sword.SetActive( false );
 		m_shield.SetActive( false );
 		m_isDeath = true;
@@ -156,40 +158,44 @@ bool Player::Damage( UINT damage, Actor* source ){
 		}
 	}
 	if( damage != 0 ){
-		ChangeAct( Anim::Damage );
+		ChangeAct( int(Anim::Damage) );
 	}
 	return Actor::Damage( damage, source);
 }
 
-void Player::ChangeActDefault(){
-	if( g_pad->IsTrigger( enButtonB ) && ChangeAct( Anim::Roll ) ){
-		return;
-	}
-
-	if( g_pad->IsPress( enButtonLB1 ) ){
-		ChangeAct( Anim::Guard);
-		return;
-	}
-
-	if( g_pad->IsTrigger( enButtonRB1 ) && ChangeAct( Anim::Slash1 ) ){
-		return;
-	}
-
-	if( g_pad->GetLStickVec().LengthSq() > 0.01f ){
-		ChangeAct( Anim::Walk);
-		return;
-	}
-
-	ChangeAct( Anim::Idle);
+Act * Player::GetAct( int index ){
+	return m_actArray[index].get();
 }
 
-bool Player::ChangeAct( Anim act ){
-	Act* a = m_actArray[int( act )].get();
-	//スタミナが足りない場合は変更せずfalseを返す。
-	if( a->ConsumeStamina( m_stamina ) ){
-		m_nowAct = a;
-		m_nowAct->Start( this );
-		return true;
-	}
-	return false;
-}
+//void Player::ChangeActDefault(){
+//	if( g_pad->IsTrigger( enButtonB ) && ChangeAct( Anim::Roll ) ){
+//		return;
+//	}
+//
+//	if( g_pad->IsPress( enButtonLB1 ) ){
+//		ChangeAct( Anim::Guard);
+//		return;
+//	}
+//
+//	if( g_pad->IsTrigger( enButtonRB1 ) && ChangeAct( Anim::Slash1 ) ){
+//		return;
+//	}
+//
+//	if( g_pad->GetLStickVec().LengthSq() > 0.01f ){
+//		ChangeAct( Anim::Walk);
+//		return;
+//	}
+//
+//	ChangeAct( Anim::Idle);
+//}
+//
+//bool Player::ChangeAct( Anim act ){
+//	Act* a = m_actArray[int( act )].get();
+//	//スタミナが足りない場合は変更せずfalseを返す。
+//	if( a->ConsumeStamina( m_stamina ) ){
+//		m_nowAct = a;
+//		m_nowAct->Start( this );
+//		return true;
+//	}
+//	return false;
+//}

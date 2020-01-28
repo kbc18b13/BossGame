@@ -1,23 +1,22 @@
 #include "stdafx.h"
 #include "Guard.h"
 #include <vector>
-namespace PlayerAct{
+namespace PlayerSpace{
 
 Guard::Guard(){}
 
 
 Guard::~Guard(){}
 
-void Guard::ChangeState( Player * p ){
-	ChangeActDefault( p );
-}
-
-void Guard::Update( Player * p ){
-	model( p ).Play( int( Player::Anim::Guard ) , 0.2f);
-	CVector3 move = camera( p ).GetPadVec();
-	chara( p ).Excecute(move, 0.3f, 1, false);
+void Guard::Update( Actor * p ){
+	m_model->Play( int( Player::Anim::Guard ) , 0.2f);
+	CVector3 move = m_camera->GetPadVec();
+	m_chara->Excecute(move, 0.3f, 1, false);
 	if( move.LengthSq() > 0.01f ){
-		rot( p ).SetRotationVec( CVector3::AxisZ(), move );
+		m_model->SetRot( CQuaternion::CreateRotVec( CVector3::AxisZ(), move ) );
+	}
+	if( !g_pad->IsPress( enButtonLB1 ) ){
+		ActEnd( int( Player::Anim::Idle ) );
 	}
 }
 

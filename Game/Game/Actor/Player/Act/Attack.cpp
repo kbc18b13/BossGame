@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Attack.h"
 
-namespace PlayerAct{
+namespace PlayerSpace{
 
 Attack::Attack( Player::Anim animation_, Player::Anim nextAttack_ ){
 	animation = animation_;
@@ -35,7 +35,8 @@ void Attack::Update( Actor* p ){
 	if( m_timer > 0.3f ){
 		if( nextAttack != Player::Anim::SlashEnd && pushedAtkButton ){
 			
-			if( ChangeAct( p, nextAttack ) ){
+			if( m_stamina->Consume(m_needStamina) ){
+				ActEnd( int( nextAttack ) );
 				return;
 			}
 		}
@@ -43,8 +44,9 @@ void Attack::Update( Actor* p ){
 
 	//アニメーション終了後は遷移
 	if( !m_model->IsPlaying() ){
-		sword( p ).AttackEnd();
-		ChangeActDefault( p );
+		m_sword->AttackEnd();
+		ActEnd( int(Player::Anim::Idle) );
+		return;
 	}
 
 	m_model->Play( int( animation ), 0.2f );

@@ -1,16 +1,14 @@
 #pragma once
-#include "Act.h"
+#include "PlayerAct.h"
 
-namespace PlayerAct{
+namespace PlayerSpace{
 
-class Idle : public Act{
+class Idle : public PlayerAct{
 public:
 	Idle();
 	~Idle();
 
-	void ChangeState( Player* p ) override;
-
-	void Update( Player* p ) override;
+	void Update( Actor* p ) override;
 };
 
 }

@@ -10,6 +10,10 @@
 
 class SkinModelRender;
 
+namespace PlayerSpace{
+class PlayerAct;
+}
+
 class Player : public Actor
 {
 public:
@@ -41,18 +45,19 @@ public:
 	};
 
 private:
+	Act* GetAct( int index ) override;
 	/// <summary>
 	/// デフォルトのステート変更
 	/// </summary>
-	void ChangeActDefault();
+	//void ChangeActDefault();
 
 	/// <summary>
 	/// ステート変更
 	/// </summary>
 	/// <returns>変更に成功したかどうか。スタミナが足りないと失敗する。</returns>
-	bool ChangeAct( Anim act );
+	//bool ChangeAct( Anim act );
 
-	std::unique_ptr<Act> m_actArray[int(Anim::Num)];
+	std::unique_ptr<PlayerSpace::PlayerAct> m_actArray[int(Anim::Num)];
 
 	static constexpr float WALK_MAX = 200;
 	static constexpr float WALK_ACCEL_AIR = 10;
@@ -74,7 +79,5 @@ private:
 	Stamina m_stamina;//スタミナ
 
 	bool m_fallDeath = false; //落下死
-
-	friend class PlayerAct::Act;
 };
 

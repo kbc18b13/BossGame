@@ -1,28 +1,26 @@
 #include "stdafx.h"
 #include "Walk.h"
 
-namespace PlayerAct{
+namespace PlayerSpace{
 
 Walk::Walk(){}
 
 
 Walk::~Walk(){}
 
-void Walk::ChangeState( Player* p ){
-	ChangeActDefault( p );
-}
-
-void Walk::Update( Player* p ){
-	model( p ).Play( int( Player::Anim::Walk ), 0.2f );
+void Walk::Update( Actor* p ){
+	m_model->Play( int( Player::Anim::Walk ), 0.2f );
 	//ƒLƒƒƒ‰ƒRƒ“‚Ì‘€ì
-	CVector3 move = camera( p ).GetPadVec();
-	float speed = ( g_pad->IsPress( enButtonX ) && stamina( p ).Consume( GameTime::GetDeltaTime() * 2 )) ? 1.5f : 1;
+	CVector3 move = m_camera->GetPadVec();
+	float speed = ( g_pad->IsPress( enButtonX ) && m_stamina->Consume( GameTime::GetDeltaTime() * 2 )) ? 1.5f : 1;
 
-	chara( p ).Excecute( move,speed, 1 /(speed*2) ,g_pad->IsTrigger( enButtonA ) );
+	m_chara->Excecute( move,speed, 1 /(speed*2) ,g_pad->IsTrigger( enButtonA ) );
 
 	//ƒ‚ƒfƒ‹‚ÌŒü‚«
 	if( move.LengthSq() > 0.01f){
-		rot(p).SetRotationVec( CVector3::AxisZ(), move);
+		m_model->SetRot( CQuaternion::CreateRotVec( CVector3::AxisZ(), move ) );
+	} else{
+		ActEnd( int(Player::Anim::Idle) );
 	}
 }
 

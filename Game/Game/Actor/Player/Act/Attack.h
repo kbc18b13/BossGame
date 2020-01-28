@@ -1,7 +1,7 @@
 #pragma once
-#include "Act.h"
+#include "PlayerAct.h"
 
-namespace PlayerAct{
+namespace PlayerSpace{
 
 class Attack : public PlayerAct{
 public:
@@ -11,8 +11,6 @@ public:
 	void SubStart( Actor* p ) override;
 
 	void Update( Actor* p ) override;
-
-	void End( Actor* p ) override;
 
 private:
 	Player::Anim animation;

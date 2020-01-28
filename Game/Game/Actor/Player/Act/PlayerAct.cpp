@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include "Act.h"
+#include "PlayerAct.h"
 
-namespace PlayerAct{
+namespace PlayerSpace{
 
 PlayerAct::PlayerAct(){}
 

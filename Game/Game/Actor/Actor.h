@@ -68,9 +68,10 @@ protected:
 		m_nowAct = GetAct( index );
 		m_nowAct->Start( this );
 	}
+
 	virtual Act* GetAct( int index ) = 0;
 
-	Act* m_nowAct; //現在のステート
+	Act* m_nowAct = nullptr; //現在のステート
 
 	UINT m_nowHP; //ヒットポイント
 	UINT m_maxHP; //最大ヒットポイント

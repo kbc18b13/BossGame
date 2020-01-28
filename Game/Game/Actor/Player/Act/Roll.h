@@ -1,18 +1,16 @@
 #pragma once
-#include "Act.h"
+#include "PlayerAct.h"
 
-namespace PlayerAct{
+namespace PlayerSpace{
 
-class Roll : public Act{
+class Roll : public PlayerAct{
 public:
 	Roll();
 	~Roll();
 
-	void ChangeState( Player* p ) override;
+	void SubStart( Actor* p ) override;
 
-	void Start( Player* p ) override;
-
-	void Update( Player* p ) override;
+	void Update( Actor* p ) override;
 
 private:
 	CVector3 m_move;

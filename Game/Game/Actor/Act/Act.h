@@ -1,6 +1,6 @@
 #pragma once
-#include "Actor/Actor.h"
 
+class Actor;
 class CharaConEx;
 
 class Act{

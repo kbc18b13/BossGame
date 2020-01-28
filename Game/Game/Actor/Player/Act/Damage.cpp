@@ -1,25 +1,22 @@
 #include "stdafx.h"
 #include "Damage.h"
 
-namespace PlayerAct{
+namespace PlayerSpace{
 
 Damage::Damage(){}
 
 Damage::~Damage(){}
 
-void Damage::Start( Player * p ){
-	sword( p ).AttackEnd();
-	model( p ).Play( int(Player::Anim::Damage) , 0.2f);
+void Damage::SubStart( Actor* p ){
+	m_sword->AttackEnd();
+	m_model->Play( int(Player::Anim::Damage) , 0.2f);
 }
 
-void Damage::ChangeState( Player * p ){
-	if( !model( p ).IsPlaying() ){
-		ChangeAct( p, Player::Anim::Idle );
+void Damage::Update( Actor* p ){
+	m_chara->Excecute();
+	if( !m_model->IsPlaying() ){
+		ActEnd( int( Player::Anim::Idle ) );
 	}
-}
-
-void Damage::Update( Player * p ){
-	chara( p ).Excecute();
 }
 
 }

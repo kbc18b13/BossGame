@@ -2,7 +2,7 @@
 #include "..\Player.h"
 #include "Actor/Act/Act.h"
 
-namespace PlayerAct{
+namespace PlayerSpace{
 
 class PlayerAct : public Act{
 public:
@@ -13,14 +13,18 @@ public:
 	void Update( Actor* a ) = 0;
 	void End( Actor* a ) override;
 
-	bool ConsumeStamina(Stamina& stamina){
-		return stamina.Consume(m_needStamina);
+	void Init(SkinModelRender* model, CharaConEx* chara, ModelArmWeapon* sword,
+			   PlayerCamera* camera, Stamina* stamina ){
+		SetSkinModelRender( model );
+		SetCharaCon( chara );
+		m_sword = sword; m_camera = camera; m_stamina = stamina;
 	}
 
-protected:
+public:
 	UINT m_needStamina = 0;
 	ModelArmWeapon* m_sword;
 	PlayerCamera* m_camera;
+	Stamina* m_stamina;
 };
 
 }
