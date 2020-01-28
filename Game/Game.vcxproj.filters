@@ -51,6 +51,7 @@
     <ClCompile Include="Game\Weapon\ModelArmWeapon.cpp" />
     <ClCompile Include="Game\Weapon\ArmWeapon.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Yowai\Yowai.cpp" />
+    <ClCompile Include="Game\Actor\Act\Act.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -95,6 +96,7 @@
     <ClInclude Include="Game\Weapon\ModelArmWeapon.h" />
     <ClInclude Include="Game\Weapon\ArmWeapon.h" />
     <ClInclude Include="Game\Actor\Enemy\Yowai\Yowai.h" />
+    <ClInclude Include="Game\Actor\Act\Act.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">

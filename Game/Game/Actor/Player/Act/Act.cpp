@@ -3,10 +3,12 @@
 
 namespace PlayerAct{
 
-Act::Act(){}
+PlayerAct::PlayerAct(){}
 
-Act::~Act(){}
+PlayerAct::~PlayerAct(){}
 
-void Act::Start( Player*){}
+void PlayerAct::SubStart( Actor*){}
+
+void PlayerAct::End( Actor* ){}
 
 }

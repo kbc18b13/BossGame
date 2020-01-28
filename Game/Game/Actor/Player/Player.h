@@ -8,12 +8,7 @@
 #include "Stamina.h"
 #include "graphics/FontRender.h"
 
-class Sword;
 class SkinModelRender;
-
-namespace PlayerAct{
-class Act;
-}
 
 class Player : public Actor
 {
@@ -57,8 +52,7 @@ private:
 	/// <returns>変更に成功したかどうか。スタミナが足りないと失敗する。</returns>
 	bool ChangeAct( Anim act );
 
-	std::unique_ptr<PlayerAct::Act> m_actArray[int(Anim::Num)];
-	PlayerAct::Act* m_nowAct;
+	std::unique_ptr<Act> m_actArray[int(Anim::Num)];
 
 	static constexpr float WALK_MAX = 200;
 	static constexpr float WALK_ACCEL_AIR = 10;

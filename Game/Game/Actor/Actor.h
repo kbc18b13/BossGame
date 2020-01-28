@@ -1,6 +1,7 @@
 #pragma once
 #include "Util/CharaConEx.h"
 #include "graphics/SkinModelRender.h"
+#include "Act/Act.h"
 
 class PlayerCamera;
 class IStage;
@@ -9,9 +10,12 @@ class Actor : public IGameObject{
 public:
 	Actor(UINT maxHP, IStage* stage);
 	virtual ~Actor();
-    
+
     void Update() override{
-		m_damageCool = std::max(m_damageCool - GameTime::GetDeltaTime(), 0.0f);
+		m_nowAct->Update(this);
+		if( m_nowAct->isActEnd() ){
+			ChangeAct( m_nowAct->GetNextAct() );
+		}
     }
 
 	void SetPos( const CVector3& pos ){
@@ -59,7 +63,15 @@ public:
 	}
 
 protected:
-	float m_damageCool = 0.0f; //無敵時間
+	void ChangeAct( int index ){
+		m_nowAct->End( this );
+		m_nowAct = GetAct( index );
+		m_nowAct->Start( this );
+	}
+	virtual Act* GetAct( int index ) = 0;
+
+	Act* m_nowAct; //現在のステート
+
 	UINT m_nowHP; //ヒットポイント
 	UINT m_maxHP; //最大ヒットポイント
 	PlayerCamera* lockCamera = nullptr;

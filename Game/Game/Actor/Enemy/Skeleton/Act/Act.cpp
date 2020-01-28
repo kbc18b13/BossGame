@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Act.h"
+#include "..\..\..\Player\Act\Act.h"
 
 namespace SkeletonAct{
 

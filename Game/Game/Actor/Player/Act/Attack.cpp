@@ -12,17 +12,17 @@ Attack::Attack( Player::Anim animation_, Player::Anim nextAttack_ ){
 
 Attack::~Attack(){}
 
-void Attack::Start( Player* p ){
-	sword( p ).AttackStart();
+void Attack::SubStart( Actor* p ){
+	m_sword->AttackStart();
 	pushedAtkButton = false;
 	m_timer = 0;
 }
 
-void Attack::ChangeState( Player* p ){
+void Attack::Update( Actor* p ){
 	//回避
 	if( g_pad->IsTrigger( enButtonB ) ){
-		sword( p ).AttackEnd();
-		ChangeAct( p, Player::Anim::Roll );
+		m_sword->AttackEnd();
+		ActEnd( int(Player::Anim::Roll) );
 		return;
 	}
 
@@ -34,6 +34,7 @@ void Attack::ChangeState( Player* p ){
 	//コンボ可能な時間
 	if( m_timer > 0.3f ){
 		if( nextAttack != Player::Anim::SlashEnd && pushedAtkButton ){
+			
 			if( ChangeAct( p, nextAttack ) ){
 				return;
 			}
@@ -41,15 +42,13 @@ void Attack::ChangeState( Player* p ){
 	}
 
 	//アニメーション終了後は遷移
-	if( !model( p ).IsPlaying() ){
+	if( !m_model->IsPlaying() ){
 		sword( p ).AttackEnd();
 		ChangeActDefault( p );
 	}
-}
 
-void Attack::Update( Player* p ){
-	model( p ).Play( int( animation ), 0.2f );
-	chara( p ).Excecute();
+	m_model->Play( int( animation ), 0.2f );
+	m_chara->Excecute();
 	m_timer += GameTime::GetDeltaTime();
 }
 

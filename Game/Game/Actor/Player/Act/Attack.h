@@ -3,21 +3,16 @@
 
 namespace PlayerAct{
 
-class Attack : public Act{
+class Attack : public PlayerAct{
 public:
 	Attack( Player::Anim animation_, Player::Anim nextAttack_);
 	~Attack();
 
-	void Start( Player* p ) override;
+	void SubStart( Actor* p ) override;
 
-	void ChangeState( Player* p ) override;
+	void Update( Actor* p ) override;
 
-	void Update( Player* p ) override;
-
-	/*void Init( Player::Anim animation_, Act* nextAttack_ = nullptr ){
-		animation = animation_;
-		nextAttack = nextAttack_;
-	}*/
+	void End( Actor* p ) override;
 
 private:
 	Player::Anim animation;

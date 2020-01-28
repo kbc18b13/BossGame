@@ -12,8 +12,6 @@
 #include "Util/DisplayText.h"
 #include "Scene/IStage.h"
 
-using namespace PlayerAct;
-
 Player::Player(IStage* stage) : Actor( 10 , stage){
 	//アニメーションクリップ読み込み
 	{
@@ -48,7 +46,7 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 		desc.userIndex = enCollisionAttr_Player;
 		desc.userPointer = this;
 	}
-	m_charaCon.Init( desc );//キャラコンの初期化
+	m_chara.Init( desc );//キャラコンの初期化
 
 	//アクトステートの初期化
 	{

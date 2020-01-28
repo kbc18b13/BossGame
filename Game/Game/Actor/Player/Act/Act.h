@@ -1,17 +1,17 @@
 #pragma once
-#include <functional>
 #include "..\Player.h"
+#include "Actor/Act/Act.h"
 
 namespace PlayerAct{
 
-class Act{
+class PlayerAct : public Act{
 public:
-	Act();
-	virtual ~Act();
+	PlayerAct();
+	~PlayerAct();
 
-	virtual void Start( Player*);
-	virtual void ChangeState(Player* p) = 0;
-	virtual void Update(Player* p) = 0;
+	void SubStart( Actor* a ) override;
+	void Update( Actor* a ) = 0;
+	void End( Actor* a ) override;
 
 	bool ConsumeStamina(Stamina& stamina){
 		return stamina.Consume(m_needStamina);
@@ -19,32 +19,8 @@ public:
 
 protected:
 	UINT m_needStamina = 0;
-
-	CQuaternion& rot( Player* p ){
-		return p->rot;
-	}
-
-	PlayerCamera& camera( Player* p ){
-		return p->m_camera;
-	}
-	SkinModelRender& model( Player* p ){
-		return p->m_model;
-	}
-	CharaConEx& chara( Player* p ){
-		return p->m_charaCon;
-	}
-	ModelArmWeapon& sword( Player* p ){
-		return p->m_sword;
-	}
-	Stamina& stamina( Player* p ){
-		return p->m_stamina;
-	}
-	void ChangeActDefault( Player* p ){
-		p->ChangeActDefault();
-	}
-	bool ChangeAct(Player* p , Player::Anim a){
-		return p->ChangeAct( a );
-	}
+	ModelArmWeapon* m_sword;
+	PlayerCamera* m_camera;
 };
 
 }
