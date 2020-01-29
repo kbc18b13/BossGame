@@ -5,8 +5,8 @@
 #include "Weapon/ModelArmWeapon.h"
 #include "Util/MiniBarGauge.h"
 
-namespace SkeletonAct{
-class Act;
+namespace EnemySpace{
+class EnemyAct;
 }
 
 class SkeletonEnemy : public Actor{
@@ -30,6 +30,7 @@ public:
 		Num,
 	};
 private:
+	Act* GetAct( int index ) override;
 
 	//アニメーション
 	AnimationClip m_animClip [int( Anim::Num )];
@@ -40,11 +41,6 @@ private:
 	MiniBarGauge m_hpBar;
 
 	//ステート
-	std::unique_ptr<SkeletonAct::Act> stateArray[int( Anim::Num )];
-	SkeletonAct::Act* nowAct = nullptr;
-	//ステート変更関数
-	void ChangeAct( Anim state );
-
-	friend SkeletonAct::Act;
+	std::unique_ptr<EnemySpace::EnemyAct> m_stateArray[int( Anim::Num )];
 };
 

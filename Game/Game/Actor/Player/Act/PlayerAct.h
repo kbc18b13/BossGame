@@ -9,10 +9,6 @@ public:
 	PlayerAct();
 	~PlayerAct();
 
-	void SubStart( Actor* a ) override;
-	void Update( Actor* a ) = 0;
-	void End( Actor* a ) override;
-
 	void Init(SkinModelRender* model, CharaConEx* chara, ModelArmWeapon* sword,
 			   PlayerCamera* camera, Stamina* stamina ){
 		SetSkinModelRender( model );

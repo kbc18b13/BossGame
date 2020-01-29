@@ -4,17 +4,17 @@
 #include "Scene/Stage1.h"
 #include "Actor/Player/Player.h"
 
-#include "Act/ActAttack.h"
-#include "Act/ActIdle.h"
-#include "Act/ActStep.h"
-#include "Act/ActChase.h"
-#include "Act/ActTackle.h"
-#include "Act/ActHip.h"
+#include "Act/TrollAttack.h"
+#include "Act/TrollIdle.h"
+#include "Act/TrollStep.h"
+#include "Actor/Enemy/Act/Chase.h"
+#include "Act/TrollTackle.h"
+#include "Act/TrollHip.h"
 
 #include "Util/DisplayText.h"
 #include "graphics/RenderObjectManager.h"
 
-using namespace TrollAct;
+using namespace EnemySpace;
 
 Troll::Troll(IStage* stage) : Actor(10, stage ){
     //モデル
@@ -47,7 +47,7 @@ Troll::Troll(IStage* stage) : Actor(10, stage ){
 		desc.userIndex = enCollisionAttr_Enemy;
 		desc.userPointer = this;
 	}
-	m_CharaCon.Init(desc); 
+	m_chara.Init(desc); 
 
     //腕コリジョン
     Bone* arm = m_model.GetModel().GetSkeleton().GetBone(20);
@@ -70,14 +70,19 @@ Troll::~Troll() {
 }
 
 void Troll::Start() {
-	m_actionArray[int(ActState::Attack)].reset(new ActAttack(m_armCollision));
-	m_actionArray[int(ActState::Chase)].reset(new ActChase());
-	m_actionArray[int(ActState::Wait)].reset(new ActIdle());
-	m_actionArray[int(ActState::Step)].reset(new ActStep());
-    m_actionArray[int(ActState::Tackle)].reset(new ActTackle(m_bodyCollision));
-    m_actionArray[int(ActState::Hip)].reset(new ActHip(m_bodyCollision));
+	m_actionArray[int(ActState::Attack)].reset(new TrollAttack(m_armCollision));
+	m_actionArray[int(ActState::Chase)].reset(new Chase(int(AnimState::Walk), int(ActState::Wait)));
+	m_actionArray[int(ActState::Wait)].reset(new TrollIdle());
+	m_actionArray[int(ActState::Step)].reset(new TrollStep());
+    m_actionArray[int(ActState::Tackle)].reset(new TrollTackle(m_bodyCollision));
+    m_actionArray[int(ActState::Hip)].reset(new TrollHip(m_bodyCollision));
 
-	ChangeAct( ActState::Wait );
+	//初期化
+	for( auto& a : m_actionArray ){
+		a->Init( &m_model, &m_chara, m_stage->GetPlayer() );
+	}
+
+	m_nowAct = GetAct( int( ActState::Wait ) );
 }
 
 void Troll::Update() {
@@ -86,8 +91,7 @@ void Troll::Update() {
 		return;
 	}
 
-	//現在のステートのアクションを実行
-    m_activeAction->Continue(this);
+	m_model.SetPos( GetPos() );
 
 	//HPバー更新
 	m_hpBar.SetPercent( Actor::GetHPPer() );
@@ -98,7 +102,7 @@ void Troll::Update() {
 		m_model.SetActive( false );
 		m_armCollision.SetActive( false );
 		m_bodyCollision.SetActive( false );
-		m_CharaCon.SetActive( false );
+		m_chara.SetActive( false );
 		m_hpBar.SetActive( false );
 		m_nameFont.SetActive( false );
 		m_isDeath = true;
@@ -112,41 +116,40 @@ void Troll::Update() {
     Actor::Update();
 }
 
-void Troll::SetPos(const CVector3 & pos) {
-	m_CharaCon.SetPosition(pos);
-	m_model.SetPos(pos);
+Act * Troll::GetAct( int index ){
+	return m_actionArray[index].get();
 }
 
-void Troll::ChangeActDefault(){
-	if( Util::RandomInt( 0, 4 ) == 0 ){
-		ChangeAct( ActState::Step );
-		return;
-	}
-
-	CVector3 toP = m_stage->GetPlayer()->GetPos() - m_CharaCon.GetPosition();
-
-	//近い
-	if( toP.LengthSq() < 100 * 100 ){
-		if( Util::RandomInt( 0, 2 ) == 0 ){
-			ChangeAct( ActState::Hip );
-		} else{
-			ChangeAct( ActState::Attack );
-		}
-
-		//遠い
-	} else{
-		if( Util::RandomInt( 0, 2 ) == 0 ){
-			ChangeAct( ActState::Tackle );
-		} else{
-			ChangeAct( ActState::Chase );
-		}
-	}
-}
-
-void Troll::ChangeAct( ActState act ){
-	TrollAct::Act* a = m_actionArray[int( act )].get();
-	if( a != m_activeAction ){
-		a->Start( this );
-		m_activeAction = a;
-	}
-}
+//void Troll::ChangeActDefault(){
+//	if( Util::RandomInt( 0, 4 ) == 0 ){
+//		ChangeAct( ActState::Step );
+//		return;
+//	}
+//
+//	CVector3 toP = m_stage->GetPlayer()->GetPos() - m_CharaCon.GetPosition();
+//
+//	//近い
+//	if( toP.LengthSq() < 100 * 100 ){
+//		if( Util::RandomInt( 0, 2 ) == 0 ){
+//			ChangeAct( ActState::Hip );
+//		} else{
+//			ChangeAct( ActState::Attack );
+//		}
+//
+//		//遠い
+//	} else{
+//		if( Util::RandomInt( 0, 2 ) == 0 ){
+//			ChangeAct( ActState::Tackle );
+//		} else{
+//			ChangeAct( ActState::Chase );
+//		}
+//	}
+//}
+//
+//void Troll::ChangeAct( ActState act ){
+//	TrollAct::Act* a = m_actionArray[int( act )].get();
+//	if( a != m_activeAction ){
+//		a->Start( this );
+//		m_activeAction = a;
+//	}
+//}

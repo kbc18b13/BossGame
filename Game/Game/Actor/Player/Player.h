@@ -65,8 +65,6 @@ private:
 	static constexpr float WALK_BLAKE = 20;
 	static constexpr float JUMP_POWER = 350;
 
-	CQuaternion rot;//回転
-
 	AnimationClip m_animClip[int(Anim::Num)];        //アニメーションクリップ
 
 	ModelArmWeapon m_sword;

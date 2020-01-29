@@ -6,8 +6,8 @@
 #include "graphics/FontRender.h"
 #include "Weapon/ArmWeapon.h"
 
-namespace TrollAct{
-class Act;
+namespace EnemySpace{
+class EnemyAct;
 }
 
 class Troll : public Actor{
@@ -42,21 +42,12 @@ public:
 	};
 
 private:
-	/// <summary>
-	/// デフォルトのステート変更
-	/// </summary>
-	void ChangeActDefault();
-
-	/// <summary>
-	/// 指定式ステート変更
-	/// </summary>
-	/// <param name="act"></param>
-	void ChangeAct( ActState  act);
+	Act* GetAct( int index ) override;
 
 	//現在のステート
-	TrollAct::Act* m_activeAction;
+	EnemySpace::EnemyAct* m_activeAction;
 	//ステート配列
-	std::unique_ptr<TrollAct::Act> m_actionArray[int( ActState::Num )];
+	std::unique_ptr<EnemySpace::EnemyAct> m_actionArray[int( ActState::Num )];
 
 	AnimationClip m_animClip[int( AnimState::Num )];//アニメーションクリップ
 
@@ -65,6 +56,4 @@ private:
 
 	BarGauge m_hpBar; //HPバー
 	FontRender m_nameFont;
-
-	friend class TrollAct::Act;
 };

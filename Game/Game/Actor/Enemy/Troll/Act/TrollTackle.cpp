@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "ActTackle.h"
+#include "TrollTackle.h"
 #include "graphics/SkinModelRender.h"
 #include "Actor/Player/Player.h"
 #include "Scene/Stage1.h"
@@ -7,21 +7,21 @@
 using AnimState = Troll::AnimState;
 using ActState = Troll::ActState;
 
-namespace TrollAct{
+namespace EnemySpace{
 
-ActTackle::ActTackle( TrollBodyCollision& body ) : bodyCol( body ){
+TrollTackle::TrollTackle( TrollBodyCollision& body ) : bodyCol( body ){
 
 }
 
-void ActTackle::Start( Troll* t ){
+void TrollTackle::SubStart( Actor* t ){
 	bodyCol.StartAttack();
-	playerPos = player( t )->GetPos();
+	playerPos = m_target->GetPos();
 	m_timer = 8.0f;
 }
 
-void ActTackle::Continue( Troll* t ){
+void TrollTackle::Update( Actor* t ){
 	//プレイヤーへ向かって走らせる
-	CVector3 move = playerPos - chara( t ).GetPosition();
+	CVector3 move = playerPos - m_chara->GetPosition();
 
 	move.y = 0;
 	float moveLength = move.Length();
@@ -33,14 +33,14 @@ void ActTackle::Continue( Troll* t ){
 	move /= moveLength;
 	move *= 5;
 
-	model( t ).Play( int( AnimState::Tackle ), 0.2f );
-	model( t ).SetPos( chara( t ).Excecute( move, 4, 0.5f, false ) );
-	model( t ).SetRot( Util::LookRotXZ( move ) );
+	m_model->Play( int( AnimState::Tackle ), 0.2f );
+	m_model->SetPos( m_chara->Excecute( move, 4, 0.5f, false ) );
+	m_model->SetRot( Util::LookRotXZ( move ) );
 
 	//タイマーが0を下回ったら終了
 	if( m_timer <= 0 ){
 		bodyCol.EndAttack();
-		ChangeAct( t, ActState::Wait );
+		ActEnd( int( ActState::Wait ));
 	} else{
 		m_timer -= GameTime::GetDeltaTime();
 	}

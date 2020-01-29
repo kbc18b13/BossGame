@@ -108,6 +108,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game\Actor\Act\Act.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Act\Chase.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Act\EnemyAct.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\SkeAttack.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\SkeIdle.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Skeleton\SkeletonEnemy.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll\Act\TrollAttack.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll\Act\TrollHip.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll\Act\TrollIdle.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll\Act\TrollStep.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll\Act\TrollTackle.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll\Troll.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Troll\TrollBodyCollision.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\Damage.cpp" />
     <ClCompile Include="Game\Util\Fade.cpp" />
     <ClCompile Include="Game\Util\DisplayText.cpp" />
@@ -143,6 +155,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Act\Act.h" />
+    <ClInclude Include="Game\Actor\Enemy\Act\Chase.h" />
+    <ClInclude Include="Game\Actor\Enemy\Act\EnemyAct.h" />
+    <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\SkeAttack.h" />
+    <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\SkeIdle.h" />
+    <ClInclude Include="Game\Actor\Enemy\Skeleton\SkeletonEnemy.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\Act\TrollAttack.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\Act\TrollHip.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\Act\TrollIdle.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\Act\TrollStep.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\Act\TrollTackle.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\Troll.h" />
+    <ClInclude Include="Game\Actor\Enemy\Troll\TrollBodyCollision.h" />
     <ClInclude Include="Game\Actor\Player\Act\Damage.h" />
     <ClInclude Include="Game\Util\Fade.h" />
     <ClInclude Include="Game\Util\DisplayText.h" />

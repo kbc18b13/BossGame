@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "EnemyAct.h"
 
-namespace EnemyAct{
+namespace EnemySpace{
 
 EnemyAct::EnemyAct(){}
 

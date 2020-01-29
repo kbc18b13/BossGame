@@ -1,9 +1,13 @@
 #include "stdafx.h"
 #include "SkeletonEnemy.h"
-#include "Act/Attack.h"
-#include "Act/Chase.h"
-#include "Act/Idle.h"
-using namespace SkeletonAct;
+
+#include "Scene/IStage.h"
+#include "Actor/Player/Player.h"
+
+#include "Act/SkeAttack.h"
+#include "Actor/Enemy/Act/Chase.h"
+#include "Act/SkeIdle.h"
+using namespace EnemySpace;
 
 SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 5, stage ){
 	//キャラコン
@@ -40,17 +44,23 @@ SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 5, stage ){
 
 	//ステートの初期化
 	{
-		stateArray[int( Anim::Idle )].reset( new Idle() );
-		stateArray[int( Anim::Chase )].reset( new Chase() );
-		stateArray[int( Anim::Attack1 )].reset( new Attack(Anim::Attack1, Anim::Attack2 ) );
-		stateArray[int( Anim::Attack2 )].reset( new Attack(Anim::Attack2, Anim::Attack1 ) );
-		ChangeAct( Anim::Idle );
+		m_stateArray[int( Anim::Idle )].reset( new SkeIdle() );
+		m_stateArray[int( Anim::Chase )].reset( new Chase( int( Anim::Chase ), int( Anim::Idle ) ) );
+		m_stateArray[int( Anim::Attack1 )].reset( new SkeAttack( m_sword, int( Anim::Attack1 ) ) );
+		m_stateArray[int( Anim::Attack2 )].reset( new SkeAttack( m_sword, int( Anim::Attack2 ) ) );
+
+		//初期化
+		for( auto& a : m_stateArray ){
+			a->Init( &m_model, &m_chara, m_stage->GetPlayer() );
+		}
+
+		m_nowAct = GetAct( int( Anim::Idle ) );
 	}
 
 	//剣の初期化
 	{
 		Bone* b = m_model.GetModel().GetSkeleton().GetBone( 4 );
-		m_sword.Init( b, this, { 13,5,5 }, L"Assets/modelData/SkeSword.cmo" , false);
+		m_sword.Init( b, this, { 13,5,5 }, L"Assets/modelData/SkeSword.cmo", false );
 		m_sword.SetOffset( { 12, 0, 0 } );
 	}
 
@@ -63,9 +73,6 @@ void SkeletonEnemy::Update(){
 	if( m_isDeath ){
 		return;
 	}
-
-	//ステートのアップデート
-	nowAct->Update(this);
 
 	//位置をモデルに適用
 	m_model.SetPos( GetPos() );
@@ -86,10 +93,6 @@ void SkeletonEnemy::Update(){
 	m_sword.Update();
 }
 
-void SkeletonEnemy::ChangeAct( Anim state ){
-	Act* a = stateArray[int( state )].get();
-	if( a != nowAct ){
-		nowAct = a;
-		a->Start(this);
-	}
+Act * SkeletonEnemy::GetAct( int index ){
+	return m_stateArray[index].get();
 }

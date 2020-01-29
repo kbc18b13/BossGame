@@ -105,11 +105,10 @@ void Player::Update(){
 	//モデル位置
 	m_model.SetPos( m_chara.GetPosition() );
 
-	//モデル回転
+	//ロックオン時の回転
 	if( m_camera.IsLockOn() ){
-		rot = Util::LookRotXZ( m_camera.GetLockOnPos() - GetPos() );
+		m_model.SetRot(Util::LookRotXZ( m_camera.GetLockOnPos() - GetPos() ));
 	}
-	m_model.SetRot( rot );
 
 	//カメラの更新
 	m_camera.Update( GetPos() + CVector3::Up() * 40 );
@@ -145,7 +144,7 @@ void Player::Update(){
 bool Player::Damage( UINT damage, Actor* source ){
 	if( m_nowAct == m_actArray[int( Anim::Guard )].get() ){
 		CVector3 v( 0, 0, 1 );
-		rot.Multiply( v );
+		m_model.GetRot().Multiply( v );
 
 		CVector3 toSource = source->GetPos() - GetPos();
 		toSource.y = 0;
