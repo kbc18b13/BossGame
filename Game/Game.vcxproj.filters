@@ -50,6 +50,9 @@
     <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\SkeIdle.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Skeleton\SkeletonEnemy.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\Walker.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Yowai\Act\YowaAttack.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Yowai\Act\YowaIdle.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Act\Hit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -92,6 +95,9 @@
     <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\SkeIdle.h" />
     <ClInclude Include="Game\Actor\Enemy\Skeleton\SkeletonEnemy.h" />
     <ClInclude Include="Game\Actor\Player\Act\Walker.h" />
+    <ClInclude Include="Game\Actor\Enemy\Yowai\Act\YowaIdle.h" />
+    <ClInclude Include="Game\Actor\Enemy\Yowai\Act\YowaAttack.h" />
+    <ClInclude Include="Game\Actor\Enemy\Act\Hit.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">

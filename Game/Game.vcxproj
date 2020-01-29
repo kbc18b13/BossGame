@@ -151,6 +151,9 @@
     <ClCompile Include="Game\Weapon\Weapon.cpp" />
     <ClCompile Include="Game\Weapon\ModelArmWeapon.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Yowai\Yowai.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Yowai\Act\YowaAttack.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Act\Hit.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Yowai\Act\YowaIdle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Act\Act.h" />
@@ -193,6 +196,9 @@
     <ClInclude Include="Game\Weapon\Weapon.h" />
     <ClInclude Include="Game\Weapon\ModelArmWeapon.h" />
     <ClInclude Include="Game\Actor\Enemy\Yowai\Yowai.h" />
+    <ClInclude Include="Game\Actor\Enemy\Yowai\Act\YowaAttack.h" />
+    <ClInclude Include="Game\Actor\Enemy\Act\Hit.h" />
+    <ClInclude Include="Game\Actor\Enemy\Yowai\Act\YowaIdle.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Carriage.fbx" />

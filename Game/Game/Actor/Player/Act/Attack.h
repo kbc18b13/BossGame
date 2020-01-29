@@ -12,6 +12,8 @@ public:
 
 	void Update( Actor* p ) override;
 
+	void End( Actor * p ) override;
+
 private:
 	int m_animation;
 	const int m_maxCombo;

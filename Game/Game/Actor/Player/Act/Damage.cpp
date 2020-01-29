@@ -8,7 +8,6 @@ Damage::Damage(){}
 Damage::~Damage(){}
 
 void Damage::SubStart( Actor* p ){
-	m_sword->AttackEnd();
 	m_model->Play( int(Player::Anim::Damage) , 0.2f);
 }
 

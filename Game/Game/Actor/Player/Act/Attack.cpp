@@ -22,7 +22,6 @@ void Attack::SubStart( Actor* p ){
 void Attack::Update( Actor* p ){
 	//回避
 	if( g_pad->IsTrigger( enButtonB ) ){
-		m_sword->AttackEnd();
 		ActEnd( int(Player::Act::Roll) );
 		return;
 	}
@@ -55,12 +54,15 @@ void Attack::Update( Actor* p ){
 
 	//アニメーション終了後は遷移
 	if( !m_model->IsPlaying() ){
-		m_sword->AttackEnd();
 		ActEnd( int(Player::Act::Walker) );
 		return;
 	}
 	m_chara->Excecute();
 	m_timer += GameTime::GetDeltaTime();
+}
+
+void Attack::End( Actor * p ){
+	m_sword->AttackEnd();
 }
 
 }
