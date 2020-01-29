@@ -5,7 +5,7 @@ namespace PlayerSpace{
 
 class Attack : public PlayerAct{
 public:
-	Attack( Player::Anim animation_, Player::Anim nextAttack_);
+	Attack( Player::Anim animation1, int combo);
 	~Attack();
 
 	void SubStart( Actor* p ) override;
@@ -13,9 +13,10 @@ public:
 	void Update( Actor* p ) override;
 
 private:
-	Player::Anim animation;
-	Player::Anim nextAttack;
-	bool pushedAtkButton = false;
+	int m_animation;
+	const int m_maxCombo;
+	bool m_pushedAtkButton = false;
+	int m_nowCombo = 1;
 	float m_timer = 0;
 };
 

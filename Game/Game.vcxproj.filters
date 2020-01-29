@@ -21,8 +21,6 @@
     <ClCompile Include="Game\Scene\IStage.cpp" />
     <ClCompile Include="Game\Actor\Player\Shield.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\Guard.cpp" />
-    <ClCompile Include="Game\Actor\Player\Act\Idle.cpp" />
-    <ClCompile Include="Game\Actor\Player\Act\Walk.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\Attack.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\Roll.cpp" />
     <ClCompile Include="Game\Actor\Player\Stamina.cpp" />
@@ -51,6 +49,7 @@
     <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\SkeAttack.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\SkeIdle.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Skeleton\SkeletonEnemy.cpp" />
+    <ClCompile Include="Game\Actor\Player\Act\Walker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -64,8 +63,6 @@
     <ClInclude Include="Game\Scene\IStage.h" />
     <ClInclude Include="Game\Actor\Player\Shield.h" />
     <ClInclude Include="Game\Actor\Player\Act\Guard.h" />
-    <ClInclude Include="Game\Actor\Player\Act\Idle.h" />
-    <ClInclude Include="Game\Actor\Player\Act\Walk.h" />
     <ClInclude Include="Game\Actor\Player\Act\Attack.h" />
     <ClInclude Include="Game\Actor\Player\Act\Roll.h" />
     <ClInclude Include="Game\Actor\Player\Stamina.h" />
@@ -94,6 +91,7 @@
     <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\SkeAttack.h" />
     <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\SkeIdle.h" />
     <ClInclude Include="Game\Actor\Enemy\Skeleton\SkeletonEnemy.h" />
+    <ClInclude Include="Game\Actor\Player\Act\Walker.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">

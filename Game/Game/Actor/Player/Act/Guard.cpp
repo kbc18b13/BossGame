@@ -16,7 +16,7 @@ void Guard::Update( Actor * p ){
 		m_model->SetRot( CQuaternion::CreateRotVec( CVector3::AxisZ(), move ) );
 	}
 	if( !g_pad->IsPress( enButtonLB1 ) ){
-		ActEnd( int( Player::Anim::Idle ) );
+		ActEnd( int( Player::Act::Walker ) );
 	}
 }
 

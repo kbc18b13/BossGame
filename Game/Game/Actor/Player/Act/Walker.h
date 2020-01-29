@@ -3,13 +3,12 @@
 
 namespace PlayerSpace{
 
-class Walk : public PlayerAct{
+class Walker : public PlayerAct{
 public:
-	Walk();
-	~Walk();
+	Walker();
+	~Walker();
 
 	void Update( Actor* p ) override;
-
 };
 
 }

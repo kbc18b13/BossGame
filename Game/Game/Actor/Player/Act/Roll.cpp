@@ -11,6 +11,8 @@ Roll::Roll(){
 Roll::~Roll(){}
 
 void Roll::SubStart( Actor * p ){
+	m_stamina->Consume( m_needStamina );
+
 	//ˆÚ“®•ûŒü‚ÌŒˆ’è
 	m_move = m_camera->GetPadVec();
 
@@ -18,6 +20,9 @@ void Roll::SubStart( Actor * p ){
 	if( m_move.LengthSq() < 0.01f ){
 		m_move = CVector3( 0, 0, 1 );
 		m_model->GetRot().Multiply( m_move );
+	} else{
+		//“ü—Í‚µ‚Ä‚éê‡‚Í‚»‚Á‚¿‚ðŒü‚©‚¹‚éB
+		m_model->SetRot( Util::LookRotXZ( m_move ) );
 	}
 }
 
@@ -32,7 +37,7 @@ void Roll::Update( Actor * p ){
 		if( m_chara->OnGround() ){
 			m_chara->SetVelocity( m_chara->GetVelocity() / 10 );
 		}
-		ActEnd( int( Player::Anim::Idle ) );
+		ActEnd( int( Player::Act::Walker ) );
 	}
 }
 

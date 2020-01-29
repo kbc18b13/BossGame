@@ -15,7 +15,7 @@ void Damage::SubStart( Actor* p ){
 void Damage::Update( Actor* p ){
 	m_chara->Excecute();
 	if( !m_model->IsPlaying() ){
-		ActEnd( int( Player::Anim::Idle ) );
+		ActEnd( int( Player::Act::Walker ) );
 	}
 }
 

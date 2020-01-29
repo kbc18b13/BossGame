@@ -3,8 +3,7 @@
 #include "physics/CollisionAttr.h"
 #include "graphics/RenderObjectManager.h"
 #include "Act/Attack.h"
-#include "Act/Idle.h"
-#include "Act/Walk.h"
+#include "Act/Walker.h"
 #include "Act/Guard.h"
 #include "Act/Roll.h"
 #include "Act/Damage.h"
@@ -52,22 +51,18 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 
 	//アクトステートの初期化
 	{
-		m_actArray[int( Anim::Slash4 )].reset( new Attack( Anim::Slash4, Anim::SlashEnd ) );
-		m_actArray[int( Anim::Slash3 )].reset( new Attack( Anim::Slash3, Anim::Slash4 ) );
-		m_actArray[int( Anim::Slash2 )].reset( new Attack( Anim::Slash2, Anim::Slash3 ) );
-		m_actArray[int( Anim::Slash1 )].reset( new Attack( Anim::Slash1, Anim::Slash2 ) );
-		m_actArray[int( Anim::Idle )].reset( new Idle() );
-		m_actArray[int( Anim::Walk )].reset( new Walk() );
-		m_actArray[int( Anim::Guard )].reset( new Guard() );
-		m_actArray[int( Anim::Roll )].reset( new Roll() );
-		m_actArray[int( Anim::Damage )].reset( new PlayerSpace::Damage() );
+		m_actArray[int( Act::Slash )].reset( new Attack( Anim::Slash1, 4 ) );
+		m_actArray[int( Act::Walker )].reset( new Walker() );
+		m_actArray[int( Act::Guard )].reset( new Guard() );
+		m_actArray[int( Act::Roll )].reset( new Roll() );
+		m_actArray[int( Act::Damage )].reset( new PlayerSpace::Damage() );
 
 		//必要なものを注入
 		for( auto& a : m_actArray ){
 			a->Init( &m_model, &m_chara, &m_sword, &m_camera, &m_stamina );
 		}
 
-		m_nowAct = GetAct( int(Anim::Idle ));
+		m_nowAct = GetAct( int(Act::Walker ));
 	}
 	//剣の初期化
 	m_sword.Init( m_model.GetModel().GetSkeleton().GetBone( L"Hand_L" ), this ,
@@ -102,6 +97,9 @@ void Player::Update(){
 		m_camera.TurnLockOn( m_stage );
 	}
 
+	//ステートのアップデート
+	Actor::Update();
+
 	//モデル位置
 	m_model.SetPos( m_chara.GetPosition() );
 
@@ -119,7 +117,7 @@ void Player::Update(){
 	//スタミナバーの更新
 	m_stamina.Update();
 
-	Actor::Update();
+	//モデルなど
 	m_model.Update();
 	m_sword.Update();
 	m_shield.Update();
@@ -142,7 +140,7 @@ void Player::Update(){
 }
 
 bool Player::Damage( UINT damage, Actor* source ){
-	if( m_nowAct == m_actArray[int( Anim::Guard )].get() ){
+	if( m_nowAct == m_actArray[int( Act::Guard )].get() ){
 		CVector3 v( 0, 0, 1 );
 		m_model.GetRot().Multiply( v );
 
@@ -150,19 +148,19 @@ bool Player::Damage( UINT damage, Actor* source ){
 		toSource.y = 0;
 		toSource.Normalize();
 
-		if( acosf( v.Dot( toSource ) ) < CMath::DegToRad( 50 ) ){
+		if( acosf( v.Dot( toSource ) ) < CMath::DegToRad( 80 ) ){
 			if( m_stamina.Consume( damage * 10 ) ){
 				damage = 0;
 			}
 		}
 	}
 	if( damage != 0 ){
-		ChangeAct( int(Anim::Damage) );
+		ChangeAct( int(Act::Damage) );
 	}
 	return Actor::Damage( damage, source);
 }
 
-Act * Player::GetAct( int index ){
+Act* Player::GetAct( int index ){
 	return m_actArray[index].get();
 }
 

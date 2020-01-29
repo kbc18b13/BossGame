@@ -41,11 +41,20 @@ public:
 		Roll,
 		Damage,
 		Num,
+	};
+
+	enum class Act{
+		Walker,
+		Slash,
+		Guard,
+		Roll,
+		Damage,
+		Num,
 		SlashEnd, //攻撃終了のためのダミー
 	};
 
 private:
-	Act* GetAct( int index ) override;
+	::Act* GetAct( int index ) override;
 	/// <summary>
 	/// デフォルトのステート変更
 	/// </summary>
@@ -57,7 +66,7 @@ private:
 	/// <returns>変更に成功したかどうか。スタミナが足りないと失敗する。</returns>
 	//bool ChangeAct( Anim act );
 
-	std::unique_ptr<PlayerSpace::PlayerAct> m_actArray[int(Anim::Num)];
+	std::unique_ptr<PlayerSpace::PlayerAct> m_actArray[int(Act::Num)];
 
 	static constexpr float WALK_MAX = 200;
 	static constexpr float WALK_ACCEL_AIR = 10;

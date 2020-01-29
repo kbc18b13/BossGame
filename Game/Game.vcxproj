@@ -143,8 +143,7 @@
     <ClCompile Include="Game\Scene\IStage.cpp" />
     <ClCompile Include="Game\Actor\Player\Shield.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\Guard.cpp" />
-    <ClCompile Include="Game\Actor\Player\Act\Idle.cpp" />
-    <ClCompile Include="Game\Actor\Player\Act\Walk.cpp" />
+    <ClCompile Include="Game\Actor\Player\Act\Walker.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\Roll.cpp" />
     <ClCompile Include="Game\Actor\Player\Stamina.cpp" />
     <ClCompile Include="Game\Ground\TriggerCollision.cpp" />
@@ -186,8 +185,7 @@
     <ClInclude Include="Game\Scene\IStage.h" />
     <ClInclude Include="Game\Actor\Player\Shield.h" />
     <ClInclude Include="Game\Actor\Player\Act\Guard.h" />
-    <ClInclude Include="Game\Actor\Player\Act\Idle.h" />
-    <ClInclude Include="Game\Actor\Player\Act\Walk.h" />
+    <ClInclude Include="Game\Actor\Player\Act\Walker.h" />
     <ClInclude Include="Game\Actor\Player\Act\Roll.h" />
     <ClInclude Include="Game\Actor\Player\Stamina.h" />
     <ClInclude Include="Game\Ground\TriggerCollision.h" />
