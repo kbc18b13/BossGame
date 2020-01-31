@@ -91,6 +91,9 @@ void Troll::Update() {
 		return;
 	}
 
+	//ステートの更新関数
+	ActStateUpdate();
+
 	m_model.SetPos( GetPos() );
 
 	//HPバー更新
@@ -113,7 +116,6 @@ void Troll::Update() {
     m_model.Update();
     m_armCollision.Update();
 	m_bodyCollision.Update();
-    Actor::Update();
 }
 
 Act * Troll::GetAct( int index ){

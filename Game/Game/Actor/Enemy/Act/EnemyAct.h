@@ -6,7 +6,7 @@ namespace EnemySpace{
 class EnemyAct : public Act{
 public:
 	EnemyAct();
-	virtual ~EnemyAct();
+	~EnemyAct();
 
 	void Init(SkinModelRender* model, CharaConEx* chara, Actor* target){
 		SetSkinModelRender( model );

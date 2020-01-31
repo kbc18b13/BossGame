@@ -1,6 +1,16 @@
 #include "stdafx.h"
 #include "Yowai.h"
 
+#include "Scene/IStage.h"
+#include "Actor/Player/Player.h"
+
+#include "Act/YowaAttack.h"
+#include "Act/YowaIdle.h"
+#include "Actor/Enemy/Act/Hit.h"
+#include "Actor/Enemy/Act/Chase.h"
+
+using namespace EnemySpace;
+
 Yowai::Yowai( IStage * stage ) : Actor(10, stage){
 	//モデル初期化
 	{
@@ -36,8 +46,54 @@ Yowai::Yowai( IStage * stage ) : Actor(10, stage){
 
 	//ステート
 	{
-		
+		m_stateArray[int( Anim::Idle )].reset( new YowaIdle() );
+		m_stateArray[int( Anim::Walk )].reset( new Chase( int( Anim::Walk ), int( Anim::Attack ) ) );
+		m_stateArray[int( Anim::Hit )].reset( new Hit( int( Anim::Hit ), int( Anim::Idle ) ) );
+		m_stateArray[int( Anim::Attack )].reset( new YowaAttack( m_weapon));
+
+		//初期化
+		for( auto& a : m_stateArray ){
+			a->Init( &m_model, &m_chara, m_stage->GetPlayer() );
+		}
+
+		m_nowAct = GetAct( int( Anim::Idle ) );
 	}
+
+	Bone* b = m_model.GetModel().GetSkeleton().GetBone( 2 );
+	m_weapon.Init( b, this, { 5,5,5 }, false );
+	m_weapon.SetOffset( CVector3( 0, 7, 0 ) );
+
+	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 50, 2 );
+	m_hpBar.SetColor( CVector4( 1, 0, 0, 1 ) );
 }
 
 Yowai::~Yowai(){}
+
+void Yowai::Update(){
+	//死亡時、アップデートはしない。
+	if( m_isDeath ){
+		return;
+	}
+
+	//ステートのアップデート
+	ActStateUpdate();
+
+	m_model.SetPos( GetPos() );
+
+	m_hpBar.SetPercent( GetHPPer() );
+	m_hpBar.SetPos( GetPos() + CVector3::Up() * 50 );
+
+	if( m_nowHP == 0 ){
+		m_model.SetActive( false );
+		m_chara.SetActive( false );
+		m_weapon.SetActive( false );
+		m_isDeath = true;
+	}
+
+	m_model.Update();
+	m_weapon.Update();
+}
+
+Act * Yowai::GetAct( int index ){
+	return m_stateArray[index].get();
+}

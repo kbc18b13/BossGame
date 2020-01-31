@@ -5,8 +5,8 @@
 #include "Actor/Player/Player.h"
 
 #include "Act/SkeAttack.h"
-#include "Actor/Enemy/Act/Chase.h"
 #include "Act/SkeIdle.h"
+#include "Actor/Enemy/Act/Chase.h"
 using namespace EnemySpace;
 
 SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 5, stage ){
@@ -86,9 +86,9 @@ void SkeletonEnemy::Update(){
 	}
 
 	//各種アップデート
+	ActStateUpdate();
 	m_hpBar.SetPercent( GetHPPer() );
 	m_hpBar.SetPos( GetPos() + CVector3::Up() * 50 );
-	Actor::Update();
 	m_model.Update();
 	m_sword.Update();
 }

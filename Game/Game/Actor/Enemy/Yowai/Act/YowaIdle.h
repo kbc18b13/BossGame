@@ -12,6 +12,7 @@ public:
 	void Update( Actor* s ) override;
 
 private:
+	float m_timer = 0;
 };
 
 }

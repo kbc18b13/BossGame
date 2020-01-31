@@ -24,9 +24,7 @@ public:
 		m_in.SetMulColor( color );
 	}
 
-	void view(){
-		time = c_time;
-	}
+	void view();
 
 	void Render() override;
 

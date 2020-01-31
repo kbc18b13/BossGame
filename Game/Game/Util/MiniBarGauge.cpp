@@ -12,6 +12,14 @@ void MiniBarGauge::Init( const wchar_t * outImagePath, const wchar_t * inImagePa
 	g_ROManager.AddDefaultRender( this );
 }
 
+void MiniBarGauge::view(){
+	if( time < 0 && time <= 2.9f ){
+		time = 2.9f;
+	} else{
+		time = c_time;
+	}
+}
+
 void MiniBarGauge::Render(){
 	if( m_active ){
 

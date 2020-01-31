@@ -4,6 +4,7 @@
 #include "Actor/Player/Player.h"
 #include "Actor/Enemy/Troll/Troll.h"
 #include "Actor/Enemy/Skeleton/SkeletonEnemy.h"
+#include "Actor/Enemy/Yowai/Yowai.h"
 #include "Title.h"
 #include "Util/Fade.h"
 
@@ -23,7 +24,7 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 			carriage.SetPos( objData.position );
 			carriage.SetRot( objData.rotation );
 		} else if( wcscmp( objData.name, L"Skeleton" ) == 0 ){
-			Actor* t = NewGO<SkeletonEnemy>( 0, this );
+			Actor* t = NewGO<Yowai>( 0, this );
 			t->SetPos( objData.position );
 			enemyArray.push_back( t );
 		} else if( wcscmp( objData.name, L"BossRoom" ) == 0 ){

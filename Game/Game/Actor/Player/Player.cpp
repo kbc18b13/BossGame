@@ -98,7 +98,7 @@ void Player::Update(){
 	}
 
 	//ステートのアップデート
-	Actor::Update();
+	ActStateUpdate();
 
 	//モデル位置
 	m_model.SetPos( m_chara.GetPosition() );

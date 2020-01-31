@@ -11,7 +11,7 @@ public:
 	Actor(UINT maxHP, IStage* stage);
 	virtual ~Actor();
 
-    void Update() override{
+    void ActStateUpdate() {
 		m_nowAct->Update(this);
 		if( m_nowAct->isActEnd() ){
 			ChangeAct( m_nowAct->GetNextAct() );

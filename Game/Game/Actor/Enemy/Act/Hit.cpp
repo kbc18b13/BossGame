@@ -11,6 +11,6 @@ void EnemySpace::Hit::SubStart( Actor * s ){
 
 void EnemySpace::Hit::Update( Actor * s ){
 	if( !m_model->IsPlaying() ){
-		
+		ActEnd( m_next );
 	}
 }
