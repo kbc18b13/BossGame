@@ -23,10 +23,10 @@ void EnemySpace::YowaIdle::Update( Actor * s ){
 	CVector3 toP = m_target->GetPos() - s->GetPos();
 
 	//‰“‚¯‚ê‚Î‘Ò‚Â
-	if( toP.LengthSq() < 300 * 300 ){
+	if( toP.LengthSq() < 170 * 170 ){
 
 		//‹ß‚¯‚ê‚Î’@‚­‚©’Ç‚¤
-		if( toP.LengthSq() < 40 * 40 ){
+		if( toP.LengthSq() < 30 * 30 ){
 			ActEnd( int( Yowai::Anim::Attack ) );
 		} else{
 			ActEnd( int( Yowai::Anim::Walk ) );

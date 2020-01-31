@@ -11,7 +11,7 @@
 Stage1::Stage1() : ground( L"Assets/modelData/FirstStage.cmo" ),
 carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo" ){
 	Level level;
-	level.Init( L"Assets/level/level1.tkl", [&]( LevelObjectData& objData ) -> bool{
+	level.Init( L"Assets/level/level.tkl", [&]( LevelObjectData& objData ) -> bool{
 		if( wcscmp( objData.name, L"Stage" ) == 0 ){
 			ground.SetPos( objData.position );
 		} else if( wcscmp( objData.name, L"Chara" ) == 0 ){
@@ -24,6 +24,10 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 			carriage.SetPos( objData.position );
 			carriage.SetRot( objData.rotation );
 		} else if( wcscmp( objData.name, L"Skeleton" ) == 0 ){
+			Actor* t = NewGO<SkeletonEnemy>( 0, this );
+			t->SetPos( objData.position );
+			enemyArray.push_back( t );
+		} else if( wcscmp( objData.name, L"Yowai" ) == 0 ){
 			Actor* t = NewGO<Yowai>( 0, this );
 			t->SetPos( objData.position );
 			enemyArray.push_back( t );

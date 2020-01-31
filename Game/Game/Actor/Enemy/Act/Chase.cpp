@@ -17,7 +17,7 @@ void Chase::Update( Actor* a ){
 	CVector3 move = m_target->GetPos() - m_chara->GetPosition();
 	move.y = 0;
 	float moveLength = move.Length();
-	if( moveLength < 40 ){
+	if( moveLength < 30 ){
 		m_timer = 0;
 	} else{
 		move /= moveLength;

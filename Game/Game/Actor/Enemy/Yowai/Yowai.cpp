@@ -33,7 +33,7 @@ Yowai::Yowai( IStage * stage ) : Actor(10, stage){
 
 		desc.walkAccel = 10;
 		desc.walkAccelAir = 1;
-		desc.walkMax = 100;
+		desc.walkMax = 50;
 
 		desc.gravity = 900;
 		desc.jumpPower = 500;
@@ -57,6 +57,7 @@ Yowai::Yowai( IStage * stage ) : Actor(10, stage){
 		}
 
 		m_nowAct = GetAct( int( Anim::Idle ) );
+		m_nowAct->Start(this);
 	}
 
 	Bone* b = m_model.GetModel().GetSkeleton().GetBone( 2 );
