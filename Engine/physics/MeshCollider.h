@@ -34,6 +34,11 @@ public:
 	{
 		return m_meshShape.get();
 	}
+
+	void SetLocalScale( const CVector3& scale ) override {
+		m_meshShape->setLocalScaling( scale );
+	}
+
 private:
 	typedef std::vector<CVector3>					VertexBuffer;		//頂点バッファ。
 	typedef std::vector<unsigned int>				IndexBuffer;		//インデックスバッファ。

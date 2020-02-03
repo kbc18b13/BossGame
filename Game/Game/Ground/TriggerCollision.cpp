@@ -37,7 +37,7 @@ void TriggerCollision::Init( std::function<void()> func, const CVector3& halfExt
 
 void TriggerCollision::Update(){
 	TriggerResult result;
-	g_physics.ContactText( m_coll.GetBody(), result );
+	g_physics.ContactTest( m_coll.GetBody(), result );
 	if( result.isHit ){
 		m_func();
 	}

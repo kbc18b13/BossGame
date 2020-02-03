@@ -1,5 +1,6 @@
 #include "Ground/CollisionModel.h"
 #include "Ground/TriggerCollision.h"
+#include "Ground/BigDoor.h"
 #include "IStage.h"
 class Troll;
 class Player;
@@ -17,5 +18,6 @@ private:
 	CVector3 trollPos;
 	CollisionModel ground;
 	CollisionModel carriage;
+	BigDoor* bigDoor = nullptr;
 	TriggerCollision* bossRoomTrigger;
 };

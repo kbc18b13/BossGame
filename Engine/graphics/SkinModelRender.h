@@ -138,6 +138,12 @@ public:
         m_isShadowReceive = isReceive;
     }
 
+	/// <summary>
+	/// メッシュの反転を設定
+	/// </summary>
+	void SetCCW( bool ccw ){
+		m_skinModel.SetCCW( ccw );
+	}
 private:
     SkinModel m_skinModel; //スキンモデル
 

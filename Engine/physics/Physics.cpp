@@ -95,3 +95,11 @@ void PhysicsWorld::AddCollision(ICollision & cl) {
 void PhysicsWorld::RemoveCollision(ICollision & cl) {
 	dynamicWorld->removeCollisionObject(cl.GetBody());
 }
+
+void PhysicsWorld::UpdateSingleAABB( RigidBody & rb ){
+	dynamicWorld->updateSingleAabb( rb.GetBody() );
+}
+
+void PhysicsWorld::UpdateSingleAABB( ICollision & cl ){
+	dynamicWorld->updateSingleAabb( cl.GetBody() );
+}

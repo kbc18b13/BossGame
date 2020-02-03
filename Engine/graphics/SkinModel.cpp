@@ -9,6 +9,7 @@ SkinModel::~SkinModel()
 		m_samplerState->Release();
 	}
 }
+
 void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 {
 	//スケルトンのデータを読み込む。
@@ -25,6 +26,7 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 
 	m_enFbxUpAxis = enFbxUpAxis;
 }
+
 void SkinModel::InitSkeleton(const wchar_t* filePath)
 {
 	//スケルトンのデータを読み込む。
@@ -47,12 +49,14 @@ void SkinModel::InitSkeleton(const wchar_t* filePath)
 #endif
 	}
 }
+
 void SkinModel::InitConstantBuffer()
 {
 	//作成するバッファのサイズをsizeof演算子で求める。
 	int bufferSize = sizeof(SVSConstantBuffer);
 	m_cb.Init(Util::AlignSize(bufferSize, 16), false );
 }
+
 void SkinModel::InitSamplerState()
 {
 	//テクスチャのサンプリング方法を指定するためのサンプラステートを作成。
@@ -64,6 +68,7 @@ void SkinModel::InitSamplerState()
 	desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 	g_graphicsEngine->GetD3DDevice()->CreateSamplerState(&desc, &m_samplerState);
 }
+
 void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVector3 scale)
 {
 	//3dsMaxと軸を合わせるためのバイアス。
@@ -89,6 +94,7 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 	//スケルトンの更新。
 	m_skeleton.Update(m_worldMatrix);
 }
+
 void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMatrix)
 {
 	if (!m_isDraw) {
@@ -127,4 +133,10 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 		viewMatrix,
 		projMatrix
 	);
+}
+
+void SkinModel::SetCCW( bool ccw ){
+	for( auto mesh : m_modelDx->meshes ){
+		mesh->ccw = ccw;
+	}
 }

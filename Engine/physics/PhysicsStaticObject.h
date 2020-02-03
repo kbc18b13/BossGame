@@ -52,6 +52,19 @@ public:
 		m_rigidBody.GetBody()->setWorldTransform( trans );
 	}
 
+	void SetScale( const CVector3& scale ){
+		m_meshCollider.SetLocalScale( scale );
+		g_physics.UpdateSingleAABB( m_rigidBody );
+	}
+
+	MeshCollider* GetShape(){
+		return &m_meshCollider;
+	}
+
+	RigidBody* GetRigidBody(){
+		return &m_rigidBody;
+	}
+
 private:
 	void CreateRigidBody( CVector3 pos, CQuaternion rot );
 	MeshCollider m_meshCollider;		//!<メッシュコライダー。

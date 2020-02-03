@@ -49,7 +49,7 @@ std::vector<Actor*>& ActorHitCollision::ContactTest() {
 
     //”»’è
     contactCB.eraseHits();
-    g_physics.ContactText(m_collision.GetBody(), contactCB);
+    g_physics.ContactTest(m_collision.GetBody(), contactCB);
     return contactCB.getHits();
 }
 

@@ -28,6 +28,11 @@ public:
 	{
 		return shape;
 	}
+
+	void SetLocalScale( const CVector3& scale ) override{
+		shape->setLocalScaling( scale );
+	}
+
 private:
 	btCylinderShape* shape = nullptr;
 };

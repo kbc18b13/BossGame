@@ -107,6 +107,7 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Ground\BigDoor.cpp" />
     <ClCompile Include="Game\Actor\Act\Act.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Act\Chase.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Act\EnemyAct.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="Game\Actor\Enemy\Yowai\Act\YowaIdle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Ground\BigDoor.h" />
     <ClInclude Include="Game\Actor\Act\Act.h" />
     <ClInclude Include="Game\Actor\Enemy\Act\Chase.h" />
     <ClInclude Include="Game\Actor\Enemy\Act\EnemyAct.h" />
@@ -201,6 +203,7 @@
     <ClInclude Include="Game\Actor\Enemy\Yowai\Act\YowaIdle.h" />
   </ItemGroup>
   <ItemGroup>
+    <MeshContentTask Include="Assets\modelData\BigDoor.fbx" />
     <MeshContentTask Include="Assets\modelData\Carriage.fbx" />
     <MeshContentTask Include="Assets\modelData\Carriage_col.fbx" />
     <MeshContentTask Include="Assets\modelData\FirstStage.fbx" />

@@ -11,7 +11,7 @@
 
 using namespace EnemySpace;
 
-Yowai::Yowai( IStage * stage ) : Actor(10, stage){
+Yowai::Yowai( IStage * stage ) : Actor(3, stage){
 	//ƒ‚ƒfƒ‹‰Šú‰»
 	{
 		m_animClips[int( Anim::Idle )].Load( L"Assets/animData/Yowai_Idle.tka", true);

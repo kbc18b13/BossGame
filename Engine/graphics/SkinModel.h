@@ -108,6 +108,11 @@ public:
 		m_emissionColor = color;
 	}
 
+	/// <summary>
+	/// メッシュの反転を設定
+	/// </summary>
+	void SetCCW( bool ccw );
+
 	/*!
 	*@brief	SRVのレジスタ番号。
 	*/

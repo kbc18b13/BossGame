@@ -450,6 +450,11 @@ public:
 		return btQuaternion( x, y, z, w );
 	}
 
+	//単項マイナス演算子
+	const CQuaternion operator-(){
+		return CQuaternion(-x, -y, -z, -w);
+	}
+
 	//任意の軸周りの回転クォータニオンを作成。
 	void SetRotation( const CVector3& axis, float angle ){
 		float s;

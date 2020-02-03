@@ -23,6 +23,9 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 		} else if( wcscmp( objData.name, L"Carriage" ) == 0 ){
 			carriage.SetPos( objData.position );
 			carriage.SetRot( objData.rotation );
+		} else if( wcscmp( objData.name, L"BigDoor" ) == 0 ){
+			bigDoor = NewGO<BigDoor>( 0 );
+			bigDoor->SetPos( objData.position );
 		} else if( wcscmp( objData.name, L"Skeleton" ) == 0 ){
 			Actor* t = NewGO<SkeletonEnemy>( 0, this );
 			t->SetPos( objData.position );
@@ -59,9 +62,16 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 Stage1::~Stage1(){
 	if( bossRoomTrigger )
 		DeleteGO( bossRoomTrigger );
+	DeleteGO( bigDoor );
 }
 
 void Stage1::Update(){
+	if( g_pad->IsTrigger( enButtonUp ) ){
+		bigDoor->Open();
+	}
+	if( g_pad->IsTrigger( enButtonDown ) ){
+		bigDoor->Close();
+	}
 	if( isEndStage ){
 		endTime += GameTime::GetDeltaTime();
 
