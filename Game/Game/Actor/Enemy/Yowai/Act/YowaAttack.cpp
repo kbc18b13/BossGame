@@ -10,7 +10,7 @@ YowaAttack::~YowaAttack(){}
 
 void YowaAttack::SubStart( Actor * s ){
 	m_model->Play( int( Yowai::Anim::Attack ), 0.2f );
-	m_weapon.AttackStart();
+	//m_weapon.AttackStart();
 }
 
 void YowaAttack::Update( Actor * s ){
@@ -24,6 +24,13 @@ void YowaAttack::Update( Actor * s ){
 
 void YowaAttack::End( Actor * s ){
 	m_weapon.AttackEnd();
+}
+
+void YowaAttack::Init( SkinModelRender * model, CharaConEx * chara, Actor * target ){
+	model->AddEventFunc( "Attack", [&](){
+		m_weapon.AttackStart();
+	} );
+	EnemyAct::Init( model, chara, target );
 }
 
 }

@@ -89,6 +89,10 @@ public:
 		m_charaCon.SetActive( active );
 	}
 
+	float GetHeight(){
+		return m_charaCon.GetHeight();
+	}
+
 private:
 	float m_walkAccel;
 	float m_walkAccelAir;

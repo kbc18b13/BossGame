@@ -11,12 +11,18 @@ Attack::Attack( Player::Anim animation_, int combo ) : m_maxCombo(combo){
 
 Attack::~Attack(){}
 
-void Attack::SubStart( Actor* p ){
+void Attack::LocalStart(){
 	m_sword->AttackStart();
-	m_model->Play( int( m_animation ), 0.2f );
+	m_model->Play( int( m_animation + m_nowCombo ), 0.2f );
 	m_pushedAtkButton = false;
 	m_timer = 0;
-	m_nowCombo = 1;
+	m_nowCombo++;
+	m_chara->AddVelocity( m_model->GetFront() * 100 );
+}
+
+void Attack::SubStart( Actor* p ){
+	m_nowCombo = 0;
+	LocalStart();
 }
 
 void Attack::Update( Actor* p ){
@@ -36,11 +42,7 @@ void Attack::Update( Actor* p ){
 		if( m_nowCombo < m_maxCombo && m_pushedAtkButton ){
 			
 			if( m_stamina->Consume(m_needStamina) ){
-				m_sword->AttackStart();
-				m_model->Play( int( m_animation + m_nowCombo ), 0.2f );
-				m_pushedAtkButton = false;
-				m_timer = 0;
-				m_nowCombo++;
+				LocalStart();
 				return;
 			}
 		}

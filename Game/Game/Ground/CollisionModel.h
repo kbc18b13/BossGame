@@ -17,13 +17,6 @@ public:
 	void SetScale( const CVector3& scale );
 
 	/// <summary>
-	/// メッシュの反転を設定
-	/// </summary>
-	void SetCCW( bool ccw ){
-		m_model.SetCCW( ccw );
-	}
-
-	/// <summary>
 	/// キャラコンのめり込みを解決する
 	/// </summary>
 	void CollideChara();

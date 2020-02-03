@@ -13,6 +13,8 @@ public:
 	void SubStart( Actor* s ) override;
 	void Update( Actor* s ) override;
 
+	void Init( SkinModelRender* model, CharaConEx* chara, Actor* target ) override;
+
 private:
 	ModelArmWeapon& m_sword;
 	int m_anim;

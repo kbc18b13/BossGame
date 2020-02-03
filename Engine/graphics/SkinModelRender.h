@@ -100,10 +100,18 @@ public:
     /// <summary>
     /// 回転を取得
     /// </summary>
-    /// <returns></returns>
     CQuaternion GetRot(){
         return m_rot;
     }
+
+	/// <summary>
+	/// 前方向を取得
+	/// </summary>
+	CVector3 GetFront(){
+		CVector3 v(0, 0, 1);
+		m_rot.Multiply( v );
+		return v;
+	}
 
     /// <summary>
     /// ワールド行列を設定
@@ -141,8 +149,8 @@ public:
 	/// <summary>
 	/// メッシュの反転を設定
 	/// </summary>
-	void SetCCW( bool ccw ){
-		m_skinModel.SetCCW( ccw );
+	void AddEventFunc( const char* name,const std::function<void()>& func ){
+		m_animation.AddEventFunc( name, func );
 	}
 private:
     SkinModel m_skinModel; //スキンモデル

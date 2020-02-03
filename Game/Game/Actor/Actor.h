@@ -43,6 +43,10 @@ public:
 		return float(m_nowHP) / m_maxHP;
 	}
 
+	float GetHeight(){
+		return m_chara.GetHeight();
+	}
+
 	bool IsDeath(){
 		return m_isDeath;
 	}

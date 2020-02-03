@@ -9,9 +9,11 @@
 #include "Actor/Enemy/Act/Hit.h"
 #include "Actor/Enemy/Act/Chase.h"
 
+#include "Scene/Stage1.h"
+
 using namespace EnemySpace;
 
-Yowai::Yowai( IStage * stage ) : Actor(3, stage){
+Yowai::Yowai( IStage * stage ) : Actor(10, stage){
 	//ƒ‚ƒfƒ‹‰Šú‰»
 	{
 		m_animClips[int( Anim::Idle )].Load( L"Assets/animData/Yowai_Idle.tka", true);
@@ -88,6 +90,7 @@ void Yowai::Update(){
 		m_model.SetActive( false );
 		m_chara.SetActive( false );
 		m_weapon.SetActive( false );
+		m_opener->DeathEnemy();
 		m_isDeath = true;
 	}
 

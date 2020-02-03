@@ -14,6 +14,8 @@ public:
 	void Update( Actor* s ) override;
 	void End( Actor* s ) override;
 
+	void Init( SkinModelRender* model, CharaConEx* chara, Actor* target ) override;
+
 private:
 	ArmWeapon& m_weapon;
 };

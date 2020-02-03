@@ -3,6 +3,8 @@
 #include "Util/MiniBarGauge.h"
 #include "Weapon/ArmWeapon.h"
 
+class DoorOpener;
+
 class IStage;
 
 namespace EnemySpace{
@@ -18,7 +20,12 @@ public:
 
 	bool Damage( UINT damage, Actor* source ) override{
 		m_hpBar.view();
+		ChangeAct( int( Anim::Hit ) );
 		return Actor::Damage( damage, source );
+	}
+
+	void SetOpener( DoorOpener* opener ){
+		m_opener = opener;
 	}
 
 	//アニメーション
@@ -40,5 +47,7 @@ private:
 	MiniBarGauge m_hpBar;
 
 	ArmWeapon m_weapon;
+
+	DoorOpener* m_opener = nullptr;
 };
 

@@ -5,16 +5,19 @@
 
 PlayerCamera::PlayerCamera(){
 	m_lockOnSprite.Init( L"Assets/sprite/lockOn.dds", 80, 80 );
+	m_lockOnSprite.SetScale( CVector2( 0.5f, 0.5f ) );
 	m_lockOnSprite.SetIsDraw( false );
 }
 
 void PlayerCamera::UpdateGCamera(const CVector3& look){
 
+	//レイキャストを使った壁に当たるカメラ
 	btCollisionWorld::ClosestRayResultCallback cb(look, m_pos);
 
 	g_physics.GetDynamicWorld()->rayTest( look, m_pos, cb );
 
 	if( cb.hasHit() ){
+		//例が当たったから少し押しもどす。
 		CVector3 hitPos = cb.m_hitPointWorld;
 		CVector3 toL = look - m_pos;
 		toL.Normalize();
@@ -30,7 +33,7 @@ void PlayerCamera::UpdateGCamera(const CVector3& look){
 void PlayerCamera::Update( const CVector3 & playerPos){
 	if( IsLockOn() ){
 		CVector3 ePos = GetLockOnPos();
-		ePos.y += 50;
+		ePos.y += m_lockOnEnemy->GetHeight() / 2;
 		//ターゲット画像の移動
 		m_lockOnSprite.SetPosNormalized( g_camera3D.GetProjectedPos( ePos ).xy() );
 

@@ -11,6 +11,7 @@
 Stage1::Stage1() : ground( L"Assets/modelData/FirstStage.cmo" ),
 carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo" ){
 	Level level;
+
 	level.Init( L"Assets/level/level.tkl", [&]( LevelObjectData& objData ) -> bool{
 		if( wcscmp( objData.name, L"Stage" ) == 0 ){
 			ground.SetPos( objData.position );
@@ -31,8 +32,10 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 			t->SetPos( objData.position );
 			enemyArray.push_back( t );
 		} else if( wcscmp( objData.name, L"Yowai" ) == 0 ){
-			Actor* t = NewGO<Yowai>( 0, this );
+			Yowai* t = NewGO<Yowai>( 0, this );
 			t->SetPos( objData.position );
+			t->SetOpener( &opener );
+			opener.AddEnemyCount();
 			enemyArray.push_back( t );
 		} else if( wcscmp( objData.name, L"BossRoom" ) == 0 ){
 			std::function<void()> f = [&](){
@@ -49,11 +52,13 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 		return true;
 	} );
 
+	opener.SetDoor( bigDoor );
+
 	g_graphicsEngine->GetDirectionLight().SetColor( 0, { 1,1,1,1 } );
 	g_graphicsEngine->GetDirectionLight().SetDirection( 0, { -1,-1,-1 } );
 	g_graphicsEngine->GetDirectionLight().Apply();
 
-	g_graphicsEngine->GetAmbientLight().SetColor( { 0.3f,0.3f,0.3f,1 } );
+	g_graphicsEngine->GetAmbientLight().SetColor( { 0.5f,0.5f,0.5f,1 } );
 	g_graphicsEngine->GetAmbientLight().Apply();
 
 	Fade::Out();
@@ -72,6 +77,8 @@ void Stage1::Update(){
 	if( g_pad->IsTrigger( enButtonDown ) ){
 		bigDoor->Close();
 	}
+
+	//ステージ終了処理
 	if( isEndStage ){
 		endTime += GameTime::GetDeltaTime();
 

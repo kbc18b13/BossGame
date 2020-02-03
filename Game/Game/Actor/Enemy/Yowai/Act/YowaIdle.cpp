@@ -8,7 +8,7 @@ EnemySpace::YowaIdle::YowaIdle(){}
 EnemySpace::YowaIdle::~YowaIdle(){}
 
 void EnemySpace::YowaIdle::SubStart( Actor * s ){
-	m_timer = 3;
+	m_timer = 0.7f;
 	m_model->Play( int( Yowai::Anim::Idle ), 0.2f );
 }
 

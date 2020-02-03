@@ -91,6 +91,10 @@ public:
 		return m_isActive;
 	}
 
+	float GetHeight(){
+		return m_collider.GetHeight() + m_collider.GetRadius() * 2;
+	}
+
 private:
 	CVector3 			m_position = CVector3::Zero();	//座標。
 	bool 				m_isJump = false;				//ジャンプ中？
