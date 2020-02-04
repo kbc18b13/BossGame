@@ -18,7 +18,7 @@ void Walker::Update(Actor* p ){
 		return;
 	}
 
-	if( g_pad->IsTrigger( enButtonRB1 ) && m_stamina->CanDo() ){
+	if( (g_pad->IsTrigger( enButtonRB1 ) || g_pad->IsTrigger( enButtonRB2 ) )&& m_stamina->CanDo() ){
 		ActEnd( int( Player::Act::Slash ) );
 		return;
 	}

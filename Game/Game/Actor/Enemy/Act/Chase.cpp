@@ -4,7 +4,8 @@
 
 namespace EnemySpace{
 
-Chase::Chase(int walkAnim, int nextState ) : m_walkAnim(walkAnim), m_nextState(nextState){}
+Chase::Chase(int walkAnim, int nextState, float stopDistance ) :
+	m_walkAnim(walkAnim), m_nextState(nextState), m_stopDistance(stopDistance){}
 
 Chase::~Chase(){}
 
@@ -17,7 +18,7 @@ void Chase::Update( Actor* a ){
 	CVector3 move = m_target->GetPos() - m_chara->GetPosition();
 	move.y = 0;
 	float moveLength = move.Length();
-	if( moveLength < 30 ){
+	if( moveLength < m_stopDistance ){
 		m_timer = 0;
 	} else{
 		move /= moveLength;

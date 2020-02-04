@@ -45,7 +45,7 @@ SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 5, stage ){
 	//ステートの初期化
 	{
 		m_stateArray[int( Anim::Idle )].reset( new SkeIdle() );
-		m_stateArray[int( Anim::Chase )].reset( new Chase( int( Anim::Chase ), int( Anim::Idle ) ) );
+		m_stateArray[int( Anim::Chase )].reset( new Chase( int( Anim::Chase ), int( Anim::Idle ), 30.0f ));
 		m_stateArray[int( Anim::Attack1 )].reset( new SkeAttack( m_sword, int( Anim::Attack1 ) ) );
 		m_stateArray[int( Anim::Attack2 )].reset( new SkeAttack( m_sword, int( Anim::Attack2 ) ) );
 
@@ -62,6 +62,7 @@ SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 5, stage ){
 		Bone* b = m_model.GetModel().GetSkeleton().GetBone( 4 );
 		m_sword.Init( b, this, { 13,5,5 }, L"Assets/modelData/SkeSword.cmo", false );
 		m_sword.SetOffset( { 12, 0, 0 } );
+		m_sword.SetKnockBack( CVector3( 0, 20, 50 ) );
 	}
 
 	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 50, 2 );

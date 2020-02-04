@@ -15,13 +15,21 @@ public:
 	void End( Actor * p ) override;
 
 private:
-	void LocalStart();
-
 	int m_animation;
 	const int m_maxCombo;
-	bool m_pushedAtkButton = false;
+
+	enum class Atk{
+		None,
+		Light,
+		Heavy,
+	};
+	Atk m_next = Atk::None;
+
 	int m_nowCombo = 0;
 	float m_timer = 0;
+
+
+	void LocalStart( bool heavy);
 };
 
 }

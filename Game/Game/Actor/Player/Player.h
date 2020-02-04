@@ -37,6 +37,7 @@ public:
 		Slash2,
 		Slash3,
 		Slash4,
+		HeavySlash,
 		Guard,
 		Roll,
 		Damage,

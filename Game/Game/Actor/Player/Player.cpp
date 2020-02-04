@@ -14,7 +14,7 @@
 using namespace PlayerSpace;
 
 Player::Player(IStage* stage) : Actor( 10 , stage){
-	//アニメーションクリップ読み込み
+	//モデル読み込み
 	{
 		m_animClip[int( Anim::Walk )].Load( L"Assets/animData/TestChara_Run.tka", true );
 		m_animClip[int( Anim::Idle )].Load( L"Assets/animData/TestChara_Idle.tka", true );
@@ -22,13 +22,18 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 		m_animClip[int( Anim::Slash2 )].Load( L"Assets/animData/TestChara_Slash2.tka" );
 		m_animClip[int( Anim::Slash3 )].Load( L"Assets/animData/TestChara_Slash3.tka" );
 		m_animClip[int( Anim::Slash4 )].Load( L"Assets/animData/TestChara_Slash4.tka" );
+		m_animClip[int( Anim::HeavySlash )].Load( L"Assets/animData/TestChara_HeavySlash.tka" );
 		m_animClip[int( Anim::Guard )].Load( L"Assets/animData/TestChara_Guard.tka" );
 		m_animClip[int( Anim::Roll )].Load( L"Assets/animData/TestChara_Roll.tka" );
 		m_animClip[int( Anim::Damage )].Load( L"Assets/animData/TestChara_Damage.tka" );
-	}
 
-	//cmoファイルの読み込み。
-	m_model.Init( L"Assets/modelData/TestChara.cmo", m_animClip, int( Anim::Num ) );
+		//cmoファイルの読み込み。
+		m_model.Init( L"Assets/modelData/TestChara.cmo", m_animClip, int( Anim::Num ) );
+
+		m_model.AddEventFunc( "Attack", [&](){
+			m_sword.AttackStart();
+		} );
+	}
 
 	CharaConDesc desc;
 	{

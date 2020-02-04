@@ -17,6 +17,13 @@
 #include <functional>
 #include <algorithm>
 
+//ƒTƒEƒ“ƒh
+#include <xaudio2.h>
+#include <x3daudio.h>
+#include <xaudio2fx.h>
+#include "sound/SoundEngine.h"
+#include "sound/SoundSource.h"
+
 //BulletPhysics
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision\CollisionDispatch\btGhostObject.h"

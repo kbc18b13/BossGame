@@ -6,7 +6,7 @@ namespace EnemySpace{
 
 class Chase : public EnemyAct{
 public:
-	Chase(int walkAnim, int nextState);
+	Chase(int walkAnim, int nextState, float stopDistance);
 	~Chase();
 
 	void SubStart( Actor* a ) override;
@@ -16,6 +16,7 @@ public:
 private:
 	int m_nextState;
 	int m_walkAnim;
+	float m_stopDistance = 0.0f;
 	float m_timer = 0.0f;
 };
 

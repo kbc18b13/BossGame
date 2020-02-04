@@ -11,16 +11,6 @@
 // ウィンドウプログラムのメイン関数。
 ///////////////////////////////////////////////////////////////////
 
-//void timestamp(const wchar_t* t){
-//	static wchar_t fpsText[50];
-//	static clock_t before = 0;
-//	clock_t now = clock();
-//	swprintf( fpsText, L" : %ld\n", now - before );
-//	OutputDebugStringW( t );
-//	OutputDebugStringW( fpsText );
-//	before = now;
-//}
-
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
 	//ゲームの初期化。
@@ -29,6 +19,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	g_camera3D.Init();
 	g_camera3D.SetTarget({ 0.0f, 20.0f, 0.0f });
 	g_camera3D.SetFar(10000.0f);
+
+	//サウンドマネージャーの初期化
+	g_soundEngine.Init();
 
     //レンダーオブジェクトマネージャーの初期化
     g_ROManager.Init();
@@ -72,7 +65,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 #ifdef _DEBUG
 		swprintf( fpsText, L"FPS:%5f\n", GameTime::GetFPS());
 #endif
-		
+
         //描画開始。
         g_graphicsEngine->BegineRender();
 
@@ -82,5 +75,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		//描画終了。
 		g_graphicsEngine->EndRender();
 
+		//サウンドエンジンの更新。
+		g_soundEngine.Update();
 	}
 }

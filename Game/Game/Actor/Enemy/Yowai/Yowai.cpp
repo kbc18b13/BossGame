@@ -13,7 +13,7 @@
 
 using namespace EnemySpace;
 
-Yowai::Yowai( IStage * stage ) : Actor(10, stage){
+Yowai::Yowai( IStage * stage ) : Actor(4, stage){
 	//モデル初期化
 	{
 		m_animClips[int( Anim::Idle )].Load( L"Assets/animData/Yowai_Idle.tka", true);
@@ -49,7 +49,7 @@ Yowai::Yowai( IStage * stage ) : Actor(10, stage){
 	//ステート
 	{
 		m_stateArray[int( Anim::Idle )].reset( new YowaIdle() );
-		m_stateArray[int( Anim::Walk )].reset( new Chase( int( Anim::Walk ), int( Anim::Attack ) ) );
+		m_stateArray[int( Anim::Walk )].reset( new Chase( int( Anim::Walk ), int( Anim::Attack ), 30.0f ) );
 		m_stateArray[int( Anim::Hit )].reset( new Hit( int( Anim::Hit ), int( Anim::Idle ) ) );
 		m_stateArray[int( Anim::Attack )].reset( new YowaAttack( m_weapon));
 

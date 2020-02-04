@@ -71,7 +71,7 @@ Troll::~Troll() {
 
 void Troll::Start() {
 	m_actionArray[int(ActState::Attack)].reset(new TrollAttack(m_armCollision));
-	m_actionArray[int(ActState::Chase)].reset(new Chase(int(AnimState::Walk), int(ActState::Wait)));
+	m_actionArray[int(ActState::Chase)].reset(new Chase(int(AnimState::Walk), int(ActState::Wait), 50.0f ));
 	m_actionArray[int(ActState::Wait)].reset(new TrollIdle());
 	m_actionArray[int(ActState::Step)].reset(new TrollStep());
     m_actionArray[int(ActState::Tackle)].reset(new TrollTackle(m_bodyCollision));
