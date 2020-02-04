@@ -246,6 +246,14 @@ public:
 			DirectX::XMMatrixTranspose(*this)
 		);
 	}
+
+	void CopyTo( float* to){
+		float* from = m[0];
+		for( int i = 0; i < 16; i++ ){
+			to[i] = from[i];
+		}
+	}
+
 	static const CMatrix Identity()
 	{
 		static const CMatrix identity(

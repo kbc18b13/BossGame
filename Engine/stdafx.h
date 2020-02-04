@@ -52,6 +52,10 @@
 #include "graphics/animation/AnimationClip.h"
 #include "graphics/Camera.h"
 
+//Effekseer
+#include "Effekseer.h"
+#include "EffekseerRendererDX11.h"
+
 //ゲームオブジェクト
 #include "gameObject/GameObjectManager.h"
 #include "gameObject/IGameObject.h"

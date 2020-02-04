@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "RenderObjectManager.h"
 
+extern Effekseer::Manager* g_effectManager;
+
 RenderObjectManager g_ROManager;
 
 RenderObjectManager::RenderObjectManager(){}
@@ -56,6 +58,9 @@ void RenderObjectManager::Render(){
 
     //通常描画オブジェクトの描画
     m_defaultRender.Render();
+
+	//エフェクト描画
+	g_effectManager->Draw();
 
     //物理ワイヤーフレーム
     g_physics.DebugDraw();
