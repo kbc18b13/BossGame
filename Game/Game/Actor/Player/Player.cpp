@@ -109,7 +109,7 @@ void Player::Update(){
 	m_model.SetPos( m_chara.GetPosition() );
 
 	//ƒƒbƒNƒIƒ“‚Ì‰ñ“]
-	if( m_camera.IsLockOn() ){
+	if( m_camera.IsLockOn() && m_nowAct != GetAct(int(Act::Roll))){
 		m_model.SetRot(Util::LookRotXZ( m_camera.GetLockOnPos() - GetPos() ));
 	}
 

@@ -28,7 +28,7 @@ void Roll::SubStart( Actor * p ){
 
 void Roll::Update( Actor * p ){
 	m_model->Play( int( Player::Anim::Roll ) );
-	m_chara->Excecute(m_move, 1.5f, 2,false);
+	m_chara->Excecute(m_move, 2, 2,false);
 
 	//アニメーション終了時。
 	if( !m_model->IsPlaying() ){

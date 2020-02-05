@@ -75,6 +75,12 @@ public:
         m_moveSpeedXZ.y += v.z;
     }
 
+	//ŠÔ‚Æ•ûŒü‚ğŒˆ‚ß‚ÄˆÚ“®B
+	void Move( const CVector3& v, float time ){
+		m_timeMoveVec = v;
+		m_timeMoveTime = time;
+	}
+
     //’…’n‚µ‚Ä‚¢‚é‚È‚çtrue
 	bool OnGround() const {
 		return m_charaCon.IsOnGround();
@@ -103,6 +109,9 @@ private:
 
 	CVector2 m_moveSpeedXZ;
 	float m_jumpSpeed = 0.0f;
+
+	CVector3 m_timeMoveVec;
+	float m_timeMoveTime = 0.0f;
 
 	CharacterController m_charaCon;
 };

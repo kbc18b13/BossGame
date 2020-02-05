@@ -25,6 +25,10 @@ CVector3 CharaConEx::Excecute( const CVector3& _pad, float speedScale, float acc
 		//_____________________最大速度___________現在の速度___________デルタタイム_______加速スピード
 		m_moveSpeedXZ += ( ( pad * maxSpeed ) - m_moveSpeedXZ ) * GameTime::GetDeltaTime() * accel;
 
+		if( m_timeMoveTime > 0 ){
+			m_moveSpeedXZ = m_timeMoveVec.xz();
+		}
+
 	}
 
 	//上下
@@ -32,6 +36,10 @@ CVector3 CharaConEx::Excecute( const CVector3& _pad, float speedScale, float acc
 		m_jumpSpeed -= m_gravity * GameTime::GetDeltaTime();
 		if( jump && m_charaCon.IsOnGround() ){
 			m_jumpSpeed += m_jumpPower;
+		}
+		if( m_timeMoveTime > 0 ){
+			m_jumpSpeed += m_timeMoveVec.y;
+			m_timeMoveTime -= GameTime::GetDeltaTime();
 		}
 	}
 
