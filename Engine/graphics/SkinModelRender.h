@@ -42,8 +42,8 @@ public:
     *@param[in]	clipNo	アニメーションクリップの番号。Init関数に渡したanimClipListの並びとなる。
     *@param[in]	interpolateTime		補完時間(単位：秒)
     */
-    void Play( int clipNo, float interpolateTime = 0.0f, bool allowSameClip = false ){
-        m_animation.Play( clipNo, interpolateTime, allowSameClip );
+    void Play( int clipNo, float interpolateTime = 0.0f, bool allowSameClip = false , bool reverse = false){
+        m_animation.Play( clipNo, interpolateTime, allowSameClip, reverse );
     }
 
     /*!

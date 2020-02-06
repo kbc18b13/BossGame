@@ -97,6 +97,14 @@ public:
 		return *m_topBoneKeyFramList;
 	}
 
+	size_t GetKeySize() const{
+		return m_topBoneKeyFramList->size();
+	}
+
+	float GetLength() const{
+		return m_topBoneKeyFramList->back()->time;
+	}
+
 	int GetEventSize() const{
 		return m_eventList.size();
 	}

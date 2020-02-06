@@ -20,7 +20,7 @@ void Attack::LocalStart( bool heavy ){
 	} else{
 		m_stamina->Consume( m_needStamina * 2);
 		m_sword->SetDamage( 3 );
-		m_model->Play( int( Player::Anim::HeavySlash ), 0.2f );
+		m_model->Play( int( Player::Anim::HeavySlash ), 0.2f);
 		m_nowCombo = 3;
 	}
 

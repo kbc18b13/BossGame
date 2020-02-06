@@ -25,7 +25,7 @@ void Walker::Update(Actor* p ){
 
 	if( g_pad->GetLStickVec().LengthSq() > 0.01f ){
 		//•à‚«
-		m_model->Play( int( Player::Anim::Walk ), 0.2f );
+		m_model->Play( int( Player::Anim::Walk ), 0.2f);
 		//ƒLƒƒƒ‰ƒRƒ“‚Ì‘€ì
 		CVector3 move = m_camera->GetPadVec();
 		float speed = ( g_pad->IsPress( enButtonX ) && m_stamina->Consume( GameTime::GetDeltaTime() * 2 ) ) ? 1.5f : 1;

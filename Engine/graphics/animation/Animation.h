@@ -46,8 +46,8 @@ public:
 	*@param[in]	clipNo	アニメーションクリップの番号。Init関数に渡したanimClipListの並びとなる。
 	*@param[in]	interpolateTime		補完時間(単位：秒)
 	*/
-	void Play( int clipNo, float interpolateTime = 0.0f, bool allowSameClip = false ){
-		PlayCommon( m_animationClips[clipNo], interpolateTime, allowSameClip );
+	void Play( int clipNo, float interpolateTime = 0.0f, bool allowSameClip = false, bool reverse = false ){
+		PlayCommon( m_animationClips[clipNo], interpolateTime, allowSameClip , reverse);
 	}
 
 	/*!
@@ -68,7 +68,7 @@ public:
 	void Update( float deltaTime );
 
 private:
-	void PlayCommon( AnimationClip* nextClip, float interpolateTime, bool sameClip = false ){
+	void PlayCommon( AnimationClip* nextClip, float interpolateTime, bool sameClip, bool reverse ){
 
 		int index = GetLastAnimationControllerIndex();
 
@@ -83,7 +83,7 @@ private:
 			m_numAnimationPlayController++;
 		}
 		index = GetLastAnimationControllerIndex();
-		m_animationPlayController[index].ChangeAnimationClip( nextClip );
+		m_animationPlayController[index].ChangeAnimationClip( nextClip , reverse);
 		m_animationPlayController[index].SetInterpolateTime( interpolateTime );
 		m_interpolateTime = 0.0f;
 		m_interpolateTimeEnd = interpolateTime;
