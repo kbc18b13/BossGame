@@ -10,6 +10,9 @@ public:
 
 	void Init(Actor* player){
 		m_player = player;
+		CVector3 playerPos = m_player->GetPos();
+		playerPos.y += m_player->GetHeight();
+		m_pos = playerPos + m_vec;
 	}
 
 	/// <summary>

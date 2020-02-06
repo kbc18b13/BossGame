@@ -82,13 +82,14 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 1000, 25 );
 	m_hpBar.SetPosCenterZero( CVector2( 625, 325 ) );
 	m_hpBar.SetColor( CVector4( 1, 0, 0, 1 ) );
+}
 
+Player::~Player(){}
+
+void Player::Start(){
 	//ÉJÉÅÉâ
 	m_camera.Init( this );
 }
-
-
-Player::~Player(){}
 
 void Player::Update(){
 	if( m_isDeath ){

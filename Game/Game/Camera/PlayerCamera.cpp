@@ -70,27 +70,35 @@ void PlayerCamera::Update(){
 
 	//回り込みカメラ
 	CVector3 PtoC = m_pos - playerPos;
-	PtoC.y = 0;
+	//PtoC.y = 0;
 	PtoC.Normalize();
 	PtoC *= CtoPLength;
 	//移動後のベクトルと前回のベクトルを合成。yは無視。
 	float nowYRot = m_vec.y;
 	m_vec = m_vec * 0.3f + PtoC * 0.7f;
-	m_vec.y = nowYRot;
+	//m_vec.y = nowYRot;
 	
 	//スティックによる回転。ここは横回転。
-	CQuaternion rot = CQuaternion::CreateRotDeg( CVector3::AxisY(), g_pad->GetRStickXF() * ROT_SPEED * GameTime::GetDeltaTime() );
+	CQuaternion rot = CQuaternion::CreateRotDeg(
+		CVector3::AxisY(), g_pad->GetRStickXF() * ROT_SPEED * GameTime::GetDeltaTime() );
+	rot.AddRotationDeg( GetRightVec(), -g_pad->GetRStickYF() * ROT_SPEED * GameTime::GetDeltaTime() );
+
 	rot.Multiply( m_vec );
 
+	const float cos30 = cosf(CMath::DegToRad(10));
+	m_vec.y = CMath::Clamp( m_vec.y, -CtoPLength * cos30 , CtoPLength * cos30 );
+	m_vec.Normalize();
+	m_vec *= CtoPLength;
+
 	//上下回転はfloatで保持して制限をかける。
-	m_upDownRot -= g_pad->GetRStickYF() * ROT_SPEED * GameTime::GetDeltaTime();
+	/*m_upDownRot -= g_pad->GetRStickYF() * ROT_SPEED * GameTime::GetDeltaTime();
 	m_upDownRot = CMath::Clamp( m_upDownRot, -LIMIT_UP_DOWN_ROT, LIMIT_UP_DOWN_ROT );
 	rot.SetRotationDeg( GetRightVec(), m_upDownRot );
 	CVector3 upDownRoteteVec = m_vec;
-	rot.Multiply( upDownRoteteVec );
+	rot.Multiply( upDownRoteteVec );*/
 
 	//ポジション更新
-	m_pos = playerPos + upDownRoteteVec;
+	m_pos = playerPos + m_vec;
 
 	//カメラの更新。
 	UpdateGCamera( playerPos );

@@ -20,6 +20,7 @@ public:
 	Player(IStage* stage);
 	~Player();
 
+	void Start() override;
 	void Update() override;
 
 	/// <summary>
