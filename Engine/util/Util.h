@@ -51,3 +51,7 @@ public:
 	}
 };
 
+//2æ
+static inline constexpr float pow2( float f ){
+	return f * f;
+}

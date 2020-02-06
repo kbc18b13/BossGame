@@ -8,13 +8,17 @@ class PlayerCamera {
 public:
 	PlayerCamera();
 
+	void Init(Actor* player){
+		m_player = player;
+	}
+
 	/// <summary>
 	/// プレイヤー座標を与えてカメラ位置を更新する
 	/// </summary>
 	/// <param name="playerPos">プレイヤーの位置</param>
-	void Update(const CVector3& playerPos);
+	void Update();
 
-	void TurnLockOn(IStage* stage);
+	void TurnLockOn();
 
 	/// <summary>
 	/// カメラの前方向
@@ -60,11 +64,14 @@ public:
 
 private:
 	void UpdateGCamera( const CVector3& look );
+	void LockOn(CVector2 pad = CVector2::Zero());
 
 	static constexpr float ROT_SPEED = 180;//カメラ回転スピード。度/秒。
 	static constexpr float LIMIT_UP_DOWN_ROT = 80;//上下回転の制限。度。0度～90度。
 	static constexpr int TARGET_RANGE = 400; //ターゲット可能な距離
 	static constexpr float CtoPLength = 100;
+
+	Actor* m_player = nullptr;
 
 	float m_upDownRot = 0.0f; //上下の回転。度。
 

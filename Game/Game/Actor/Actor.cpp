@@ -10,7 +10,7 @@ bool Actor::Damage( UINT damage, Actor* source ) {
 	m_nowHP = m_nowHP > damage ? m_nowHP - damage : 0;
 
 	if( m_nowHP == 0 && lockCamera){
-		lockCamera->TurnLockOn(m_stage);
+		lockCamera->TurnLockOn();
 	}
 	return true;
 }

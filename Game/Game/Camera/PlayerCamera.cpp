@@ -30,15 +30,27 @@ void PlayerCamera::UpdateGCamera(const CVector3& look){
 	g_camera3D.Update();
 }
 
-void PlayerCamera::Update( const CVector3 & playerPos){
+void PlayerCamera::Update(){
+
+	//敵のロックオン
+	if( g_pad->IsTrigger( enButtonRB3 ) ){
+		TurnLockOn();
+	}
+
+	CVector3 playerPos = m_player->GetPos();
+	playerPos.y += m_player->GetHeight();
+
+	//ロックオン中の挙動
 	if( IsLockOn() ){
+		if( g_pad->IsTriggerRStick() ){
+			LockOn( g_pad->GetRStickVec() );
+		}
+
 		CVector3 ePos = GetLockOnPos();
 		ePos.y += m_lockOnEnemy->GetHeight() / 2;
-		//ターゲット画像の移動
-		m_lockOnSprite.SetPosNormalized( g_camera3D.GetProjectedPos( ePos ).xy() );
 
-		ePos.y = playerPos.y;
 		m_vec = playerPos - ePos;
+		m_vec.y = 0;
 		m_vec.Normalize();
 
 		CQuaternion::CreateRotDeg( GetRightVec(), 30 ).Multiply( m_vec );
@@ -48,8 +60,13 @@ void PlayerCamera::Update( const CVector3 & playerPos){
 
 		//カメラの更新。
 		UpdateGCamera( playerPos );
+
+		//ターゲット画像の移動
+		m_lockOnSprite.SetPosNormalized( g_camera3D.GetProjectedPos( ePos ).xy() );
 		return;
 	}
+
+	//非ロックオン中の挙動
 
 	//回り込みカメラ
 	CVector3 PtoC = m_pos - playerPos;
@@ -79,7 +96,53 @@ void PlayerCamera::Update( const CVector3 & playerPos){
 	UpdateGCamera( playerPos );
 }
 
-void PlayerCamera::TurnLockOn( IStage* stage ){
+void PlayerCamera::LockOn(CVector2 pad ){
+	float lockScore = std::numeric_limits<float>::max();
+	Actor* lockOn = nullptr;
+
+	//スクリーン上の距離計算の際に中心をずらすことで、パッド入力でターゲット切り替えを行えるようにする。
+	if( pad.LengthSq() > pow2(0.01f) ){
+		pad.Normalize();
+		pad *= 0.4f;
+	}
+
+	for( Actor* e : m_player->GetStage()->GetEnemys() ){
+		CVector3 ePos = e->GetPos();
+		CVector3 pPos = m_pos - m_vec;
+
+		//死亡者以外、現在ロック中以外
+		if( !e->IsDeath()  && e != m_lockOnEnemy){
+
+			//スクリーン上での距離
+			CVector2 toScreenCenter = g_camera3D.GetProjectedPos( ePos ).xy() - pad;
+			//三次元空間での距離
+			float toEnemy = ( ePos - pPos ).Length();
+
+			//距離が範囲内の物だけを対象にする。
+			if( toEnemy < TARGET_RANGE && toScreenCenter.Length() < 1.0f ){
+
+				float score = toScreenCenter.Length() * 100 + toEnemy;
+				//2D、3D乗の距離から算出したスコアが一番小さいものを選ぶ。
+				if( lockScore > score ){
+					lockOn = e;
+					lockScore = score;
+				}
+			}
+		}
+	}
+
+	//ロックオン対象が存在した場合
+	if( lockOn ){
+		if( m_lockOnEnemy ){
+			m_lockOnEnemy->UnLockOn();
+		}
+		m_lockOnEnemy = lockOn;
+		m_lockOnEnemy->LockOn( this );
+		m_lockOnSprite.SetIsDraw( true );
+	}
+}
+
+void PlayerCamera::TurnLockOn(){
 	//ロックオン解除
 	if( IsLockOn() ){
 		m_lockOnEnemy->UnLockOn();
@@ -89,35 +152,7 @@ void PlayerCamera::TurnLockOn( IStage* stage ){
 	}
 
 	//ロックオン
-
-	float distanceToCenter = std::numeric_limits<float>::max();
-	Actor* lockOn = nullptr;
-
-	for( Actor* e : stage->GetEnemys() ){
-		CVector3 ePos = e->GetPos();
-		CVector3 pPos = m_pos - m_vec;
-
-		//死亡者以外
-		if( !e->IsDeath() ){
-			//距離が範囲内の物だけを対象にする。
-			if( ( ePos - pPos ).LengthSq() < TARGET_RANGE*TARGET_RANGE ){
-				CVector2 screenPos = g_camera3D.GetProjectedPos( ePos ).xy();
-
-				//スクリーン座標が中央に一番近い物を選択する。
-				if( distanceToCenter > screenPos.LengthSq() ){
-					lockOn = e;
-					distanceToCenter = screenPos.LengthSq();
-				}
-			}
-		}
-	}
-
-	//ロックオン対象が存在した場合
-	if( lockOn ){
-		m_lockOnEnemy = lockOn;
-		m_lockOnEnemy->LockOn( this );
-		m_lockOnSprite.SetIsDraw( true );
-	}
+	LockOn();
 }
 
 CVector3 PlayerCamera::GetPadVec(){

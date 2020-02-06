@@ -56,6 +56,11 @@ public:
 		m_stage = stage;
 	}
 
+	//ステージをゲット
+	IStage* GetStage(){
+		return m_stage;
+	}
+
 	//カメラでロックオン
 	void LockOn( PlayerCamera* camera ){
 		lockCamera = camera;

@@ -40,6 +40,11 @@
 #include "math/Matrix.h"
 
 #include "physics/Physics.h"
+
+//ユーティリティ
+#include "util/Util.h"
+
+//入力
 #include "HID/Pad.h"
 
 //グラフィック系
@@ -62,8 +67,6 @@
 
 //デルタタイム用
 #include "gameTimer/GameTime.h"
-
-#include "util/Util.h"
 
 #include "graphics/SkinModelRender.h"
 

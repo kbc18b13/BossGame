@@ -82,6 +82,9 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 1000, 25 );
 	m_hpBar.SetPosCenterZero( CVector2( 625, 325 ) );
 	m_hpBar.SetColor( CVector4( 1, 0, 0, 1 ) );
+
+	//カメラ
+	m_camera.Init( this );
 }
 
 
@@ -97,11 +100,6 @@ void Player::Update(){
 		g_ROManager.GetShadowMap().UpdateLight( GetPos() + CVector3( 400, 400, 400 ), CVector3( -1, -1, -1 ) );
 	}
 
-	//敵のロックオン
-	if( g_pad->IsTrigger( enButtonRB3 ) ){
-		m_camera.TurnLockOn( m_stage );
-	}
-
 	//ステートのアップデート
 	ActStateUpdate();
 
@@ -114,7 +112,7 @@ void Player::Update(){
 	}
 
 	//カメラの更新
-	m_camera.Update( GetPos() + CVector3::Up() * 40 );
+	m_camera.Update();
 
 	//HPバーの更新
 	m_hpBar.SetPercent( Actor::GetHPPer() );

@@ -159,6 +159,10 @@ public:
 		return CVector2(m_lStickX, m_lStickY);
 	}
 
+	bool IsTriggerLStick() const {
+		return GetLStickVec().LengthSq() > pow2( 0.1f ) && !m_lStickTrigger;
+	}
+
 	/*!
 	*@brief	右スティックのX軸の入力量を取得。
 	*@return	-1.0～1.0の正規化された値を返す。
@@ -193,6 +197,10 @@ public:
 		return CVector2(m_rStickX, m_rStickY);
 	}
 
+	bool IsTriggerRStick() const{
+		return GetRStickVec().LengthSq() > pow2( 0.1f ) && !m_rStickTrigger;
+	}
+
 private:
 	/*!
 	*@brief	ボタンの入力情報を更新。
@@ -209,8 +217,10 @@ private:
 	int m_press[enButtonNum];	//!<press入力のフラグ。
 	float m_lStickX = 0.0f;		//!<左スティックのX軸の入力量。
 	float m_lStickY = 0.0f;		//!<左スティックのY軸の入力量。
+	bool  m_lStickTrigger = false;//左スティックのトリガーフラグ。
 	float m_rStickX = 0.0f;		//!<右スティックのX軸の入力量。
 	float m_rStickY = 0.0f;		//!<右スティックのY軸の入力量。
+	bool  m_rStickTrigger = false;//右スティックのトリガーフラグ。
 };
 
 //ゲームパッドのグローバル変数のextern宣言。
