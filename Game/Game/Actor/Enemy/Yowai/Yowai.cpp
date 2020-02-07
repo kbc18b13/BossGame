@@ -86,16 +86,16 @@ void Yowai::Update(){
 	m_hpBar.SetPercent( GetHPPer() );
 	m_hpBar.SetPos( GetPos() + CVector3::Up() * 50 );
 
-	if( m_nowHP == 0 ){
-		m_model.SetActive( false );
-		m_chara.SetActive( false );
-		m_weapon.SetActive( false );
-		m_opener->DeathEnemy();
-		m_isDeath = true;
-	}
-
 	m_model.Update();
 	m_weapon.Update();
+}
+
+void Yowai::OnDeath(){
+	m_model.SetActive( false );
+	m_chara.SetActive( false );
+	m_weapon.SetActive( false );
+	m_hpBar.SetPercent( 0 );
+	m_opener->DeathEnemy();
 }
 
 Act * Yowai::GetAct( int index ){

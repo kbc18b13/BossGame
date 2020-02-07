@@ -78,20 +78,19 @@ void SkeletonEnemy::Update(){
 	//位置をモデルに適用
 	m_model.SetPos( GetPos() );
 
-	//死亡
-	if( m_nowHP == 0 ){
-		m_model.SetActive( false );
-		m_chara.SetActive( false );
-		m_sword.SetActive( false );
-		m_isDeath = true;
-	}
-
 	//各種アップデート
 	ActStateUpdate();
 	m_hpBar.SetPercent( GetHPPer() );
 	m_hpBar.SetPos( GetPos() + CVector3::Up() * 50 );
 	m_model.Update();
 	m_sword.Update();
+}
+
+void SkeletonEnemy::OnDeath(){
+	m_model.SetActive( false );
+	m_chara.SetActive( false );
+	m_sword.SetActive( false );
+	m_hpBar.SetPercent( 0 );
 }
 
 Act * SkeletonEnemy::GetAct( int index ){

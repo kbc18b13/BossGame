@@ -59,6 +59,9 @@ void RenderObjectManager::Render(){
     //通常描画オブジェクトの描画
     m_defaultRender.Render();
 
+	//半透明描画オブジェクトの描画
+	m_translucentRender.Render();
+
 	//エフェクト描画
 	g_effectManager->Draw();
 

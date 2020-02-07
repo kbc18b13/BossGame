@@ -433,6 +433,11 @@ public:
 		return DirectX::XMVector4LengthSq( xmv ).m128_f32[0];
 	}
 
+	//CVector2Çê∂ê¨
+	CVector2 xy() const{
+		return CVector2( x, y );
+	}
+
 	static CVector4 White(){
 		static const CVector4 white = { 1.0f, 1.0f, 1.0f, 1.0f };
 		return white;

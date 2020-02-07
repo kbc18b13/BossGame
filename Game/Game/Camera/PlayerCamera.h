@@ -12,6 +12,7 @@ public:
 		m_player = player;
 		CVector3 playerPos = m_player->GetPos();
 		playerPos.y += m_player->GetHeight();
+		m_springPPos = playerPos;
 		m_pos = playerPos + m_vec;
 	}
 
@@ -21,7 +22,24 @@ public:
 	/// <param name="playerPos">プレイヤーの位置</param>
 	void Update();
 
-	void TurnLockOn();
+	/// <summary>
+	/// ロックオン状態を切り替える。
+	/// </summary>
+	void TurnLockOn(){
+		if( IsLockOn() ){
+			UnLockOn();
+			return;
+		}
+		LockOn();
+	}
+
+	/// <summary>
+	/// ロックオンを外し、再ロックオンを試す。
+	/// </summary>
+	void ReLockOn(){
+		UnLockOn();
+		LockOn();
+	}
 
 	/// <summary>
 	/// カメラの前方向
@@ -66,22 +84,25 @@ public:
 	}
 
 private:
-	void UpdateGCamera( const CVector3& look );
 	void LockOn(CVector2 pad = CVector2::Zero());
+	void UnLockOn(){
+		m_lockOnEnemy->UnLockOn();
+		m_lockOnEnemy = nullptr;
+		m_lockOnSprite.SetIsDraw( false );
+	}
+	void UpdateGCamera( const CVector3& pos, const CVector3& look );
 
 	static constexpr float ROT_SPEED = 180;//カメラ回転スピード。度/秒。
-	static constexpr float LIMIT_UP_DOWN_ROT = 80;//上下回転の制限。度。0度～90度。
+	static constexpr float LIMIT_UP_DOWN_ROT = 70;//上下回転の制限。度。0度～90度。
 	static constexpr int TARGET_RANGE = 400; //ターゲット可能な距離
-	static constexpr float CtoPLength = 100;
+	static constexpr float CtoPLength = 100; //プレイヤーからカメラへのベクトルの長さ
 
 	Actor* m_player = nullptr;
+	CVector3 m_springPPos; //プレイヤーに遅れてついていくポジション
 
-	float m_upDownRot = 0.0f; //上下の回転。度。
-
-	CVector3 m_vec = {0,0,-100};//プレイヤーからカメラへのベクトル
+	CVector3 m_vec = {0,0,-CtoPLength };//プレイヤーからカメラへのベクトル
+	CVector3 m_springVec = { 0,0,-CtoPLength }; //カメラ回転に遅れてついていくベクトル
 	CVector3 m_pos;//カメラの位置
-
-	CVector3 m_oldPlayerPos;
 
 	Actor* m_lockOnEnemy = nullptr;
 

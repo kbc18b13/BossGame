@@ -55,3 +55,13 @@ public:
 static inline constexpr float pow2( float f ){
 	return f * f;
 }
+
+//—İæ
+template<typename T>
+static constexpr T CPow( T base, unsigned int exp ){
+	T ans = 1;
+	for( unsigned int i = 0; i < exp; i++ ){
+		ans *= base;
+	}
+	return ans;
+}

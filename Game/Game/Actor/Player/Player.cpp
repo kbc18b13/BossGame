@@ -47,7 +47,7 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 		desc.walkMax = 150;
 
 		desc.gravity = 900;
-		desc.jumpPower = 500;
+		desc.jumpPower = 400;
 
 		desc.userIndex = enCollisionAttr_Player;
 		desc.userPointer = this;
@@ -126,21 +126,21 @@ void Player::Update(){
 	m_sword.Update();
 	m_shield.Update();
 
-	//死亡
-	if( m_nowHP == 0){
-		m_stage->EndStage();
-		m_model.SetActive( false );
-		m_chara.SetActive( false );
-		m_sword.SetActive( false );
-		m_shield.SetActive( false );
-		m_isDeath = true;
-		DisplayText::display( L"YOU DIED", CVector3( 0.7f, 0, 0 ) );
-	}
 	if( GetPos().y < -100 && !m_fallDeath){
 		m_stage->EndStage();
 		DisplayText::display( L"YOU DIED", CVector3( 0.7f, 0, 0 ) );
 		m_fallDeath = true;
 	}
+}
+
+void Player::OnDeath(){
+	m_stage->EndStage();
+	m_model.SetActive( false );
+	m_chara.SetActive( false );
+	m_sword.SetActive( false );
+	m_shield.SetActive( false );
+	m_hpBar.SetPercent( 0 );
+	DisplayText::display( L"YOU DIED", CVector3( 0.7f, 0, 0 ) );
 }
 
 bool Player::Damage( UINT damage, Actor* source ){
@@ -167,36 +167,3 @@ bool Player::Damage( UINT damage, Actor* source ){
 Act* Player::GetAct( int index ){
 	return m_actArray[index].get();
 }
-
-//void Player::ChangeActDefault(){
-//	if( g_pad->IsTrigger( enButtonB ) && ChangeAct( Anim::Roll ) ){
-//		return;
-//	}
-//
-//	if( g_pad->IsPress( enButtonLB1 ) ){
-//		ChangeAct( Anim::Guard);
-//		return;
-//	}
-//
-//	if( g_pad->IsTrigger( enButtonRB1 ) && ChangeAct( Anim::Slash1 ) ){
-//		return;
-//	}
-//
-//	if( g_pad->GetLStickVec().LengthSq() > 0.01f ){
-//		ChangeAct( Anim::Walk);
-//		return;
-//	}
-//
-//	ChangeAct( Anim::Idle);
-//}
-//
-//bool Player::ChangeAct( Anim act ){
-//	Act* a = m_actArray[int( act )].get();
-//	//スタミナが足りない場合は変更せずfalseを返す。
-//	if( a->ConsumeStamina( m_stamina ) ){
-//		m_nowAct = a;
-//		m_nowAct->Start( this );
-//		return true;
-//	}
-//	return false;
-//}

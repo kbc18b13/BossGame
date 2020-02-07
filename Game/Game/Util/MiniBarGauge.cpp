@@ -9,11 +9,11 @@ MiniBarGauge::~MiniBarGauge(){}
 void MiniBarGauge::Init( const wchar_t * outImagePath, const wchar_t * inImagePath, UINT width, UINT height ){
 	m_out.Init( outImagePath, width, height );
 	m_in.Init( inImagePath, width, height );
-	g_ROManager.AddDefaultRender( this );
+	g_ROManager.AddTranslucentRender( this );
 }
 
 void MiniBarGauge::view(){
-	if( time < 0 && time <= 2.9f ){
+	if( time > 0 && time <= 2.9f ){
 		time = 2.9f;
 	} else{
 		time = c_time;
@@ -25,19 +25,27 @@ void MiniBarGauge::Render(){
 
 		g_graphicsEngine->ResetBlendState();
 
+		//タイムが0より小さいとそもそも描画しない
 		if( time <= 0 ){
 			return;
 		}
+
+		//アルファは3.0から2.9にかけて濃くなり、1.0から0にかけて薄くなっていく
 		float alpha;
 		if( time > 2.9f ){
 			alpha = ( 3.0f - time ) * 10;
 		} else{
 			alpha = std::min(time, 1.0f);
 		}
+
+		//タイムを減らす
 		time -= GameTime::GetDeltaTime();
+
+		//アルファを適用
 		m_out.SetMulColor( CVector4( 1, 1, 1, alpha ) );
 		m_in.SetMulColor( CVector4( 1, 0, 0, alpha ) );
 
+		//ビュー行列変換
 		CVector4 pos = CVector4(m_pos.x, m_pos.y, m_pos.z, 1);
 
 		g_camera3D.GetViewMatrix().Mul( pos );

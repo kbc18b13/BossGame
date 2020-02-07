@@ -99,59 +99,24 @@ void Troll::Update() {
 	//HPバー更新
 	m_hpBar.SetPercent( Actor::GetHPPer() );
 
-	//死亡
-	if( m_nowHP == 0 ){
-		m_stage->EndStage();
-		m_model.SetActive( false );
-		m_armCollision.SetActive( false );
-		m_bodyCollision.SetActive( false );
-		m_chara.SetActive( false );
-		m_hpBar.SetActive( false );
-		m_nameFont.SetActive( false );
-		m_isDeath = true;
-		DisplayText::display( L"VICTORY ARCHIVED" , CVector3(0.5f, 0.5f, 1.0f));
-	}
-
 	//各種アップデート
     m_model.Update();
     m_armCollision.Update();
 	m_bodyCollision.Update();
 }
 
+void Troll::OnDeath(){
+	m_stage->EndStage();
+	m_model.SetActive( false );
+	m_armCollision.SetActive( false );
+	m_bodyCollision.SetActive( false );
+	m_chara.SetActive( false );
+	m_hpBar.SetActive( false );
+	m_nameFont.SetActive( false );
+	m_hpBar.SetPercent( 0 );
+	DisplayText::display( L"VICTORY ARCHIVED", CVector3( 0.5f, 0.5f, 1.0f ) );
+}
+
 Act * Troll::GetAct( int index ){
 	return m_actionArray[index].get();
 }
-
-//void Troll::ChangeActDefault(){
-//	if( Util::RandomInt( 0, 4 ) == 0 ){
-//		ChangeAct( ActState::Step );
-//		return;
-//	}
-//
-//	CVector3 toP = m_stage->GetPlayer()->GetPos() - m_CharaCon.GetPosition();
-//
-//	//近い
-//	if( toP.LengthSq() < 100 * 100 ){
-//		if( Util::RandomInt( 0, 2 ) == 0 ){
-//			ChangeAct( ActState::Hip );
-//		} else{
-//			ChangeAct( ActState::Attack );
-//		}
-//
-//		//遠い
-//	} else{
-//		if( Util::RandomInt( 0, 2 ) == 0 ){
-//			ChangeAct( ActState::Tackle );
-//		} else{
-//			ChangeAct( ActState::Chase );
-//		}
-//	}
-//}
-//
-//void Troll::ChangeAct( ActState act ){
-//	TrollAct::Act* a = m_actionArray[int( act )].get();
-//	if( a != m_activeAction ){
-//		a->Start( this );
-//		m_activeAction = a;
-//	}
-//}

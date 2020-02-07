@@ -16,6 +16,8 @@ public:
 
 	void Update() override;
 
+	void OnDeath() override;
+
 	bool Damage( UINT damage, Actor* source ) override{
 		m_hpBar.view();
 		return Actor::Damage( damage, source );

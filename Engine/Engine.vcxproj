@@ -180,6 +180,7 @@
     <ClInclude Include="level\MapChip.h" />
     <ClInclude Include="math\kMath.h" />
     <ClInclude Include="math\Matrix.h" />
+    <ClInclude Include="math\Pow.h" />
     <ClInclude Include="math\Vector.h" />
     <ClInclude Include="physics\BoxCollider.h" />
     <ClInclude Include="physics\CapsuleCollider.h" />

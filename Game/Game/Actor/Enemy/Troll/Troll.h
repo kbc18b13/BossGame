@@ -18,6 +18,7 @@ public:
 
 	void Start() override;
 	void Update() override;
+	void OnDeath() override;
 
 	//—ñ‹“
 	enum class AnimState{

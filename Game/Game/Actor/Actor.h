@@ -80,6 +80,8 @@ protected:
 
 	virtual Act* GetAct( int index ) = 0;
 
+	virtual void OnDeath(){};
+
 	Act* m_nowAct = nullptr; //現在のステート
 
 	UINT m_nowHP; //ヒットポイント

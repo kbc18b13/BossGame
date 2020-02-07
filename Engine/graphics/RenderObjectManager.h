@@ -22,9 +22,13 @@ public:
 
     //普通の描画オブジェクトの登録
     void AddDefaultRender( IRenderObject* ro ){
-        ro->machine = &m_defaultRender;
         m_defaultRender.AddRenderObject( ro );
     }
+
+	//半透明オブジェクトの登録
+	void AddTranslucentRender( IRenderObject* ro ){
+		m_translucentRender.AddRenderObject( ro );
+	}
 
     //シャドウキャスターを登録
     void AddShadowCaster( SkinModelRender* modelRender ){
@@ -37,7 +41,6 @@ public:
 
     //HUD描画オブジェクトの登録
     void AddHUDRender( IRenderObject* ro ){
-        ro->machine = &m_HUDRender;
         m_HUDRender.AddRenderObject( ro );
     }
 
@@ -60,6 +63,7 @@ private:
 
     //描画オブジェクト
     RenderMachine m_defaultRender;
+	RenderMachine m_translucentRender;
     RenderMachine m_HUDRender;
 
 	IRenderObject* m_fadeRender = nullptr;

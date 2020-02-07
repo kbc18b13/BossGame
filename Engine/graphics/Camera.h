@@ -109,7 +109,7 @@ public:
 	}
 
 	//ビュープロジェクション行列をかけた座標にして返す
-	CVector3 GetProjectedPos(CVector3 pos );
+	CVector4 GetProjectedPos(const CVector3& pos );
 
 private:
 	CMatrix	m_viewMatrix = CMatrix::Identity();		//ビュー行列。

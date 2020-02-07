@@ -22,7 +22,7 @@ public:
 
 	void Start() override;
 	void Update() override;
-
+	void OnDeath() override;
 	/// <summary>
 	/// ƒ_ƒ[ƒW‚ğ—^‚¦‚é
 	/// </summary>

@@ -26,12 +26,12 @@ void Camera::Update()
 	m_cbuffer.UpdateData(&m_position);
 }
 
-CVector3 Camera::GetProjectedPos(CVector3 pos3 ){
+CVector4 Camera::GetProjectedPos(const CVector3& pos3 ){
 	CVector4 pos4 = CVector4( pos3.x, pos3.y, pos3.z, 1 );
 	m_viewMatrix.Mul( pos4 );
 	m_projMatrix.Mul( pos4 );
-	pos3.x = pos4.x / pos4.w;
-	pos3.y = pos4.y / pos4.w;
-	pos3.z = pos4.z / pos4.w;
-	return pos3;
+	pos4.x = pos4.x / pos4.w;
+	pos4.y = pos4.y / pos4.w;
+	pos4.z = pos4.z / pos4.w;
+	return pos4;
 }

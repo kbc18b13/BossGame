@@ -9,22 +9,22 @@ PlayerCamera::PlayerCamera(){
 	m_lockOnSprite.SetIsDraw( false );
 }
 
-void PlayerCamera::UpdateGCamera(const CVector3& look){
+void PlayerCamera::UpdateGCamera( const CVector3& pos, const CVector3& look){
 
 	//レイキャストを使った壁に当たるカメラ
-	btCollisionWorld::ClosestRayResultCallback cb(look, m_pos);
+	btCollisionWorld::ClosestRayResultCallback cb(look, pos);
 
-	g_physics.GetDynamicWorld()->rayTest( look, m_pos, cb );
+	g_physics.GetDynamicWorld()->rayTest( look, pos, cb );
 
 	if( cb.hasHit() ){
 		//例が当たったから少し押しもどす。
 		CVector3 hitPos = cb.m_hitPointWorld;
-		CVector3 toL = look - m_pos;
+		CVector3 toL = look - pos;
 		toL.Normalize();
 		hitPos += toL * 2;
 		g_camera3D.SetPosition( hitPos );
 	} else{
-		g_camera3D.SetPosition( m_pos );
+		g_camera3D.SetPosition( pos );
 	}
 	g_camera3D.SetTarget( look );
 	g_camera3D.Update();
@@ -37,8 +37,21 @@ void PlayerCamera::Update(){
 		TurnLockOn();
 	}
 
-	CVector3 playerPos = m_player->GetPos();
-	playerPos.y += m_player->GetHeight();
+	{
+		CVector3 playerPos = m_player->GetPos();
+		playerPos.y += m_player->GetHeight();
+
+		//バネ位置をプレイヤー側へずらす
+		m_springPPos.Lerp( 0.2f, m_springPPos, playerPos );
+
+		//プレイヤーとバネ位置に最大距離を設ける
+		CVector3 toSpring = m_springPPos - playerPos;
+		if( toSpring.LengthSq() > pow2( 100 ) ){
+			toSpring.Normalize();
+			toSpring *= 200;
+			m_springPPos = playerPos + toSpring;
+		}
+	}
 
 	//ロックオン中の挙動
 	if( IsLockOn() ){
@@ -49,17 +62,20 @@ void PlayerCamera::Update(){
 		CVector3 ePos = GetLockOnPos();
 		ePos.y += m_lockOnEnemy->GetHeight() / 2;
 
-		m_vec = playerPos - ePos;
+		m_vec = m_springPPos - ePos;
 		m_vec.y = 0;
 		m_vec.Normalize();
 
 		CQuaternion::CreateRotDeg( GetRightVec(), 30 ).Multiply( m_vec );
 
 		m_vec *= 100;
-		m_pos = playerPos + m_vec;
+		m_pos = m_springPPos + m_vec;
+
+		//バネ回転
+		m_springVec.Lerp( 0.7f, m_springVec, m_vec );
 
 		//カメラの更新。
-		UpdateGCamera( playerPos );
+		UpdateGCamera( m_springPPos + m_springVec, m_springPPos );
 
 		//ターゲット画像の移動
 		m_lockOnSprite.SetPosNormalized( g_camera3D.GetProjectedPos( ePos ).xy() );
@@ -69,39 +85,47 @@ void PlayerCamera::Update(){
 	//非ロックオン中の挙動
 
 	//回り込みカメラ
-	CVector3 PtoC = m_pos - playerPos;
-	//PtoC.y = 0;
+	CVector3 PtoC = m_pos - m_springPPos;
 	PtoC.Normalize();
 	PtoC *= CtoPLength;
+
 	//移動後のベクトルと前回のベクトルを合成。yは無視。
-	float nowYRot = m_vec.y;
-	m_vec = m_vec * 0.3f + PtoC * 0.7f;
-	//m_vec.y = nowYRot;
+	m_vec.x = m_vec.x * 0.3f + PtoC.x * 0.7f;
+	m_vec.z = m_vec.z * 0.3f + PtoC.z * 0.7f;
+
+	float yVec = m_vec.y * 0.7f + PtoC.y * 0.3f;
+	//縦方向の回転は、一定範囲内に収まっていなければ無効にする。
+
+	constexpr float cos80 = 0.1736481f;
+	constexpr float cos50 = 0.6427876f;
+	if( cos80*CtoPLength < yVec && yVec < cos50*CtoPLength ){
+		m_vec.y = yVec;
+	}
+
 	
-	//スティックによる回転。ここは横回転。
-	CQuaternion rot = CQuaternion::CreateRotDeg(
-		CVector3::AxisY(), g_pad->GetRStickXF() * ROT_SPEED * GameTime::GetDeltaTime() );
+	//スティックによる回転。
+	CQuaternion rot;
+	rot.SetRotationDeg( CVector3::AxisY(), g_pad->GetRStickXF() * ROT_SPEED * GameTime::GetDeltaTime() );
 	rot.AddRotationDeg( GetRightVec(), -g_pad->GetRStickYF() * ROT_SPEED * GameTime::GetDeltaTime() );
 
 	rot.Multiply( m_vec );
 
-	const float cos30 = cosf(CMath::DegToRad(10));
-	m_vec.y = CMath::Clamp( m_vec.y, -CtoPLength * cos30 , CtoPLength * cos30 );
-	m_vec.Normalize();
-	m_vec *= CtoPLength;
+	//上下回転に制限をかける。
+	float nowPitch = CMath::RadToDeg( acosf( CMath::Clamp( m_vec.y / CtoPLength, -1, 1) ));
+	float clampPitch = nowPitch - CMath::Clamp( nowPitch, 90-LIMIT_UP_DOWN_ROT, 90+LIMIT_UP_DOWN_ROT );
+	CQuaternion clampRot;
+	clampRot.SetRotationDeg( GetRightVec(), clampPitch );
 
-	//上下回転はfloatで保持して制限をかける。
-	/*m_upDownRot -= g_pad->GetRStickYF() * ROT_SPEED * GameTime::GetDeltaTime();
-	m_upDownRot = CMath::Clamp( m_upDownRot, -LIMIT_UP_DOWN_ROT, LIMIT_UP_DOWN_ROT );
-	rot.SetRotationDeg( GetRightVec(), m_upDownRot );
-	CVector3 upDownRoteteVec = m_vec;
-	rot.Multiply( upDownRoteteVec );*/
+	clampRot.Multiply( m_vec );
+
+	//バネ回転
+	m_springVec.Lerp( 0.7f, m_springVec, m_vec );
 
 	//ポジション更新
-	m_pos = playerPos + m_vec;
+	m_pos = m_springPPos + m_vec;
 
 	//カメラの更新。
-	UpdateGCamera( playerPos );
+	UpdateGCamera( m_springPPos + m_springVec, m_springPPos );
 }
 
 void PlayerCamera::LockOn(CVector2 pad ){
@@ -122,14 +146,14 @@ void PlayerCamera::LockOn(CVector2 pad ){
 		if( !e->IsDeath()  && e != m_lockOnEnemy){
 
 			//スクリーン上での距離
-			CVector2 toScreenCenter = g_camera3D.GetProjectedPos( ePos ).xy() - pad;
+			CVector4 toScreenCenter = g_camera3D.GetProjectedPos( ePos ) - CVector4(pad.x, pad.y, 0, 0);
 			//三次元空間での距離
 			float toEnemy = ( ePos - pPos ).Length();
 
 			//距離が範囲内の物だけを対象にする。
-			if( toEnemy < TARGET_RANGE && toScreenCenter.Length() < 1.0f ){
+			if( toEnemy < TARGET_RANGE && toScreenCenter.xy().Length() < 0.8f && toScreenCenter.w > 0){
 
-				float score = toScreenCenter.Length() * 100 + toEnemy;
+				float score = toScreenCenter.xy().Length() * 100 + toEnemy;
 				//2D、3D乗の距離から算出したスコアが一番小さいものを選ぶ。
 				if( lockScore > score ){
 					lockOn = e;
@@ -141,6 +165,7 @@ void PlayerCamera::LockOn(CVector2 pad ){
 
 	//ロックオン対象が存在した場合
 	if( lockOn ){
+		//既に何かをロックオンしていたら解除する。
 		if( m_lockOnEnemy ){
 			m_lockOnEnemy->UnLockOn();
 		}
@@ -148,19 +173,6 @@ void PlayerCamera::LockOn(CVector2 pad ){
 		m_lockOnEnemy->LockOn( this );
 		m_lockOnSprite.SetIsDraw( true );
 	}
-}
-
-void PlayerCamera::TurnLockOn(){
-	//ロックオン解除
-	if( IsLockOn() ){
-		m_lockOnEnemy->UnLockOn();
-		m_lockOnEnemy = nullptr;
-		m_lockOnSprite.SetIsDraw( false );
-		return;
-	}
-
-	//ロックオン
-	LockOn();
 }
 
 CVector3 PlayerCamera::GetPadVec(){
