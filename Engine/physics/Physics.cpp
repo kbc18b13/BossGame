@@ -81,7 +81,7 @@ void PhysicsWorld::Update()
 }
 void PhysicsWorld::AddRigidBody(RigidBody& rb)
 {
-	dynamicWorld->addRigidBody(rb.GetBody());
+	dynamicWorld->addRigidBody(rb.GetBody(), rb.GetBody()->getCollisionFlags(), 0xffff);
 }
 void PhysicsWorld::RemoveRigidBody(RigidBody& rb)
 {

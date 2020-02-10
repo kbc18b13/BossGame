@@ -13,6 +13,9 @@ void PlayerCamera::UpdateGCamera( const CVector3& pos, const CVector3& look){
 
 	//レイキャストを使った壁に当たるカメラ
 	btCollisionWorld::ClosestRayResultCallback cb(look, pos);
+	cb.m_collisionFilterMask = 0xffffffff;
+	cb.m_collisionFilterMask ^= btCollisionObject::CollisionFlags::CF_Player;
+
 
 	g_physics.GetDynamicWorld()->rayTest( look, pos, cb );
 
@@ -48,7 +51,7 @@ void PlayerCamera::Update(){
 		CVector3 toSpring = m_springPPos - playerPos;
 		if( toSpring.LengthSq() > pow2( 100 ) ){
 			toSpring.Normalize();
-			toSpring *= 200;
+			toSpring *= 100;
 			m_springPPos = playerPos + toSpring;
 		}
 	}
@@ -93,15 +96,17 @@ void PlayerCamera::Update(){
 	m_vec.x = m_vec.x * 0.3f + PtoC.x * 0.7f;
 	m_vec.z = m_vec.z * 0.3f + PtoC.z * 0.7f;
 
+	//縦方向の回転は横に比べて遅くする
 	float yVec = m_vec.y * 0.7f + PtoC.y * 0.3f;
-	//縦方向の回転は、一定範囲内に収まっていなければ無効にする。
 
+	//縦方向の回転は、一定範囲内に収まっていなければ無効にする。
 	constexpr float cos80 = 0.1736481f;
 	constexpr float cos50 = 0.6427876f;
 	if( cos80*CtoPLength < yVec && yVec < cos50*CtoPLength ){
 		m_vec.y = yVec;
 	}
-
+	m_vec.Normalize();
+	m_vec *= CtoPLength;
 	
 	//スティックによる回転。
 	CQuaternion rot;

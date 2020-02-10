@@ -8,6 +8,7 @@ struct CharaConDesc {
 	CVector3 position;
 
 	int userIndex     = enCollisionAttr_Character;
+	btCollisionObject::CollisionFlags collisionFlag = btCollisionObject::CollisionFlags::CF_CHARACTER_OBJECT;
 	void* userPointer = nullptr;
 
 	float walkAccel    = 0;

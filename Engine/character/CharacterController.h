@@ -26,7 +26,9 @@ public:
 		*@param[in]	height		カプセルコライダーの高さ。
 		*@param[in]	position	初期位置。
 		*/
-	void Init(float radius, float height, const CVector3& position, int userIndex = enCollisionAttr_Character, void* userPointer = nullptr);
+	void Init(float radius, float height, const CVector3& position,
+			   int userIndex = enCollisionAttr_Character, void* userPointer = nullptr,
+			   btCollisionObject::CollisionFlags collisionFlag = btCollisionObject::CollisionFlags::CF_CHARACTER_OBJECT);
 	/*!
 		* @brief	実行。
 		*@param[in]	deltaTime		経過時間。単位は秒。

@@ -96,7 +96,8 @@ namespace {
 }
 
 
-void CharacterController::Init(float radius, float height, const CVector3& position, int userIndex, void* userPointer)
+void CharacterController::Init(float radius, float height, const CVector3& position, int userIndex,
+								void* userPointer, btCollisionObject::CollisionFlags collisionFlag )
 {
 	m_position = position;
 	//コリジョン作成。
@@ -115,7 +116,7 @@ void CharacterController::Init(float radius, float height, const CVector3& posit
 	//@todo 未対応。trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
 	m_rigidBody.GetBody()->setUserIndex(userIndex);
 	m_rigidBody.GetBody()->setUserPointer(userPointer);
-	m_rigidBody.GetBody()->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
+	m_rigidBody.GetBody()->setCollisionFlags(collisionFlag);
 	g_physics.AddRigidBody(m_rigidBody);
 
 }

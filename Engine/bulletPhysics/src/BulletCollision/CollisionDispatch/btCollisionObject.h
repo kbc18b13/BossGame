@@ -42,16 +42,6 @@ typedef btAlignedObjectArray<class btCollisionObject*> btCollisionObjectArray;
 #define btCollisionObjectDataName "btCollisionObjectFloatData"
 #endif
 
-//累乗
-template<typename T>
-static constexpr T CPow( T base, unsigned int exp ){
-	T ans = 1;
-	for( unsigned int i = 0; i < exp; i++ ){
-		ans *= base;
-	}
-	return ans;
-}
-
 /// btCollisionObject can be used to manage collision detection objects. 
 /// btCollisionObject maintains all information that is needed for a collision detection: Shape, Transform and AABB proxy.
 /// They can be added to the btCollisionWorld.
@@ -139,9 +129,9 @@ public:
 		CF_DISABLE_SPU_COLLISION_PROCESSING = 64,//disable parallel/SPU processing
 
 		//以下ユーザー定義
-		CF_Enemy = CPow(2, 5),
-		CF_Player = CPow( 2, 5 ),
-		CF_Ground,
+		CF_Enemy = 128,
+		CF_Player = 256,
+		CF_Ground  = 512,
 	};
 
 	enum	CollisionObjectTypes

@@ -2,7 +2,7 @@
 #include "CharaConEx.h"
 
 void CharaConEx::Init( const CharaConDesc& desc ){
-	m_charaCon.Init( desc.radius, desc.height, desc.position, desc.userIndex, desc.userPointer );
+	m_charaCon.Init( desc.radius, desc.height, desc.position, desc.userIndex, desc.userPointer, desc.collisionFlag);
 	m_walkAccel = desc.walkAccel;
 	m_walkAccelAir = desc.walkAccelAir;
 	m_walkMax = desc.walkMax;

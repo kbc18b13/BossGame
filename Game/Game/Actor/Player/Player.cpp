@@ -51,6 +51,7 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 
 		desc.userIndex = enCollisionAttr_Player;
 		desc.userPointer = this;
+		desc.collisionFlag = btCollisionObject::CollisionFlags::CF_Player;
 	}
 	m_chara.Init( desc );//ƒLƒƒƒ‰ƒRƒ“‚Ì‰Šú‰»
 
