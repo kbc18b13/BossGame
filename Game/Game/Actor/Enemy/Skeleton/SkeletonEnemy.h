@@ -29,6 +29,7 @@ public:
 		Chase,
 		Attack1,
 		Attack2,
+		SideWalk,
 		Num,
 	};
 private:

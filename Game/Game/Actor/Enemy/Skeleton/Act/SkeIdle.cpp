@@ -9,7 +9,7 @@ SkeIdle::SkeIdle(){}
 SkeIdle::~SkeIdle(){}
 
 void SkeIdle::SubStart( Actor* s ){
-	m_timer = 1.5f;
+	m_timer = 0.f;
 	m_model->Play( int( SkeletonEnemy::Anim::Idle ), 0.5f );
 }
 
@@ -25,11 +25,14 @@ void SkeIdle::Update( Actor* s ){
 
 		}else if( toP.LengthSq() < 40 * 40 ){
 
-			//結構近くにいる場合は斬る。2種類からランダムで。
-			if( Util::RandomInt( 0, 1 ) == 0 ){
+			//結構近くにいる場合は斬るか、横歩き。
+			int r = Util::RandomInt( 0, 2 );
+			if( r == 0 ){
 				ActEnd( int(SkeletonEnemy::Anim::Attack1) );
-			} else{
+			} else if(r == 1){
 				ActEnd( int(SkeletonEnemy::Anim::Attack2) );
+			} else{
+				ActEnd( int( SkeletonEnemy::Anim::SideWalk ) );
 			}
 
 		} else{
