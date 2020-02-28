@@ -156,6 +156,7 @@
     <ClCompile Include="Game\Actor\Enemy\Act\Hit.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Yowai\Act\YowaIdle.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Act\SideWalk.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\SkeJumpAttack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Ground\BigDoor.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="Game\Actor\Enemy\Act\Hit.h" />
     <ClInclude Include="Game\Actor\Enemy\Yowai\Act\YowaIdle.h" />
     <ClInclude Include="Game\Actor\Enemy\Act\SideWalk.h" />
+    <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\SkeJumpAttack.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\BigDoor.fbx" />

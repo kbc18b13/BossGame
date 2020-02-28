@@ -35,8 +35,7 @@ void AnimationClip::Load(const wchar_t* filePath, bool isLoop)
 	fread(&header, sizeof(header), 1, fp);
 		
 	if (header.numAnimationEvent > 0) {
-		//アニメーションイベントは対応予定。
-		//就職作品でチャレンジ中。
+		//アニメーションイベント
 
 		for (int i = 0; i < header.numAnimationEvent; i++) {
 			float eventTime;
@@ -48,6 +47,12 @@ void AnimationClip::Load(const wchar_t* filePath, bool isLoop)
 
 			m_eventList.emplace_back(eventTime, name);
 		}
+
+		//イベントの時間順にソートする。
+		using AED = AnimationEventData;
+		std::sort( m_eventList.begin(), m_eventList.end(), []( const AED& e1, const AED& e2 ) -> bool{
+			return e1.invokeTime < e2.invokeTime;
+		} );
 	}
 
 

@@ -6,8 +6,10 @@
 
 #include "Act/SkeAttack.h"
 #include "Act/SkeIdle.h"
+#include "Act/SkeJumpAttack.h"
 #include "Actor/Enemy/Act/Chase.h"
 #include "Actor/Enemy/Act/SideWalk.h"
+#include "Actor/Enemy/Act/Hit.h"
 
 using namespace EnemySpace;
 
@@ -40,17 +42,25 @@ SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 5, stage ){
 		m_animClip[int( Anim::Chase )].Load( L"Assets/animData/Skeleton_Walk.tka", true );
 		m_animClip[int( Anim::Attack1 )].Load( L"Assets/animData/Skeleton_Attack1.tka", false );
 		m_animClip[int( Anim::Attack2 )].Load( L"Assets/animData/Skeleton_Attack2.tka", false );
+		m_animClip[int( Anim::JumpAttack )].Load( L"Assets/animData/Skeleton_JumpAttack.tka", false );
+		m_animClip[int( Anim::Hit )].Load( L"Assets/animData/Skeleton_Hit.tka", false );
 		m_model.Init( L"Assets/modelData/Skeleton.cmo", m_animClip, int( Anim::Num ) );
 		m_model.SetPos( GetPos() );
 	}
 
 	//ステートの初期化
 	{
-		m_stateArray[int( Anim::Idle )].reset( new SkeIdle() );
-		m_stateArray[int( Anim::Chase )].reset( new Chase( int( Anim::Chase ), int( Anim::Idle ), 30.0f ));
-		m_stateArray[int( Anim::Attack1 )].reset( new SkeAttack( m_sword, int( Anim::Attack1 ) ) );
-		m_stateArray[int( Anim::Attack2 )].reset( new SkeAttack( m_sword, int( Anim::Attack2 ) ) );
-		m_stateArray[int( Anim::SideWalk )].reset( new SideWalk( int( Anim::Chase ), int( Anim::Idle ) ));
+		m_stateArray[int( ActE::Idle )].reset( new SkeIdle() );
+		m_stateArray[int( ActE::Chase )].reset( new Chase( int( Anim::Chase ), int( ActE::Idle ), 60.0f ));
+		m_stateArray[int( ActE::Attack )].reset( new SkeAttack( m_sword, int( Anim::Attack1 ), 2 ) );
+		m_stateArray[int( ActE::SideWalk )].reset( new SideWalk( int( Anim::Chase ), int( ActE::Idle ) ));
+		m_stateArray[int( ActE::Hit )].reset( new Hit(int(Anim::Hit), int(ActE::Idle)));
+		m_stateArray[int( ActE::JumpAttack )].reset( new SkeJumpAttack( m_sword ) );
+
+		//必要なアニメーションイベント
+		m_model.AddEventFunc( "Attack", [this](){
+			m_sword.AttackStart();
+		} );
 
 		//初期化
 		for( auto& a : m_stateArray ){
@@ -64,7 +74,7 @@ SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 5, stage ){
 	{
 		Bone* b = m_model.GetModel().GetSkeleton().GetBone( L"Hand_R" );
 		m_sword.Init( b, this, { 13,5,5 }, L"Assets/modelData/SkeSword.cmo", false );
-		m_sword.SetOffset( { 12, 0, 0 } );
+		m_sword.SetOffset( { -12, 0, 0 } );
 		m_sword.SetKnockBack( CVector3( 0, 20, 50 ) );
 	}
 

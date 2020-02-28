@@ -16,7 +16,7 @@ void Attack::LocalStart( bool heavy ){
 	if( !heavy ){
 		m_stamina->Consume( m_needStamina );
 		m_sword->SetDamage( 1 );
-		m_model->Play( int( m_animation + m_nowCombo ), 0.2f );
+		m_model->Play( int( m_animation + m_nowCombo ), 0.2f);
 	} else{
 		m_stamina->Consume( m_needStamina * 2);
 		m_sword->SetDamage( 3 );

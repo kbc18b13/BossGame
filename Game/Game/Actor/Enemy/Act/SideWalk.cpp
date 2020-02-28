@@ -7,7 +7,7 @@ EnemySpace::SideWalk::SideWalk( int walkAnim, int nextState ) : m_walkAnim(walkA
 EnemySpace::SideWalk::~SideWalk(){}
 
 void EnemySpace::SideWalk::SubStart( Actor * a ){
-	m_timer = 4;
+	m_timer = 1;
 }
 
 void EnemySpace::SideWalk::Update( Actor * a ){
@@ -26,7 +26,7 @@ void EnemySpace::SideWalk::Update( Actor * a ){
 	//‰¡‚ÉŒü‚©‚Á‚Ä•à‚©‚¹‚é
 	CVector3 walk = toP;
 	CQuaternion::CreateRotDeg( CVector3::AxisY(), 90 ).Multiply( walk );
-	m_chara->Excecute( walk, 0.2f, 1, false );
+	m_chara->Excecute( walk, 1.0f, 1, false );
 
 	m_timer -= GameTime::GetDeltaTime();
 }

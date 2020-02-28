@@ -71,7 +71,7 @@ void PlayerCamera::Update(){
 
 		CQuaternion::CreateRotDeg( GetRightVec(), 30 ).Multiply( m_vec );
 
-		m_vec *= 100;
+		m_vec *= CtoPLength;
 		m_pos = m_springPPos + m_vec;
 
 		//ƒoƒl‰ñ“]

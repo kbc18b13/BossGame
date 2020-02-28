@@ -20,16 +20,29 @@ public:
 
 	bool Damage( UINT damage, Actor* source ) override{
 		m_hpBar.view();
+		ChangeAct( int( ActE::Hit ) );
 		return Actor::Damage( damage, source );
 	}
 
-	//アニメーション兼ステート
+	//アニメーション
 	enum class Anim{
 		Idle,
 		Chase,
 		Attack1,
 		Attack2,
 		SideWalk,
+		Hit,
+		JumpAttack,
+		Num,
+	};
+	//ステート
+	enum class ActE{
+		Idle,
+		Chase,
+		Attack,
+		SideWalk,
+		Hit,
+		JumpAttack,
 		Num,
 	};
 private:
@@ -44,6 +57,6 @@ private:
 	MiniBarGauge m_hpBar;
 
 	//ステート
-	std::unique_ptr<EnemySpace::EnemyAct> m_stateArray[int( Anim::Num )];
+	std::unique_ptr<EnemySpace::EnemyAct> m_stateArray[int( ActE::Num )];
 };
 

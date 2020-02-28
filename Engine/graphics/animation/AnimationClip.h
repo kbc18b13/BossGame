@@ -21,12 +21,23 @@ struct AnimClipHeader {
 */
 struct AnimationEventData {
 	float	invokeTime;					//!<アニメーションイベントが発生する時間(単位:秒)
-	char*   eventName;
+	const char* eventName;
 
-	AnimationEventData(float time, char* name) {
-		invokeTime = time;
-		eventName = name;
+	AnimationEventData(float time, char* name) : invokeTime(time), eventName(name) {}
+
+	AnimationEventData( const AnimationEventData& data ) = delete;
+
+	AnimationEventData( AnimationEventData&& data ) noexcept : invokeTime( data.invokeTime ), eventName( data.eventName ){
+		data.eventName = nullptr;
 	}
+
+	AnimationEventData& operator=( AnimationEventData&& data ) noexcept{
+		invokeTime = data.invokeTime;
+		eventName = data.eventName;
+		data.eventName = nullptr;
+		return *this;
+	}
+
 	~AnimationEventData() {
 		delete[] eventName;
 	}

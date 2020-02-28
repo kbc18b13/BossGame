@@ -9,7 +9,7 @@ SkeIdle::SkeIdle(){}
 SkeIdle::~SkeIdle(){}
 
 void SkeIdle::SubStart( Actor* s ){
-	m_timer = 0.f;
+	m_timer = 0.3f;
 	m_model->Play( int( SkeletonEnemy::Anim::Idle ), 0.5f );
 }
 
@@ -20,25 +20,29 @@ void SkeIdle::Update( Actor* s ){
 	if( m_timer <= 0 ){
 		if( toP.LengthSq() > 300 * 300 ){
 
-			//遠くにいるときは待機
+			//察知範囲外は待機
 			m_timer = 1.5;
 
-		}else if( toP.LengthSq() < 40 * 40 ){
+		}else if( toP.LengthSq() < 60 * 60 ){
 
 			//結構近くにいる場合は斬るか、横歩き。
-			int r = Util::RandomInt( 0, 2 );
+			int r = Util::RandomInt( 0, 3 );
 			if( r == 0 ){
-				ActEnd( int(SkeletonEnemy::Anim::Attack1) );
-			} else if(r == 1){
-				ActEnd( int(SkeletonEnemy::Anim::Attack2) );
+				ActEnd( int( SkeletonEnemy::ActE::SideWalk ) );
 			} else{
-				ActEnd( int( SkeletonEnemy::Anim::SideWalk ) );
+				ActEnd( int(SkeletonEnemy::ActE::Attack) );
 			}
 
 		} else{
 
-			//近くもないけど遠くもなければ追え。
-			ActEnd( int(SkeletonEnemy::Anim::Chase ));
+			//ジャンプ切り圏内なら確率で切る。
+			if( toP.LengthSq() < pow2( 150 ) /*&& Util::RandomInt( 0, 1 ) == 0*/ ){
+				ActEnd( int( SkeletonEnemy::ActE::JumpAttack ) );
+			} else{
+
+				//察知範囲内で遠ければ追う。
+				ActEnd( int( SkeletonEnemy::ActE::Chase ) );
+			}
 		}
 	}
 
