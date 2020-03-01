@@ -44,7 +44,7 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 
 		desc.walkAccel = 10;
 		desc.walkAccelAir = 1;
-		desc.walkMax = 150;
+		desc.walkMax = 120;
 
 		desc.gravity = 900;
 		desc.jumpPower = 400;
