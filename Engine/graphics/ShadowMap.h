@@ -1,5 +1,6 @@
 #pragma once
 #include "RenderTarget.h"
+#include "graphics/Parts/ConstantBuffer.h"
 
 class SkinModelRender;
 
@@ -40,7 +41,7 @@ private:
 
     RenderTarget m_renderTarget;
 
-    ID3D11Buffer* m_vpMatCB = nullptr;
+    ConstantBuffer m_vpMatCB;
 
     std::vector<SkinModelRender*> m_shadowCasters;
 };

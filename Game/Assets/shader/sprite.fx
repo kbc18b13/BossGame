@@ -10,6 +10,7 @@ sampler Sampler : register(s0);
 
 cbuffer ConstBuffer : register(b0) {
 	float4x4 worldMatrix;
+    float4 mulColor;
 }
 
 struct VSInput {
@@ -31,6 +32,6 @@ PSInput VSMain(VSInput input) {
 }
 
 float4 PSMain(PSInput input) : SV_Target{
-	float4 col = Texture.Sample(Sampler, input.uv);
+	float4 col = Texture.Sample(Sampler, input.uv) * mulColor;
 	return col;
 }

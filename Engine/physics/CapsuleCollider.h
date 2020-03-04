@@ -37,6 +37,11 @@ public:
 	{
 		return height;
 	}
+
+	void SetLocalScale( const CVector3& scale ) override{
+		shape->setLocalScaling( scale );
+	}
+
 private:
 	btCapsuleShape*		shape = nullptr;
 	float radius = 0.0f;

@@ -1,4 +1,7 @@
 #pragma once
+
+#include "graphics/Parts/ConstantBuffer.h"
+
 class Camera
 {
 public:
@@ -50,6 +53,17 @@ public:
 	{
 		return m_up;
 	}
+
+	CVector3 GetFront(){
+		CVector3 v = m_target - m_position;
+		v.Normalize();
+		return v;
+	}
+
+	float GetViewAngle(){
+		return m_viewAngle;
+	}
+
 	/*!
 	 * @brief	視点を設定。
 	 */
@@ -71,6 +85,7 @@ public:
 	{
 		m_up = up;
 	}
+
 	/*!
 	 * @brief	遠平面を設定。
 	 */
@@ -92,6 +107,10 @@ public:
 	{
 		m_viewAngle = angle;
 	}
+
+	//ビュープロジェクション行列をかけた座標にして返す
+	CVector4 GetProjectedPos(const CVector3& pos );
+
 private:
 	CMatrix	m_viewMatrix = CMatrix::Identity();		//ビュー行列。
 	CMatrix m_projMatrix = CMatrix::Identity();		//プロジェクション行列。
@@ -102,7 +121,7 @@ private:
 	float m_far = 10000.0f;							//遠い平面までの距離。
 	float m_near = 1.0f;							//近平面までの距離。
 
-	ID3D11Buffer* m_cbuffer;
+	ConstantBuffer m_cbuffer;
 };
 
 extern Camera g_camera3D;		//!<3Dカメラ。

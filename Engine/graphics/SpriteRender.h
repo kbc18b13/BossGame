@@ -19,8 +19,14 @@ public:
 	/// 位置を設定
 	/// </summary>
 	/// <param name="pos">位置。ピクセル単位。</param>
-	void SetPos(const CVector2& pos) {
+	void SetPosPixel(const CVector2& pos) {
 		m_pos = pos;
+	}
+
+	//正規化座標系で位置を設定。
+	void SetPosNormalized( const CVector2& pos ){
+		m_pos.x = pos.x * FRAME_BUFFER_W * 0.5f;
+		m_pos.y = pos.y * FRAME_BUFFER_H * 0.5f;
 	}
 
 	/// <summary>
@@ -76,10 +82,22 @@ public:
     CVector2 GetPivot() {
         return m_pivot;
     }
+
+	//乗算カラーを設定
+	void SetMulColor(const CVector4& color){
+		m_sprite.SetMulColor( color );
+	}
+
+	//描画の可否を設定
+	void SetIsDraw( bool isDraw ){
+		m_isDraw = isDraw;
+	}
+
 private:
 	CVector2 m_pos = CVector2::Zero();            //位置
 	CVector2 m_scale = CVector2::One();           //拡大率
 	CQuaternion m_rot = CQuaternion::Identity();  //回転
     CVector2 m_pivot = CVector2::Zero();
+	bool m_isDraw = true;
 	Sprite m_sprite; //Sprite
 };

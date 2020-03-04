@@ -96,7 +96,8 @@ namespace {
 }
 
 
-void CharacterController::Init(float radius, float height, const CVector3& position, int userIndex, void* userPointer)
+void CharacterController::Init(float radius, float height, const CVector3& position, int userIndex,
+								void* userPointer, btCollisionObject::CollisionFlags collisionFlag )
 {
 	m_position = position;
 	//コリジョン作成。
@@ -115,7 +116,7 @@ void CharacterController::Init(float radius, float height, const CVector3& posit
 	//@todo 未対応。trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
 	m_rigidBody.GetBody()->setUserIndex(userIndex);
 	m_rigidBody.GetBody()->setUserPointer(userPointer);
-	m_rigidBody.GetBody()->setCollisionFlags(btCollisionObject::CF_CHARACTER_OBJECT);
+	m_rigidBody.GetBody()->setCollisionFlags(collisionFlag);
 	g_physics.AddRigidBody(m_rigidBody);
 
 }
@@ -144,7 +145,7 @@ const CVector3& CharacterController::Execute(float deltaTime, CVector3& moveSpee
 			CVector3 addPos = nextPosition - m_position;
 			CVector3 addPosXZ = addPos;
 			addPosXZ.y = 0.0f;
-			if (addPosXZ.Length() < FLT_EPSILON) {
+			if (addPosXZ.Length() < 0.0001f) {
 				//XZ平面で動きがないので調べる必要なし。
 				//FLT_EPSILONは1より大きい、最小の値との差分を表す定数。
 				//とても小さい値のことです。
@@ -287,11 +288,14 @@ const CVector3& CharacterController::Execute(float deltaTime, CVector3& moveSpee
 	//@todo 未対応。 trans.setRotation(btQuaternion(rotation.x, rotation.y, rotation.z));
 	return m_position;
 }
-/*!
-* @brief	死亡したことを通知。
-*/
-void CharacterController::RemoveRigidBoby()
-{
-	g_physics.RemoveRigidBody(m_rigidBody);
+
+void CharacterController::SetActive( bool active ){
+	if( m_isActive && !active ){
+		g_physics.RemoveRigidBody( m_rigidBody );
+	}
+	if( !m_isActive && active ){
+		g_physics.AddRigidBody( m_rigidBody );
+	}
+	m_isActive = active;
 }
 

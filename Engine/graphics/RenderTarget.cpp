@@ -7,6 +7,7 @@ RenderTarget::RenderTarget() {
 
 
 RenderTarget::~RenderTarget() {
+    Release();
 }
 
 void RenderTarget::Release() {
@@ -29,6 +30,7 @@ void RenderTarget::Release() {
     }
     if (m_renderTargetSRV != nullptr) {
         m_renderTargetSRV->Release();
+        m_renderTargetSRV = nullptr;
     }
 }
 

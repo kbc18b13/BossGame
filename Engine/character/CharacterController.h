@@ -18,7 +18,7 @@ public:
 	}
 	~CharacterController()
 	{
-		RemoveRigidBoby();
+		SetActive( false );
 	}
 	/*!
 		* @brief	初期化。
@@ -26,7 +26,9 @@ public:
 		*@param[in]	height		カプセルコライダーの高さ。
 		*@param[in]	position	初期位置。
 		*/
-	void Init(float radius, float height, const CVector3& position, int userIndex = enCollisionAttr_Character, void* userPointer = nullptr);
+	void Init(float radius, float height, const CVector3& position,
+			   int userIndex = enCollisionAttr_Character, void* userPointer = nullptr,
+			   btCollisionObject::CollisionFlags collisionFlag = btCollisionObject::CollisionFlags::CF_CHARACTER_OBJECT);
 	/*!
 		* @brief	実行。
 		*@param[in]	deltaTime		経過時間。単位は秒。
@@ -77,10 +79,24 @@ public:
 	{
 		return &m_rigidBody;
 	}
-	/*!
-	* @brief	剛体を物理エンジンから削除。。
-	*/
-	void RemoveRigidBoby();
+
+	/// <summary>
+	/// アクティブかどうかを設定
+	/// </summary>
+	/// <param name="active">アクティブならtrue</param>
+	void SetActive( bool active );
+
+	/// <summary>
+	/// アクティブかどうかを返す。
+	/// </summary>
+	bool IsActive(){
+		return m_isActive;
+	}
+
+	float GetHeight(){
+		return m_collider.GetHeight() + m_collider.GetRadius() * 2;
+	}
+
 private:
 	CVector3 			m_position = CVector3::Zero();	//座標。
 	bool 				m_isJump = false;				//ジャンプ中？
@@ -89,4 +105,6 @@ private:
 	float				m_radius = 0.0f;
 	float				m_height = 0.0f;		
 	RigidBody			m_rigidBody;					//剛体。
+
+	bool                m_isActive = true;              //アクティブかどうか
 };

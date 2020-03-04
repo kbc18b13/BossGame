@@ -18,6 +18,7 @@ void RenderMachine::Render(){
 }
 
 void RenderMachine::AddRenderObject( IRenderObject * ro ){
+	ro->machine = this;
     ro->index = roArray.size();
     roArray.push_back( ro );
 }

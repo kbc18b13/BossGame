@@ -2,42 +2,73 @@
 #include "Actor/Actor.h"
 #include "Camera/PlayerCamera.h"
 #include "Util/CharaConEx.h"
-#include "Sword.h"
+#include "Weapon/ModelArmWeapon.h"
+#include "Shield.h"
+#include "Util/BarGauge.h"
+#include "Stamina.h"
+#include "graphics/FontRender.h"
 
-class Sword;
 class SkinModelRender;
+
+namespace PlayerSpace{
+class PlayerAct;
+}
 
 class Player : public Actor
 {
 public:
-	Player();
+	Player(IStage* stage);
 	~Player();
 
+	void Start() override;
 	void Update() override;
-
+	void OnDeath() override;
 	/// <summary>
-	/// 位置を取得
+	/// ダメージを与える
 	/// </summary>
-	CVector3 GetPos() const override{
-		return m_charaCon.GetPosition();
-	}
+	/// <param name="damage">ダメージ</param>
+	/// <param name="coolTime">ヒット後クールタイム</param>
+	/// <returns>クールタイム判定によるダメージの可否</returns>
+	bool Damage( UINT damage, Actor* source ) override;
 
-	/// <summary>
-	/// 位置を設定
-	/// </summary>
-	void SetPos(const CVector3& pos)  override {
-		m_charaCon.SetPosition(pos);
-	}
+	enum class Anim{
+		Walk,
+		Idle,
+		Slash1,
+		Slash2,
+		Slash3,
+		Slash4,
+		HeavySlash,
+		Guard,
+		Roll,
+		Damage,
+		Num,
+	};
 
-    /// <summary>
-    /// 加速させる
-    /// </summary>
-    void AddVelocity(const CVector3& pos) override {
-        m_charaCon.AddVelocity(pos);
-    }
+	enum class Act{
+		Walker,
+		Slash,
+		Guard,
+		Roll,
+		Damage,
+		Num,
+		SlashEnd, //攻撃終了のためのダミー
+	};
 
 private:
-	void SlashEnd();
+	::Act* GetAct( int index ) override;
+	/// <summary>
+	/// デフォルトのステート変更
+	/// </summary>
+	//void ChangeActDefault();
+
+	/// <summary>
+	/// ステート変更
+	/// </summary>
+	/// <returns>変更に成功したかどうか。スタミナが足りないと失敗する。</returns>
+	//bool ChangeAct( Anim act );
+
+	std::unique_ptr<PlayerSpace::PlayerAct> m_actArray[int(Act::Num)];
 
 	static constexpr float WALK_MAX = 200;
 	static constexpr float WALK_ACCEL_AIR = 10;
@@ -45,29 +76,17 @@ private:
 	static constexpr float WALK_BLAKE = 20;
 	static constexpr float JUMP_POWER = 350;
 
-	CQuaternion rot;//回転
+	AnimationClip m_animClip[int(Anim::Num)];        //アニメーションクリップ
 
-	enum EnAnim {
-		enAnimWalk,
-		enAnimIdle,
-		enAnimSlash,
-		enAnimSlash2,
-		enAnimSlash3,
-		enAnimSlash4,
-		enAnimNum
-	};
-	AnimationClip m_animClip[enAnimNum];        //アニメーションクリップ
-	SkinModelRender m_model;                    //自分のモデル。
-
-	Sword m_sword;
-
-	CharaConEx m_charaCon;             //キャラコン
+	ModelArmWeapon m_sword;
+	Shield m_shield;
 
 	PlayerCamera m_camera;                      //カメラ
 
+	BarGauge m_hpBar;//HPバー
 
-	static constexpr int MAX_COMBO = 4;
-	int m_comboCount = -1;
-	bool m_comboContinue = false;
+	Stamina m_stamina;//スタミナ
+
+	bool m_fallDeath = false; //落下死
 };
 

@@ -21,12 +21,23 @@ struct AnimClipHeader {
 */
 struct AnimationEventData {
 	float	invokeTime;					//!<アニメーションイベントが発生する時間(単位:秒)
-	char*   eventName;
+	const char* eventName;
 
-	AnimationEventData(float time, char* name) {
-		invokeTime = time;
-		eventName = name;
+	AnimationEventData(float time, char* name) : invokeTime(time), eventName(name) {}
+
+	AnimationEventData( const AnimationEventData& data ) = delete;
+
+	AnimationEventData( AnimationEventData&& data ) noexcept : invokeTime( data.invokeTime ), eventName( data.eventName ){
+		data.eventName = nullptr;
 	}
+
+	AnimationEventData& operator=( AnimationEventData&& data ) noexcept{
+		invokeTime = data.invokeTime;
+		eventName = data.eventName;
+		data.eventName = nullptr;
+		return *this;
+	}
+
 	~AnimationEventData() {
 		delete[] eventName;
 	}
@@ -95,6 +106,14 @@ public:
 	const keyFramePtrList& GetTopBoneKeyFrameList() const
 	{
 		return *m_topBoneKeyFramList;
+	}
+
+	size_t GetKeySize() const{
+		return m_topBoneKeyFramList->size();
+	}
+
+	float GetLength() const{
+		return m_topBoneKeyFramList->back()->time;
 	}
 
 	int GetEventSize() const{

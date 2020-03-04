@@ -3,6 +3,7 @@
 #include "ShadowMap.h"
 #include "RenderMachine.h"
 #include "PostEffect/PostEffect.h"
+#include "PostEffect/Bloom.h"
 
 class RenderObjectManager;
 
@@ -21,9 +22,13 @@ public:
 
     //普通の描画オブジェクトの登録
     void AddDefaultRender( IRenderObject* ro ){
-        ro->machine = &m_defaultRender;
         m_defaultRender.AddRenderObject( ro );
     }
+
+	//半透明オブジェクトの登録
+	void AddTranslucentRender( IRenderObject* ro ){
+		m_translucentRender.AddRenderObject( ro );
+	}
 
     //シャドウキャスターを登録
     void AddShadowCaster( SkinModelRender* modelRender ){
@@ -36,9 +41,13 @@ public:
 
     //HUD描画オブジェクトの登録
     void AddHUDRender( IRenderObject* ro ){
-        ro->machine = &m_HUDRender;
         m_HUDRender.AddRenderObject( ro );
     }
+
+	//フェード描画オブジェクトの登録
+	void SetFadeRender( IRenderObject* ro ){
+		m_fadeRender = ro;
+	}
 
     //シャドウマップを取得
     ShadowMap& GetShadowMap(){
@@ -54,10 +63,17 @@ private:
 
     //描画オブジェクト
     RenderMachine m_defaultRender;
+	RenderMachine m_translucentRender;
     RenderMachine m_HUDRender;
+
+	IRenderObject* m_fadeRender = nullptr;
 
     //ポストエフェクト
     PostEffect m_postEffect;
     Shader m_monoShader;
+	Bloom m_bloom;
+
+	ID3D11DepthStencilState* m_noDepth; //深度無し深度ステンシルステート
+	ID3D11BlendState* m_alphaBlend;
 };
 

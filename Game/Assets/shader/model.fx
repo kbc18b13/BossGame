@@ -29,6 +29,7 @@ cbuffer VSCb : register(b0){
 	float4x4 mWorld;
 	float4x4 mView;
 	float4x4 mProj;
+    float3 mEmissionColor;
 };
 
 
@@ -194,19 +195,27 @@ float4 PSMain( PSInput In ) : SV_Target0
 			sum += pow(specPower, 10) * (mLightColor[0]*0.5f);
 		}
 	}
-
+    //環境光
 	sum += color * mAmbColor;
+    
     //シャドウマップ
     {
+        //プロジェクション行列を経た座標をテクスチャ座標に変換する。
         float3 shadowPos2 = In.shadowPos.xyz / In.shadowPos.w;
         shadowPos2.xy *= float2(0.5f, -0.5f);
         shadowPos2.xy += 0.5f;
+        //シャドウマップの深度とピクセルの深度を比較する。
         float mapDepth = shadowMap.Sample(Sampler, shadowPos2.xy).r;
         if (0 <= shadowPos2.x && shadowPos2.x <= 1
             && 0 <= shadowPos2.y && shadowPos2.y <= 1
-            && mapDepth + 0.001f < shadowPos2.z) {
-            sum.rgb /= 4;
+            && mapDepth + 0.0003f < shadowPos2.z) {
+            sum.rgb /= 2;
+            //sum.rbg = 1;
         }
     }
+    
+    //自己発光色
+    sum.xyz += mEmissionColor;
+    
 	return sum;
 }

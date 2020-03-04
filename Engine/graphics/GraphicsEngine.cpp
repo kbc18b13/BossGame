@@ -68,7 +68,7 @@ void GraphicsEngine::Init(HWND hWnd)
 	sd.BufferCount = 1;									//スワップチェインのバッファ数。通常は１。
 	sd.BufferDesc.Width = (UINT)FRAME_BUFFER_W;			//フレームバッファの幅。
 	sd.BufferDesc.Height = (UINT)FRAME_BUFFER_H;		//フレームバッファの高さ。
-	sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;	//フレームバッファのフォーマット。R8G8B8A8の32bit。
+	sd.BufferDesc.Format = FRAME_BUFFER_FORMAT;	//フレームバッファのフォーマット。R8G8B8A8の32bit。
 	sd.BufferDesc.RefreshRate.Numerator = 60;			//モニタのリフレッシュレート。(バックバッファとフロントバッファを入れ替えるタイミングとなる。)
 	sd.BufferDesc.RefreshRate.Denominator = 1;			//２にしたら30fpsになる。1でいい。
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;	//サーフェスまたはリソースを出力レンダー ターゲットとして使用します。
@@ -137,7 +137,7 @@ void GraphicsEngine::Init(HWND hWnd)
 		m_pd3dDevice->CreateDepthStencilView(m_depthStencil, &descDSV, &m_depthStencilView);
 	}
 	D3D11_RASTERIZER_DESC desc = {};
-	desc.CullMode = D3D11_CULL_NONE;
+	desc.CullMode = D3D11_CULL_FRONT;
 	desc.FillMode = D3D11_FILL_SOLID;
 	desc.DepthClipEnable = true;
 	desc.MultisampleEnable = true;
@@ -153,6 +153,28 @@ void GraphicsEngine::Init(HWND hWnd)
 	m_viewport.MaxDepth = 1.0f;
 	m_pd3dDeviceContext->RSSetViewports(1, &m_viewport);
 	m_pd3dDeviceContext->RSSetState(m_rasterizerState);
+
+	D3D11_DEPTH_STENCIL_DESC depthDesc{};
+	depthDesc.DepthEnable = true;
+	depthDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+	depthDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+
+	m_pd3dDevice->CreateDepthStencilState( &depthDesc, &m_depthStencilState );
+	m_pd3dDeviceContext->OMSetDepthStencilState( m_depthStencilState, 0 );
+
+	//アルファ有効ブレンドステート
+	D3D11_BLEND_DESC blDesc{};
+	auto& r0 = blDesc.RenderTarget[0];
+	r0.BlendEnable = true;
+	r0.BlendOp = D3D11_BLEND_OP_ADD;
+	r0.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	r0.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	r0.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	r0.SrcBlendAlpha = D3D11_BLEND_ZERO;
+	r0.DestBlendAlpha = D3D11_BLEND_ZERO;
+	r0.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	m_pd3dDevice->CreateBlendState( &blDesc, &m_alphaBlend );
 
 	m_dirLight.Init(1);
 	m_ambientLight.Init(2);

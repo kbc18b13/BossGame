@@ -5,7 +5,7 @@ using namespace std::chrono;
 namespace GameTime {
 
 static time_point<system_clock> beforeFrame;//前フレームの時刻
-static float deltaTime = 0;//前フレームとの差
+static float deltaTime = 1;//前フレームとの差
 
 void UpdateTime() {
 	auto now = system_clock::now();
@@ -14,8 +14,12 @@ void UpdateTime() {
 	beforeFrame = now;
 }
 
+float GetFPS(){
+	return 1.0f / deltaTime;
+}
+
 float GetDeltaTime() {
-	return min(deltaTime, 1.0f/20.0f);
+	return std::min(deltaTime, 1.0f/20.0f);
 }
 
 }

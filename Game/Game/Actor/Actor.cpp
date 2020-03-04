@@ -1,19 +1,19 @@
 #include "stdafx.h"
 #include "Actor.h"
+#include "Camera/PlayerCamera.h"
 
-Actor::Actor(UINT maxHP) : m_maxHP(maxHP) , m_nowHP(maxHP){}
+Actor::Actor( UINT maxHP, IStage * stage ) : m_maxHP( maxHP ), m_nowHP( maxHP ), m_stage( stage ){}
 
-Actor::~Actor() {}
+Actor::~Actor(){}
 
-bool Actor::Damage(Attack& atk) {
-	if (dmg.TryAttack(atk)) {
+bool Actor::Damage( UINT damage, Actor* source ){
+	m_nowHP = m_nowHP > damage ? m_nowHP - damage : 0;
 
-		if (m_nowHP < atk.damage) {
-			m_nowHP = 0;
-		} else {
-			m_nowHP -= atk.damage;
-		}
-        return true;
+	if( m_nowHP == 0 ){
+		OnDeath();
+		m_isDeath = true;
+		if( lockCamera )
+			lockCamera->ReLockOn();
 	}
-    return false;
+	return true;
 }

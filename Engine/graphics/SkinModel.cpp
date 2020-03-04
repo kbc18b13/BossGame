@@ -4,15 +4,12 @@
 
 SkinModel::~SkinModel()
 {
-	if (m_cb != nullptr) {
-		//定数バッファを解放。
-		m_cb->Release();
-	}
 	if (m_samplerState != nullptr) {
 		//サンプラステートを解放。
 		m_samplerState->Release();
 	}
 }
+
 void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 {
 	//スケルトンのデータを読み込む。
@@ -29,6 +26,7 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 
 	m_enFbxUpAxis = enFbxUpAxis;
 }
+
 void SkinModel::InitSkeleton(const wchar_t* filePath)
 {
 	//スケルトンのデータを読み込む。
@@ -51,23 +49,14 @@ void SkinModel::InitSkeleton(const wchar_t* filePath)
 #endif
 	}
 }
+
 void SkinModel::InitConstantBuffer()
 {
 	//作成するバッファのサイズをsizeof演算子で求める。
 	int bufferSize = sizeof(SVSConstantBuffer);
-	//どんなバッファを作成するのかをせてbufferDescに設定する。
-	D3D11_BUFFER_DESC bufferDesc;
-	ZeroMemory(&bufferDesc, sizeof(bufferDesc));				//０でクリア。
-	bufferDesc.Usage = D3D11_USAGE_DEFAULT;						//バッファで想定されている、読み込みおよび書き込み方法。
-	bufferDesc.ByteWidth = (((bufferSize - 1) / 16) + 1) * 16;	//バッファは16バイトアライメントになっている必要がある。
-																//アライメントって→バッファのサイズが16の倍数ということです。
-	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;			//バッファをどのようなパイプラインにバインドするかを指定する。
-																//定数バッファにバインドするので、D3D11_BIND_CONSTANT_BUFFERを指定する。
-	bufferDesc.CPUAccessFlags = 0;								//CPU アクセスのフラグです。
-																//CPUアクセスが不要な場合は0。
-	//作成。
-	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&bufferDesc, NULL, &m_cb);
+	m_cb.Init(Util::AlignSize(bufferSize, 16), false );
 }
+
 void SkinModel::InitSamplerState()
 {
 	//テクスチャのサンプリング方法を指定するためのサンプラステートを作成。
@@ -79,6 +68,7 @@ void SkinModel::InitSamplerState()
 	desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 	g_graphicsEngine->GetD3DDevice()->CreateSamplerState(&desc, &m_samplerState);
 }
+
 void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVector3 scale)
 {
 	//3dsMaxと軸を合わせるためのバイアス。
@@ -104,6 +94,7 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 	//スケルトンの更新。
 	m_skeleton.Update(m_worldMatrix);
 }
+
 void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMatrix)
 {
 	if (!m_isDraw) {
@@ -119,10 +110,11 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 	vsCb.mWorld = m_worldMatrix;
 	vsCb.mProj = projMatrix;
 	vsCb.mView = viewMatrix;
-	d3dDeviceContext->UpdateSubresource(m_cb, 0, nullptr, &vsCb, 0, 0);
+	vsCb.mEmissionColor = m_emissionColor;
+	m_cb.UpdateData( &vsCb );
 	//定数バッファをGPUに転送。
-	d3dDeviceContext->VSSetConstantBuffers(0, 1, &m_cb);
-	d3dDeviceContext->PSSetConstantBuffers(0, 1, &m_cb);
+	m_cb.SetToContext( ShaderType::VS, 0 );
+	m_cb.SetToContext( ShaderType::PS, 0 );
 	//サンプラステートを設定。
 	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
 	//ボーン行列をGPUに転送。
@@ -141,4 +133,10 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 		viewMatrix,
 		projMatrix
 	);
+}
+
+void SkinModel::SetCCW( bool ccw ){
+	for( auto mesh : m_modelDx->meshes ){
+		mesh->ccw = ccw;
+	}
 }

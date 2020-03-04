@@ -1,4 +1,6 @@
 #pragma once
+#include "graphics/Parts/ConstantBuffer.h"
+
 class DirectionLight {
 private:
 	static constexpr UINT LIGHT_NUM = 4;
@@ -39,6 +41,6 @@ public:
 
 private:
 	CBStruct m_cbStruct;
-	ID3D11Buffer* m_CBuf;
+	ConstantBuffer m_CBuf;
 	UINT m_bufferNum;
 };

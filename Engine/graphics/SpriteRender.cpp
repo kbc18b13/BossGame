@@ -3,11 +3,10 @@
 #include "RenderObjectManager.h"
 
 void SpriteRender::Render() {
-    CVector2 pixelPivot = m_pivot;
-    pixelPivot.x *= m_sprite.GetWidth() * m_scale.x;
-    pixelPivot.y *= m_sprite.GetHeight() * m_scale.y;
-
-    m_sprite.UpdateWorldMatrix(m_pos - pixelPivot, m_scale, m_rot);
+	if(!m_isDraw || m_sprite.GetMulColor().w == 0 ){
+		return;
+	}
+    m_sprite.UpdateWorldMatrix(m_pos, m_scale, m_rot, m_pivot);
 	m_sprite.Draw();
 }
 

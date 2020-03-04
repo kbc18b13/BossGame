@@ -4,17 +4,8 @@
 Camera g_camera3D;		//3DƒJƒƒ‰B
 
 void Camera::Init() {
-	D3D11_BUFFER_DESC desc{};
-	desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	desc.ByteWidth = sizeof(CVector3) + 4;
-	desc.CPUAccessFlags = 0;
-	desc.Usage = D3D11_USAGE_DEFAULT;
-
-	D3D11_SUBRESOURCE_DATA data{};
-	data.pSysMem = &m_position;
-
-	g_graphicsEngine->GetD3DDevice()->CreateBuffer(&desc, &data, &m_cbuffer);
-	g_graphicsEngine->GetD3DDeviceContext()->PSSetConstantBuffers(3, 1, &m_cbuffer);
+	m_cbuffer.Init(sizeof(CVector3) + 4, false, &m_position);
+	m_cbuffer.SetToContext(ShaderType::PS, 3);
 }
 
 void Camera::Update()
@@ -32,6 +23,15 @@ void Camera::Update()
 		m_near,
 		m_far
 	);
+	m_cbuffer.UpdateData(&m_position);
+}
 
-	g_graphicsEngine->GetD3DDeviceContext()->UpdateSubresource(m_cbuffer, 0, nullptr, &m_position, 0, 0);
+CVector4 Camera::GetProjectedPos(const CVector3& pos3 ){
+	CVector4 pos4 = CVector4( pos3.x, pos3.y, pos3.z, 1 );
+	m_viewMatrix.Mul( pos4 );
+	m_projMatrix.Mul( pos4 );
+	pos4.x = pos4.x / pos4.w;
+	pos4.y = pos4.y / pos4.w;
+	pos4.z = pos4.z / pos4.w;
+	return pos4;
 }

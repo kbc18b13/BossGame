@@ -2,124 +2,169 @@
 #include "Player.h"
 #include "physics/CollisionAttr.h"
 #include "graphics/RenderObjectManager.h"
+#include "Act/Attack.h"
+#include "Act/Walker.h"
+#include "Act/Guard.h"
+#include "Act/Roll.h"
+#include "Act/Damage.h"
 
-Player::Player() : Actor(10)
-{
-	//アニメーションクリップ読み込み
-	m_animClip[enAnimWalk].Load(L"Assets/animData/TestChara_Run.tka", true);
-	m_animClip[enAnimIdle].Load(L"Assets/animData/TestChara_Idle.tka",true);
-	m_animClip[enAnimSlash].Load(L"Assets/animData/TestChara_Slash.tka");
-	m_animClip[enAnimSlash2].Load(L"Assets/animData/TestChara_Slash2.tka");
-	m_animClip[enAnimSlash3].Load(L"Assets/animData/TestChara_Slash3.tka");
-	m_animClip[enAnimSlash4].Load(L"Assets/animData/TestChara_Slash4.tka");
+#include "Util/DisplayText.h"
+#include "Scene/IStage.h"
 
-	//cmoファイルの読み込み。
-	m_model.Init(L"Assets/modelData/TestChara.cmo",m_animClip,enAnimNum);
-	m_model.GetAnim().AddEventFunc("End", [&]() {
-		SlashEnd();
-	});
+using namespace PlayerSpace;
+
+Player::Player(IStage* stage) : Actor( 10 , stage){
+	//モデル読み込み
+	{
+		m_animClip[int( Anim::Walk )].Load( L"Assets/animData/TestChara_Run.tka", true );
+		m_animClip[int( Anim::Idle )].Load( L"Assets/animData/TestChara_Idle.tka", true );
+		m_animClip[int( Anim::Slash1 )].Load( L"Assets/animData/TestChara_Slash.tka" );
+		m_animClip[int( Anim::Slash2 )].Load( L"Assets/animData/TestChara_Slash2.tka" );
+		m_animClip[int( Anim::Slash3 )].Load( L"Assets/animData/TestChara_Slash3.tka" );
+		m_animClip[int( Anim::Slash4 )].Load( L"Assets/animData/TestChara_Slash4.tka" );
+		m_animClip[int( Anim::HeavySlash )].Load( L"Assets/animData/TestChara_HeavySlash.tka" );
+		m_animClip[int( Anim::Guard )].Load( L"Assets/animData/TestChara_Guard.tka" );
+		m_animClip[int( Anim::Roll )].Load( L"Assets/animData/TestChara_Roll.tka" );
+		m_animClip[int( Anim::Damage )].Load( L"Assets/animData/TestChara_Damage.tka" );
+
+		//cmoファイルの読み込み。
+		m_model.Init( L"Assets/modelData/TestChara.cmo", m_animClip, int( Anim::Num ) );
+
+		m_model.AddEventFunc( "Attack", [&](){
+			m_sword.AttackStart();
+		} );
+	}
 
 	CharaConDesc desc;
 	{
 		desc.radius = 8;
 		desc.height = 24;
 
-		desc.position = CVector3(0, 50, 0);
+		desc.position = CVector3( 0, 50, 0 );
 
-		desc.walkAccel    = 100;
-		desc.walkAccelAir = 10;
-		desc.walkBrake    = 10;
-		desc.walkMax      = 150;
+		desc.walkAccel = 10;
+		desc.walkAccelAir = 1;
+		desc.walkMax = 120;
 
-		desc.gravity      = 900;
-		desc.jumpPower    = 500;
+		desc.gravity = 900;
+		desc.jumpPower = 400;
 
-		desc.userIndex   = enCollisionAttr_Player;
+		desc.userIndex = enCollisionAttr_Player;
 		desc.userPointer = this;
+		desc.collisionFlag = btCollisionObject::CollisionFlags::CF_Player;
 	}
-	m_charaCon.Init(desc);//キャラコンの初期化
+	m_chara.Init( desc );//キャラコンの初期化
 
-	m_camera.SetVec({ 0, 80, -80 });
+	//アクトステートの初期化
+	{
+		m_actArray[int( Act::Slash )].reset( new Attack( Anim::Slash1, 4 ) );
+		m_actArray[int( Act::Walker )].reset( new Walker() );
+		m_actArray[int( Act::Guard )].reset( new Guard() );
+		m_actArray[int( Act::Roll )].reset( new Roll() );
+		m_actArray[int( Act::Damage )].reset( new PlayerSpace::Damage() );
 
-	/*m_sword = NewGO<Sword>(2, m_model.GetModel().GetSkeleton().GetBone(L"Hand_L"), this);*/
-    m_sword.Init(m_model.GetModel().GetSkeleton().GetBone(L"Hand_L"), this);
-	m_sword.SetOffset({ 12, 0, 0 });
+		//必要なものを注入
+		for( auto& a : m_actArray ){
+			a->Init( &m_model, &m_chara, &m_sword, &m_camera, &m_stamina );
+		}
 
-    m_model.AddFookFunc(m_sword);
+		m_nowAct = GetAct( int(Act::Walker ));
+	}
+	//剣の初期化
+	m_sword.Init( m_model.GetModel().GetSkeleton().GetBone( L"Hand_L" ), this ,
+				  { 13,5,5 } , L"Assets/modelData/Sword.cmo" , true);
+	m_sword.SetOffset( { 12, 0, 0 } );
+	m_sword.SetKnockBack( CVector3( 0, 100, 100 ) );
+
+	//盾の初期化
+	m_shield.Init( m_model.GetModel().GetSkeleton().GetBone( L"Hand_R" ), this );
+
+	//HPバーの初期化
+	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 1000, 25 );
+	m_hpBar.SetPosCenterZero( CVector2( 625, 325 ) );
+	m_hpBar.SetColor( CVector4( 1, 0, 0, 1 ) );
 }
 
+Player::~Player(){}
 
-Player::~Player()
-{
-	//DeleteGO(m_sword);
+void Player::Start(){
+	//カメラ
+	m_camera.Init( this );
 }
 
-void Player::Update()
-{
-    //シャドウマップの移動
-    {
-        g_ROManager.GetShadowMap().UpdateLight(GetPos() + CVector3(400, 400, 400), CVector3(-1, -1, -1));
-    }
+void Player::Update(){
+	if( m_isDeath ){
+		return;
+	}
 
-    if (g_pad->IsPress(enButtonLB1)) {
-        m_charaCon.AddVelocity(CVector3::Up()*50);
-    }
+	//シャドウマップの移動
+	{
+		g_ROManager.GetShadowMap().UpdateLight( GetPos() + CVector3( 400, 400, 400 ), CVector3( -1, -1, -1 ) );
+	}
 
-	//キャラコンの操作
-	CVector3 move = g_pad->GetLStickXF() * m_camera.GetRightVec() + g_pad->GetLStickYF() * m_camera.GetFrontVec_XZ();
-	CVector3 pos = m_charaCon.Excecute(move, g_pad->IsTrigger(enButtonA));
-	CVector3 speed = m_charaCon.GetVelocity();
+	//ステートのアップデート
+	ActStateUpdate();
 
 	//モデル位置
-	m_model.SetPos(pos);
-	//モデル回転
-	if (speed.x*speed.x + speed.z*speed.z > 1) {
-		float angle = atan2f(speed.x, speed.z);
-		rot.SetRotation(CVector3::AxisY(), angle);
+	m_model.SetPos( m_chara.GetPosition() );
+
+	//ロックオン時の回転
+	if( m_camera.IsLockOn() && m_nowAct != GetAct(int(Act::Roll))){
+		m_model.SetRot(Util::LookRotXZ( m_camera.GetLockOnPos() - GetPos() ));
 	}
 
-	m_model.SetRot(rot);
-	m_camera.Update(GetPos()+CVector3::Up()*25);
+	//カメラの更新
+	m_camera.Update();
 
-	//アニメーション
-	if (g_pad->IsTrigger(enButtonRB1)) {
-		if (m_comboCount == -1) {
-			m_comboCount++;
-			m_model.Play(enAnimSlash, 0.1f);
-			m_sword.SlashStart();
-		} else {
-			m_comboContinue = true;
-		}
-	}else
-	if (m_comboCount == -1) {
-		if (speed.LengthSq() > 0.001f) {
-			m_model.Play(enAnimWalk, 0.1f);
-		} else {
-			m_model.Play(enAnimIdle, 0.3f);
-		}
+	//HPバーの更新
+	m_hpBar.SetPercent( Actor::GetHPPer() );
+
+	//スタミナバーの更新
+	m_stamina.Update();
+
+	//モデルなど
+	m_model.Update();
+	m_sword.Update();
+	m_shield.Update();
+
+	if( GetPos().y < -100 && !m_fallDeath){
+		m_stage->EndStage();
+		DisplayText::display( L"YOU DIED", CVector3( 0.7f, 0, 0 ) );
+		m_fallDeath = true;
 	}
-
-
-    Actor::Update();
-    m_model.Update();
 }
 
-void Player::SlashEnd() {
-	if (m_comboContinue) {//次のキー入力があれば
+void Player::OnDeath(){
+	m_stage->EndStage();
+	m_model.SetActive( false );
+	m_chara.SetActive( false );
+	m_sword.SetActive( false );
+	m_shield.SetActive( false );
+	m_hpBar.SetPercent( 0 );
+	DisplayText::display( L"YOU DIED", CVector3( 0.7f, 0, 0 ) );
+}
 
-		m_comboCount++;//コンボを進める
-		if (m_comboCount >= MAX_COMBO) {
-			m_comboCount = -1;//コンボ終了
-			m_model.Play(enAnimIdle, 0.3f);
-			m_sword.SlashEnd();
-		} else {
-			m_model.Play(enAnimSlash + m_comboCount, 0.1f);//アニメーション
-			m_sword.SlashStart();
+bool Player::Damage( UINT damage, Actor* source ){
+	if( m_nowAct == m_actArray[int( Act::Guard )].get() ){
+		CVector3 v( 0, 0, 1 );
+		m_model.GetRot().Multiply( v );
+
+		CVector3 toSource = source->GetPos() - GetPos();
+		toSource.y = 0;
+		toSource.Normalize();
+
+		if( acosf( v.Dot( toSource ) ) < CMath::DegToRad( 80 ) ){
+			if( m_stamina.Consume( damage * 10 ) ){
+				damage = 0;
+			}
 		}
-	} else {
-		m_comboCount = -1;//コンボ終了
-		m_model.Play(enAnimIdle, 0.3f);
-		m_sword.SlashEnd();
 	}
-	m_comboContinue = false;
+	if( damage != 0 ){
+		ChangeAct( int(Act::Damage) );
+	}
+	return Actor::Damage( damage, source);
+}
+
+Act* Player::GetAct( int index ){
+	return m_actArray[index].get();
 }

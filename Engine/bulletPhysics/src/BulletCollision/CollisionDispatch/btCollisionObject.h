@@ -42,7 +42,6 @@ typedef btAlignedObjectArray<class btCollisionObject*> btCollisionObjectArray;
 #define btCollisionObjectDataName "btCollisionObjectFloatData"
 #endif
 
-
 /// btCollisionObject can be used to manage collision detection objects. 
 /// btCollisionObject maintains all information that is needed for a collision detection: Shape, Transform and AABB proxy.
 /// They can be added to the btCollisionWorld.
@@ -127,7 +126,12 @@ public:
 		CF_CUSTOM_MATERIAL_CALLBACK = 8,//this allows per-triangle material (friction/restitution)
 		CF_CHARACTER_OBJECT = 16,
 		CF_DISABLE_VISUALIZE_OBJECT = 32, //disable debug drawing
-		CF_DISABLE_SPU_COLLISION_PROCESSING = 64//disable parallel/SPU processing
+		CF_DISABLE_SPU_COLLISION_PROCESSING = 64,//disable parallel/SPU processing
+
+		//以下ユーザー定義
+		CF_Enemy = 128,
+		CF_Player = 256,
+		CF_Ground  = 512,
 	};
 
 	enum	CollisionObjectTypes

@@ -24,6 +24,21 @@ public:
     //フレームバッファへの描画前準備。
     void BegineFrameBuffer();
 
+	//ラスタライザステートをリセット
+	void ResetRasterizerState(){
+		m_pd3dDeviceContext->RSSetState( m_rasterizerState );
+	}
+
+	//デプスステンシルステートをリセット
+	void ResetDepthStencilState(){
+		m_pd3dDeviceContext->OMSetDepthStencilState( m_depthStencilState, 0 );
+	}
+
+	//ブレンドステートをリセット
+	void ResetBlendState(){
+		m_pd3dDeviceContext->OMSetBlendState( m_alphaBlend, nullptr, 0xffffffff);
+	}
+
 	//D3D11デバイスを取得。
 	ID3D11Device* GetD3DDevice()
 	{
@@ -57,6 +72,8 @@ private:
 	ID3D11RasterizerState*	m_rasterizerState = NULL;	//ラスタライザステート。
 	ID3D11Texture2D*		m_depthStencil = NULL;		//デプスステンシル。
 	ID3D11DepthStencilView* m_depthStencilView = NULL;	//デプスステンシルビュー。
+	ID3D11DepthStencilState* m_depthStencilState = NULL;//デプスステンシルステート
+	ID3D11BlendState* m_alphaBlend = NULL;
     D3D11_VIEWPORT m_viewport;
 
 };

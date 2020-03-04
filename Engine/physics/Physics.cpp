@@ -37,8 +37,11 @@ void PhysicsWorld::setDebugDraw(bool isDraw) {
 }
 
 void PhysicsWorld::DebugDraw() {
-	st_debugWire->DrawBegin();//ワイヤフレーム描画準備
-	dynamicWorld->debugDrawWorld();//デバッグワイヤーフレームの描画
+	if( st_debugWire->getDebugMode() == btIDebugDraw::DBG_DrawWireframe ){
+		st_debugWire->DrawBegin();//ワイヤフレーム描画準備
+		dynamicWorld->debugDrawWorld();//デバッグワイヤーフレームの描画
+		st_debugWire->DrawEnd();//ワイヤフレーム描画終了。
+	}
 }
 
 void PhysicsWorld::Init()
@@ -78,7 +81,7 @@ void PhysicsWorld::Update()
 }
 void PhysicsWorld::AddRigidBody(RigidBody& rb)
 {
-	dynamicWorld->addRigidBody(rb.GetBody());
+	dynamicWorld->addRigidBody(rb.GetBody(), rb.GetBody()->getCollisionFlags(), 0xffff);
 }
 void PhysicsWorld::RemoveRigidBody(RigidBody& rb)
 {
@@ -91,4 +94,12 @@ void PhysicsWorld::AddCollision(ICollision & cl) {
 
 void PhysicsWorld::RemoveCollision(ICollision & cl) {
 	dynamicWorld->removeCollisionObject(cl.GetBody());
+}
+
+void PhysicsWorld::UpdateSingleAABB( RigidBody & rb ){
+	dynamicWorld->updateSingleAabb( rb.GetBody() );
+}
+
+void PhysicsWorld::UpdateSingleAABB( ICollision & cl ){
+	dynamicWorld->updateSingleAabb( cl.GetBody() );
 }

@@ -35,13 +35,16 @@ public:
 	/*!
 	* @brief	アニメーションクリップの変更。
 	*/
-	void ChangeAnimationClip(AnimationClip* clip)
+	void ChangeAnimationClip(AnimationClip* clip, bool reverse)
 	{
 		m_animationClip = clip;
-		m_currentKeyFrameNo = 0;
-		m_time = 0.0f;
 		m_isPlaying = true;
-		m_nextEventNumber = 0;
+		m_isReverse = reverse;
+		if( reverse ){
+			ReverseStartLoop();
+		} else{
+			NormalStartLoop();
+		}
 	}
 	void SetInterpolateTime(float interpolateTime)
 	{
@@ -59,13 +62,20 @@ public:
 		if (m_interpolateEndTime <= 0.0f) {
 			return 1.0f;
 		}
-		return min( 1.0f, m_interpolateTime / m_interpolateEndTime );
+		return std::min( 1.0f, m_interpolateTime / m_interpolateEndTime );
 	}
 	/*!
 	* @brief	アニメーションを進める。
 	*@param[in]	deltaTime		アニメーションを進める時間。
 	*/
-	void Update(float deltaTime, Animation* animation);
+	void Update( float deltaTime, Animation* animation ){
+		if( m_isReverse ){
+			ReverseUpdate( deltaTime, animation );
+			return;
+		}
+		NormalUpdate( deltaTime, animation );
+	}
+
 	/*!
 	* @brief	ローカルボーン行列を取得。
 	*/
@@ -89,7 +99,13 @@ private:
 	/*!
 	*@brief	ループ再生開始する時の処理。
 	*/
-	void StartLoop();
+	void NormalStartLoop();
+
+	void NormalUpdate( float deltaTime, Animation* animation );
+
+	void ReverseStartLoop();
+
+	void ReverseUpdate( float deltaTime, Animation* animation );
 private:
 	AnimationClip*			m_animationClip = nullptr;		//!<アニメーションクリップ。
 	int                     m_nextEventNumber = 0;
@@ -99,4 +115,6 @@ private:
 	float					m_interpolateTime;			//!<補完時間
 	float					m_interpolateEndTime;		//!<補完終了時間
 	bool					m_isPlaying = false;		//!<再生中？
+
+	bool m_isReverse = false; //逆再生
 };

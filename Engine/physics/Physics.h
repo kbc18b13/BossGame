@@ -42,9 +42,15 @@ public:
 	*/
 	void AddCollision(ICollision& cl);
 	/*!
-	* @brief	コリジョンオブジェクトを登録。
+	* @brief	コリジョンオブジェクトを削除。
 	*/
 	void RemoveCollision(ICollision& cl);
+
+	/// <summary>
+	/// 対象のAABBをアップデートする。コリジョンシェイプのスケーリングを変更した後に呼ばなければならない。
+	/// </summary>
+	void UpdateSingleAABB( RigidBody& rb );
+	void UpdateSingleAABB( ICollision& cl );
 
 	void ConvexSweepTest(
 		const btConvexShape* castShape,
@@ -56,7 +62,7 @@ public:
 	{
 		dynamicWorld->convexSweepTest(castShape, convexFromWorld, convexToWorld, resultCallback, allowedCcdPenetration);
 	}
-	void ContactText(
+	void ContactTest(
 		btCollisionObject* colObj, 
 		btCollisionWorld::ContactResultCallback& resultCallback
 	)

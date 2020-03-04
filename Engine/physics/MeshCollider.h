@@ -23,10 +23,22 @@ public:
 	 *@param[in]	model		スキンモデル。
 	 */
 	void CreateFromSkinModel( const SkinModel& model);
+
+	/// <summary>
+	/// cmoファイルからメッシュコライダーを生成。
+	/// </summary>
+	/// <param name="filePath"></param>
+	void CreateFromCMOFile( const wchar_t* filePath );
+
 	btCollisionShape* GetBody() const override
 	{
 		return m_meshShape.get();
 	}
+
+	void SetLocalScale( const CVector3& scale ) override {
+		m_meshShape->setLocalScaling( scale );
+	}
+
 private:
 	typedef std::vector<CVector3>					VertexBuffer;		//頂点バッファ。
 	typedef std::vector<unsigned int>				IndexBuffer;		//インデックスバッファ。

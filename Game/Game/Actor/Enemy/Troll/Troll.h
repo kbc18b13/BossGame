@@ -1,74 +1,60 @@
 #pragma once
 #include "Actor/Actor.h"
-#include "graphics/CFont.h"
 #include "Util/CharaConEx.h"
-#include "TrollArmCollision.h"
-class SkinModelRender;
-class Stage1;
-class Act;
+#include "TrollBodyCollision.h"
+#include "Util/BarGauge.h"
+#include "graphics/FontRender.h"
+#include "Weapon/ArmWeapon.h"
 
-class Troll: public Actor , public IRenderObject{
+namespace EnemySpace{
+class EnemyAct;
+}
+
+class Troll : public Actor{
 public:
 	//関数
-	Troll(Stage1* stage);
+	Troll( IStage* stage );
 	~Troll();
 
 	void Start() override;
 	void Update() override;
-	void Render() override;
-
-	void SetPos(const CVector3& pos) override;
-
-	CVector3 GetPos() const override {
-		return m_CharaCon.GetPosition();
-	}
-
-    /// <summary>
-    /// 加速させる
-    /// </summary>
-    void AddVelocity(const CVector3& pos) override {
-        m_CharaCon.AddVelocity(pos);
-    }
+	void OnDeath() override;
 
 	//列挙
-	enum class AnimState {
+	enum class AnimState{
 		Walk,
 		Attack,
 		JumpUp,
 		JumpDown,
 		Idle,
-        Tackle,
-        Hip,
+		Tackle,
+		Hip,
 		Num
 	};
 
-	enum class ActState {
+	enum class ActState{
 		Wait,
 		Chase,
 		Attack,
 		Step,
-        Tackle,
-        Hip,
+		Tackle,
+		Hip,
 		Num,
 	};
 
 private:
-	//変数
-	Stage1* stage;
+	Act* GetAct( int index ) override;
 
-    Act* m_activeAction;
-    std::unique_ptr<Act> m_actionArray[int(ActState::Num)];
-	std::function<void(ActState)> m_stateChangeFunc;
+	//現在のステート
+	EnemySpace::EnemyAct* m_activeAction;
+	//ステート配列
+	std::unique_ptr<EnemySpace::EnemyAct> m_actionArray[int( ActState::Num )];
 
-	int m_state;
+	AnimationClip m_animClip[int( AnimState::Num )];//アニメーションクリップ
 
-	float m_timer = 0.0f;
+	ArmWeapon m_armCollision;//腕の攻撃判定
+	TrollBodyCollision m_bodyCollision;//体の攻撃判定
 
-	CharaConEx m_CharaCon;
-	AnimationClip m_animClip[int(AnimState::Num)];//アニメーションクリップ
-	SkinModelRender m_model;//モデル
-
-	CFont m_font;
-
-    TrollArmCollision armCollision;
+	BarGauge m_hpBar; //HPバー
+	FontRender m_nameFont;
 };

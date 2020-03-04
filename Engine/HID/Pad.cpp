@@ -133,6 +133,11 @@ void Pad::UpdateButtonInput()
 */
 void Pad::UpdateAnalogStickInput()
 {
+	//スティックのトリガーフラグを更新する。
+	//入力があればtrueを入れる。
+	m_lStickTrigger = pow2(m_lStickX) + pow2(m_lStickY) > pow2(0.1f);
+	m_rStickTrigger = pow2( m_rStickX ) + pow2( m_rStickY ) > pow2( 0.1f );
+
 	//xInputState.Gamepad.sThumbLX、sThumbLYにLスティックのX方向のとY方向の入力情報がsigned short(-32,768 ～ 32,767)の範囲で入っている。
 	//この値がINPUT_DEADZONE以下の場合は、入力されていないとする。スティックの遊びです。
 	//これがないとちょっと触れただけでキャラが動いてしまって、イライラすることとなります。

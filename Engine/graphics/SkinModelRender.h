@@ -28,15 +28,22 @@ public:
     /// <summary>
     /// 描画関数
     /// </summary>
-    void Render() override;
+	void Render() override{
+		Render( EnRenderMode::Default, g_camera3D.GetViewMatrix(), g_camera3D.GetProjectionMatrix() );
+	}
+
+	/// <summary>
+	/// 描画関数
+	/// </summary>
+	void Render( EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMatrix );
 
     /*!
     *@brief	アニメーションの再生。
     *@param[in]	clipNo	アニメーションクリップの番号。Init関数に渡したanimClipListの並びとなる。
     *@param[in]	interpolateTime		補完時間(単位：秒)
     */
-    void Play( int clipNo, float interpolateTime = 0.0f ){
-        m_animation.Play( clipNo, interpolateTime );
+    void Play( int clipNo, float interpolateTime = 0.0f, bool allowSameClip = false , bool reverse = false){
+        m_animation.Play( clipNo, interpolateTime, allowSameClip, reverse );
     }
 
     /*!
@@ -86,13 +93,25 @@ public:
         m_rot = rot;
     }
 
+	void AddRot( const CQuaternion& rot ){
+		m_rot.Multiply( rot );
+	}
+
     /// <summary>
     /// 回転を取得
     /// </summary>
-    /// <returns></returns>
     CQuaternion GetRot(){
         return m_rot;
     }
+
+	/// <summary>
+	/// 前方向を取得
+	/// </summary>
+	CVector3 GetFront(){
+		CVector3 v(0, 0, 1);
+		m_rot.Multiply( v );
+		return v;
+	}
 
     /// <summary>
     /// ワールド行列を設定
@@ -112,6 +131,14 @@ public:
         return m_animation;
     }
 
+	/// <summary>
+	/// 描画するかどうかを設定
+	/// </summary>
+	/// <param name="active">描画するならtrue</param>
+	void SetActive( bool active ){
+		m_isActive = active;
+	}
+
     /// <summary>
     /// シャドウを受けるかどうかを設定
     /// </summary>
@@ -119,10 +146,12 @@ public:
         m_isShadowReceive = isReceive;
     }
 
-    void AddFookFunc( IGameObject& func ){
-        m_fookFuncs.push_back( &func );
-    }
-
+	/// <summary>
+	/// メッシュの反転を設定
+	/// </summary>
+	void AddEventFunc( const char* name,const std::function<void()>& func ){
+		m_animation.AddEventFunc( name, func );
+	}
 private:
     SkinModel m_skinModel; //スキンモデル
 
@@ -135,6 +164,6 @@ private:
     bool m_isShadowReceive = false;
     bool m_isShadowCaster = false;
 
-    std::vector<IGameObject*> m_fookFuncs; //モデルレンダーのUpdate後にUpdateを呼びたいクラス
+	bool m_isActive = true; //描画するかどうか
 };
 

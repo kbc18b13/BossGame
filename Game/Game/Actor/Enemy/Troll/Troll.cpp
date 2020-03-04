@@ -3,15 +3,20 @@
 #include "physics/CollisionAttr.h"
 #include "Scene/Stage1.h"
 #include "Actor/Player/Player.h"
-#include "Act/ActAttack.h"
-#include "Act/ActIdle.h"
-#include "Act/ActStep.h"
-#include "Act/ActChase.h"
-#include "Act/ActTackle.h"
-#include "Act/ActHip.h"
+
+#include "Act/TrollAttack.h"
+#include "Act/TrollIdle.h"
+#include "Act/TrollStep.h"
+#include "Actor/Enemy/Act/Chase.h"
+#include "Act/TrollTackle.h"
+#include "Act/TrollHip.h"
+
+#include "Util/DisplayText.h"
 #include "graphics/RenderObjectManager.h"
 
-Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/font.spritefont"){
+using namespace EnemySpace;
+
+Troll::Troll(IStage* stage) : Actor(10, stage ){
     //モデル
 	{
 		m_animClip[int(AnimState::Walk)].Load(L"Assets/animData/Troll_Walk.tka", true);
@@ -32,10 +37,9 @@ Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/f
 
 		desc.position = CVector3(0, 0, 0);
 
-		desc.walkAccel = 100;
-		desc.walkAccelAir = 10;
-		desc.walkBrake = 10;
-		desc.walkMax = 150;
+		desc.walkAccel = 10;
+		desc.walkAccelAir = 1;
+		desc.walkMax = 100;
 
 		desc.gravity = 900;
 		desc.jumpPower = 500;
@@ -43,58 +47,76 @@ Troll::Troll(Stage1* stage) :stage(stage) , Actor(1000) , m_font(L"Assets/font/f
 		desc.userIndex = enCollisionAttr_Enemy;
 		desc.userPointer = this;
 	}
-	m_CharaCon.Init(desc);
-    m_font.SetPos({500.0f, 500.0f});
+	m_chara.Init(desc); 
 
     //腕コリジョン
     Bone* arm = m_model.GetModel().GetSkeleton().GetBone(20);
-    armCollision.Init(this, arm);
+	m_armCollision.Init( arm, this, CVector3( 10.0f, 20.0f, 10.0f ), false );
+	m_armCollision.SetDamage( 3 );
+	m_armCollision.SetKnockBack( CVector3( 0, 200, 300 ) );
 
-    g_ROManager.AddHUDRender( this );
+	//体コリジョン
+	m_bodyCollision.Init( this );
+
+	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 1000, 25);
+	m_hpBar.SetPosLikeTex( CVector2( 1144, 563 ) );
+	m_hpBar.SetColor( CVector4( 1, 0, 0, 1 ) );
+
+	m_nameFont.SetText( L"BOSSEnemy" );
+	m_nameFont.SetPos( CVector2( 150, 500 ) );
 }
 
 Troll::~Troll() {
 }
 
 void Troll::Start() {
-	m_actionArray[int(ActState::Attack)].reset(new ActAttack(armCollision));
-	m_actionArray[int(ActState::Chase)].reset(new ActChase());
-	m_actionArray[int(ActState::Wait)].reset(new ActIdle());
-	m_actionArray[int(ActState::Step)].reset(new ActStep());
-    m_actionArray[int(ActState::Tackle)].reset(new ActTackle());
-    m_actionArray[int(ActState::Hip)].reset(new ActHip());
+	m_actionArray[int(ActState::Attack)].reset(new TrollAttack(m_armCollision));
+	m_actionArray[int(ActState::Chase)].reset(new Chase(int(AnimState::Walk), int(ActState::Wait), 50.0f ));
+	m_actionArray[int(ActState::Wait)].reset(new TrollIdle());
+	m_actionArray[int(ActState::Step)].reset(new TrollStep());
+    m_actionArray[int(ActState::Tackle)].reset(new TrollTackle(m_bodyCollision));
+    m_actionArray[int(ActState::Hip)].reset(new TrollHip(m_bodyCollision));
 
-    //ステート変更関数
-    m_stateChangeFunc = [&](ActState act) {
-        m_activeAction = m_actionArray[int(act)].get();
-        m_activeAction->Start();
-    };
+	//初期化
+	for( auto& a : m_actionArray ){
+		a->Init( &m_model, &m_chara, m_stage->GetPlayer() );
+	}
 
-    m_stateChangeFunc(ActState::Wait);
+	m_nowAct = GetAct( int( ActState::Wait ) );
 }
 
 void Troll::Update() {
-	ActArg arg;
-	arg.charaCon = &m_CharaCon;
-	arg.model = &m_model;
-	arg.player = stage->GetPlayer();
-    arg.changeAct = m_stateChangeFunc;
-    m_activeAction->Continue(arg);
+	//死亡時、アップデートはしない。
+	if( m_isDeath ){
+		return;
+	}
 
+	//ステートの更新関数
+	ActStateUpdate();
+
+	m_model.SetPos( GetPos() );
+
+	//HPバー更新
+	m_hpBar.SetPercent( Actor::GetHPPer() );
+
+	//各種アップデート
     m_model.Update();
-    armCollision.Update();
-    Actor::Update();
+    m_armCollision.Update();
+	m_bodyCollision.Update();
 }
 
-void Troll::SetPos(const CVector3 & pos) {
-	m_CharaCon.SetPosition(pos);
-	m_model.SetPos(pos);
+void Troll::OnDeath(){
+	m_stage->EndStage();
+	m_model.SetActive( false );
+	m_armCollision.SetActive( false );
+	m_bodyCollision.SetActive( false );
+	m_chara.SetActive( false );
+	m_hpBar.SetActive( false );
+	m_nameFont.SetActive( false );
+	m_hpBar.SetPercent( 0 );
+	DisplayText::display( L"VICTORY ARCHIVED", CVector3( 0.5f, 0.5f, 1.0f ) );
 }
 
-void Troll::Render() {
-	m_font.Begine();
-	wchar_t str[10];
-	swprintf(str, L"%d", m_nowHP);
-	m_font.DrawStr(str);
-	m_font.End();
+Act * Troll::GetAct( int index ){
+	return m_actionArray[index].get();
 }
