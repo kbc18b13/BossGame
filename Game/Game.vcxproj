@@ -157,6 +157,11 @@
     <ClCompile Include="Game\Actor\Enemy\Yowai\Act\YowaIdle.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Act\SideWalk.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Skeleton\Act\SkeJumpAttack.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Slime\Slime.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Slime\Act\SlimeAvoid.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Slime\Act\SlimeIdle.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Slime\Act\SlimeRollAttack.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Slime\Act\SlimeStrike.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Ground\BigDoor.h" />
@@ -205,6 +210,11 @@
     <ClInclude Include="Game\Actor\Enemy\Yowai\Act\YowaIdle.h" />
     <ClInclude Include="Game\Actor\Enemy\Act\SideWalk.h" />
     <ClInclude Include="Game\Actor\Enemy\Skeleton\Act\SkeJumpAttack.h" />
+    <ClInclude Include="Game\Actor\Enemy\Slime\Slime.h" />
+    <ClInclude Include="Game\Actor\Enemy\Slime\Act\SlimeAvoid.h" />
+    <ClInclude Include="Game\Actor\Enemy\Slime\Act\SlimeIdle.h" />
+    <ClInclude Include="Game\Actor\Enemy\Slime\Act\SlimeRollAttack.h" />
+    <ClInclude Include="Game\Actor\Enemy\Slime\Act\SlimeStrike.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\BigDoor.fbx" />
@@ -214,6 +224,7 @@
     <MeshContentTask Include="Assets\modelData\Shield.fbx" />
     <MeshContentTask Include="Assets\modelData\Skeleton.fbx" />
     <MeshContentTask Include="Assets\modelData\SkeSword.fbx" />
+    <MeshContentTask Include="Assets\modelData\Slime.fbx" />
     <MeshContentTask Include="Assets\modelData\Sword.fbx" />
     <MeshContentTask Include="Assets\modelData\TestChara.fbx" />
     <MeshContentTask Include="Assets\modelData\Troll.fbx" />

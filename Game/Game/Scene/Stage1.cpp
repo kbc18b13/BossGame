@@ -5,6 +5,7 @@
 #include "Actor/Enemy/Troll/Troll.h"
 #include "Actor/Enemy/Skeleton/SkeletonEnemy.h"
 #include "Actor/Enemy/Yowai/Yowai.h"
+#include "Actor/Enemy/Slime/Slime.h"
 #include "Title.h"
 #include "Util/Fade.h"
 
@@ -37,6 +38,10 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 			t->SetOpener( &opener );
 			opener.AddEnemyCount();
 			enemyArray.push_back( t );
+		} else if( wcscmp( objData.name, L"Slime" ) == 0){
+			Actor* a = NewGO<Slime>( 0, this );
+			a->SetPos( objData.position );
+			enemyArray.push_back( a );
 		} else if( wcscmp( objData.name, L"BossRoom" ) == 0 ){
 			std::function<void()> f = [&](){
 				Actor* t = NewGO<Troll>( 0, this );
