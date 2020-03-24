@@ -42,6 +42,7 @@ public:
 		Strike,
 		Hit,
 		Avoid,
+		RollAttack,
 		Num,
 	};
 

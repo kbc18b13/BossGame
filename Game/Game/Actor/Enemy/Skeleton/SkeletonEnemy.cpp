@@ -13,7 +13,7 @@
 
 using namespace EnemySpace;
 
-SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 5, stage ){
+SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 10, stage ){
 	//ƒLƒƒƒ‰ƒRƒ“
 	{
 		CharaConDesc desc;

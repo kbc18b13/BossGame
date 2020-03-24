@@ -3,6 +3,7 @@
 #include "Act/SlimeIdle.h"
 #include "Act/SlimeStrike.h"
 #include "Act//SlimeAvoid.h"
+#include "Act/SlimeRollAttack.h"
 #include "..\Act\Chase.h"
 #include "..\Act\Hit.h"
 #include "Scene/IStage.h"
@@ -10,7 +11,7 @@
 
 using namespace EnemySpace;
 
-Slime::Slime( IStage * stage ) : Actor(5 ,stage){
+Slime::Slime( IStage * stage ) : Actor(7 ,stage){
 
 	//キャラコン
 	{
@@ -52,9 +53,10 @@ Slime::Slime( IStage * stage ) : Actor(5 ,stage){
 	{
 		m_stateArray[int( ActE::Idle )].reset( new SlimeIdle() );
 		m_stateArray[int( ActE::Chase )].reset( new Chase(int(Anim::Walk), int(ActE::Strike), 40) );
-		m_stateArray[int( ActE::Strike )].reset( new SlimeStrike() );
+		m_stateArray[int( ActE::Strike )].reset( new SlimeStrike(m_weapon) );
 		m_stateArray[int( ActE::Hit )].reset( new Hit(int(Anim::Hit), int(ActE::Idle)) );
 		m_stateArray[int( ActE::Avoid )].reset( new SlimeAvoid() );
+		m_stateArray[int( ActE::RollAttack )].reset( new SlimeRollAttack() );
 
 		//必要なアニメーションイベント
 		m_model.AddEventFunc( "Attack", [this](){

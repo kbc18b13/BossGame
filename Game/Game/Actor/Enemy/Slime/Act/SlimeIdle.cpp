@@ -37,7 +37,11 @@ void SlimeIdle::Update( Actor * a ){
 		ActEnd( int( Slime::ActE::Strike ) );
 	} else{
 		//‰“‚¯‚ê‚Î’Ç‚¤
-		ActEnd( int( Slime::ActE::Chase ) );
+		if( Util::RandomInt( 0, 3 ) == 0 ){
+			ActEnd( int( Slime::ActE::RollAttack ) );
+		} else{
+			ActEnd( int( Slime::ActE::Chase ) );
+		}
 	}
 	m_chara->Excecute();
 }
