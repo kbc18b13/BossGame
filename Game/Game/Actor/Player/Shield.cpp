@@ -8,7 +8,6 @@ Shield::Shield(){}
 Shield::~Shield(){}
 
 void Shield::Init( Bone * handBone, Player * p ){
-	m_model.Init( L"Assets/modelData/Shield.cmo" );
 	m_hand = handBone;
 }
 
@@ -24,8 +23,5 @@ void Shield::Update(){
 		//rot.Multiply( offset );
 		//CVector3 position = CVector3( worldMat.v[3] ) + offset;*/
 		//m_collision.GetBody()->getWorldTransform().setOrigin( position );
-
-		m_model.SetWorldMatrix( worldMat );
-		m_model.Update();
 	}
 }

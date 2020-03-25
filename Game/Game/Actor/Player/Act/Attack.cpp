@@ -27,6 +27,9 @@ void Attack::LocalStart( bool heavy ){
 	m_next = Atk::None;
 	m_timer = 0;
 	m_nowCombo++;
+	if( m_nowCombo == m_maxCombo ){
+		m_nowCombo = 0;
+	}
 	m_chara->AddVelocity( m_model->GetFront() * 100 );
 }
 
@@ -52,8 +55,8 @@ void Attack::Update( Actor* p ){
 	}
 
 	//ƒRƒ“ƒ{‰Â”\‚ÈŽžŠÔ
-	if( m_timer > 0.2f ){
-		if( m_nowCombo < m_maxCombo && m_next != Atk::None ){
+	if( m_timer > 0.5f ){
+		if(m_next != Atk::None ){
 
 			if( m_stamina->CanDo() ){
 				LocalStart( m_next == Atk::Heavy );

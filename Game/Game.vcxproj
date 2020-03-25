@@ -220,6 +220,7 @@
     <MeshContentTask Include="Assets\modelData\BigDoor.fbx" />
     <MeshContentTask Include="Assets\modelData\Carriage.fbx" />
     <MeshContentTask Include="Assets\modelData\Carriage_col.fbx" />
+    <MeshContentTask Include="Assets\modelData\Chara.fbx" />
     <MeshContentTask Include="Assets\modelData\FirstStage.fbx" />
     <MeshContentTask Include="Assets\modelData\Shield.fbx" />
     <MeshContentTask Include="Assets\modelData\Skeleton.fbx" />

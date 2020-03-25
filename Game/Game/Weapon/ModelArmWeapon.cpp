@@ -23,8 +23,20 @@ void ModelArmWeapon::Init( Bone* handBone, Actor* master, const CVector3& halfEx
 }
 
 void ModelArmWeapon::Update(){
-	m_weapon.UpdateWorldMatrix( m_hand->GetWorldMatrix() );
+	CMatrix mat = m_hand->GetWorldMatrix();
+	m_weapon.UpdateWorldMatrix( mat );
 	m_weapon.Update();
-	m_model.SetWorldMatrix( m_hand->GetWorldMatrix() );
+
+	CMatrix modelMat;
+	modelMat.MakeRotationFromQuaternion( m_modelRot );
+	CMatrix offset;
+	offset.MakeTranslation( m_modelOffset );
+
+	modelMat.Mul( modelMat, offset );
+	modelMat.Mul( modelMat, mat );
+	
+
+	m_model.SetWorldMatrix( modelMat);
+	m_model.AddRot( m_modelRot );
 	m_model.Update();
 }

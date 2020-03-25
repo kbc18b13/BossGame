@@ -11,11 +11,10 @@ public:
 	void Update();
 
 	void SetActive(bool active){
-		m_model.SetActive( active );
+		//m_model.SetActive( active );
 	}
 
 private:
-	SkinModelRender m_model;
 	Bone* m_hand;
 };
 

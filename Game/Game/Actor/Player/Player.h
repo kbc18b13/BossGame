@@ -36,8 +36,6 @@ public:
 		Idle,
 		Slash1,
 		Slash2,
-		Slash3,
-		Slash4,
 		HeavySlash,
 		Guard,
 		Roll,

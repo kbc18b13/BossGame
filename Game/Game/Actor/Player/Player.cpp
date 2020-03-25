@@ -16,19 +16,17 @@ using namespace PlayerSpace;
 Player::Player(IStage* stage) : Actor( 10 , stage){
 	//モデル読み込み
 	{
-		m_animClip[int( Anim::Walk )].Load( L"Assets/animData/TestChara_Run.tka", true );
-		m_animClip[int( Anim::Idle )].Load( L"Assets/animData/TestChara_Idle.tka", true );
-		m_animClip[int( Anim::Slash1 )].Load( L"Assets/animData/TestChara_Slash.tka" );
-		m_animClip[int( Anim::Slash2 )].Load( L"Assets/animData/TestChara_Slash2.tka" );
-		m_animClip[int( Anim::Slash3 )].Load( L"Assets/animData/TestChara_Slash3.tka" );
-		m_animClip[int( Anim::Slash4 )].Load( L"Assets/animData/TestChara_Slash4.tka" );
-		m_animClip[int( Anim::HeavySlash )].Load( L"Assets/animData/TestChara_HeavySlash.tka" );
-		m_animClip[int( Anim::Guard )].Load( L"Assets/animData/TestChara_Guard.tka" );
-		m_animClip[int( Anim::Roll )].Load( L"Assets/animData/TestChara_Roll.tka" );
-		m_animClip[int( Anim::Damage )].Load( L"Assets/animData/TestChara_Damage.tka" );
+		m_animClip[int( Anim::Walk )].Load( L"Assets/animData/Chara_Run.tka", true );
+		m_animClip[int( Anim::Idle )].Load( L"Assets/animData/Chara_Idle.tka", true );
+		m_animClip[int( Anim::Slash1 )].Load( L"Assets/animData/Chara_Slash.tka" );
+		m_animClip[int( Anim::Slash2 )].Load( L"Assets/animData/Chara_Slash2.tka" );
+		m_animClip[int( Anim::HeavySlash )].Load( L"Assets/animData/Chara_HeavySlash.tka" );
+		m_animClip[int( Anim::Guard )].Load( L"Assets/animData/Chara_Guard.tka" );
+		m_animClip[int( Anim::Roll )].Load( L"Assets/animData/Chara_Roll.tka" );
+		m_animClip[int( Anim::Damage )].Load( L"Assets/animData/Chara_Damage.tka" );
 
 		//cmoファイルの読み込み。
-		m_model.Init( L"Assets/modelData/TestChara.cmo", m_animClip, int( Anim::Num ) );
+		m_model.Init( L"Assets/modelData/Chara.cmo", m_animClip, int( Anim::Num ) );
 
 		m_model.AddEventFunc( "Attack", [&](){
 			m_sword.AttackStart();
@@ -57,7 +55,7 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 
 	//アクトステートの初期化
 	{
-		m_actArray[int( Act::Slash )].reset( new Attack( Anim::Slash1, 4 ) );
+		m_actArray[int( Act::Slash )].reset( new Attack( Anim::Slash1, 2 ) );
 		m_actArray[int( Act::Walker )].reset( new Walker() );
 		m_actArray[int( Act::Guard )].reset( new Guard() );
 		m_actArray[int( Act::Roll )].reset( new Roll() );
@@ -72,8 +70,10 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 	}
 	//剣の初期化
 	m_sword.Init( m_model.GetModel().GetSkeleton().GetBone( L"Hand_L" ), this ,
-				  { 13,5,5 } , L"Assets/modelData/Sword.cmo" , true);
-	m_sword.SetOffset( { 12, 0, 0 } );
+				  { 5,5,13 } , L"Assets/modelData/SkeSword.cmo" , true);
+	m_sword.SetOffset( { 0, 2, 15 } );
+	m_sword.SetModelOffset( { 0, 2, 0 } );
+	m_sword.SetModelRot( CQuaternion::CreateRotDeg( CVector3::AxisY(), 45 ) );
 	m_sword.SetKnockBack( CVector3( 0, 100, 100 ) );
 
 	//盾の初期化
