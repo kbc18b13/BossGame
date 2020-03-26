@@ -152,6 +152,11 @@ public:
 	void AddEventFunc( const char* name,const std::function<void()>& func ){
 		m_animation.AddEventFunc( name, func );
 	}
+
+	void LoadSpecularTex( const wchar_t* filepath ){
+		m_skinModel.LoadSpecularTex( filepath );
+	}
+
 private:
     SkinModel m_skinModel; //ƒXƒLƒ“ƒ‚ƒfƒ‹
 

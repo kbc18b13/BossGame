@@ -75,6 +75,7 @@ SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 10, stage ){
 	{
 		Bone* b = m_model.GetModel().GetSkeleton().GetBone( L"Hand_R" );
 		m_sword.Init( b, this, { 13,5,5 }, L"Assets/modelData/SkeSword.cmo", false );
+		m_sword.GetModel().LoadSpecularTex( L"Assets/modelData/SkeSwordSpec.dds" );
 		m_sword.SetOffset( { -12, 0, 0 } );
 		m_sword.SetKnockBack( CVector3( 0, 20, 50 ) );
 	}

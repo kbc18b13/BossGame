@@ -23,7 +23,7 @@ void SkinModel::Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis)
 
 	//SkinModelDataManagerを使用してCMOファイルのロード。
 	m_modelDx = g_skinModelDataManager.Load(filePath, m_skeleton);
-
+	
 	m_enFbxUpAxis = enFbxUpAxis;
 }
 
@@ -47,6 +47,17 @@ void SkinModel::InitSkeleton(const wchar_t* filePath)
 		sprintf(message, "tksファイルの読み込みに失敗しました。%ls\n", skeletonFilePath.c_str());
 		OutputDebugStringA(message);
 #endif
+	}
+}
+
+void SkinModel::LoadSpecularTex( const wchar_t * filepath ){
+	HRESULT result = DirectX::CreateDDSTextureFromFileEx(
+		g_graphicsEngine->GetD3DDevice(), filepath, 0,
+		D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 0, 0,
+		false, nullptr, &m_specTex);
+
+	if( FAILED( result ) ){
+		abort();
 	}
 }
 
@@ -111,6 +122,10 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 	vsCb.mProj = projMatrix;
 	vsCb.mView = viewMatrix;
 	vsCb.mEmissionColor = m_emissionColor;
+	if( m_specTex != nullptr ){
+		vsCb.mHasSpecularMap = 1;
+		d3dDeviceContext->PSSetShaderResources( 3, 1, m_specTex.GetAddressOf() );
+	}
 	m_cb.UpdateData( &vsCb );
 	//定数バッファをGPUに転送。
 	m_cb.SetToContext( ShaderType::VS, 0 );

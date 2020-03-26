@@ -35,6 +35,9 @@
 #include "DirectXTK/Inc/SpriteFont.h"
 #include "DirectXTK/Inc/DDSTextureLoader.h"
 
+template<typename T>
+using ComPtr = Microsoft::WRL::ComPtr<T>;
+
 //êîäwån
 #include "math/Vector.h"
 #include "math/Matrix.h"

@@ -45,6 +45,14 @@ void Bloom::Init(){
 
 	g_graphicsEngine->GetD3DDevice()->CreateBlendState( &blendDesc, &blendState );
 
+	D3D11_SAMPLER_DESC sampDesc{};
+	sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+
+	g_graphicsEngine->GetD3DDevice()->CreateSamplerState( &sampDesc, &m_sampler );
+
 	//加算合成用シェーダー
 	lastShader.Load( "Assets/shader/Bloom.fx", "PSPlus", Shader::EnType::PS );
 }
@@ -52,6 +60,11 @@ void Bloom::Init(){
 void Bloom::ApplyEffect( PostEffect& postEffect ){
 	using PS = ID3D11PixelShader;
     ID3D11DeviceContext* dc = g_graphicsEngine->GetD3DDeviceContext();
+	
+	//サンプラステートを設定
+	ComPtr<ID3D11SamplerState> oldSampler;
+	dc->PSGetSamplers( 0, 1, &oldSampler );
+	dc->PSSetSamplers( 0, 1, m_sampler.GetAddressOf() );
 
 	//輝度抽出
 	luminanceTarget.SetToContext( dc );
@@ -86,4 +99,6 @@ void Bloom::ApplyEffect( PostEffect& postEffect ){
 
 	//ブレンドステートを戻す
 	dc->OMSetBlendState( beforeBS, facter, mask );
+	//サンプラステートを戻す
+	dc->PSSetSamplers( 0, 1, oldSampler.GetAddressOf() );
 }

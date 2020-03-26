@@ -14,6 +14,9 @@ StructuredBuffer<float4x4> boneMatrix : register(t1);
 //シャドウマップ。
 Texture2D<float4> shadowMap : register(t2);
 
+//スペキュラマップ
+Texture2D<float> specularMap : register(t3);
+
 /////////////////////////////////////////////////////////////
 // SamplerState
 /////////////////////////////////////////////////////////////
@@ -30,6 +33,8 @@ cbuffer VSCb : register(b0){
 	float4x4 mView;
 	float4x4 mProj;
     float3 mEmissionColor;
+    float dummy;
+    int mHasSpecular;
 };
 
 
@@ -188,11 +193,13 @@ float4 PSMain( PSInput In ) : SV_Target0
 
 		sum += max(dot(In.Normal, -dir), 0) * mLightColor[i] * color;
 		//鏡面反射光
-		{
+		if(mHasSpecular){
 			float3 refVec = dir + 2 * (In.Normal * dot(In.Normal, -dir));
 			float3 eyeLine = normalize(In.worldPos - eyePos);
 			float specPower = max(dot(refVec, -eyeLine), 0);
-			sum += pow(specPower, 10) * (mLightColor[0]*0.5f);
+            
+            float mapPower = specularMap.Sample(Sampler, In.TexCoord);
+			sum += pow(specPower, 10) * (mLightColor[0]*10*mapPower);
 		}
 	}
     //環境光

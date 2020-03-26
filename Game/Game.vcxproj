@@ -72,7 +72,7 @@
       <AdditionalLibraryDirectories>$(SolutionDir)\Engine\Effekseer\DebugLib;$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)\Assets\sprite\%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <MeshContentTask>
       <ContentOutput>$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
@@ -100,7 +100,7 @@
       <AdditionalLibraryDirectories>$(SolutionDir)\Engine\Effekseer\lib;$(SolutionDir)$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)\Assets\sprite\%(Filename).dds</ContentOutput>
+      <ContentOutput>%(RelativeDir)%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <MeshContentTask>
       <ContentOutput>$(ProjectDir)\Assets\modelData\%(Filename).cmo</ContentOutput>
@@ -251,6 +251,12 @@
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\fade.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\modelData\charaSpec.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\modelData\SkeSwordSpec.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

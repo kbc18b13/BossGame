@@ -23,6 +23,7 @@ protected:
     Shader m_psShadow;		//シャドウマップ生成用のピクセルシェーダー。
 	bool isSkining;
 	ID3D11ShaderResourceView* m_albedoTex = nullptr;
+	ID3D11ShaderResourceView* m_specularTex = nullptr;
     EnRenderMode m_renderMode = EnRenderMode::Default;	//レンダリングモード。
 
 public:
@@ -39,6 +40,9 @@ public:
 	void SetAlbedoTexture(ID3D11ShaderResourceView* tex)
 	{
 		m_albedoTex = tex;
+	}
+	void SetSpecularTexture( ID3D11ShaderResourceView* tex ){
+		m_specularTex = tex;
 	}
 	void SetMatrialName(const wchar_t* matName)
 	{

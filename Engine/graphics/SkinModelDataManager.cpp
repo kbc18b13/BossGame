@@ -40,6 +40,7 @@ DirectX::Model* SkinModelDataManager::Load(const wchar_t* filePath, const Skelet
 			false,
 			onFindBone
 		);
+
 		retModel = model.get();
 		//新規なのでマップに登録する。
 		m_directXModelMap.insert({ filePath, std::move(model) });

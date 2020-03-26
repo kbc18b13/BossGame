@@ -139,5 +139,9 @@
     <ImageContentTask Include="Assets\sprite\lockOn.png" />
     <ImageContentTask Include="Assets\sprite\TextBack.png" />
     <ImageContentTask Include="Assets\sprite\fade.png" />
+    <ImageContentTask Include="Assets\modelData\charaSpec.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\modelData\SkeSwordSpec.png" />
   </ItemGroup>
 </Project>

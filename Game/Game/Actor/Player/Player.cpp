@@ -27,6 +27,7 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 
 		//cmoファイルの読み込み。
 		m_model.Init( L"Assets/modelData/Chara.cmo", m_animClip, int( Anim::Num ) );
+		m_model.LoadSpecularTex( L"Assets/modelData/charaSpec.dds" );
 
 		m_model.AddEventFunc( "Attack", [&](){
 			m_sword.AttackStart();
@@ -71,6 +72,7 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 	//剣の初期化
 	m_sword.Init( m_model.GetModel().GetSkeleton().GetBone( L"Hand_L" ), this ,
 				  { 5,5,13 } , L"Assets/modelData/SkeSword.cmo" , true);
+	m_sword.GetModel().LoadSpecularTex( L"Assets/modelData/SkeSwordSpec.dds" );
 	m_sword.SetOffset( { 0, 2, 15 } );
 	m_sword.SetModelOffset( { 0, 2, 0 } );
 	m_sword.SetModelRot( CQuaternion::CreateRotDeg( CVector3::AxisY(), 45 ) );

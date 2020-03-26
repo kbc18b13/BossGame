@@ -33,5 +33,7 @@ private:
 	Shader lastShader; //最後に加算合成をするシェーダー
 
 	RenderTarget* m_target;//対象のターゲット
+
+	ComPtr<ID3D11SamplerState> m_sampler;//サンプラステート
 };
 

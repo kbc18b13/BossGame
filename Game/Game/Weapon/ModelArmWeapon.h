@@ -46,6 +46,10 @@ public:
 		m_model.SetActive( active );
 	}
 
+	SkinModelRender& GetModel(){
+		return m_model;
+	}
+
 private:
 
 	Bone* m_hand; //è‚Ìƒ{[ƒ“
