@@ -55,7 +55,7 @@ Player::Player(IStage* stage) : Actor( 10 , stage){
 
 	//アクトステートの初期化
 	{
-		m_actArray[int( Act::Slash )].reset( new Attack( Anim::Slash1, 2 ) );
+		m_actArray[int( Act::Slash )].reset( new Attack( Anim::Slash1, 2 , &m_model) );
 		m_actArray[int( Act::Walker )].reset( new Walker() );
 		m_actArray[int( Act::Guard )].reset( new Guard() );
 		m_actArray[int( Act::Roll )].reset( new Roll() );

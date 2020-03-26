@@ -28,10 +28,10 @@ VirtualPadToXPad vPadToXPadTable[enButtonNum] = {
 	{ enButtonSelect	, XINPUT_GAMEPAD_BACK },
 	{ enButtonStart		, XINPUT_GAMEPAD_START },
 	{ enButtonRB1		, XINPUT_GAMEPAD_RIGHT_SHOULDER },
-	{ enButtonRB2		, 0 },
+	{ enButtonRB2		, 0x0400 },
 	{ enButtonRB3		, XINPUT_GAMEPAD_RIGHT_THUMB },
 	{ enButtonLB1		, XINPUT_GAMEPAD_LEFT_SHOULDER },
-	{ enButtonLB2		, 0 },
+	{ enButtonLB2		, 0x0800 },
 	{ enButtonLB3		, XINPUT_GAMEPAD_LEFT_THUMB },
 };
 /*!
@@ -86,6 +86,14 @@ void Pad::UpdateButtonInput()
 	// = 0001 0000 0000 0000(wButtons & XINPUT_GAMEPAD_A の結果)
 	//このように、ビットパターンと論理積を取った時に、0出ない場合はそのパッドが入力されていると判断することができる。
 
+	//トリガーのボタン判定
+	if( m_state.xInputState.Gamepad.bLeftTrigger != 0 ){
+		m_state.xInputState.Gamepad.wButtons |= vPadToXPadTable[enButtonLB2].xButton;
+	}
+	if( m_state.xInputState.Gamepad.bRightTrigger != 0 ){
+		m_state.xInputState.Gamepad.wButtons |= vPadToXPadTable[enButtonRB2].xButton;
+	}
+
 	//実習 1 残りのボタンも入力をとれるようにしてみよう。
 	// vPadToXPadTableは仮想キー(enButton～)とXBoxコントローラのボタン(XINPUT_GAMEPAD_～)の対応データの配列となっている。
 	for (const auto& vPadToXPad : vPadToXPadTable) {
@@ -107,25 +115,6 @@ void Pad::UpdateButtonInput()
 			m_trigger[vPadToXPad.vButton] = 0;
 			m_press[vPadToXPad.vButton] = 0;
 		}
-	}
-
-	//左トリガー(LB2ボタン)の入力判定。
-	if (m_state.xInputState.Gamepad.bLeftTrigger != 0) {
-		m_trigger[enButtonLB2] = 1 ^ m_press[enButtonLB2];
-		m_press[enButtonLB2] = 1;
-	}
-	else {
-		m_trigger[enButtonLB2] = 0;
-		m_press[enButtonLB2] = 0;
-	}
-	//右トリガー(RB2ボタン)の入力判定。
-	if (m_state.xInputState.Gamepad.bRightTrigger != 0) {
-		m_trigger[enButtonRB2] = 1 ^ m_press[enButtonRB2];
-		m_press[enButtonRB2] = 1;
-	}
-	else {
-		m_trigger[enButtonRB2] = 0;
-		m_press[enButtonRB2] = 0;
 	}
 }
 /*!

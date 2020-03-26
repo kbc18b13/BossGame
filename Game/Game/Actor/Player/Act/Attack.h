@@ -5,7 +5,7 @@ namespace PlayerSpace{
 
 class Attack : public PlayerAct{
 public:
-	Attack( Player::Anim animation1, int combo);
+	Attack( Player::Anim animation1, int combo, SkinModelRender* model);
 	~Attack();
 
 	void SubStart( Actor* p ) override;
@@ -28,6 +28,7 @@ private:
 	int m_nowCombo = 0;
 	float m_timer = 0;
 
+	bool m_canGoNext = false;
 
 	void LocalStart( bool heavy);
 };

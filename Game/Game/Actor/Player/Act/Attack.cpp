@@ -3,9 +3,13 @@
 
 namespace PlayerSpace{
 
-Attack::Attack( Player::Anim animation_, int combo ) : m_maxCombo( combo ){
+Attack::Attack( Player::Anim animation_, int combo, SkinModelRender* model ) : m_maxCombo( combo ){
 	m_animation = int( animation_ );
 	m_needStamina = 5;
+
+	model->AddEventFunc( "Combo", [&](){
+		m_canGoNext = true;
+	} );
 }
 
 
@@ -20,12 +24,13 @@ void Attack::LocalStart( bool heavy ){
 	} else{
 		m_stamina->Consume( m_needStamina * 2);
 		m_sword->SetDamage( 3 );
-		m_model->Play( int( Player::Anim::HeavySlash ), 0.2f);
-		m_nowCombo = 3;
+		m_model->Play( int( Player::Anim::HeavySlash ), 0.2f, true);
+		m_nowCombo = 0;
 	}
 
 	m_next = Atk::None;
 	m_timer = 0;
+	m_canGoNext = false;
 	m_nowCombo++;
 	if( m_nowCombo == m_maxCombo ){
 		m_nowCombo = 0;
@@ -55,7 +60,7 @@ void Attack::Update( Actor* p ){
 	}
 
 	//ƒRƒ“ƒ{‰Â”\‚ÈŽžŠÔ
-	if( m_timer > 0.5f ){
+	if( m_canGoNext || !m_model->IsPlaying()){
 		if(m_next != Atk::None ){
 
 			if( m_stamina->CanDo() ){
