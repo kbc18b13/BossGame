@@ -13,7 +13,7 @@
 
 using namespace PlayerSpace;
 
-Player::Player(IStage* stage) : Actor( 10 , stage){
+Player::Player(IStage* stage) : Actor( 1000 , stage){
 	//ƒ‚ƒfƒ‹“Ç‚İ‚İ
 	{
 		m_animClip[int( Anim::Walk )].Load( L"Assets/animData/Chara_Run.tka", true );

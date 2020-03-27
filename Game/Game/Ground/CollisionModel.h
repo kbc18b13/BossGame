@@ -3,7 +3,8 @@
 class SkinModelRender;
 class CollisionModel {
 public:
-	CollisionModel(const wchar_t* modelPath, const wchar_t* collisionModelPath = nullptr);
+	CollisionModel(const wchar_t* modelPath, const wchar_t* collisionModelPath = nullptr,
+					btCollisionObject::CollisionFlags flag = btCollisionObject::CF_Ground );
 	~CollisionModel();
 
 	void SetPos(const CVector3& pos);

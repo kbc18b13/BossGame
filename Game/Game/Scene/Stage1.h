@@ -2,6 +2,8 @@
 #include "Ground/TriggerCollision.h"
 #include "Ground/BigDoor.h"
 #include "IStage.h"
+#include "WayPoint/WayPointManager.h"
+
 class Troll;
 class Player;
 
@@ -35,6 +37,10 @@ public:
 
 	void EndStage() override;
 
+	virtual CVector3 GetShouldGo( const CVector3& from, const CVector3& to ){
+		return wpManager.GetShouldGo( from, to );
+	}
+
 private:
 	//ステージ終了までの時間
 	float endTime = 0.0f;
@@ -48,4 +54,7 @@ private:
 	CollisionModel carriage;
 	DoorOpener opener;
 	BigDoor* bigDoor = nullptr;
+
+	//ウェイポイントを管理
+	WayPointManager wpManager;
 };

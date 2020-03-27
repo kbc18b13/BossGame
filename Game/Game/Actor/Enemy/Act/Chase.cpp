@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Chase.h"
 #include "Actor\Actor.h"
+#include "Scene/IStage.h"
 
 namespace EnemySpace{
 
@@ -14,8 +15,9 @@ void Chase::SubStart( Actor* a ){
 }
 
 void Chase::Update( Actor* a ){
+	CVector3 toGO = a->GetStage()->GetShouldGo( a->GetPos(), m_target->GetPos() );
 
-	CVector3 move = m_target->GetPos() - m_chara->GetPosition();
+	CVector3 move = toGO - m_chara->GetPosition();
 	move.y = 0;
 	float moveLength = move.Length();
 	if( moveLength < m_stopDistance ){

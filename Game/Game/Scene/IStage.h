@@ -16,6 +16,10 @@ public:
 		return enemyArray;
 	}
 
+	virtual CVector3 GetShouldGo( const CVector3& from, const CVector3& to ){
+		return to;
+	}
+
 	virtual void EndStage() = 0;
 
 protected:

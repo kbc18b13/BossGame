@@ -3,8 +3,10 @@
 #include "Actor/Actor.h"
 #include "physics/CollisionAttr.h"
 
-CollisionModel::CollisionModel( const wchar_t* modelPath, const wchar_t* collisionModelPath ){
+CollisionModel::CollisionModel( const wchar_t* modelPath, const wchar_t* collisionModelPath,
+								btCollisionObject::CollisionFlags flag){
 	m_model.Init( modelPath );
+	m_collider.SetFlag( flag );
 	if( !collisionModelPath ){
 		m_collider.CreateMeshObject( m_model.GetModel(), { 0,0,0 }, CQuaternion::Identity() );
 	} else{

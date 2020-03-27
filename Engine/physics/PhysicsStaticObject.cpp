@@ -23,6 +23,7 @@ void PhysicsStaticObject::CreateRigidBody( CVector3 pos, CQuaternion rot ){
 	rbInfo.pos = pos;
 	rbInfo.rot = rot;
 	m_rigidBody.Create( rbInfo );
+	m_rigidBody.GetBody()->setCollisionFlags( m_flag );
 	//„‘Ì‚ğ•¨—ƒ[ƒ‹ƒh‚É’Ç‰Á‚·‚éB
 	g_physics.AddRigidBody( m_rigidBody );
 }

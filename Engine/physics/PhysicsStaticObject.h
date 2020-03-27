@@ -65,8 +65,13 @@ public:
 		return &m_rigidBody;
 	}
 
+	void SetFlag( btCollisionObject::CollisionFlags flag ){
+		m_flag = flag;
+	}
+
 private:
 	void CreateRigidBody( CVector3 pos, CQuaternion rot );
 	MeshCollider m_meshCollider;		//!<メッシュコライダー。
 	RigidBody m_rigidBody;				//!<剛体。
+	btCollisionObject::CollisionFlags m_flag;
 };

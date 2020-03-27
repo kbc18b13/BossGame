@@ -2,7 +2,7 @@
  * @brief	ユーティリティ関数。
  */
 #pragma once
-
+#include <fstream>
 
 class Util{
 public:
@@ -30,6 +30,13 @@ public:
 			hash = hash * 37 + string[i];
 		}
 		return hash;
+	}
+
+	template<typename T>
+	static T readBinary( std::ifstream& ifs ){
+		T value;
+		ifs.read( reinterpret_cast<char*>(&value), sizeof( T ) );
+		return value;
 	}
 
 	//ランダムなInt値を返す。範囲にendを含む。

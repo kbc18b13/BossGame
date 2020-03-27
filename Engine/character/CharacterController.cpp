@@ -32,7 +32,7 @@ namespace {
 			//上方向と法線のなす角度を求める。
 			float angle = hitNormalTmp.Dot(CVector3::Up());
 			angle = fabsf(acosf(angle));
-			if (angle < CMath::PI * 0.44f		//地面の傾斜が80度より小さいので地面とみなす。
+			if (angle < CMath::DegToRad(60)		//地面の傾斜が80度より小さいので地面とみなす。
 				|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Ground //もしくはコリジョン属性が地面と指定されている。
 				) {
 				//衝突している。
