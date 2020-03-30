@@ -18,7 +18,7 @@ void SkeIdle::Update( Actor* s ){
 	CVector3 toP =  m_target->GetPos() - s->GetPos();
 
 	if( m_timer <= 0 ){
-		if( toP.LengthSq() > 300 * 300 ){
+		if( toP.LengthSq() > 400 * 400 ){
 
 			//Ž@’m”ÍˆÍŠO‚Í‘Ò‹@
 			m_timer = 1.5;

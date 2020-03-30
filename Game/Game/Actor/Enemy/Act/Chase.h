@@ -18,6 +18,7 @@ private:
 	int m_walkAnim;
 	float m_stopDistance = 0.0f;
 	float m_timer = 0.0f;
+	CQuaternion rot;
 };
 
 }

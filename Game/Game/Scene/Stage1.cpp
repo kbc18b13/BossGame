@@ -68,6 +68,8 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 		return true;
 	} );
 
+	m_wall.Init( L"Assets/modelData/FirstStageWall.cmo" );
+
 	opener.SetDoor( bigDoor );
 
 	wpManager.Load( L"Assets/level/wayPoint.wpdata" );
@@ -78,7 +80,6 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 
 	g_graphicsEngine->GetAmbientLight().SetColor( { 0.5f,0.5f,0.5f,1 } );
 	g_graphicsEngine->GetAmbientLight().Apply();
-
 	Fade::Out();
 }
 

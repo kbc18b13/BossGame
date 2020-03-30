@@ -1,6 +1,7 @@
 #include "Ground/CollisionModel.h"
 #include "Ground/TriggerCollision.h"
 #include "Ground/BigDoor.h"
+#include "Ground/GhostCollision.h"
 #include "IStage.h"
 #include "WayPoint/WayPointManager.h"
 
@@ -47,13 +48,14 @@ private:
 	//ステージ終了フラグ
 	bool isEndStage = false;
 
-
 	TriggerCollision* bossRoomTrigger = nullptr;
 	CVector3 trollPos;
 	CollisionModel ground;
 	CollisionModel carriage;
 	DoorOpener opener;
 	BigDoor* bigDoor = nullptr;
+
+	GhostCollision m_wall;
 
 	//ウェイポイントを管理
 	WayPointManager wpManager;

@@ -69,6 +69,8 @@ public:
 	{
 		dynamicWorld->contactTest(colObj, resultCallback);
 	}
+
+	void DrawLine( const CVector3& from, const CVector3& to, const CVector3& color );
 };
 
 extern PhysicsWorld g_physics;

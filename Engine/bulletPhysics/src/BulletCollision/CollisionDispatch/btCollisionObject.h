@@ -132,6 +132,7 @@ public:
 		CF_Enemy = 128,
 		CF_Player = 256,
 		CF_Ground  = 512,
+		CF_Ray = 1024
 	};
 
 	enum	CollisionObjectTypes

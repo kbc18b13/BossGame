@@ -2,7 +2,8 @@
 #include "IStage.h"
 #include "Actor/Player/Player.h"
 
-IStage::IStage(){}
+IStage::IStage(){
+}
 
 
 IStage::~IStage(){

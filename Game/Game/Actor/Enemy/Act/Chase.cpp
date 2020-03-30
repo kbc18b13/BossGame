@@ -12,11 +12,11 @@ Chase::~Chase(){}
 
 void Chase::SubStart( Actor* a ){
 	m_timer = 5.0f;
+	rot = m_model->GetRot();
 }
 
 void Chase::Update( Actor* a ){
 	CVector3 toGO = a->GetStage()->GetShouldGo( a->GetPos(), m_target->GetPos() );
-
 	CVector3 move = toGO - m_chara->GetPosition();
 	move.y = 0;
 	float moveLength = move.Length();
@@ -28,7 +28,8 @@ void Chase::Update( Actor* a ){
 	}
 	m_model->Play( m_walkAnim, 0.2f );
 	m_model->SetPos( m_chara->Excecute( move, false ) );
-	m_model->SetRot( Util::LookRotXZ( move ) );
+	rot.Slerp( 0.5f, rot, Util::LookRotXZ( move ) );
+	m_model->SetRot( rot );
 
 	//タイマーが0を下回ったら終了
 	if( m_timer <= 0 ){

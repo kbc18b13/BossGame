@@ -103,3 +103,7 @@ void PhysicsWorld::UpdateSingleAABB( RigidBody & rb ){
 void PhysicsWorld::UpdateSingleAABB( ICollision & cl ){
 	dynamicWorld->updateSingleAabb( cl.GetBody() );
 }
+
+void PhysicsWorld::DrawLine(const CVector3& from, const CVector3& to, const CVector3& color){
+	st_debugWire->drawLine( from, to, color );
+}

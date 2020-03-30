@@ -2,7 +2,7 @@
 #include <vector>
 class Actor;
 class Player;
-
+#include "graphics/SkinModelRender.h"
 class IStage : public IGameObject{
 public:
 	IStage();
@@ -21,7 +21,6 @@ public:
 	}
 
 	virtual void EndStage() = 0;
-
 protected:
 	Player* player;
 	std::vector<Actor*> enemyArray;

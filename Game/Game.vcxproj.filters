@@ -62,6 +62,7 @@
     <ClCompile Include="Game\Actor\Enemy\Slime\Act\SlimeRollAttack.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Slime\Act\SlimeStrike.cpp" />
     <ClCompile Include="Game\WayPoint\WayPointManager.cpp" />
+    <ClCompile Include="Game\Ground\GhostCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -116,6 +117,7 @@
     <ClInclude Include="Game\Actor\Enemy\Slime\Act\SlimeIdle.h" />
     <ClInclude Include="Game\Actor\Enemy\Slime\Act\SlimeRollAttack.h" />
     <ClInclude Include="Game\WayPoint\WayPointManager.h" />
+    <ClInclude Include="Game\Ground\GhostCollision.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">
@@ -133,6 +135,7 @@
     <MeshContentTask Include="Assets\modelData\BigDoor.fbx" />
     <MeshContentTask Include="Assets\modelData\Slime.fbx" />
     <MeshContentTask Include="Assets\modelData\Chara.fbx" />
+    <MeshContentTask Include="Assets\modelData\FirstStageWall.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Title_back.png" />
@@ -143,8 +146,6 @@
     <ImageContentTask Include="Assets\sprite\fade.png" />
     <ImageContentTask Include="Assets\modelData\charaSpec.png" />
     <ImageContentTask Include="Assets\modelData\SkeSwordSpec.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Assets\modelData\SlimeSpec.png" />
+    <ImageContentTask Include="Assets\modelData\SlimeSpec.png" />
   </ItemGroup>
 </Project>
