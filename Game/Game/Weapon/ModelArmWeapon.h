@@ -50,6 +50,10 @@ public:
 		return m_model;
 	}
 
+	void SetSound( SoundOverlap* sound ){
+		m_weapon.SetSound( sound );
+	}
+
 private:
 
 	Bone* m_hand; //è‚Ìƒ{[ƒ“

@@ -6,6 +6,8 @@
 
 Title::Title() {
 	backImage.Init(L"Assets/sprite/Title_back.dds", FRAME_BUFFER_W, FRAME_BUFFER_H);
+	m_bgm.Init( L"Assets/sound/titleBGM.wav" );
+	m_bgm.Play( true );
 	Fade::Out();
 }
 

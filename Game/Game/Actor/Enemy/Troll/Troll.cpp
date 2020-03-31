@@ -16,7 +16,7 @@
 
 using namespace EnemySpace;
 
-Troll::Troll(IStage* stage) : Actor(10, stage ){
+Troll::Troll(IStage* stage) : Actor(100, stage ){
     //モデル
 	{
 		m_animClip[int(AnimState::Walk)].Load(L"Assets/animData/Troll_Walk.tka", true);
@@ -52,7 +52,7 @@ Troll::Troll(IStage* stage) : Actor(10, stage ){
     //腕コリジョン
     Bone* arm = m_model.GetModel().GetSkeleton().GetBone(20);
 	m_armCollision.Init( arm, this, CVector3( 10.0f, 20.0f, 10.0f ), false );
-	m_armCollision.SetDamage( 3 );
+	m_armCollision.SetDamage( 30 );
 	m_armCollision.SetKnockBack( CVector3( 0, 200, 300 ) );
 
 	//体コリジョン

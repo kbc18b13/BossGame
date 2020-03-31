@@ -10,4 +10,6 @@ public:
 
 private:
 	SpriteRender backImage;
+	//BGM
+	CSoundSource m_bgm;
 };

@@ -60,5 +60,8 @@ private:
 
 	//ステート
 	std::unique_ptr<EnemySpace::EnemyAct> m_stateArray[int( ActE::Num )];
+
+	//音
+	SoundOverlap m_se_strike;
 };
 

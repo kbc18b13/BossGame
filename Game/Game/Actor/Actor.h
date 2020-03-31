@@ -80,6 +80,10 @@ protected:
 
 	virtual Act* GetAct( int index ) = 0;
 
+	bool NowActIs( int index ){
+		return m_nowAct == GetAct( index );
+	}
+
 	virtual void OnDeath(){};
 
 	Act* m_nowAct = nullptr; //現在のステート

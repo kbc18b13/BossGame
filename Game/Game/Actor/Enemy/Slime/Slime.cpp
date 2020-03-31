@@ -11,7 +11,9 @@
 
 using namespace EnemySpace;
 
-Slime::Slime( IStage * stage ) : Actor(7 ,stage){
+Slime::Slime( IStage * stage ) : Actor(50 ,stage){
+	//音
+	m_se_strike.Init( L"Assets/sound/strike.wav" );
 
 	//キャラコン
 	{
@@ -62,6 +64,7 @@ Slime::Slime( IStage * stage ) : Actor(7 ,stage){
 		//必要なアニメーションイベント
 		m_model.AddEventFunc( "Attack", [this](){
 			m_weapon.AttackStart();
+			m_se_strike.Play();
 		} );
 
 		//初期化

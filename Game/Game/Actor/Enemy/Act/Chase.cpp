@@ -11,7 +11,7 @@ Chase::Chase(int walkAnim, int nextState, float stopDistance ) :
 Chase::~Chase(){}
 
 void Chase::SubStart( Actor* a ){
-	m_timer = 5.0f;
+	m_timer = 30.0f;
 	rot = m_model->GetRot();
 }
 

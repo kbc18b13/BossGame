@@ -59,4 +59,8 @@ private:
 
 	//ウェイポイントを管理
 	WayPointManager wpManager;
+
+	//BGM
+	CSoundSource m_bgm;
+	CSoundSource m_bossBGM;
 };

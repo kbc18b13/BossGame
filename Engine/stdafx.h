@@ -23,6 +23,7 @@
 #include <xaudio2fx.h>
 #include "sound/SoundEngine.h"
 #include "sound/SoundSource.h"
+#include "sound/SoundOverlap.h"
 
 //BulletPhysics
 #include "btBulletDynamicsCommon.h"

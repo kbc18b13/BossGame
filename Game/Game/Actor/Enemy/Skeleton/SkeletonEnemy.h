@@ -56,6 +56,10 @@ private:
 
 	MiniBarGauge m_hpBar;
 
+	//音
+	SoundOverlap m_se_swordSwing;
+	SoundOverlap m_se_swordSlash;
+
 	//ステート
 	std::unique_ptr<EnemySpace::EnemyAct> m_stateArray[int( ActE::Num )];
 };

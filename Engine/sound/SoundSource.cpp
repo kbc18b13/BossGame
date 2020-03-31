@@ -20,7 +20,7 @@ CSoundSource::~CSoundSource()
 void CSoundSource::InitCommon()
 {
 }
-void CSoundSource::Init(wchar_t* filePath)
+void CSoundSource::Init(const wchar_t* filePath)
 {
 	m_isAvailable = false;
 	m_waveFile = g_soundEngine.GetWaveFileBank().FindWaveFile(0, filePath);
@@ -115,7 +115,9 @@ void CSoundSource::Play(bool isLoop)
 	}
 	if (m_isPlaying) {
 		//Ä¶’†‚Ì‚à‚Ì‚ðÄŠJ‚·‚éB
-		m_sourceVoice->Start(0);
+		//m_sourceVoice->Start(0);
+
+
 	}
 	else {
 		if (m_isStreaming) {

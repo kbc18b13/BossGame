@@ -48,18 +48,21 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 			enemyArray.push_back( t );
 
 		} else if( wcscmp( objData.name, L"Slime" ) == 0){
-			/*Actor* a = NewGO<Slime>( 0, this );
+			Actor* a = NewGO<Slime>( 0, this );
 			a->SetPos( objData.position );
-			enemyArray.push_back( a );*/
+			enemyArray.push_back( a );
 
 		} else if( wcscmp( objData.name, L"BossRoom" ) == 0 ){
 			std::function<void()> f = [&](){
 				Actor* t = NewGO<Troll>( 0, this );
 				t->SetPos( trollPos );
 				enemyArray.push_back( t );
+
+				m_bgm.Stop();
+				m_bossBGM.Play( true );
+
 				DeleteGO( bossRoomTrigger );
 				bossRoomTrigger = nullptr;
-
 			};
 
 			bossRoomTrigger = NewGO<TriggerCollision>( 0 );
@@ -80,6 +83,11 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 
 	g_graphicsEngine->GetAmbientLight().SetColor( { 0.5f,0.5f,0.5f,1 } );
 	g_graphicsEngine->GetAmbientLight().Apply();
+
+	m_bossBGM.Init( L"Assets/sound/bossBGM.wav" );
+	m_bgm.Init( L"Assets/sound/stageBGM.wav" );
+	m_bgm.Play( true );
+
 	Fade::Out();
 }
 

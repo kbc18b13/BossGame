@@ -19,12 +19,15 @@ void Weapon::Update(){
 
 		//既にヒットしたアクターでない場合だけ、ヒット処理を行う。
 		if( std::find( m_hitActors.begin(), m_hitActors.end(), a ) == m_hitActors.end() ){
+			//音
+			if( m_sound )
+				m_sound->Play();
 			//ダメージ
 			a->Damage( m_damage, m_master );
 			//ノックバック
 			CVector3 v = a->GetPos() - pos;
 			CVector3 knockBack = m_knock;
-			Util::LookRotXZ( v ).Multiply(knockBack);
+			Util::LookRotXZ( v ).Multiply( knockBack );
 			a->AddVelocity( knockBack );
 			//ヒットしたアクターの配列に追加
 			m_hitActors.push_back( a );

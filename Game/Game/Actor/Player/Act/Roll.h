@@ -14,6 +14,7 @@ public:
 
 private:
 	CVector3 m_move;
+	SoundOverlap m_sound;
 };
 
 }

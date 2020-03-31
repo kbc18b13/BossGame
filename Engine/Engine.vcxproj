@@ -201,6 +201,7 @@
     <ClInclude Include="graphics\PostEffect\PostEffect.h" />
     <ClInclude Include="graphics\RenderMachine.h" />
     <ClInclude Include="graphics\RenderObjectManager.h" />
+    <ClInclude Include="sound\SoundOverlap.h" />
     <ClInclude Include="sound\SoundEngine.h" />
     <ClInclude Include="sound\SoundSource.h" />
     <ClInclude Include="sound\WaveFile.h" />
@@ -260,6 +261,7 @@
     <ClCompile Include="graphics\PostEffect\PostEffect.cpp" />
     <ClCompile Include="graphics\RenderMachine.cpp" />
     <ClCompile Include="graphics\RenderObjectManager.cpp" />
+    <ClCompile Include="sound\SoundOverlap.cpp" />
     <ClCompile Include="sound\SoundEngine.cpp" />
     <ClCompile Include="sound\SoundSource.cpp" />
     <ClCompile Include="sound\WaveFile.cpp" />

@@ -9,12 +9,12 @@ void SlimeStrike::SubStart( Actor * a ){
 	int r = Util::RandomInt( 0, 2 );
 	if( r == 0 ){
 		m_model->Play( int( Slime::Anim::HeavyStrike ) , 0.2f);
-		m_weapon.SetDamage( 4 );
-		m_weapon.SetKnockBack( { 0,200,500 } );
+		m_weapon.SetDamage( 20 );
+		m_weapon.SetKnockBack( { 0,100,250 } );
 		return;
 	}
 	m_model->Play( int( Slime::Anim::Strike ), 0.2f );
-	m_weapon.SetDamage( 1 );
+	m_weapon.SetDamage( 10 );
 	m_weapon.SetKnockBack( { 0, 20, 50 } );
 }
 

@@ -13,7 +13,13 @@
 
 using namespace EnemySpace;
 
-SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 10, stage ){
+SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 60, stage ){
+	//音
+	{
+		m_se_swordSwing.Init( L"Assets/sound/sword_swing.wav" );
+		m_se_swordSlash.Init( L"Assets/sound/sword_slash2.wav" );
+	}
+
 	//キャラコン
 	{
 		CharaConDesc desc;
@@ -59,7 +65,10 @@ SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 10, stage ){
 
 		//必要なアニメーションイベント
 		m_model.AddEventFunc( "Attack", [this](){
-			m_sword.AttackStart();
+			if( NowActIs( int( ActE::Attack ) ) || NowActIs( int( ActE::JumpAttack ) ) ){
+				m_sword.AttackStart();
+				m_se_swordSwing.Play();
+			}
 		} );
 
 		//初期化
@@ -78,6 +87,8 @@ SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 10, stage ){
 		m_sword.GetModel().LoadSpecularTex( L"Assets/modelData/SkeSwordSpec.dds" );
 		m_sword.SetOffset( { -12, 0, 0 } );
 		m_sword.SetKnockBack( CVector3( 0, 20, 50 ) );
+		m_sword.SetDamage( 10 );
+		m_sword.SetSound( &m_se_swordSlash );
 	}
 
 	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 50, 2 );

@@ -13,7 +13,7 @@
 
 using namespace EnemySpace;
 
-Yowai::Yowai( IStage * stage ) : Actor(5, stage){
+Yowai::Yowai( IStage * stage ) : Actor(40, stage){
 	//ÉÇÉfÉãèâä˙âª
 	{
 		m_animClips[int( Anim::Idle )].Load( L"Assets/animData/Yowai_Idle.tka", true);
@@ -65,6 +65,7 @@ Yowai::Yowai( IStage * stage ) : Actor(5, stage){
 	Bone* b = m_model.GetModel().GetSkeleton().GetBone( 2 );
 	m_weapon.Init( b, this, { 5,5,5 }, false );
 	m_weapon.SetOffset( CVector3( 0, 7, 0 ) );
+	m_weapon.SetDamage( 10 );
 
 	m_hpBar.Init( L"Assets/sprite/HpOut.dds", L"Assets/sprite/HpIn.dds", 50, 2 );
 	m_hpBar.SetColor( CVector4( 1, 0, 0, 1 ) );

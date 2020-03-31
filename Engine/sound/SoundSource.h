@@ -39,7 +39,7 @@ public:
 	/// <param name="filePath">
 	/// ファイルパス。対応しているファイルフォーマット(*.wave)
 	/// </param>
-	void Init(wchar_t* filePath);
+	void Init(const wchar_t* filePath);
 	/// <summary>
 	/// 初期化(ストリーミング再生)
 	/// </summary>

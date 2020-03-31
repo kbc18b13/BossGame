@@ -5,6 +5,7 @@ namespace PlayerSpace{
 
 Roll::Roll(){
 	m_needStamina = 10;
+	m_sound.Init( L"Assets/sound/roll.wav" );
 }
 
 
@@ -12,6 +13,9 @@ Roll::~Roll(){}
 
 void Roll::SubStart( Actor * p ){
 	m_stamina->Consume( m_needStamina );
+
+	//‰¹
+	m_sound.Play();
 
 	//ˆÚ“®•ûŒü‚ÌŒˆ’è
 	m_move = m_camera->GetPadVec();

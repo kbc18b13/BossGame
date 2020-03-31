@@ -85,6 +85,10 @@ private:
 
 	Stamina m_stamina;//スタミナ
 
+	SoundOverlap m_se_swordSwing;
+	SoundOverlap m_se_swordSlash;
+	SoundOverlap m_se_guard;
+
 	bool m_fallDeath = false; //落下死
 };
 

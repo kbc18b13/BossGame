@@ -37,6 +37,10 @@ public:
 		m_knock = knock;
 	}
 
+	void SetSound( SoundOverlap* sound ){
+		m_sound = sound;
+	}
+
 private:
 	ActorHitCollision m_collision;
 
@@ -48,5 +52,7 @@ private:
 	Actor* m_master;
 
 	bool m_isAttack = false;
+
+	SoundOverlap* m_sound = nullptr;
 };
 

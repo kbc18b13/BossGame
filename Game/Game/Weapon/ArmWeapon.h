@@ -35,6 +35,10 @@ public:
 		m_weapon.SetActive( active );
 	}
 
+	void SetSound( SoundOverlap* sound ){
+		m_weapon.SetSound( sound );
+	}
+
 private:
 
 	Bone* m_hand; //è‚Ìƒ{[ƒ“

@@ -13,7 +13,14 @@
 
 using namespace PlayerSpace;
 
-Player::Player(IStage* stage) : Actor( 1000 , stage){
+Player::Player( IStage* stage ) : Actor( 150, stage ){
+	//音声初期化
+	{
+		m_se_swordSwing.Init( L"Assets/sound/sword_swing.wav" );
+		m_se_swordSlash.Init( L"Assets/sound/sword_slash.wav" );
+		m_se_guard.Init( L"Assets/sound/guard.wav" );
+	}
+
 	//モデル読み込み
 	{
 		m_animClip[int( Anim::Walk )].Load( L"Assets/animData/Chara_Run.tka", true );
@@ -30,7 +37,10 @@ Player::Player(IStage* stage) : Actor( 1000 , stage){
 		m_model.LoadSpecularTex( L"Assets/modelData/charaSpec.dds" );
 
 		m_model.AddEventFunc( "Attack", [&](){
-			m_sword.AttackStart();
+			if( NowActIs( int( Act::Slash ) ) ){
+				m_se_swordSwing.Play();
+				m_sword.AttackStart();
+			}
 		} );
 	}
 
@@ -56,7 +66,7 @@ Player::Player(IStage* stage) : Actor( 1000 , stage){
 
 	//アクトステートの初期化
 	{
-		m_actArray[int( Act::Slash )].reset( new Attack( Anim::Slash1, 2 , &m_model) );
+		m_actArray[int( Act::Slash )].reset( new Attack( Anim::Slash1, 2, &m_model ) );
 		m_actArray[int( Act::Walker )].reset( new Walker() );
 		m_actArray[int( Act::Guard )].reset( new Guard() );
 		m_actArray[int( Act::Roll )].reset( new Roll() );
@@ -67,16 +77,17 @@ Player::Player(IStage* stage) : Actor( 1000 , stage){
 			a->Init( &m_model, &m_chara, &m_sword, &m_camera, &m_stamina );
 		}
 
-		m_nowAct = GetAct( int(Act::Walker ));
+		m_nowAct = GetAct( int( Act::Walker ) );
 	}
 	//剣の初期化
-	m_sword.Init( m_model.GetModel().GetSkeleton().GetBone( L"Hand_L" ), this ,
-				  { 5,5,13 } , L"Assets/modelData/SkeSword.cmo" , true);
+	m_sword.Init( m_model.GetModel().GetSkeleton().GetBone( L"Hand_L" ), this,
+				  { 5,5,13 }, L"Assets/modelData/SkeSword.cmo", true );
 	m_sword.GetModel().LoadSpecularTex( L"Assets/modelData/SkeSwordSpec.dds" );
 	m_sword.SetOffset( { 0, 2, 15 } );
 	m_sword.SetModelOffset( { 0, 2, 0 } );
 	m_sword.SetModelRot( CQuaternion::CreateRotDeg( CVector3::AxisY(), 45 ) );
 	m_sword.SetKnockBack( CVector3( 0, 100, 100 ) );
+	m_sword.SetSound( &m_se_swordSlash );
 
 	//盾の初期化
 	m_shield.Init( m_model.GetModel().GetSkeleton().GetBone( L"Hand_R" ), this );
@@ -111,8 +122,8 @@ void Player::Update(){
 	m_model.SetPos( m_chara.GetPosition() );
 
 	//ロックオン時の回転
-	if( m_camera.IsLockOn() && m_nowAct != GetAct(int(Act::Roll))){
-		m_model.SetRot(Util::LookRotXZ( m_camera.GetLockOnPos() - GetPos() ));
+	if( m_camera.IsLockOn() && m_nowAct != GetAct( int( Act::Roll ) ) ){
+		m_model.SetRot( Util::LookRotXZ( m_camera.GetLockOnPos() - GetPos() ) );
 	}
 
 	//カメラの更新
@@ -129,7 +140,7 @@ void Player::Update(){
 	m_sword.Update();
 	m_shield.Update();
 
-	if( GetPos().y < -100 && !m_fallDeath){
+	if( GetPos().y < -100 && !m_fallDeath ){
 		m_stage->EndStage();
 		DisplayText::display( L"YOU DIED", CVector3( 0.7f, 0, 0 ) );
 		m_fallDeath = true;
@@ -156,15 +167,16 @@ bool Player::Damage( UINT damage, Actor* source ){
 		toSource.Normalize();
 
 		if( acosf( v.Dot( toSource ) ) < CMath::DegToRad( 80 ) ){
-			if( m_stamina.Consume( damage * 10 ) ){
+			if( m_stamina.Consume( damage ) ){
 				damage = 0;
+				m_se_guard.Play();
 			}
 		}
 	}
 	if( damage != 0 ){
-		ChangeAct( int(Act::Damage) );
+		ChangeAct( int( Act::Damage ) );
 	}
-	return Actor::Damage( damage, source);
+	return Actor::Damage( damage, source );
 }
 
 Act* Player::GetAct( int index ){
