@@ -110,11 +110,6 @@ void Player::Update(){
 		return;
 	}
 
-	//シャドウマップの移動
-	{
-		g_ROManager.GetShadowMap().UpdateLight( GetPos() + CVector3( 400, 400, 400 ), CVector3( -1, -1, -1 ) );
-	}
-
 	//ステートのアップデート
 	ActStateUpdate();
 

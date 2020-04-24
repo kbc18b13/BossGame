@@ -26,6 +26,10 @@ void Camera::Update()
 	m_cbuffer.UpdateData(&m_position);
 }
 
+float Camera::GetAspect(){
+	return FRAME_BUFFER_W / FRAME_BUFFER_H;
+}
+
 CVector4 Camera::GetProjectedPos(const CVector3& pos3 ){
 	CVector4 pos4 = CVector4( pos3.x, pos3.y, pos3.z, 1 );
 	m_viewMatrix.Mul( pos4 );

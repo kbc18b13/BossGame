@@ -201,6 +201,7 @@
     <ClInclude Include="math\Pow.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="graphics\CascadeShadow.h">
     <ClInclude Include="sound\SoundOverlap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -368,6 +369,7 @@
     <ClCompile Include="sound\WaveFileBank.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="graphics\CascadeShadow.cpp">
     <ClCompile Include="sound\SoundOverlap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>

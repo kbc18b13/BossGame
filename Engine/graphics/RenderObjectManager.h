@@ -1,6 +1,7 @@
 #pragma once
 #include "RenderTarget.h"
 #include "ShadowMap.h"
+#include "CascadeShadow.h"
 #include "RenderMachine.h"
 #include "PostEffect/PostEffect.h"
 #include "PostEffect/Bloom.h"
@@ -50,7 +51,7 @@ public:
 	}
 
     //シャドウマップを取得
-    ShadowMap& GetShadowMap(){
+    CascadeShadow& GetShadowMap(){
         return m_shadowMap;
     }
 
@@ -59,7 +60,8 @@ private:
     RenderTarget m_defaultTarget;
 
     //シャドウマップ
-    ShadowMap m_shadowMap;
+    //ShadowMap m_shadowMap;
+	CascadeShadow m_shadowMap;
 
     //描画オブジェクト
     RenderMachine m_defaultRender;

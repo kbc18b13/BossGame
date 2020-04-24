@@ -60,6 +60,11 @@ public:
 		return v;
 	}
 
+	CVector3 GetRight(){
+		CVector3 v(m_viewMatrix.v[0]);
+		return v;
+	}
+
 	float GetViewAngle(){
 		return m_viewAngle;
 	}
@@ -93,12 +98,18 @@ public:
 	{
 		m_far = f;
 	}
+	float GetFar(){
+		return m_far;
+	}
 	/*!
 	 * @brief	近平面を設定。
 	 */
 	void SetNear( float n )
 	{
 		m_near = n;
+	}
+	float GetNear(){
+		return m_near;
 	}
 	/*!
 	 * @brief	画角を設定。
@@ -107,6 +118,8 @@ public:
 	{
 		m_viewAngle = angle;
 	}
+
+	float GetAspect();
 
 	//ビュープロジェクション行列をかけた座標にして返す
 	CVector4 GetProjectedPos(const CVector3& pos );

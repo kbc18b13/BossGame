@@ -13,8 +13,8 @@ void ShadowMap::Init( unsigned int w, unsigned int h ){
 }
 
 void ShadowMap::UpdateLight( const CVector3 & pos, const CVector3 & dir ){
-    m_lightViewMatrix = DirectX::XMMatrixLookToLH( pos, dir, CVector3::Up() );
-    m_lightProjMatrix = DirectX::XMMatrixOrthographicLH( 1600, 1600, 10, 5000 );
+    //m_lightViewMatrix = DirectX::XMMatrixLookToLH( pos, dir, CVector3::Up() );
+    //m_lightProjMatrix = DirectX::XMMatrixOrthographicLH( 800, 800, 10, 5000 );
 }
 
 void ShadowMap::RemoveShadowCaster( SkinModelRender * render ){
@@ -35,6 +35,8 @@ void ShadowMap::RenderToShadowMap( ID3D11DeviceContext * dc ){
     //シャドウマップをクリア。
     //一番奥のZは1.0なので、1.0で塗りつぶす。
     m_renderTarget.Clear( CVector4( 1.0f, 1.0f, 1.0f, 1.0f ) );
+
+	CVector3 pos = g_camera3D.GetPosition();
 
     //シャドウキャスターをシャドウマップにレンダリング。
     for( auto& caster : m_shadowCasters ){
