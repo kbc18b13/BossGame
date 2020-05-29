@@ -204,6 +204,9 @@
     <ClInclude Include="sound\SoundOverlap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Effekseer\Effect.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="character\CharacterController.cpp">
@@ -369,6 +372,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="sound\SoundOverlap.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Effekseer\Effect.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

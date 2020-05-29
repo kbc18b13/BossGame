@@ -146,6 +146,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Effekseer\Effect.h" />
     <ClInclude Include="Effekseer\Effekseer.h" />
     <ClInclude Include="Effekseer\EffekseerRendererDX11.h" />
     <ClInclude Include="graphics\FontRender.h" />
@@ -211,6 +212,7 @@
     <ClInclude Include="util\Util.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Effekseer\Effect.cpp" />
     <ClCompile Include="graphics\FontRender.cpp" />
     <ClCompile Include="graphics\Parts\ConstantBuffer.cpp" />
     <ClCompile Include="graphics\PostEffect\Blur.cpp" />
