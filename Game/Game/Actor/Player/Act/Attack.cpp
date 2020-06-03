@@ -36,6 +36,8 @@ void Attack::LocalStart( bool heavy ){
 		m_nowCombo = 0;
 	}
 	m_chara->AddVelocity( m_model->GetFront() * 100 );
+
+
 }
 
 void Attack::SubStart( Actor* p ){
