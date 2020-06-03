@@ -10,6 +10,7 @@ void Camera::Init() {
 
 void Camera::Update()
 {
+
 	//ビュー行列を計算。
 	m_viewMatrix.MakeLookAt(
 		m_position,

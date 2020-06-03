@@ -88,6 +88,7 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 	m_bgm.Init( L"Assets/sound/stageBGM.wav" );
 	m_bgm.Play( true );
 
+
 	Fade::Out();
 }
 

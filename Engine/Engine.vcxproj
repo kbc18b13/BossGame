@@ -146,6 +146,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="graphics\CascadePart.h" />
     <ClInclude Include="Effekseer\Effekseer.h" />
     <ClInclude Include="Effekseer\EffekseerRendererDX11.h" />
     <ClInclude Include="graphics\CascadeShadow.h" />
@@ -212,6 +213,7 @@
     <ClInclude Include="util\Util.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="graphics\CascadePart.cpp" />
     <ClCompile Include="graphics\CascadeShadow.cpp" />
     <ClCompile Include="graphics\FontRender.cpp" />
     <ClCompile Include="graphics\Parts\ConstantBuffer.cpp" />

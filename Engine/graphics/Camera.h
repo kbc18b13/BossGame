@@ -51,7 +51,8 @@ public:
 	 */
 	CVector3 GetUp()
 	{
-		return m_up;
+		CVector3 v( m_viewMatrix._12, m_viewMatrix._22, m_viewMatrix._32 );
+		return v;
 	}
 
 	CVector3 GetFront(){
@@ -61,7 +62,7 @@ public:
 	}
 
 	CVector3 GetRight(){
-		CVector3 v(m_viewMatrix.v[0]);
+		CVector3 v( m_viewMatrix._11, m_viewMatrix._21, m_viewMatrix._31 );
 		return v;
 	}
 
@@ -131,7 +132,7 @@ private:
 	CVector3 m_position = CVector3::Zero();			//視点。
 	CVector3 m_up = CVector3::Up();					//上方向。
 	float m_viewAngle = CMath::DegToRad(60.0f);		//画角。
-	float m_far = 10000.0f;							//遠い平面までの距離。
+	float m_far = 2000.0f;							//遠い平面までの距離。
 	float m_near = 1.0f;							//近平面までの距離。
 
 	ConstantBuffer m_cbuffer;
