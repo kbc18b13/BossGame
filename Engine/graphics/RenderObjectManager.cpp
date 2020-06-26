@@ -14,7 +14,7 @@ RenderObjectManager::~RenderObjectManager(){
 }
 
 void RenderObjectManager::Init(){
-    m_shadowMap.Init( 2048, 2048 );
+    m_shadowMap.Init( 512, 512 );
     m_postEffect.Init();
 
     //ポストエフェクト前に書き込むレンダリングターゲット

@@ -8,7 +8,7 @@ public:
 	void Update();
 	bool Consume( float amount );
 
-	bool CanDo(){
+	bool CanDo() const{
 		return m_stamina > 0;
 	}
 

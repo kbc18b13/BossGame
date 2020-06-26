@@ -15,11 +15,11 @@ public:
 	}
 
 	void Play(){
-		m_hundle = g_effectManager->Play( m_effect, pos );
+		m_hundle = g_effectManager->Play( m_effect, m_pos );
 	}
 
 	void SetRot(){
-		g_effectManager->getma
+		
 	}
 
 private:

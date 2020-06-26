@@ -355,6 +355,11 @@ public:
 	CVector4( const CVector3& v ){
 		Set( v );
 	}
+	//任意の値バージョン
+	CVector4( const CVector3& v , float _w){
+		x = v.x; y = v.y; z = v.z; w = _w;
+	}
+
 	//ベクトルの各要素を設定。
 	void Set( float _x, float _y, float _z, float _w ){
 		this->x = _x;

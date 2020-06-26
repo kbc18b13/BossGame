@@ -1,7 +1,7 @@
 /*!
  * @brief	モデルシェーダー。
  */
-
+static const int shadowMapNum = 5;
 
 /////////////////////////////////////////////////////////////
 // Shader Resource View
@@ -11,16 +11,28 @@ Texture2D<float4> albedoTexture : register(t0);
 //ボーン行列
 StructuredBuffer<float4x4> boneMatrix : register(t1);
 
-//シャドウマップ。
-Texture2D<float4> shadowMap : register(t2);
-
 //スペキュラマップ
-Texture2D<float> specularMap : register(t3);
+Texture2D<float> specularMap : register(t2);
+
+//シャドウマップ。
+Texture2D<float4> shadowMap0 : register(t3);
+Texture2D<float4> shadowMap1 : register(t4);
+Texture2D<float4> shadowMap2 : register(t5);
+Texture2D<float4> shadowMap3 : register(t6);
+Texture2D<float4> shadowMap4 : register(t7);
 
 /////////////////////////////////////////////////////////////
 // SamplerState
 /////////////////////////////////////////////////////////////
 sampler Sampler : register(s0);
+SamplerComparisonState compSampler : register(s2);
+
+SamplerState msan
+{
+    Filter = MIN_MAG_MIP_LINEAR;
+    AddressU = Wrap;
+    AddressV = Wrap;
+};
 
 /////////////////////////////////////////////////////////////
 // 定数バッファ。
@@ -37,11 +49,6 @@ cbuffer VSCb : register(b0){
     int mHasSpecular;
 };
 
-
-cbuffer PSEye : register(b3) {
-	float3 eyePos;
-}
-
 /*!
  * @brief	ディレクションライトの定数バッファ。
  */
@@ -54,9 +61,18 @@ cbuffer PSCbAmb : register(b2) {
 	float4 mAmbColor;
 };
 
+//スペキュラ用
+cbuffer PSEye : register(b3) {
+	float3 eyePos;
+}
+
 //シャドウマップ用行列
-cbuffer ShadowCamera : register(b6) {
-    float4x4 mShadowVP;
+cbuffer ShadowCamera : register(b4) {
+    float4x4 shadowVP[shadowMapNum];
+}
+
+cbuffer ShadowCameraFar : register(b5) {
+    float4 shadowFar[shadowMapNum/4];
 }
 
 /////////////////////////////////////////////////////////////
@@ -94,7 +110,7 @@ struct PSInput{
 	float3 Tangent		: TANGENT;
 	float2 TexCoord 	: TEXCOORD0;
 	float3 worldPos     : WORLD;
-    float4 shadowPos     : SHADOW;
+    float4 shadowPos[shadowMapNum]     : SHADOW;
 };
 /*!
  *@brief	スキン行列を計算。
@@ -120,11 +136,13 @@ PSInput VSMain( VSInputNmTxVcTangent In )
 {
 	PSInput psInput = (PSInput)0;
 	float4 pos = mul(mWorld, In.Position);
-
+    
 	psInput.worldPos = pos.xyz;
 
     //シャドウマップUV
-    psInput.shadowPos = mul(mShadowVP, pos);
+    for(int i = 0; i < shadowMapNum; i++){
+        psInput.shadowPos[i] = mul(shadowVP[i], pos);
+    }
 
 	pos = mul(mView, pos);
 	pos = mul(mProj, pos);
@@ -172,8 +190,10 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 	psInput.worldPos = pos.xyz;
 
     //シャドウマップUV
-    psInput.shadowPos = mul(mShadowVP, pos);
-
+    for(int i = 0; i < shadowMapNum; i++){
+        psInput.shadowPos[i] = mul(shadowVP[i], pos);
+    }
+    
 	pos = mul(mView, pos);
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
@@ -187,10 +207,10 @@ float4 PSMain( PSInput In ) : SV_Target0
 {
 	float4 color = albedoTexture.Sample(Sampler, In.TexCoord);
 	float4 sum = float4(0, 0, 0, 0);
-
+    
 	for (int i = 0; i < 4; i++) {
 		float3 dir = normalize(mLightVec[i].xyz);
-
+        
 		sum += max(dot(In.Normal, -dir), 0) * mLightColor[i] * color;
 		//鏡面反射光
 		if(mHasSpecular){
@@ -208,17 +228,20 @@ float4 PSMain( PSInput In ) : SV_Target0
     //シャドウマップ
     {
         //プロジェクション行列を経た座標をテクスチャ座標に変換する。
-        float3 shadowPos2 = In.shadowPos.xyz / In.shadowPos.w;
+        float3 shadowPos2 = In.shadowPos[0].xyz / In.shadowPos[0].w;
         shadowPos2.xy *= float2(0.5f, -0.5f);
         shadowPos2.xy += 0.5f;
+        
         //シャドウマップの深度とピクセルの深度を比較する。
-        float mapDepth = shadowMap.Sample(Sampler, shadowPos2.xy).r;
-        if (0 <= shadowPos2.x && shadowPos2.x <= 1
-            && 0 <= shadowPos2.y && shadowPos2.y <= 1
-            && mapDepth + 0.0003f < shadowPos2.z) {
-            sum.rgb /= 2;
-            //sum.rbg = 1;
-        }
+        //float mapDepth = shadowMap.Sample(Sampler, shadowPos2.xy).r;
+        //if (0 <= shadowPos2.x && shadowPos2.x <= 1
+        //    && 0 <= shadowPos2.y && shadowPos2.y <= 1
+        //    && mapDepth + 0.0003f < shadowPos2.z) {
+        //    sum.rgb /= 2;
+        //}
+        
+        float shadow = shadowMap0.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z - 0.003f);
+        sum.rgb *= 0.3f + (shadow*0.7f);
     }
     
     //自己発光色

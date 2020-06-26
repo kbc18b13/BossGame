@@ -21,8 +21,8 @@ void __cdecl ModelEffect::Apply(ID3D11DeviceContext* deviceContext)
         deviceContext->VSSetShader((ID3D11VertexShader*)m_vsShader.GetBody(), NULL, 0);
         deviceContext->PSSetShader((ID3D11PixelShader*)m_psShader.GetBody(), NULL, 0);
 
-        auto shadowMapTex = g_ROManager.GetShadowMap().GetShadowMapSRV();
-        deviceContext->PSSetShaderResources(enSkinModelSRVReg_ShadowMap, 1, &shadowMapTex);
+        ID3D11ShaderResourceView** shadowMapTexs = g_ROManager.GetShadowMap().GetSRVPointer();
+        deviceContext->PSSetShaderResources(enSkinModelSRVReg_ShadowMap0, 5, shadowMapTexs);
         deviceContext->PSSetShaderResources(enSkinModelSRVReg_AlbedoTexture, 1, &m_albedoTex);
         break;
     }

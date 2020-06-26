@@ -12,7 +12,7 @@ void ConstantBuffer::Init(size_t size, bool writeCPU, void* initDataP) {
 	m_isWriteCPU = writeCPU;
 
 	D3D11_BUFFER_DESC desc{};
-	desc.BindFlags = D3D10_BIND_CONSTANT_BUFFER;
+	desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	desc.ByteWidth = size;
 	desc.CPUAccessFlags = writeCPU ? D3D11_CPU_ACCESS_WRITE : 0;
 	desc.Usage = writeCPU ? D3D11_USAGE_DYNAMIC : D3D11_USAGE_DEFAULT;

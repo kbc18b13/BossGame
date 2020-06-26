@@ -45,6 +45,7 @@ void Bloom::Init(){
 
 	g_graphicsEngine->GetD3DDevice()->CreateBlendState( &blendDesc, &blendState );
 
+	//ƒTƒ“ƒvƒ‰[‚ğì¬
 	D3D11_SAMPLER_DESC sampDesc{};
 	sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
 	sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;

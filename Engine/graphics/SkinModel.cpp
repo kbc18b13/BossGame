@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SkinModel.h"
 #include "SkinModelDataManager.h"
+#include "SkinModelShaderConst.h"
 
 SkinModel::~SkinModel()
 {
@@ -124,7 +125,7 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 	vsCb.mEmissionColor = m_emissionColor;
 	if( m_specTex != nullptr ){
 		vsCb.mHasSpecularMap = 1;
-		d3dDeviceContext->PSSetShaderResources( 3, 1, m_specTex.GetAddressOf() );
+		d3dDeviceContext->PSSetShaderResources( enSkinModelSRVReg_Speculer, 1, m_specTex.GetAddressOf() );
 	}
 	m_cb.UpdateData( &vsCb );
 	//定数バッファをGPUに転送。

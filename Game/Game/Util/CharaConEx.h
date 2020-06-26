@@ -88,7 +88,7 @@ public:
 	}
 
     //d—Í‰Á‘¬“x‚ğæ“¾
-    float GetGravity() {
+    float GetGravity()  const{
         return m_gravity;
     }
 
@@ -96,7 +96,7 @@ public:
 		m_charaCon.SetActive( active );
 	}
 
-	float GetHeight(){
+	float GetHeight() const{
 		return m_charaCon.GetHeight();
 	}
 

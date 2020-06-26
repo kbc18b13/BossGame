@@ -13,6 +13,7 @@ enum EnSkinModelCBReg{
 	enSkinModelCBReg_Light,		//!<ライト用の定数バッファ。
 	enSkinModelCBReg_Material,	//!<マテリアルパラメータ。
 	enSkinModelCBReg_Shadow,	//!<影。
+	enSkinModelCBReg_ShadowFar,	//!<影。
 	enSkinModelCBReg_GBuffer,	//!<G-Buffer。
 	
 };
@@ -22,5 +23,10 @@ enum EnSkinModelCBReg{
 enum EnSkinModelSRVReg{
 	enSkinModelSRVReg_AlbedoTexture,		//!<アルベドテクスチャ。
 	enSkinModelSRVReg_BoneMatrixArray,		//!<ボーン行列の配列。
-    enSkinModelSRVReg_ShadowMap,		//!<シャドウマップの配列。
+	enSkinModelSRVReg_Speculer,            //スペキュラマップ
+    enSkinModelSRVReg_ShadowMap0,		//!<シャドウマップの配列。
+	enSkinModelSRVReg_ShadowMap1,		
+	enSkinModelSRVReg_ShadowMap2,		
+	enSkinModelSRVReg_ShadowMap3,		
+	enSkinModelSRVReg_ShadowMap4,		
 };

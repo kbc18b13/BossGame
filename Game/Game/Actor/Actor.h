@@ -31,23 +31,23 @@ public:
 
 	virtual bool Damage(UINT damage, Actor* source);
 
-	UINT GetNowHP() {
+	UINT GetNowHP() const{
 		return m_nowHP;
 	}
 
-	UINT GetMaxHP() {
+	UINT GetMaxHP()  const{
 		return m_maxHP;
 	}
 
-	float GetHPPer() {
+	float GetHPPer()  const{
 		return float(m_nowHP) / m_maxHP;
 	}
 
-	float GetHeight(){
+	float GetHeight() const{
 		return m_chara.GetHeight();
 	}
 
-	bool IsDeath(){
+	bool IsDeath() const{
 		return m_isDeath;
 	}
 

@@ -75,7 +75,7 @@ public:
 	/*!
 	* @brief	剛体を取得。
 	*/
-	RigidBody* GetRigidBody()
+	const RigidBody* GetRigidBody() const
 	{
 		return &m_rigidBody;
 	}
@@ -89,11 +89,11 @@ public:
 	/// <summary>
 	/// アクティブかどうかを返す。
 	/// </summary>
-	bool IsActive(){
+	bool IsActive() const{
 		return m_isActive;
 	}
 
-	float GetHeight(){
+	float GetHeight() const{
 		return m_collider.GetHeight() + m_collider.GetRadius() * 2;
 	}
 
