@@ -5,17 +5,37 @@
 
 class CascadePart{
 public:
-	void Init(float w, float h);
+	void Init( UINT w, UINT h, float scale ){
+		Init( w*scale, h*scale );
+	}
+	void Init( UINT w, UINT h );
 
-	void SetPart(float nearClip, float farClip){
+	/// <summary>
+	/// 描画される範囲を0～1とした場合の近面と遠面を設定する
+	/// </summary>
+	void SetPart( float nearClip, float farClip ){
 		m_near = nearClip;
 		m_far = farClip;
 	}
 
+	float GetNear(){
+		return m_near;
+	}
+
+	/// <summary>
+	/// カメラの近、遠平面を考慮した近平面を返す。
+	/// </summary>
 	float GetCameraNear(){
 		return g_camera3D.GetNear() + ( m_near * ( g_camera3D.GetFar() - g_camera3D.GetNear() ) );
 	}
 
+	float GetFar(){
+		return m_far;
+	}
+
+	/// <summary>
+	/// カメラの近、遠平面を考慮した遠平面を返す。
+	/// </summary>
 	float GetCameraFar(){
 		return g_camera3D.GetNear() + ( m_far * ( g_camera3D.GetFar() - g_camera3D.GetNear() ) );
 	}
@@ -27,7 +47,7 @@ public:
 	/// <summary>
 	/// シャドウマップに描画。
 	/// </summary>
-	void RenderToShadowMap( ID3D11DeviceContext* dc , std::vector<SkinModelRender*>& casters);
+	void RenderToShadowMap( ID3D11DeviceContext* dc, std::vector<SkinModelRender*>& casters );
 
 	/// <summary>
 	/// シャドウマップのSRVを取得。

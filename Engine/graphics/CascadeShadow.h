@@ -38,14 +38,13 @@ public:
 	}
 
 private:
-	void UpdateMatirx(CVector3( &verts )[8] );
-
 	CVector3 m_lightCameraPosition = CVector3::Zero();	//ライトカメラの視点。
 	CVector3 m_lightCameraTarget = CVector3::Zero();	//ライトカメラの注視点。
 	CMatrix m_lightViewMatrix = CMatrix::Identity();	//ライトビュー行列。
 	CMatrix m_lightProjMatrix = CMatrix::Identity();	//ライトプロジェクション行列。
 	
 	ComPtr<ID3D11SamplerState> m_sampler;//サンプラステート
+	ComPtr<ID3D11RasterizerState> m_rasterState;//ラスタライザステート
 
 	//分割の数
 	static constexpr int partNum = 5;

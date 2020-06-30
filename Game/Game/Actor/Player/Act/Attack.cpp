@@ -19,7 +19,7 @@ void Attack::LocalStart( bool heavy ){
 	//m_sword->AttackStart() アニメーションイベントに移動。
 	if( !heavy ){
 		m_stamina->Consume( m_needStamina );
-		m_sword->SetDamage( 10 );
+		m_sword->SetDamage( 10*100 );
 		m_model->Play( int( m_animation + m_nowCombo ), 0.2f);
 	} else{
 		m_stamina->Consume( m_needStamina * 2);

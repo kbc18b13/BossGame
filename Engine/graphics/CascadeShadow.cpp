@@ -13,14 +13,23 @@ void CascadeShadow::Init( unsigned int w, unsigned int h ){
 
 	//分割距離を設定
 	{
-		float partLen = 0.0f;
-		int pCount = 0;
-		for( auto& p : parts ){
-			p.Init( w, h );
-			p.SetPart( partLen, partLen + 1.0f / partNum );
-			partLen += 1.0f / partNum;
+		parts[0].Init( w, h );
+		parts[0].SetPart( 0, 0.07f );
 
-			partFarClips[pCount++] = p.GetCameraFar();
+		parts[1].Init( w, h, 0.5f );
+		parts[1].SetPart( parts[0].GetFar(), 0.15f );
+
+		parts[2].Init( w, h, 0.4f );
+		parts[2].SetPart( parts[1].GetFar(), 0.3f );
+
+		parts[3].Init( w, h, 0.3f );
+		parts[3].SetPart( parts[2].GetFar(), 0.5f );
+
+		parts[4].Init( w, h, 0.2f );
+		parts[4].SetPart( parts[3].GetFar(), 0.7f );
+
+		for( int i = 0; i < ARRAYSIZE( parts ); i++ ){
+			partFarClips[i] = parts[i].GetCameraFar();
 		}
 	}
 
@@ -34,7 +43,7 @@ void CascadeShadow::Init( unsigned int w, unsigned int h ){
 		sampDesc.BorderColor[1] = 1;
 		sampDesc.BorderColor[2] = 1;
 		sampDesc.BorderColor[3] = 1;
-		sampDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_POINT;
+		sampDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
 		sampDesc.ComparisonFunc = D3D11_COMPARISON_LESS;
 
 		HRESULT res = g_graphicsEngine->GetD3DDevice()->CreateSamplerState( &sampDesc, &m_sampler );
@@ -48,10 +57,20 @@ void CascadeShadow::Init( unsigned int w, unsigned int h ){
 		shadowPCB.Init( Util::AlignSize( sizeof( partFarClips ), 16 ), false, partFarClips );
 	}
 
-	/*for( SkinModelRender*& s : g_testSk ){
-		s = new SkinModelRender();
-		s->Init( L"Assets/modelData/Troll.cmo" );
-	}*/
+	//ラスタライザステート設定
+	{
+		D3D11_RASTERIZER_DESC rDesc{};
+		rDesc.CullMode = D3D11_CULL_BACK;
+		rDesc.FillMode = D3D11_FILL_SOLID;
+		rDesc.DepthBias = 1000;
+		rDesc.SlopeScaledDepthBias = 0.8f;
+		rDesc.DepthBiasClamp = 1000000;
+
+		HRESULT res = g_graphicsEngine->GetD3DDevice()->CreateRasterizerState( &rDesc, &m_rasterState );
+		if( FAILED( res ) ){
+			abort();
+		}
+	}
 }
 
 void CascadeShadow::RemoveShadowCaster( SkinModelRender * render ){
@@ -64,6 +83,11 @@ void CascadeShadow::RemoveShadowCaster( SkinModelRender * render ){
 }
 
 void CascadeShadow::RenderToShadowMap( ID3D11DeviceContext * dc ){
+
+	//ラスタライザステートを変更
+	ComPtr<ID3D11RasterizerState> oldRS;
+	dc->RSGetState( &oldRS );
+	dc->RSSetState( m_rasterState.Get() );
 
 	//各垂台でドロー
 	int pCount = 0;
@@ -79,7 +103,12 @@ void CascadeShadow::RenderToShadowMap( ID3D11DeviceContext * dc ){
 		//VP行列を更新
 		partVPMats[pCount++] = p.GetVPMat();
 	}
+
+	//影用定数バッファを設定。RenderObjectManagerの次ステップで使われる。
 	shadowVCB.UpdateData( partVPMats );
 	shadowVCB.SetToContext( ShaderType::VS, enSkinModelCBReg_Shadow );
 	shadowPCB.SetToContext( ShaderType::PS, enSkinModelCBReg_ShadowFar );
+
+	//ラスタライザステートを戻す。
+	dc->RSSetState( oldRS.Get() );
 }

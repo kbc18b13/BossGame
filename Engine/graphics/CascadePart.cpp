@@ -4,7 +4,7 @@
 
 extern SkinModelRender* g_testSk[4];
 
-void CascadePart::Init( float w, float h ){
+void CascadePart::Init( UINT w, UINT h ){
 	m_renderTarget.Init( w, h, DXGI_FORMAT_R32_FLOAT );
 }
 
@@ -58,14 +58,14 @@ void CascadePart::RenderToShadowMap( ID3D11DeviceContext * dc, std::vector<SkinM
 	CVector3 centerPos = ( minPos + maxPos ) / 2; //AABBの中心
 	CVector3 newPos = ( minPos + maxPos ) / 2; //AABBの中心
 	float moveBack = ( newPos.z - minPos.z ) + g_camera3D.GetNear(); //中心から最も手前までの距離＋ニアクリップ
-	newPos.z -= moveBack; //新しいカメラ空間でのライトカメラ座標
+	newPos.z -= moveBack+1000; //新しいカメラ空間でのライトカメラ座標
 
 	//AABBにしたがってビュー行列、プロジェクション行列を再設定
 	lightViewMatrix.v[3] -= CVector4(newPos, 0);
 
 	CMatrix lightProjMatrix =
 		DirectX::XMMatrixOrthographicLH( maxPos.x - minPos.x, maxPos.y - minPos.y,
-										g_camera3D.GetNear(), maxPos.z - minPos.z + g_camera3D.GetNear() );
+										g_camera3D.GetNear(), maxPos.z - minPos.z + g_camera3D.GetNear() + 1000 );
 
 
 	//レンダーターゲットとビューポートを更新

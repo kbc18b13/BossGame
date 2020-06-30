@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ShadowMap.h"
 #include "SkinModelRender.h"
+#include "SkinModelShaderConst.h"
 
 ShadowMap::ShadowMap(){}
 
@@ -46,5 +47,5 @@ void ShadowMap::RenderToShadowMap( ID3D11DeviceContext * dc ){
     CMatrix mat;
     mat.Mul( m_lightViewMatrix, m_lightProjMatrix );
     m_vpMatCB.UpdateData( &mat );
-    m_vpMatCB.SetToContext( ShaderType::VS, 6 );
+    m_vpMatCB.SetToContext( ShaderType::VS,  enSkinModelCBReg_Shadow);
 }

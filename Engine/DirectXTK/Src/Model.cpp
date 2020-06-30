@@ -182,10 +182,10 @@ void ModelMesh::PrepareForRendering(
     deviceContext->OMSetDepthStencilState(depthStencilState, 0);
 
     // Set the rasterizer state.
-    if (wireframe)
+    /*if (wireframe)
         deviceContext->RSSetState(states.Wireframe());
     else
-        deviceContext->RSSetState(ccw ? states.CullCounterClockwise() : states.CullClockwise());
+        deviceContext->RSSetState(ccw ? states.CullCounterClockwise() : states.CullClockwise());*/
 		
     // Set sampler state.
     ID3D11SamplerState* samplers[] =

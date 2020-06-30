@@ -1,11 +1,12 @@
 #include "stdafx.h"
 #include "Camera.h"
+#include "SkinModelShaderConst.h"
 
 Camera g_camera3D;		//3DÉJÉÅÉâÅB
 
 void Camera::Init() {
 	m_cbuffer.Init(sizeof(CVector3) + 4, false, &m_position);
-	m_cbuffer.SetToContext(ShaderType::PS, 3);
+	m_cbuffer.SetToContext(ShaderType::PS, enSkinModelCBReg_Specular);
 }
 
 void Camera::Update()

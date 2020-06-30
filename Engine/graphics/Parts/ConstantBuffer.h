@@ -17,8 +17,13 @@ public:
 
 	void SetToContext( ShaderType type ,int registerNum);
 
+	size_t GetSize() const{
+		return m_size;
+	}
+
 private:
 	ID3D11Buffer* m_buffer = nullptr;
 	bool m_isWriteCPU = false;
+	size_t m_size = 0;
 };
 

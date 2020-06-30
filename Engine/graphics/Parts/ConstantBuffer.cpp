@@ -19,6 +19,8 @@ void ConstantBuffer::Init(size_t size, bool writeCPU, void* initDataP) {
 
 	HRESULT result;
 
+	m_size = size;
+
 	if (initDataP != nullptr) {
 		D3D11_SUBRESOURCE_DATA data{};
 		data.pSysMem = initDataP;
@@ -35,8 +37,12 @@ void ConstantBuffer::UpdateData(void * dataP) {
 	if (m_isWriteCPU) {
 		//CPUアクセス可で作ったならMapを使う
 		D3D11_MAPPED_SUBRESOURCE mapped{};
-		dc->Map(m_buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
-		mapped.pData = dataP;
+		HRESULT res;
+		res = dc->Map(m_buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+		if( FAILED( res ) ){
+			abort();
+		}
+		std::memcpy( mapped.pData, dataP, GetSize() );
 		dc->Unmap(m_buffer, 0);
 	} else {
 		//CPUアクセス不可で作ったならUpdateSubresourceを使う

@@ -72,7 +72,7 @@ cbuffer ShadowCamera : register(b4) {
 }
 
 cbuffer ShadowCameraFar : register(b5) {
-    float4 shadowFar[shadowMapNum/4];
+    float4 shadowFar[(shadowMapNum+3)/4];
 }
 
 /////////////////////////////////////////////////////////////
@@ -200,6 +200,7 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 	psInput.TexCoord = In.TexCoord;
     return psInput;
 }
+
 //--------------------------------------------------------------------------------------
 // ピクセルシェーダーのエントリ関数。
 //--------------------------------------------------------------------------------------
@@ -228,9 +229,9 @@ float4 PSMain( PSInput In ) : SV_Target0
     //シャドウマップ
     {
         //プロジェクション行列を経た座標をテクスチャ座標に変換する。
-        float3 shadowPos2 = In.shadowPos[0].xyz / In.shadowPos[0].w;
-        shadowPos2.xy *= float2(0.5f, -0.5f);
-        shadowPos2.xy += 0.5f;
+        //float3 shadowPos2 = In.shadowPos[0].xyz / In.shadowPos[0].w;
+        //shadowPos2.xy *= float2(0.5f, -0.5f);
+        //shadowPos2.xy += 0.5f;
         
         //シャドウマップの深度とピクセルの深度を比較する。
         //float mapDepth = shadowMap.Sample(Sampler, shadowPos2.xy).r;
@@ -240,7 +241,41 @@ float4 PSMain( PSInput In ) : SV_Target0
         //    sum.rgb /= 2;
         //}
         
-        float shadow = shadowMap0.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z - 0.003f);
+        float shadow = 1;
+        
+        if(In.Position.w < shadowFar[0].x){
+            //プロジェクション行列を経た座標をテクスチャ座標に変換する。
+            float3 shadowPos2 = In.shadowPos[0].xyz / In.shadowPos[0].w;
+            shadowPos2.xy *= float2(0.5f, -0.5f);
+            shadowPos2.xy += 0.5f;
+            //シャドウマップと比較して影の強さを決める。(0が影、1がひなた)。
+            shadow = shadowMap0.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z);
+            
+        }else if(In.Position.w < shadowFar[0].y){
+            float3 shadowPos2 = In.shadowPos[1].xyz / In.shadowPos[1].w;
+            shadowPos2.xy *= float2(0.5f, -0.5f);
+            shadowPos2.xy += 0.5f;
+            shadow = shadowMap1.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z);
+            
+        }else if(In.Position.w < shadowFar[0].z){
+            float3 shadowPos2 = In.shadowPos[2].xyz / In.shadowPos[2].w;
+            shadowPos2.xy *= float2(0.5f, -0.5f);
+            shadowPos2.xy += 0.5f;
+            shadow = shadowMap2.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z);
+            
+        }else if(In.Position.w < shadowFar[0].w){
+            float3 shadowPos2 = In.shadowPos[3].xyz / In.shadowPos[3].w;
+            shadowPos2.xy *= float2(0.5f, -0.5f);
+            shadowPos2.xy += 0.5f;
+            shadow = shadowMap3.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z);
+            
+        }else if(In.Position.w < shadowFar[1].x){
+            float3 shadowPos2 = In.shadowPos[4].xyz / In.shadowPos[4].w;
+            shadowPos2.xy *= float2(0.5f, -0.5f);
+            shadowPos2.xy += 0.5f;
+            shadow = shadowMap4.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z);
+        }
+        
         sum.rgb *= 0.3f + (shadow*0.7f);
     }
     
