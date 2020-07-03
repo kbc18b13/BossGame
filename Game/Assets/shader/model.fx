@@ -206,78 +206,75 @@ PSInput VSMainSkin( VSInputNmTxWeights In )
 //--------------------------------------------------------------------------------------
 float4 PSMain( PSInput In ) : SV_Target0
 {
+    //アルベドテクスチャの読み込み
 	float4 color = albedoTexture.Sample(Sampler, In.TexCoord);
 	float4 sum = float4(0, 0, 0, 0);
     
+    float shadow = 1;
+        
+    float z = In.Position.z / In.Position.w;
+    if(In.Position.w < shadowFar[0].x){
+        //プロジェクション行列を経た座標をテクスチャ座標に変換する。
+        float3 shadowPos2 = In.shadowPos[0].xyz / In.shadowPos[0].w;
+        shadowPos2.xy *= float2(0.5f, -0.5f);
+        shadowPos2.xy += 0.5f;
+        //シャドウマップと比較して影の強さを決める。(0が影、1がひなた)。
+        shadow = shadowMap0.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z - 0.003f);
+            
+    }else if(In.Position.w < shadowFar[0].y){
+        float3 shadowPos2 = In.shadowPos[1].xyz / In.shadowPos[1].w;
+        shadowPos2.xy *= float2(0.5f, -0.5f);
+        shadowPos2.xy += 0.5f;
+        shadow = shadowMap1.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z - 0.003f);
+            
+    }else if(In.Position.w < shadowFar[0].z){
+        float3 shadowPos2 = In.shadowPos[2].xyz / In.shadowPos[2].w;
+        shadowPos2.xy *= float2(0.5f, -0.5f);
+        shadowPos2.xy += 0.5f;
+        shadow = shadowMap2.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z - 0.003f);
+            
+    }else if(In.Position.w < shadowFar[0].w){
+        float3 shadowPos2 = In.shadowPos[3].xyz / In.shadowPos[3].w;
+        shadowPos2.xy *= float2(0.5f, -0.5f);
+        shadowPos2.xy += 0.5f;
+        shadow = shadowMap3.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z - 0.003f);
+            
+    }else if(In.Position.w < shadowFar[1].x){
+        float3 shadowPos2 = In.shadowPos[4].xyz / In.shadowPos[4].w;
+        shadowPos2.xy *= float2(0.5f, -0.5f);
+        shadowPos2.xy += 0.5f;
+        shadow = shadowMap4.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z - 0.001f);
+    }
+    
+    
+    float3 eyeLine = normalize(In.worldPos - eyePos);//スペキュラー用
 	for (int i = 0; i < 4; i++) {
 		float3 dir = normalize(mLightVec[i].xyz);
         
-		sum += max(dot(In.Normal, -dir), 0) * mLightColor[i] * color;
+		sum += max(dot(In.Normal, -dir), 0) * mLightColor[i] * color * shadow;
 		//鏡面反射光
 		if(mHasSpecular){
 			float3 refVec = dir + 2 * (In.Normal * dot(In.Normal, -dir));
-			float3 eyeLine = normalize(In.worldPos - eyePos);
 			float specPower = max(dot(refVec, -eyeLine), 0);
             
             float mapPower = specularMap.Sample(Sampler, In.TexCoord);
-			sum += pow(specPower, 10) * (mLightColor[0]*10*mapPower);
+			sum += pow(specPower, 10) * (mLightColor[0]*10*mapPower) * shadow;
 		}
 	}
     //環境光
-	sum += color * mAmbColor;
-    
-    //シャドウマップ
-    {
-        //プロジェクション行列を経た座標をテクスチャ座標に変換する。
-        //float3 shadowPos2 = In.shadowPos[0].xyz / In.shadowPos[0].w;
-        //shadowPos2.xy *= float2(0.5f, -0.5f);
-        //shadowPos2.xy += 0.5f;
-        
-        //シャドウマップの深度とピクセルの深度を比較する。
-        //float mapDepth = shadowMap.Sample(Sampler, shadowPos2.xy).r;
-        //if (0 <= shadowPos2.x && shadowPos2.x <= 1
-        //    && 0 <= shadowPos2.y && shadowPos2.y <= 1
-        //    && mapDepth + 0.0003f < shadowPos2.z) {
-        //    sum.rgb /= 2;
-        //}
-        
-        float shadow = 1;
-        
-        if(In.Position.w < shadowFar[0].x){
-            //プロジェクション行列を経た座標をテクスチャ座標に変換する。
-            float3 shadowPos2 = In.shadowPos[0].xyz / In.shadowPos[0].w;
-            shadowPos2.xy *= float2(0.5f, -0.5f);
-            shadowPos2.xy += 0.5f;
-            //シャドウマップと比較して影の強さを決める。(0が影、1がひなた)。
-            shadow = shadowMap0.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z);
-            
-        }else if(In.Position.w < shadowFar[0].y){
-            float3 shadowPos2 = In.shadowPos[1].xyz / In.shadowPos[1].w;
-            shadowPos2.xy *= float2(0.5f, -0.5f);
-            shadowPos2.xy += 0.5f;
-            shadow = shadowMap1.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z);
-            
-        }else if(In.Position.w < shadowFar[0].z){
-            float3 shadowPos2 = In.shadowPos[2].xyz / In.shadowPos[2].w;
-            shadowPos2.xy *= float2(0.5f, -0.5f);
-            shadowPos2.xy += 0.5f;
-            shadow = shadowMap2.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z);
-            
-        }else if(In.Position.w < shadowFar[0].w){
-            float3 shadowPos2 = In.shadowPos[3].xyz / In.shadowPos[3].w;
-            shadowPos2.xy *= float2(0.5f, -0.5f);
-            shadowPos2.xy += 0.5f;
-            shadow = shadowMap3.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z);
-            
-        }else if(In.Position.w < shadowFar[1].x){
-            float3 shadowPos2 = In.shadowPos[4].xyz / In.shadowPos[4].w;
-            shadowPos2.xy *= float2(0.5f, -0.5f);
-            shadowPos2.xy += 0.5f;
-            shadow = shadowMap4.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z);
-        }
-        
-        sum.rgb *= 0.3f + (shadow*0.7f);
+	sum += color * mAmbColor*0.5f;
+    //環境光によるスペキュラ反射。
+    float mapPower = 0.0f;
+    if( mHasSpecular){
+        mapPower = specularMap.Sample(Sampler, In.TexCoord);    
     }
+   
+    	float3 refVec = In.Normal;
+		float specPower = max(dot(refVec, -eyeLine), 0);
+            
+        sum += pow(specPower, 10) * (mAmbColor*mapPower);
+    
+    //sum *= 0.3f + 0.7f*shadow;
     
     //自己発光色
     sum.xyz += mEmissionColor;

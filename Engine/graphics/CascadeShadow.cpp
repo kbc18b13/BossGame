@@ -86,9 +86,9 @@ void CascadeShadow::RenderToShadowMap( ID3D11DeviceContext * dc ){
 
 	//ラスタライザステートを変更
 	ComPtr<ID3D11RasterizerState> oldRS;
-	dc->RSGetState( &oldRS );
+/*	dc->RSGetState( &oldRS );
 	dc->RSSetState( m_rasterState.Get() );
-
+	*/
 	//各垂台でドロー
 	int pCount = 0;
 	for( auto& p : parts ){
@@ -110,5 +110,5 @@ void CascadeShadow::RenderToShadowMap( ID3D11DeviceContext * dc ){
 	shadowPCB.SetToContext( ShaderType::PS, enSkinModelCBReg_ShadowFar );
 
 	//ラスタライザステートを戻す。
-	dc->RSSetState( oldRS.Get() );
+//x	dc->RSSetState( oldRS.Get() );
 }

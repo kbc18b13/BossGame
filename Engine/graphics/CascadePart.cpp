@@ -65,7 +65,7 @@ void CascadePart::RenderToShadowMap( ID3D11DeviceContext * dc, std::vector<SkinM
 
 	CMatrix lightProjMatrix =
 		DirectX::XMMatrixOrthographicLH( maxPos.x - minPos.x, maxPos.y - minPos.y,
-										g_camera3D.GetNear(), maxPos.z - minPos.z + g_camera3D.GetNear() + 1000 );
+										1.0f, maxPos.z - minPos.z + g_camera3D.GetNear() + 1000 );
 
 
 	//レンダーターゲットとビューポートを更新
