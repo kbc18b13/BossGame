@@ -17,7 +17,8 @@ public:
     void Init( const wchar_t* filePath, AnimationClip animClipList[] = nullptr,
                int numAnimClip = 0,
                EnFbxUpAxis enFbxUpAxis = enFbxUpAxisY,
-               bool isShadowCaster = true);
+               bool isShadowCaster = true,
+			   bool isAlpha = false);
 
 
     /// <summary>
@@ -147,12 +148,13 @@ public:
     }
 
 	/// <summary>
-	/// メッシュの反転を設定
+	/// イベントファンクションを設定
 	/// </summary>
 	void AddEventFunc( const char* name,const std::function<void()>& func ){
 		m_animation.AddEventFunc( name, func );
 	}
 
+	//スペキュラマップを設定
 	void LoadSpecularTex( const wchar_t* filepath ){
 		m_skinModel.LoadSpecularTex( filepath );
 	}

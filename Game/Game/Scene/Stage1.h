@@ -4,7 +4,7 @@
 #include "Ground/GhostCollision.h"
 #include "IStage.h"
 #include "WayPoint/WayPointManager.h"
-
+#include "Ground/ClearDoor.h"
 class Troll;
 class Player;
 
@@ -51,6 +51,8 @@ private:
 	TriggerCollision* bossRoomTrigger = nullptr;
 	CVector3 trollPos;
 	CollisionModel ground;
+	CollisionModel ground2;
+	ClearDoor bossTobira;
 	CollisionModel carriage;
 	DoorOpener opener;
 	BigDoor* bigDoor = nullptr;

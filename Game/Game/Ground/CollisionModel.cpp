@@ -4,8 +4,8 @@
 #include "physics/CollisionAttr.h"
 
 CollisionModel::CollisionModel( const wchar_t* modelPath, const wchar_t* collisionModelPath,
-								btCollisionObject::CollisionFlags flag){
-	m_model.Init( modelPath );
+								btCollisionObject::CollisionFlags flag, bool alpha ){
+	m_model.Init( modelPath, nullptr, 0, enFbxUpAxisY,true, alpha );
 	m_collider.SetFlag( flag );
 	if( !collisionModelPath ){
 		m_collider.CreateMeshObject( m_model.GetModel(), { 0,0,0 }, CQuaternion::Identity() );

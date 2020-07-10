@@ -41,7 +41,8 @@ void SlimeRollAttack::Update( Actor * a ){
 
 		//プレイヤーにダメージ
 		damageCool -= GameTime::GetDeltaTime();
-		if(damageCool <= 0 && toP.LengthSq() < pow2( 80 ) ){
+
+		if(damageCool <= 0 && toP.LengthSq() < pow2( 80 ) && toP.y < 20){
 			m_target->Damage( 10, a );
 			m_target->AddVelocity( toPNorm * 500 + CVector3::Up()*100);
 			damageCool = 0.5f;

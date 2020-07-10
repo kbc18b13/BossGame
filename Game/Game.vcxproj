@@ -107,6 +107,7 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Ground\ClearDoor.cpp" />
     <ClCompile Include="Game\Ground\BigDoor.cpp" />
     <ClCompile Include="Game\Actor\Act\Act.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Act\Chase.cpp" />
@@ -166,6 +167,7 @@
     <ClCompile Include="Game\Ground\GhostCollision.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Ground\ClearDoor.h" />
     <ClInclude Include="Game\Ground\BigDoor.h" />
     <ClInclude Include="Game\Actor\Act\Act.h" />
     <ClInclude Include="Game\Actor\Enemy\Act\Chase.h" />
@@ -222,11 +224,13 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\BigDoor.fbx" />
+    <MeshContentTask Include="Assets\modelData\BossTobira.fbx" />
     <MeshContentTask Include="Assets\modelData\Carriage.fbx" />
     <MeshContentTask Include="Assets\modelData\Carriage_col.fbx" />
     <MeshContentTask Include="Assets\modelData\Chara.fbx" />
     <MeshContentTask Include="Assets\modelData\FirstStage.fbx" />
     <MeshContentTask Include="Assets\modelData\FirstStageWall.fbx" />
+    <MeshContentTask Include="Assets\modelData\SecondStage.fbx" />
     <MeshContentTask Include="Assets\modelData\Shield.fbx" />
     <MeshContentTask Include="Assets\modelData\Skeleton.fbx" />
     <MeshContentTask Include="Assets\modelData\SkeSword.fbx" />

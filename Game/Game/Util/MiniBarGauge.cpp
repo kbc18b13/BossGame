@@ -49,14 +49,13 @@ void MiniBarGauge::Render(){
 		CVector4 pos = CVector4(m_pos.x, m_pos.y, m_pos.z, 1);
 
 		g_camera3D.GetViewMatrix().Mul( pos );
-
-		/*float halfAngle = g_camera3D.GetViewAngle() / 2;
-		float scale = tanf( halfAngle ) * 2;*/
-		float scale = 500 / ( pos.z);
-
+		float z = pos.z;
 		g_camera3D.GetProjectionMatrix().Mul( pos );
 
 		pos /= pos.w;
+
+		float halfAngle = g_camera3D.GetViewAngle() / 2;
+		float scale = 250 / (tanf( halfAngle) * z);
 
 		CVector2 pos2D( pos.x * FRAME_BUFFER_W * 0.5f, pos.y * FRAME_BUFFER_H * 0.5f );
 		pos2D.x += m_out.GetWidth() * scale / 2;

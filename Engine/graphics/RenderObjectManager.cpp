@@ -49,6 +49,9 @@ void RenderObjectManager::Init(){
 void RenderObjectManager::Render(){
     ID3D11DeviceContext* dc = g_graphicsEngine->GetD3DDeviceContext();
 
+	//ブレンドステートをデフォルトに戻す。
+	dc->OMSetBlendState( nullptr, nullptr, 0xffffffff );
+
     //シャドウマップの描画。
     m_shadowMap.RenderToShadowMap( dc );
 
@@ -59,6 +62,9 @@ void RenderObjectManager::Render(){
     //通常描画オブジェクトの描画
     m_defaultRender.Render();
 
+	//アルファ有効ブレンドに変更。
+	dc->OMSetBlendState( m_alphaBlend, nullptr, 0xffffffff );
+
 	//半透明描画オブジェクトの描画
 	m_translucentRender.Render();
 
@@ -67,7 +73,8 @@ void RenderObjectManager::Render(){
 
     //物理ワイヤーフレーム
     g_physics.DebugDraw();
-	//BulletPhysicsに描画を任せたらブレンドステート変えられてたんでデフォルトに戻す。
+
+	//ブレンドステートをデフォルトに戻す。
 	dc->OMSetBlendState( nullptr, nullptr, 0xffffffff );
 
 	//ブルーム

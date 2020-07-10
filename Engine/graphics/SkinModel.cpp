@@ -123,6 +123,7 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 	vsCb.mProj = projMatrix;
 	vsCb.mView = viewMatrix;
 	vsCb.mEmissionColor = m_emissionColor;
+	vsCb.mAlpha = m_alpha;
 	if( m_specTex != nullptr ){
 		vsCb.mHasSpecularMap = 1;
 		d3dDeviceContext->PSSetShaderResources( enSkinModelSRVReg_Speculer, 1, m_specTex.GetAddressOf() );

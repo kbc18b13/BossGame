@@ -12,7 +12,7 @@ PhysicsStaticObject::PhysicsStaticObject()
 }
 PhysicsStaticObject::~PhysicsStaticObject()
 {
-	g_physics.RemoveRigidBody(m_rigidBody);
+	SetActive( false );
 }
 
 void PhysicsStaticObject::CreateRigidBody( CVector3 pos, CQuaternion rot ){
@@ -26,4 +26,14 @@ void PhysicsStaticObject::CreateRigidBody( CVector3 pos, CQuaternion rot ){
 	m_rigidBody.GetBody()->setCollisionFlags( m_flag );
 	//„‘Ì‚ğ•¨—ƒ[ƒ‹ƒh‚É’Ç‰Á‚·‚éB
 	g_physics.AddRigidBody( m_rigidBody );
+}
+
+void PhysicsStaticObject::SetActive( bool active ){
+	if( m_isActive && !active ){
+		g_physics.RemoveRigidBody( m_rigidBody );
+	}
+	if( !m_isActive && active ){
+		g_physics.AddRigidBody( m_rigidBody );
+	}
+	m_isActive = active;
 }

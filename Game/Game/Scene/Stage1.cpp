@@ -11,13 +11,19 @@
 
 //地形などの読み込み
 Stage1::Stage1() : ground( L"Assets/modelData/FirstStage.cmo" ),
-carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo" ){
+carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo" ),
+ground2( L"Assets/modelData/SecondStage.cmo" ),
+bossTobira( L"Assets/modelData/BossTobira.cmo" )
+{
 
 	//各種オブジェクトの配置。
 	Level level;
 	level.Init( L"Assets/level/level.tkl", [&]( LevelObjectData& objData ) -> bool{
 		if( wcscmp( objData.name, L"Stage" ) == 0 ){
 			ground.SetPos( objData.position );
+			bossTobira.SetPos( objData.position );
+		} else if( wcscmp( objData.name, L"Stage2" ) == 0 ){
+			ground2.SetPos( objData.position );
 
 		} else if( wcscmp( objData.name, L"Chara" ) == 0 ){
 			player = NewGO<Player>( 0, this );
@@ -67,6 +73,8 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 
 			bossRoomTrigger = NewGO<TriggerCollision>( 0 );
 			bossRoomTrigger->Init( f, CVector3( 125, 125, 125 ), objData.position, objData.rotation );
+		} else if( wcscmp( objData.name, L"tobira" ) == 0 ){
+			
 		}
 		return true;
 	} );
@@ -106,6 +114,8 @@ void Stage1::Update(){
 		bigDoor->Close();
 	}
 
+	bossTobira.Update();
+
 	//ステージ終了処理
 	if( isEndStage ){
 		endTime += GameTime::GetDeltaTime();
@@ -120,5 +130,6 @@ void Stage1::Update(){
 }
 
 void Stage1::EndStage(){
-	isEndStage = true;
+	//isEndStage = true;
+	bossTobira.StartClear();
 }

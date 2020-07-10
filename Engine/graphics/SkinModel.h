@@ -115,6 +115,11 @@ public:
 
 	
 	void LoadSpecularTex( const wchar_t* filepath );
+
+	void SetAlpha( float alpha ){
+		m_alpha = alpha;
+	}
+
 	/*!
 	*@brief	SRVのレジスタ番号。
 	*/
@@ -143,7 +148,8 @@ private:
 		CMatrix mWorld;
 		CMatrix mView;
 		CMatrix mProj;
-		CVector4 mEmissionColor;
+		CVector3 mEmissionColor;
+		float mAlpha = 1;
 		int mHasSpecularMap = 0;
 	};
 	EnFbxUpAxis			m_enFbxUpAxis = enFbxUpAxisZ;	//!<FBXの上方向。
@@ -158,5 +164,6 @@ private:
 	ComPtr<ID3D11ShaderResourceView> m_specTex = nullptr;
 
 	CVector3 m_emissionColor = CVector3( 0, 0, 0);
+	float m_alpha = 1;
 };
 

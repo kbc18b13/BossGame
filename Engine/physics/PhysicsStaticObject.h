@@ -69,8 +69,12 @@ public:
 		m_flag = flag;
 	}
 
+	void SetActive( bool active );
+
 private:
 	void CreateRigidBody( CVector3 pos, CQuaternion rot );
+
+	bool m_isActive = true;
 	MeshCollider m_meshCollider;		//!<メッシュコライダー。
 	RigidBody m_rigidBody;				//!<剛体。
 	btCollisionObject::CollisionFlags m_flag;

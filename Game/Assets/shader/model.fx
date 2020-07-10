@@ -45,7 +45,7 @@ cbuffer VSCb : register(b0){
 	float4x4 mView;
 	float4x4 mProj;
     float3 mEmissionColor;
-    float dummy;
+    float mAlpha;
     int mHasSpecular;
 };
 
@@ -278,6 +278,6 @@ float4 PSMain( PSInput In ) : SV_Target0
     
     //é©å»î≠åıêF
     sum.xyz += mEmissionColor;
-    
+    sum.w = mAlpha;
 	return sum;
 }
