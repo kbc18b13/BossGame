@@ -57,6 +57,8 @@ private:
 	DoorOpener opener;
 	BigDoor* bigDoor = nullptr;
 
+	SkinModelRender stageGate;
+
 	GhostCollision m_wall;
 
 	//ウェイポイントを管理

@@ -21,6 +21,11 @@ public:
     //描画。
     void Render();
 
+	//ステンシル描画用オブジェクトの登録
+	void AddStencilRender( IRenderObject* ro ){
+		m_stencilRender.AddRenderObject( ro );
+	}
+
     //普通の描画オブジェクトの登録
     void AddDefaultRender( IRenderObject* ro ){
         m_defaultRender.AddRenderObject( ro );
@@ -64,6 +69,7 @@ private:
 	CascadeShadow m_shadowMap;
 
     //描画オブジェクト
+	RenderMachine m_stencilRender;
     RenderMachine m_defaultRender;
 	RenderMachine m_translucentRender;
     RenderMachine m_HUDRender;
@@ -75,7 +81,10 @@ private:
     Shader m_monoShader;
 	Bloom m_bloom;
 
-	ID3D11DepthStencilState* m_noDepth; //深度無し深度ステンシルステート
-	ID3D11BlendState* m_alphaBlend;
+	ComPtr<ID3D11DepthStencilState> m_noDepth; //深度無し深度ステンシルステート
+	ComPtr<ID3D11DepthStencilState> m_stencilStateR;//ステンシル用読み込みステート
+	ComPtr<ID3D11DepthStencilState> m_stencilStateW;//ステンシル用書き込みステート
+
+	ComPtr<ID3D11BlendState> m_alphaBlend;
 };
 

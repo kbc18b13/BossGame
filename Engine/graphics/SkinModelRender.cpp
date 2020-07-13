@@ -9,22 +9,17 @@ SkinModelRender::~SkinModelRender(){
 	if( m_isShadowCaster )g_ROManager.RemoveShadowCaster( this );
 }
 
-void SkinModelRender::Init( const wchar_t * filePath,
-							AnimationClip animClipList[],
-							int numAnimClip,
-							EnFbxUpAxis enFbxUpAxis,
-							bool isShadowCaster ,
-							bool isAlpha ){
-	m_skinModel.Init( filePath, enFbxUpAxis );
-	if( numAnimClip != 0 ){
-		m_animation.Init( m_skinModel, animClipList, numAnimClip );
+void SkinModelRender::Init(const SkinModelRenderInitParam&  p){
+	m_skinModel.Init( p.filePath, p.enFbxUpAxis );
+	if( p.numAnimClip != 0 ){
+		m_animation.Init( m_skinModel, p.animClipList, p.numAnimClip );
 	}
 
-	if( isShadowCaster ){
+	if( p.isShadowCaster ){
 		g_ROManager.AddShadowCaster( this );
 		m_isShadowCaster = true;
 	}
-	if( isAlpha ){
+	if( p.isAlpha ){
 		g_ROManager.AddTranslucentRender( this );
 	} else{
 		g_ROManager.AddDefaultRender( this );

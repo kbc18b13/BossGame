@@ -26,7 +26,7 @@ Troll::Troll(IStage* stage) : Actor(100, stage ){
 		m_animClip[int(AnimState::Idle)].Load(L"Assets/animData/Troll_Idle.tka", true);
         m_animClip[int(AnimState::Tackle)].Load(L"Assets/animData/Troll_Tackle.tka", true);
         m_animClip[int(AnimState::Hip)].Load(L"Assets/animData/Troll_Hip.tka", false);
-		m_model.Init(L"Assets/modelData/Troll.cmo", m_animClip, int(AnimState::Num));
+		m_model.Init( { L"Assets/modelData/Troll.cmo", m_animClip, int( AnimState::Num ) } );
 	}
 
     //ƒLƒƒƒ‰ƒRƒ“

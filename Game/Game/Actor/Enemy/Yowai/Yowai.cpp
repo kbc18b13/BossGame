@@ -21,7 +21,7 @@ Yowai::Yowai( IStage * stage ) : Actor(40, stage){
 		m_animClips[int( Anim::Attack )].Load( L"Assets/animData/Yowai_Attack.tka", false );
 		m_animClips[int( Anim::Walk )].Load( L"Assets/animData/Yowai_Walk.tka", true );
 
-		m_model.Init( L"Assets/modelData/Yowai.cmo", m_animClips, int( Anim::Num ) );
+		m_model.Init( { L"Assets/modelData/Yowai.cmo", m_animClips, int( Anim::Num ) } );
 	}
 
 	//ƒLƒƒƒ‰ƒRƒ“‰Šú‰»

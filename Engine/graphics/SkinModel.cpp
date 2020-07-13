@@ -113,9 +113,17 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 		return;
 	}
 
+	ID3D11DeviceContext* dc = g_graphicsEngine->GetD3DDeviceContext();
+
+	{
+		ComPtr<ID3D11DepthStencilState> s;
+		UINT r;
+		dc->OMGetDepthStencilState( &s, &r );
+		dc->OMSetDepthStencilState( s.Get() , m_enableStencil ? 1 : 0 );
+	}
+
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
 
-	ID3D11DeviceContext* d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
 
 	//定数バッファの内容を更新。
 	SVSConstantBuffer vsCb;
@@ -126,14 +134,14 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 	vsCb.mAlpha = m_alpha;
 	if( m_specTex != nullptr ){
 		vsCb.mHasSpecularMap = 1;
-		d3dDeviceContext->PSSetShaderResources( enSkinModelSRVReg_Speculer, 1, m_specTex.GetAddressOf() );
+		dc->PSSetShaderResources( enSkinModelSRVReg_Speculer, 1, m_specTex.GetAddressOf() );
 	}
 	m_cb.UpdateData( &vsCb );
 	//定数バッファをGPUに転送。
 	m_cb.SetToContext( ShaderType::VS, 0 );
 	m_cb.SetToContext( ShaderType::PS, 0 );
 	//サンプラステートを設定。
-	d3dDeviceContext->PSSetSamplers(0, 1, &m_samplerState);
+	dc->PSSetSamplers(0, 1, &m_samplerState);
 	//ボーン行列をGPUに転送。
 	m_skeleton.SendBoneMatrixArrayToGPU();
 
@@ -144,7 +152,7 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 
 	//描画。
 	m_modelDx->Draw(
-		d3dDeviceContext,
+		dc,
 		state,
 		m_worldMatrix,
 		viewMatrix,

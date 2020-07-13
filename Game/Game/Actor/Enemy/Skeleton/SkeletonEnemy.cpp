@@ -50,7 +50,7 @@ SkeletonEnemy::SkeletonEnemy( IStage * stage ) : Actor( 60, stage ){
 		m_animClip[int( Anim::Attack2 )].Load( L"Assets/animData/Skeleton_Attack2.tka", false );
 		m_animClip[int( Anim::JumpAttack )].Load( L"Assets/animData/Skeleton_JumpAttack.tka", false );
 		m_animClip[int( Anim::Hit )].Load( L"Assets/animData/Skeleton_Hit.tka", false );
-		m_model.Init( L"Assets/modelData/Skeleton.cmo", m_animClip, int( Anim::Num ) );
+		m_model.Init( { L"Assets/modelData/Skeleton.cmo", m_animClip, int( Anim::Num ) } );
 		m_model.SetPos( GetPos() );
 	}
 

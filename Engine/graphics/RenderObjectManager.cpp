@@ -9,8 +9,6 @@ RenderObjectManager::RenderObjectManager(){}
 
 
 RenderObjectManager::~RenderObjectManager(){
-	m_alphaBlend->Release();
-	m_noDepth->Release();
 }
 
 void RenderObjectManager::Init(){
@@ -25,25 +23,54 @@ void RenderObjectManager::Init(){
 
 	m_bloom.Init();
     
-	//2D用深度ステンシルステート
-	D3D11_DEPTH_STENCIL_DESC dpDesc{};
-	dpDesc.DepthEnable = false;
-	dpDesc.StencilEnable = false;
-	g_graphicsEngine->GetD3DDevice()->CreateDepthStencilState( &dpDesc, &m_noDepth );
+	//深度ステンシルステート
+	{
+		//2D用深度無しステート
+		D3D11_DEPTH_STENCIL_DESC dpDesc{};
+		dpDesc.DepthEnable = false;
+		dpDesc.StencilEnable = false;
+		g_graphicsEngine->GetD3DDevice()->CreateDepthStencilState( &dpDesc, &m_noDepth );
+
+		//ステンシル書き込み用ステート
+		dpDesc.DepthEnable = true;
+		dpDesc.StencilEnable = true;
+		dpDesc.DepthFunc = D3D11_COMPARISON_NEVER;
+		dpDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+
+		dpDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+		dpDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+		dpDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
+		dpDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+		dpDesc.BackFace = dpDesc.FrontFace;
+
+		dpDesc.StencilWriteMask = 0xff;
+		dpDesc.StencilReadMask = 0xff;
+
+		g_graphicsEngine->GetD3DDevice()->CreateDepthStencilState( &dpDesc, &m_stencilStateW );
+
+		//ステンシル使用ステート
+		dpDesc.FrontFace.StencilFunc = D3D11_COMPARISON_GREATER_EQUAL;
+		dpDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+		dpDesc.BackFace = dpDesc.FrontFace;
+		dpDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+		g_graphicsEngine->GetD3DDevice()->CreateDepthStencilState( &dpDesc, &m_stencilStateR );
+	}
 
 	//アルファ有効ブレンドステート
-	D3D11_BLEND_DESC blDesc{};
-	auto& r0 = blDesc.RenderTarget[0];
-	r0.BlendEnable = true;
-	r0.BlendOp = D3D11_BLEND_OP_ADD;
-	r0.SrcBlend = D3D11_BLEND_SRC_ALPHA;
-	r0.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-	r0.BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	r0.SrcBlendAlpha = D3D11_BLEND_ZERO;
-	r0.DestBlendAlpha = D3D11_BLEND_ZERO;
-	r0.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	{
+		D3D11_BLEND_DESC blDesc{};
+		auto& r0 = blDesc.RenderTarget[0];
+		r0.BlendEnable = true;
+		r0.BlendOp = D3D11_BLEND_OP_ADD;
+		r0.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+		r0.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+		r0.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+		r0.SrcBlendAlpha = D3D11_BLEND_ZERO;
+		r0.DestBlendAlpha = D3D11_BLEND_ZERO;
+		r0.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-	g_graphicsEngine->GetD3DDevice()->CreateBlendState( &blDesc, &m_alphaBlend );
+		g_graphicsEngine->GetD3DDevice()->CreateBlendState( &blDesc, &m_alphaBlend );
+	}
 }
 
 void RenderObjectManager::Render(){
@@ -59,11 +86,20 @@ void RenderObjectManager::Render(){
     m_defaultTarget.SetToContext( dc );
     m_defaultTarget.Clear(CVector4(0, 54.f/255, 106.f/255, 1));
 
+	////ステンシルスバッファを描画
+	dc->OMSetDepthStencilState( m_stencilStateW.Get(), 1 );
+	m_stencilRender.Render();
+
+	////深度ステンシルステートを設定
+	dc->OMSetDepthStencilState( m_stencilStateR.Get(), 0 );
+
     //通常描画オブジェクトの描画
     m_defaultRender.Render();
 
 	//アルファ有効ブレンドに変更。
-	dc->OMSetBlendState( m_alphaBlend, nullptr, 0xffffffff );
+	dc->OMSetBlendState( m_alphaBlend.Get(), nullptr, 0xffffffff );
+
+	g_graphicsEngine->ResetDepthStencilState();
 
 	//半透明描画オブジェクトの描画
 	m_translucentRender.Render();
@@ -89,7 +125,7 @@ void RenderObjectManager::Render(){
     m_postEffect.DrawScreenRect(m_defaultTarget.GetRenderTargetSRV() , (ID3D11PixelShader*)m_monoShader.GetBody());
 
 	//アルファ有効ブレンドに変更。
-	dc->OMSetBlendState( m_alphaBlend, nullptr, 0xffffffff );
+	dc->OMSetBlendState( m_alphaBlend.Get(), nullptr, 0xffffffff );
 	//深度ステートをリセット
 	g_graphicsEngine->ResetDepthStencilState();
 

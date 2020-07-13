@@ -33,7 +33,7 @@ Player::Player( IStage* stage ) : Actor( 150, stage ){
 		m_animClip[int( Anim::Damage )].Load( L"Assets/animData/Chara_Damage.tka" );
 
 		//cmoファイルの読み込み。
-		m_model.Init( L"Assets/modelData/Chara.cmo", m_animClip, int( Anim::Num ) );
+		m_model.Init( { L"Assets/modelData/Chara.cmo", m_animClip, int( Anim::Num ) } );
 		m_model.LoadSpecularTex( L"Assets/modelData/charaSpec.dds" );
 
 		m_model.AddEventFunc( "Attack", [&](){

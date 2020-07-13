@@ -15,6 +15,7 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 ground2( L"Assets/modelData/SecondStage.cmo" ),
 bossTobira( L"Assets/modelData/BossTobira.cmo" )
 {
+	stageGate.Init( { L"Assets/modelData/StageGatge.cmo" } );
 
 	//各種オブジェクトの配置。
 	Level level;

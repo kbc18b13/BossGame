@@ -11,7 +11,7 @@ ModelArmWeapon::~ModelArmWeapon(){}
 
 void ModelArmWeapon::Init( Bone* handBone, Actor* master, const CVector3& halfExtents,
 					  const wchar_t* modelpath, bool playersModelArmWeapon ){
-	m_model.Init( modelpath );
+	m_model.Init( { modelpath } );
 
 	m_collider.Create( halfExtents );
 

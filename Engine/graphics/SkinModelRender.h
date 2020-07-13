@@ -1,6 +1,15 @@
 #pragma once
 #include "IRenderObject.h"
 
+struct SkinModelRenderInitParam{
+	const wchar_t* filePath;
+	AnimationClip* animClipList = nullptr;
+	int numAnimClip = 0;
+	EnFbxUpAxis enFbxUpAxis = enFbxUpAxisY;
+	bool isShadowCaster = true;
+	bool isAlpha = false;
+};
+
 /// <summary>
 /// モデル描画を行うゲームオブジェクト。
 /// </summary>
@@ -14,11 +23,7 @@ public:
     *@param[in]	filePath		ロードするcmoファイルのファイルパス。
     *@param[in] enFbxUpAxis		fbxの上軸。デフォルトはenFbxUpAxisZ。
     */
-    void Init( const wchar_t* filePath, AnimationClip animClipList[] = nullptr,
-               int numAnimClip = 0,
-               EnFbxUpAxis enFbxUpAxis = enFbxUpAxisY,
-               bool isShadowCaster = true,
-			   bool isAlpha = false);
+    void Init(const SkinModelRenderInitParam& param);
 
 
     /// <summary>

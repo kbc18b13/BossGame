@@ -140,6 +140,7 @@
     <MeshContentTask Include="Assets\modelData\FirstStageWall.fbx" />
     <MeshContentTask Include="Assets\modelData\SecondStage.fbx" />
     <MeshContentTask Include="Assets\modelData\BossTobira.fbx" />
+    <MeshContentTask Include="Assets\modelData\StageGatge.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Title_back.png" />

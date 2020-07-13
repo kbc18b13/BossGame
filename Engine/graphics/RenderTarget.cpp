@@ -38,7 +38,7 @@ void RenderTarget::Clear(CVector4 Color) {
     auto d3dDeviceContext = g_graphicsEngine->GetD3DDeviceContext();
     //レンダリングターゲットをクリア。
     d3dDeviceContext->ClearRenderTargetView(m_renderTargetView, Color.v);
-    d3dDeviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+    d3dDeviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 }
 
 void RenderTarget::Init(unsigned int w, unsigned int h, DXGI_FORMAT texFormat) {
@@ -123,7 +123,7 @@ void RenderTarget::Init(unsigned int w, unsigned int h, DXGI_FORMAT texFormat) {
 		//デプスステンシルビューにバインドする。
 		depthTexDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 		//32bit浮動小数点のデプスステンシルバッファを作成する。
-		depthTexDesc.Format = DXGI_FORMAT_D32_FLOAT;
+		depthTexDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 		//デプスステンシルテクスチャを作成する。
 		d3dDevice->CreateTexture2D(&depthTexDesc, nullptr, &m_depthStencilTex);
 	}

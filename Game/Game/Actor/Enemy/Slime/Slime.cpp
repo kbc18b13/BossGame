@@ -47,7 +47,7 @@ Slime::Slime( IStage * stage ) : Actor(50 ,stage){
 		m_animClip[int( Anim::RollEnd )].Load( L"Assets/animData/Slime_RollEnd.tka", false );
 		m_animClip[int( Anim::Avoid )].Load( L"Assets/animData/Slime_Avoid.tka", false );
 		m_animClip[int( Anim::Hit )].Load( L"Assets/animData/Slime_Hit.tka", false );
-		m_model.Init( L"Assets/modelData/Slime.cmo", m_animClip, int( Anim::Num ) );
+		m_model.Init( { L"Assets/modelData/Slime.cmo", m_animClip, int( Anim::Num ) } );
 		m_model.LoadSpecularTex( L"Assets/modelData/SlimeSpec.dds" );
 		m_model.SetPos( GetPos() );
 	}

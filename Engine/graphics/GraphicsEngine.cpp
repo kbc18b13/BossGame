@@ -120,7 +120,7 @@ void GraphicsEngine::Init(HWND hWnd)
 		texDesc.Height = (UINT)FRAME_BUFFER_H;
 		texDesc.MipLevels = 1;
 		texDesc.ArraySize = 1;
-		texDesc.Format = DXGI_FORMAT_D32_FLOAT;
+		texDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 		texDesc.SampleDesc.Count = 1;
 		texDesc.SampleDesc.Quality = 0;
 		texDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -158,6 +158,8 @@ void GraphicsEngine::Init(HWND hWnd)
 	depthDesc.DepthEnable = true;
 	depthDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
 	depthDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	depthDesc.StencilEnable = false;
+	
 
 	m_pd3dDevice->CreateDepthStencilState( &depthDesc, &m_depthStencilState );
 	m_pd3dDeviceContext->OMSetDepthStencilState( m_depthStencilState, 0 );

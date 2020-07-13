@@ -120,6 +120,10 @@ public:
 		m_alpha = alpha;
 	}
 
+	void SetEnableStencil( bool isEnable ){
+		m_enableStencil = isEnable;
+	}
+
 	/*!
 	*@brief	SRVのレジスタ番号。
 	*/
@@ -165,5 +169,7 @@ private:
 
 	CVector3 m_emissionColor = CVector3( 0, 0, 0);
 	float m_alpha = 1;
+
+	bool m_enableStencil = false;
 };
 

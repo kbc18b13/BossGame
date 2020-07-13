@@ -15,7 +15,6 @@ enum EnSkinModelCBReg{
 	enSkinModelCBReg_Specular,  //スペキュラ用
 	enSkinModelCBReg_Shadow,	//!<影。
 	enSkinModelCBReg_ShadowFar,	//!<影。
-	enSkinModelCBReg_GBuffer,	//!<G-Buffer。
 	
 };
 /*!
