@@ -15,10 +15,17 @@ void SkinModelRender::Init(const SkinModelRenderInitParam&  p){
 		m_animation.Init( m_skinModel, p.animClipList, p.numAnimClip );
 	}
 
+	if( p.isStencliDraw ){
+		g_ROManager.AddStencilRender( this );
+		m_skinModel.SetEnableStencil( true );
+		return;
+	}
+
 	if( p.isShadowCaster ){
 		g_ROManager.AddShadowCaster( this );
 		m_isShadowCaster = true;
 	}
+
 	if( p.isAlpha ){
 		g_ROManager.AddTranslucentRender( this );
 	} else{

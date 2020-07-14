@@ -37,7 +37,7 @@ void RenderObjectManager::Init(){
 		dpDesc.DepthFunc = D3D11_COMPARISON_NEVER;
 		dpDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 
-		dpDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+		dpDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_REPLACE;
 		dpDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
 		dpDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
 		dpDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
@@ -49,8 +49,9 @@ void RenderObjectManager::Init(){
 		g_graphicsEngine->GetD3DDevice()->CreateDepthStencilState( &dpDesc, &m_stencilStateW );
 
 		//ステンシル使用ステート
-		dpDesc.FrontFace.StencilFunc = D3D11_COMPARISON_GREATER_EQUAL;
+		dpDesc.FrontFace.StencilFunc = D3D11_COMPARISON_LESS_EQUAL;
 		dpDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+		dpDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
 		dpDesc.BackFace = dpDesc.FrontFace;
 		dpDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
 		g_graphicsEngine->GetD3DDevice()->CreateDepthStencilState( &dpDesc, &m_stencilStateR );
@@ -85,7 +86,7 @@ void RenderObjectManager::Render(){
     //描画先を通常ターゲットへ。
     m_defaultTarget.SetToContext( dc );
     m_defaultTarget.Clear(CVector4(0, 54.f/255, 106.f/255, 1));
-
+	
 	////ステンシルスバッファを描画
 	dc->OMSetDepthStencilState( m_stencilStateW.Get(), 1 );
 	m_stencilRender.Render();

@@ -150,6 +150,13 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
         modelMaterial->SetRenderMode(renderMode);
     });
 
+	//ラスタライズステートが設定されていれば有効にする。
+	if( m_rasterState.Get() ){
+		dc->RSSetState( m_rasterState.Get() );
+	} else{
+		g_graphicsEngine->ResetRasterizerState();
+	}
+
 	//描画。
 	m_modelDx->Draw(
 		dc,

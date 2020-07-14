@@ -15,7 +15,20 @@ carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo"
 ground2( L"Assets/modelData/SecondStage.cmo" ),
 bossTobira( L"Assets/modelData/BossTobira.cmo" )
 {
-	stageGate.Init( { L"Assets/modelData/StageGatge.cmo" } );
+	{
+		SkinModelRenderInitParam param;
+		param.filePath = L"Assets/modelData/StageGatge.cmo";
+		param.isStencliDraw = true;
+		stageGate.Init( param );
+
+		D3D11_RASTERIZER_DESC rsDesc{};
+		rsDesc.CullMode = D3D11_CULL_NONE;
+		rsDesc.FillMode = D3D11_FILL_SOLID;
+		rsDesc.DepthClipEnable = true;
+		ID3D11RasterizerState* rsState;
+		g_graphicsEngine->GetD3DDevice()->CreateRasterizerState( &rsDesc, &rsState );
+		stageGate.GetModel().SetRasterState( rsState );
+	}
 
 	//各種オブジェクトの配置。
 	Level level;
@@ -25,6 +38,9 @@ bossTobira( L"Assets/modelData/BossTobira.cmo" )
 			bossTobira.SetPos( objData.position );
 		} else if( wcscmp( objData.name, L"Stage2" ) == 0 ){
 			ground2.SetPos( objData.position );
+			ground2.GetModel()->GetModel().SetEnableStencil( true );
+		} else if( wcscmp( objData.name, L"StageGate" ) == 0 ){
+			stageGate.SetPos( objData.position );
 
 		} else if( wcscmp( objData.name, L"Chara" ) == 0 ){
 			player = NewGO<Player>( 0, this );
@@ -115,6 +131,7 @@ void Stage1::Update(){
 		bigDoor->Close();
 	}
 
+	stageGate.Update();
 	bossTobira.Update();
 
 	//ステージ終了処理

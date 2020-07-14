@@ -113,6 +113,9 @@ public:
 	/// </summary>
 	void SetCCW( bool ccw );
 
+	void SetRasterState( ID3D11RasterizerState* rsState ){
+		m_rasterState = rsState;
+	}
 	
 	void LoadSpecularTex( const wchar_t* filepath );
 
@@ -163,6 +166,9 @@ private:
 	DirectX::Model*		m_modelDx;						//!<DirectXTKが提供するモデルクラス。
 	ID3D11SamplerState* m_samplerState = nullptr;		//!<サンプラステート。
 	bool                m_isDraw = true;                //!<trueなら描画する
+
+	//ラスタライズステート
+	ComPtr<ID3D11RasterizerState> m_rasterState = nullptr;
 
 	//スペキュラマップ
 	ComPtr<ID3D11ShaderResourceView> m_specTex = nullptr;

@@ -8,6 +8,7 @@ struct SkinModelRenderInitParam{
 	EnFbxUpAxis enFbxUpAxis = enFbxUpAxisY;
 	bool isShadowCaster = true;
 	bool isAlpha = false;
+	bool isStencliDraw = false;
 };
 
 /// <summary>

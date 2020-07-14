@@ -23,6 +23,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
 	g_camera3D.Init();
 	g_camera3D.SetTarget( { 0.0f, 20.0f, 0.0f } );
+	g_camera3D.SetFar( 10000.0f );
 
 	//サウンドマネージャーの初期化
 	g_soundEngine.Init();
