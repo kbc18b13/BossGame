@@ -38,7 +38,7 @@ public:
 
 	void EndStage() override;
 
-	virtual CVector3 GetShouldGo( const CVector3& from, const CVector3& to ){
+	CVector3 GetShouldGo( const CVector3& from, const CVector3& to ) override{
 		return wpManager.GetShouldGo( from, to );
 	}
 

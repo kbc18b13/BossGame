@@ -64,6 +64,8 @@
     <ClCompile Include="Game\WayPoint\WayPointManager.cpp" />
     <ClCompile Include="Game\Ground\GhostCollision.cpp" />
     <ClCompile Include="Game\Ground\ClearDoor.cpp" />
+    <ClCompile Include="Game\Scene\Stage2.cpp" />
+    <ClCompile Include="Game\Scene\StageGate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -120,6 +122,8 @@
     <ClInclude Include="Game\WayPoint\WayPointManager.h" />
     <ClInclude Include="Game\Ground\GhostCollision.h" />
     <ClInclude Include="Game\Ground\ClearDoor.h" />
+    <ClInclude Include="Game\Scene\Stage2.h" />
+    <ClInclude Include="Game\Scene\StageGate.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">
@@ -141,6 +145,7 @@
     <MeshContentTask Include="Assets\modelData\SecondStage.fbx" />
     <MeshContentTask Include="Assets\modelData\BossTobira.fbx" />
     <MeshContentTask Include="Assets\modelData\StageGatge.fbx" />
+    <MeshContentTask Include="Assets\modelData\StageGatgeBOX.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Title_back.png" />

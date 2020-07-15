@@ -38,7 +38,7 @@ bossTobira( L"Assets/modelData/BossTobira.cmo" )
 			bossTobira.SetPos( objData.position );
 		} else if( wcscmp( objData.name, L"Stage2" ) == 0 ){
 			ground2.SetPos( objData.position );
-			ground2.GetModel()->GetModel().SetEnableStencil( true );
+			ground2.GetModel()->GetModel().SetStencilRef( 1 );
 		} else if( wcscmp( objData.name, L"StageGate" ) == 0 ){
 			stageGate.SetPos( objData.position );
 
@@ -90,8 +90,6 @@ bossTobira( L"Assets/modelData/BossTobira.cmo" )
 
 			bossRoomTrigger = NewGO<TriggerCollision>( 0 );
 			bossRoomTrigger->Init( f, CVector3( 125, 125, 125 ), objData.position, objData.rotation );
-		} else if( wcscmp( objData.name, L"tobira" ) == 0 ){
-			
 		}
 		return true;
 	} );

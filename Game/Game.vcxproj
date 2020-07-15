@@ -165,6 +165,8 @@
     <ClCompile Include="Game\Actor\Enemy\Slime\Act\SlimeStrike.cpp" />
     <ClCompile Include="Game\WayPoint\WayPointManager.cpp" />
     <ClCompile Include="Game\Ground\GhostCollision.cpp" />
+    <ClCompile Include="Game\Scene\Stage2.cpp" />
+    <ClCompile Include="Game\Scene\StageGate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Ground\ClearDoor.h" />
@@ -221,6 +223,8 @@
     <ClInclude Include="Game\Actor\Enemy\Slime\Act\SlimeStrike.h" />
     <ClInclude Include="Game\WayPoint\WayPointManager.h" />
     <ClInclude Include="Game\Ground\GhostCollision.h" />
+    <ClInclude Include="Game\Scene\Stage2.h" />
+    <ClInclude Include="Game\Scene\StageGate.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\BigDoor.fbx" />
@@ -236,6 +240,7 @@
     <MeshContentTask Include="Assets\modelData\SkeSword.fbx" />
     <MeshContentTask Include="Assets\modelData\Slime.fbx" />
     <MeshContentTask Include="Assets\modelData\StageGatge.fbx" />
+    <MeshContentTask Include="Assets\modelData\StageGatgeBOX.fbx" />
     <MeshContentTask Include="Assets\modelData\Sword.fbx" />
     <MeshContentTask Include="Assets\modelData\TestChara.fbx" />
     <MeshContentTask Include="Assets\modelData\Troll.fbx" />

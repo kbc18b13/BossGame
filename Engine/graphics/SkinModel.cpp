@@ -119,7 +119,7 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 		ComPtr<ID3D11DepthStencilState> s;
 		UINT r;
 		dc->OMGetDepthStencilState( &s, &r );
-		dc->OMSetDepthStencilState( s.Get() , m_enableStencil ? 1 : 0 );
+		dc->OMSetDepthStencilState( s.Get() , m_stencilRef );
 	}
 
 	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());

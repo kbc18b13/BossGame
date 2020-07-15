@@ -123,8 +123,8 @@ public:
 		m_alpha = alpha;
 	}
 
-	void SetEnableStencil( bool isEnable ){
-		m_enableStencil = isEnable;
+	void SetStencilRef( int value ){
+		m_stencilRef = value;
 	}
 
 	/*!
@@ -176,6 +176,6 @@ private:
 	CVector3 m_emissionColor = CVector3( 0, 0, 0);
 	float m_alpha = 1;
 
-	bool m_enableStencil = false;
+	int m_stencilRef = 0;
 };
 

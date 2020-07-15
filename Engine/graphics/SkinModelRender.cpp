@@ -17,7 +17,7 @@ void SkinModelRender::Init(const SkinModelRenderInitParam&  p){
 
 	if( p.isStencliDraw ){
 		g_ROManager.AddStencilRender( this );
-		m_skinModel.SetEnableStencil( true );
+		m_skinModel.SetStencilRef( 1 );
 		return;
 	}
 
