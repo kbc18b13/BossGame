@@ -539,11 +539,11 @@ public:
 	}
 
 	//ベクトルにクォータニオンを適用する。
-	void Multiply( CVector4& _v ){
+	void Multiply( CVector4& _v ) const{
 		DirectX::XMVECTOR xmv = DirectX::XMVector3Rotate( _v, *this );
 		DirectX::XMStoreFloat4( &_v.vec, xmv );
 	}
-	void Multiply( CVector3& _v ){
+	void Multiply( CVector3& _v ) const{
 		DirectX::XMVECTOR xmv = DirectX::XMVector3Rotate( _v, *this );
 		DirectX::XMStoreFloat3( &_v.vec, xmv );
 	}

@@ -18,6 +18,10 @@ public:
 
 	void Update();
 
+	CollisionModel& GetColModel(){
+		return m_colModel;
+	}
+
 private:
 	bool m_clearStart = false;
 	static constexpr float c_clearTime = 4.0f;

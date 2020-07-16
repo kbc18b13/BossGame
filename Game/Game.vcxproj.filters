@@ -146,6 +146,7 @@
     <MeshContentTask Include="Assets\modelData\BossTobira.fbx" />
     <MeshContentTask Include="Assets\modelData\StageGatge.fbx" />
     <MeshContentTask Include="Assets\modelData\StageGatgeBOX.fbx" />
+    <MeshContentTask Include="Assets\modelData\GateOut.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Title_back.png" />

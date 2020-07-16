@@ -7,7 +7,11 @@ public:
 	Stage2();
 	~Stage2();
 
-	void Update();
+	void Update() override;
+
+	void EndStage() override{}
+
+	void SetStageStencilRef( int ref ) override;
 
 private:
 	CollisionModel ground;

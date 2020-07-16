@@ -234,6 +234,7 @@
     <MeshContentTask Include="Assets\modelData\Chara.fbx" />
     <MeshContentTask Include="Assets\modelData\FirstStage.fbx" />
     <MeshContentTask Include="Assets\modelData\FirstStageWall.fbx" />
+    <MeshContentTask Include="Assets\modelData\GateOut.fbx" />
     <MeshContentTask Include="Assets\modelData\SecondStage.fbx" />
     <MeshContentTask Include="Assets\modelData\Shield.fbx" />
     <MeshContentTask Include="Assets\modelData\Skeleton.fbx" />

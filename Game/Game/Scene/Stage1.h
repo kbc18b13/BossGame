@@ -7,6 +7,7 @@
 #include "Ground/ClearDoor.h"
 class Troll;
 class Player;
+class StageGate;
 
 class DoorOpener{
 public:
@@ -42,6 +43,8 @@ public:
 		return wpManager.GetShouldGo( from, to );
 	}
 
+	void SetStageStencilRef( int ref ) override;
+
 private:
 	//ステージ終了までの時間
 	float endTime = 0.0f;
@@ -51,13 +54,12 @@ private:
 	TriggerCollision* bossRoomTrigger = nullptr;
 	CVector3 trollPos;
 	CollisionModel ground;
-	CollisionModel ground2;
 	ClearDoor bossTobira;
 	CollisionModel carriage;
 	DoorOpener opener;
 	BigDoor* bigDoor = nullptr;
 
-	SkinModelRender stageGate;
+	StageGate* stageGate;
 
 	GhostCollision m_wall;
 

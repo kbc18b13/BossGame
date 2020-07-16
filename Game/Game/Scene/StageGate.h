@@ -8,26 +8,29 @@ public:
 	StageGate();
 	~StageGate();
 
-	void Init( IStage* now, IStage* next, const CVector3& pos );
+	void Init( IStage* now, IStage* next, const CVector3& pos, const CQuaternion& rot );
 
-	void SetNextStage( IStage* stage ){
-		m_nextStage = stage;
+	void SetAStage( IStage* stage ){
+		m_AStage = stage;
 	}
 
-	void SetNowStage( IStage* stage ){
-		m_nextStage = stage;
+	void SetBStage( IStage* stage ){
+		m_BStage = stage;
 	}
 
 	void Update();
 
 private:
+	void StencilUpdate();
+
 	CVector3 m_pos;
-	CVector3 m_toNext;
+	CVector3 m_toB;
 
 	TriggerCollision m_col;
 	SkinModelRender m_gateModel;
+	SkinModelRender m_gateOutModel;
 
-	IStage* m_nextStage = nullptr;
-	IStage* m_NowStage = nullptr;
+	IStage* m_AStage = nullptr;
+	IStage* m_BStage = nullptr;
 };
 

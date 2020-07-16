@@ -20,6 +20,11 @@ public:
 		m_state = enClose;
 	}
 
+	void SetStencilRef(int ref){
+		m_doorL.GetModel()->GetModel().SetStencilRef( ref );
+		m_doorR.GetModel()->GetModel().SetStencilRef( ref );
+	}
+
 private:
 	CollisionModel m_doorL;
 	CollisionModel m_doorR;

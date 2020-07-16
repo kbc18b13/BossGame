@@ -8,27 +8,14 @@
 #include "Actor/Enemy/Slime/Slime.h"
 #include "Title.h"
 #include "Util/Fade.h"
+#include "Stage2.h"
+#include "StageGate.h"
 
 //地形などの読み込み
 Stage1::Stage1() : ground( L"Assets/modelData/FirstStage.cmo" ),
 carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo" ),
-ground2( L"Assets/modelData/SecondStage.cmo" ),
 bossTobira( L"Assets/modelData/BossTobira.cmo" )
 {
-	{
-		SkinModelRenderInitParam param;
-		param.filePath = L"Assets/modelData/StageGatge.cmo";
-		param.isStencliDraw = true;
-		stageGate.Init( param );
-
-		D3D11_RASTERIZER_DESC rsDesc{};
-		rsDesc.CullMode = D3D11_CULL_NONE;
-		rsDesc.FillMode = D3D11_FILL_SOLID;
-		rsDesc.DepthClipEnable = true;
-		ID3D11RasterizerState* rsState;
-		g_graphicsEngine->GetD3DDevice()->CreateRasterizerState( &rsDesc, &rsState );
-		stageGate.GetModel().SetRasterState( rsState );
-	}
 
 	//各種オブジェクトの配置。
 	Level level;
@@ -36,12 +23,9 @@ bossTobira( L"Assets/modelData/BossTobira.cmo" )
 		if( wcscmp( objData.name, L"Stage" ) == 0 ){
 			ground.SetPos( objData.position );
 			bossTobira.SetPos( objData.position );
-		} else if( wcscmp( objData.name, L"Stage2" ) == 0 ){
-			ground2.SetPos( objData.position );
-			ground2.GetModel()->GetModel().SetStencilRef( 1 );
 		} else if( wcscmp( objData.name, L"StageGate" ) == 0 ){
-			stageGate.SetPos( objData.position );
-
+			stageGate = NewGO<StageGate>( 0 );
+			stageGate->Init( this, NewGO<Stage2>( 0 ), objData.position, objData.rotation );
 		} else if( wcscmp( objData.name, L"Chara" ) == 0 ){
 			player = NewGO<Player>( 0, this );
 			player->SetPos( objData.position );
@@ -111,7 +95,6 @@ bossTobira( L"Assets/modelData/BossTobira.cmo" )
 	m_bgm.Init( L"Assets/sound/stageBGM.wav" );
 	m_bgm.Play( true );
 
-
 	Fade::Out();
 }
 
@@ -129,7 +112,6 @@ void Stage1::Update(){
 		bigDoor->Close();
 	}
 
-	stageGate.Update();
 	bossTobira.Update();
 
 	//ステージ終了処理
@@ -148,4 +130,14 @@ void Stage1::Update(){
 void Stage1::EndStage(){
 	//isEndStage = true;
 	bossTobira.StartClear();
+}
+
+void Stage1::SetStageStencilRef( int ref ){
+	ground.GetModel()->GetModel().SetStencilRef(ref);
+	bossTobira.GetColModel().GetModel()->GetModel().SetStencilRef( ref );
+	carriage.GetModel()->GetModel().SetStencilRef( ref );;
+	bigDoor->SetStencilRef(ref);
+	for( Actor* a : enemyArray ){
+		a->SetStencilRef( ref );
+	}
 }

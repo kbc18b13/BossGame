@@ -21,6 +21,8 @@ public:
 	}
 
 	virtual void EndStage() = 0;
+
+	virtual void SetStageStencilRef(int ref) = 0;
 protected:
 	Player* player;
 	std::vector<Actor*> enemyArray;
