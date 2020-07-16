@@ -85,7 +85,7 @@ bossTobira( L"Assets/modelData/BossTobira.cmo" )
 	wpManager.Load( L"Assets/level/wayPoint.wpdata" );
 
 	g_graphicsEngine->GetDirectionLight().SetColor( 0, { 1,1,1,1 } );
-	g_graphicsEngine->GetDirectionLight().SetDirection( 0, { -1,-1,-1 } );
+	g_graphicsEngine->GetDirectionLight().SetDirection( 0, { -0.2f,-1,-0.2f } );
 	g_graphicsEngine->GetDirectionLight().Apply();
 
 	g_graphicsEngine->GetAmbientLight().SetColor( { 0.5f,0.5f,0.5f,1 } );
@@ -135,7 +135,7 @@ void Stage1::EndStage(){
 void Stage1::SetStageStencilRef( int ref ){
 	ground.GetModel()->GetModel().SetStencilRef(ref);
 	bossTobira.GetColModel().GetModel()->GetModel().SetStencilRef( ref );
-	carriage.GetModel()->GetModel().SetStencilRef( ref );;
+	carriage.GetModel()->GetModel().SetStencilRef( ref );
 	bigDoor->SetStencilRef(ref);
 	for( Actor* a : enemyArray ){
 		a->SetStencilRef( ref );

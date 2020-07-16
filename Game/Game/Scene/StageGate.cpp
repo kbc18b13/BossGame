@@ -58,13 +58,13 @@ void StageGate::StencilUpdate(){
 
 	float dot = gateToC.Dot( m_toB );
 
-	float thresholdCol = cosf(CMath::DegToRad( 10 ));
+	float thresholdCos = cosf(CMath::DegToRad( 10 ));
 
-	if( dot < -thresholdCol ){
+	if( dot < -thresholdCos ){
 		m_AStage->SetStageStencilRef( 0 );
 		m_BStage->SetStageStencilRef( 1 );
 
-	} else if( dot > thresholdCol ){
+	} else if( dot > thresholdCos ){
 		m_AStage->SetStageStencilRef( 1 );
 		m_BStage->SetStageStencilRef( 0 );
 

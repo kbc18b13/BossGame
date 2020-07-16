@@ -2,8 +2,6 @@
 #include "CascadePart.h"
 #include <numeric>
 
-extern SkinModelRender* g_testSk[4];
-
 void CascadePart::Init( UINT w, UINT h ){
 	m_renderTarget.Init( w, h, DXGI_FORMAT_R32_FLOAT );
 }
@@ -47,7 +45,7 @@ void CascadePart::RenderToShadowMap( ID3D11DeviceContext * dc, std::vector<SkinM
 
 	//AABBを作成
 	constexpr float max_float = std::numeric_limits<float>().max();
-	constexpr float min_float = std::numeric_limits<float>().min();
+	constexpr float min_float = -std::numeric_limits<float>().max();
 	CVector3 minPos{ max_float ,max_float ,max_float };
 	CVector3 maxPos{ min_float ,min_float ,min_float };
 	for( CVector3& v : verts ){
@@ -55,17 +53,17 @@ void CascadePart::RenderToShadowMap( ID3D11DeviceContext * dc, std::vector<SkinM
 		maxPos.Max( v );
 	}
 
-	CVector3 centerPos = ( minPos + maxPos ) / 2; //AABBの中心
 	CVector3 newPos = ( minPos + maxPos ) / 2; //AABBの中心
-	float moveBack = ( newPos.z - minPos.z ) + g_camera3D.GetNear(); //中心から最も手前までの距離＋ニアクリップ
-	newPos.z -= moveBack+1000; //新しいカメラ空間でのライトカメラ座標
+	float moveBack = ( newPos.z - minPos.z ) + 2000; //中心から最も手前までの距離+余分に距離を取る
+	newPos.z -= moveBack; //新しいカメラ空間でのライトカメラ座標
+	
 
 	//AABBにしたがってビュー行列、プロジェクション行列を再設定
 	lightViewMatrix.v[3] -= CVector4(newPos, 0);
 
 	CMatrix lightProjMatrix =
 		DirectX::XMMatrixOrthographicLH( maxPos.x - minPos.x, maxPos.y - minPos.y,
-										1.0f, maxPos.z - minPos.z + g_camera3D.GetNear() + 1000 );
+										1.0f, maxPos.z - minPos.z +  2000 );
 
 
 	//レンダーターゲットとビューポートを更新

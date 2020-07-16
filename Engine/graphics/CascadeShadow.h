@@ -66,6 +66,6 @@ private:
 
 	std::vector<SkinModelRender*> m_shadowCasters;
 
-	CVector3 m_dir{ -1, -1, -1 };
+	CVector3 m_dir{ -0.2f, -1, -0.2f };
 };
 

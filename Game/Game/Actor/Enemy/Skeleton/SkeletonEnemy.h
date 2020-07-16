@@ -24,6 +24,11 @@ public:
 		return Actor::Damage( damage, source );
 	}
 
+	void SetStencilRef( int ref ) override{
+		m_model.GetModel().SetStencilRef( ref );
+		m_sword.GetModel().GetModel().SetStencilRef( ref );
+	}
+
 	//アニメーション
 	enum class Anim{
 		Idle,

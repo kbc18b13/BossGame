@@ -100,10 +100,11 @@ void RenderObjectManager::Render(){
 	//アルファ有効ブレンドに変更。
 	dc->OMSetBlendState( m_alphaBlend.Get(), nullptr, 0xffffffff );
 
-	g_graphicsEngine->ResetDepthStencilState();
 
 	//半透明描画オブジェクトの描画
 	m_translucentRender.Render();
+
+	g_graphicsEngine->ResetDepthStencilState();
 
 	//エフェクト描画
 	g_effectManager->Draw();

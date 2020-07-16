@@ -243,7 +243,7 @@ float4 PSMain( PSInput In ) : SV_Target0
         float3 shadowPos2 = In.shadowPos[4].xyz / In.shadowPos[4].w;
         shadowPos2.xy *= float2(0.5f, -0.5f);
         shadowPos2.xy += 0.5f;
-        shadow = shadowMap4.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z - 0.001f);
+        shadow = shadowMap4.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z - 0.003f);
     }
     
     
@@ -262,7 +262,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 		}
 	}
     //環境光
-	sum += color * mAmbColor*0.5f;
+	sum += color * mAmbColor;
     //環境光によるスペキュラ反射。
     float mapPower = 0.0f;
     if( mHasSpecular){

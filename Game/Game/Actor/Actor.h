@@ -71,7 +71,7 @@ public:
 		lockCamera = nullptr;
 	}
 
-	void SetStencilRef( int ref ){
+	virtual void SetStencilRef( int ref ){
 		m_model.GetModel().SetStencilRef( ref );
 	}
 

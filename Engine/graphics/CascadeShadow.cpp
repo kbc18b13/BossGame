@@ -2,7 +2,6 @@
 #include "CascadeShadow.h"
 #include "SkinModelRender.h"
 #include "SkinModelShaderConst.h"
-//SkinModelRender* g_testSk[4] = {};
 
 CascadeShadow::CascadeShadow(){}
 
@@ -14,19 +13,19 @@ void CascadeShadow::Init( unsigned int w, unsigned int h ){
 	//•ªŠ„‹——£‚ğİ’è
 	{
 		parts[0].Init( w, h );
-		parts[0].SetPart( 0, 0.07f );
+		parts[0].SetPart( 0, 0.03f );
 
 		parts[1].Init( w, h, 0.5f );
-		parts[1].SetPart( parts[0].GetFar(), 0.15f );
+		parts[1].SetPart( parts[0].GetFar(), 0.06f );
 
-		parts[2].Init( w, h, 0.4f );
-		parts[2].SetPart( parts[1].GetFar(), 0.3f );
+		parts[2].Init( w, h, 0.5f);
+		parts[2].SetPart( parts[1].GetFar(), 0.12f );
 
-		parts[3].Init( w, h, 0.3f );
-		parts[3].SetPart( parts[2].GetFar(), 0.5f );
+		parts[3].Init( w, h, 0.5f );
+		parts[3].SetPart( parts[2].GetFar(), 0.24f );
 
 		parts[4].Init( w, h, 0.2f );
-		parts[4].SetPart( parts[3].GetFar(), 0.7f );
+		parts[4].SetPart( parts[3].GetFar(), 0.34f );
 
 		for( int i = 0; i < ARRAYSIZE( parts ); i++ ){
 			partFarClips[i] = parts[i].GetCameraFar();

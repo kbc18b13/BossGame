@@ -68,7 +68,6 @@ private:
 
 	float m_near;
 	float m_far;
-
 	CMatrix m_vpMat;
 };
 
