@@ -165,6 +165,7 @@ const CVector3& CharacterController::Execute(float deltaTime, CVector3& moveSpee
 
 			SweepResultWall callback;
 			callback.me = m_rigidBody.GetBody();
+			callback.m_collisionFilterGroup = m_rigidBody.GetBody()->getCollisionFlags();
 			callback.startPos = posTmp;
 			//衝突検出。
 			g_physics.ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
@@ -260,6 +261,8 @@ const CVector3& CharacterController::Execute(float deltaTime, CVector3& moveSpee
 		SweepResultGround callback;
 		callback.me = m_rigidBody.GetBody();
 		callback.startPos.Set(start.getOrigin());
+		callback.m_collisionFilterGroup = m_rigidBody.GetBody()->getCollisionFlags();
+
 		//衝突検出。
 		if(fabsf(endPos.y - callback.startPos.y) > FLT_EPSILON){
 			g_physics.ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);

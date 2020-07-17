@@ -53,8 +53,7 @@ public:
 	}
 
 	void SetScale( const CVector3& scale ){
-		m_meshCollider.SetLocalScale( scale );
-		g_physics.UpdateSingleAABB( m_rigidBody );
+		m_meshCollider.SetLocalScale( scale , m_rigidBody.GetBody());
 	}
 
 	MeshCollider* GetShape(){

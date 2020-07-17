@@ -32,7 +32,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 	g_ROManager.Init();
 
 	//ゲームオブジェクトマネージャーの初期化
-	GOManager().Init( 10, 5 );
+	GOManager().Init( 15, 1 );
 
 	//エフェクシア初期化
 	InitEffekseer();

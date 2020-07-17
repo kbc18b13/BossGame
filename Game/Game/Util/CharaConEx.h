@@ -100,6 +100,14 @@ public:
 		return m_charaCon.GetHeight();
 	}
 
+	bool IsOnGround() const{
+		return m_charaCon.IsOnGround();
+	}
+
+	void* GetUserPointer() const{
+		return m_charaCon.GetUserPointer();
+	}
+
 private:
 	float m_walkAccel;
 	float m_walkAccelAir;

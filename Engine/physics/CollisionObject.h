@@ -38,8 +38,10 @@ public:
 		return m_group;
 	}
 
+	void SetPos(const CVector3& pos);
+
 private:
 	btCollisionObject m_collision;
-	short m_mask;
-	short m_group;
+	short m_mask = 0;
+	short m_group = 0;
 };

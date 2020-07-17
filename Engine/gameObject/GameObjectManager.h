@@ -62,6 +62,7 @@ public:
 private:
 	std::vector<std::vector<IGameObject*>> m_newGOArray;
 	std::vector<std::vector<IGameObject*>> m_goArray;
+	bool appEnd = false;
 };
 
 GameObjectManager& GOManager();

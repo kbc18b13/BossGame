@@ -7,6 +7,7 @@
 #include "Act/Guard.h"
 #include "Act/Roll.h"
 #include "Act/Damage.h"
+#include "Act/JumpAtk.h"
 
 #include "Util/DisplayText.h"
 #include "Scene/IStage.h"
@@ -31,13 +32,16 @@ Player::Player( IStage* stage ) : Actor( 150, stage ){
 		m_animClip[int( Anim::Guard )].Load( L"Assets/animData/Chara_Guard.tka" );
 		m_animClip[int( Anim::Roll )].Load( L"Assets/animData/Chara_Roll.tka" );
 		m_animClip[int( Anim::Damage )].Load( L"Assets/animData/Chara_Damage.tka" );
+		m_animClip[int( Anim::Jump )].Load( L"Assets/animData/Chara_Jump.tka" );
+		m_animClip[int( Anim::JumpAtkL )].Load( L"Assets/animData/Chara_JumpAttackL.tka" );
+		m_animClip[int( Anim::JumpAtkH )].Load( L"Assets/animData/Chara_JumpAttackH.tka" );
 
 		//cmoファイルの読み込み。
 		m_model.Init( { L"Assets/modelData/Chara.cmo", m_animClip, int( Anim::Num ) } );
 		m_model.LoadSpecularTex( L"Assets/modelData/charaSpec.dds" );
 
 		m_model.AddEventFunc( "Attack", [&](){
-			if( NowActIs( int( Act::Slash ) ) ){
+			if( NowActIs( int( Act::Slash ) ) || NowActIs( int( Act::JumpAtk ) ) ){
 				m_se_swordSwing.Play();
 				m_sword.AttackStart();
 			}
@@ -67,6 +71,7 @@ Player::Player( IStage* stage ) : Actor( 150, stage ){
 	//アクトステートの初期化
 	{
 		m_actArray[int( Act::Slash )].reset( new Attack( Anim::Slash1, 2, &m_model ) );
+		m_actArray[int( Act::JumpAtk )].reset( new JumpAtk() );
 		m_actArray[int( Act::Walker )].reset( new Walker() );
 		m_actArray[int( Act::Guard )].reset( new Guard() );
 		m_actArray[int( Act::Roll )].reset( new Roll() );

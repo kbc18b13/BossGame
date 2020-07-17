@@ -39,6 +39,10 @@ public:
 		m_weapon.SetSound( sound );
 	}
 
+	bool IsAttacking() const{
+		return m_weapon.IsAttacking();
+	}
+
 private:
 
 	Bone* m_hand; //è‚Ìƒ{[ƒ“

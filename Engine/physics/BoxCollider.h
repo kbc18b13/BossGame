@@ -29,8 +29,9 @@ public:
 		return shape;
 	}
 
-	void SetLocalScale( const CVector3& scale ) override{
+	void SetLocalScale( const CVector3& scale, btCollisionObject* updateAABB = nullptr ) override{
 		shape->setLocalScaling( scale );
+		if( updateAABB ) g_physics.UpdateSingleAABB( updateAABB );
 	}
 
 private:

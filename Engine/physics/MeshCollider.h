@@ -35,8 +35,9 @@ public:
 		return m_meshShape.get();
 	}
 
-	void SetLocalScale( const CVector3& scale ) override {
+	void SetLocalScale( const CVector3& scale, btCollisionObject* updateAABB = nullptr ) override {
 		m_meshShape->setLocalScaling( scale );
+		if( updateAABB ) g_physics.UpdateSingleAABB( updateAABB );
 	}
 
 private:

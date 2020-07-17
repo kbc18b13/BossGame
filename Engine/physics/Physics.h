@@ -49,8 +49,9 @@ public:
 	/// <summary>
 	/// 対象のAABBをアップデートする。コリジョンシェイプのスケーリングを変更した後に呼ばなければならない。
 	/// </summary>
-	void UpdateSingleAABB( RigidBody& rb );
-	void UpdateSingleAABB( ICollision& cl );
+	void UpdateSingleAABB( btCollisionObject* cl ){
+		dynamicWorld->updateSingleAabb( cl );
+	}
 
 	void ConvexSweepTest(
 		const btConvexShape* castShape,

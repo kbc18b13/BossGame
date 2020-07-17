@@ -66,6 +66,7 @@
     <ClCompile Include="Game\Ground\ClearDoor.cpp" />
     <ClCompile Include="Game\Scene\Stage2.cpp" />
     <ClCompile Include="Game\Scene\StageGate.cpp" />
+    <ClCompile Include="Game\Actor\Player\Act\JumpAtk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -124,6 +125,7 @@
     <ClInclude Include="Game\Ground\ClearDoor.h" />
     <ClInclude Include="Game\Scene\Stage2.h" />
     <ClInclude Include="Game\Scene\StageGate.h" />
+    <ClInclude Include="Game\Actor\Player\Act\JumpAtk.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">

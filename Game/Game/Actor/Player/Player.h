@@ -40,12 +40,16 @@ public:
 		Guard,
 		Roll,
 		Damage,
+		Jump,
+		JumpAtkL,
+		JumpAtkH,
 		Num,
 	};
 
 	enum class Act{
 		Walker,
 		Slash,
+		JumpAtk,
 		Guard,
 		Roll,
 		Damage,

@@ -80,6 +80,10 @@ public:
 		return &m_rigidBody;
 	}
 
+	void* GetUserPointer() const{
+		return m_rigidBody.GetBody()->getUserPointer();
+	}
+
 	/// <summary>
 	/// アクティブかどうかを設定
 	/// </summary>

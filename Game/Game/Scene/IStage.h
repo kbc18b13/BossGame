@@ -24,7 +24,7 @@ public:
 
 	virtual void SetStageStencilRef(int ref) = 0;
 protected:
-	Player* player;
+	Player* player = nullptr;
 	std::vector<Actor*> enemyArray;
 };
 

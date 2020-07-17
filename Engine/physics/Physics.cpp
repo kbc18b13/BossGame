@@ -96,14 +96,6 @@ void PhysicsWorld::RemoveCollision(ICollision & cl) {
 	dynamicWorld->removeCollisionObject(cl.GetBody());
 }
 
-void PhysicsWorld::UpdateSingleAABB( RigidBody & rb ){
-	dynamicWorld->updateSingleAabb( rb.GetBody() );
-}
-
-void PhysicsWorld::UpdateSingleAABB( ICollision & cl ){
-	dynamicWorld->updateSingleAabb( cl.GetBody() );
-}
-
 void PhysicsWorld::DrawLine(const CVector3& from, const CVector3& to, const CVector3& color){
 	st_debugWire->drawLine( from, to, color );
 }

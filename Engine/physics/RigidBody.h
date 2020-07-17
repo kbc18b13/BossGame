@@ -27,5 +27,9 @@ public:
 	{
 		return rigidBody;
 	}
+
+	const btRigidBody* GetBody() const{
+		return rigidBody;
+	}
 };
 

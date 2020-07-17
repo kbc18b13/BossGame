@@ -34,6 +34,7 @@ void ActorHitCollision::Init(ICollider & collider, EnCollisionAttr target, void*
     m_collision.SetUserPointer(userPointer);
     g_physics.AddCollision(m_collision);
     contactCB.setTarget(target);
+	contactCB.m_collisionFilterGroup = btCollisionObject::CF_NO_CONTACT_RESPONSE;
 }
 
 std::vector<Actor*>& ActorHitCollision::ContactTest() {

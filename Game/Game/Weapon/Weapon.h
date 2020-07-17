@@ -41,6 +41,10 @@ public:
 		m_sound = sound;
 	}
 
+	bool IsAttacking() const{
+		return m_isAttack;
+	}
+
 private:
 	ActorHitCollision m_collision;
 
