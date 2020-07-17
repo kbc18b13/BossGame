@@ -241,6 +241,7 @@
     <MeshContentTask Include="Assets\modelData\Shield.fbx" />
     <MeshContentTask Include="Assets\modelData\Skeleton.fbx" />
     <MeshContentTask Include="Assets\modelData\SkeSword.fbx" />
+    <MeshContentTask Include="Assets\modelData\sky.fbx" />
     <MeshContentTask Include="Assets\modelData\Slime.fbx" />
     <MeshContentTask Include="Assets\modelData\StageGatge.fbx" />
     <MeshContentTask Include="Assets\modelData\StageGatgeBOX.fbx" />
