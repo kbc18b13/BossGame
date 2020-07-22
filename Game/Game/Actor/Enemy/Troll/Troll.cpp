@@ -106,7 +106,7 @@ void Troll::Update() {
 }
 
 void Troll::OnDeath(){
-	m_stage->EndStage();
+	m_deathFunc();
 	m_model.SetActive( false );
 	m_armCollision.SetActive( false );
 	m_bodyCollision.SetActive( false );

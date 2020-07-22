@@ -4,7 +4,10 @@
 
 StageGate::StageGate(){}
 
-StageGate::~StageGate(){}
+StageGate::~StageGate(){
+	DeleteGO( m_AStage );
+	DeleteGO( m_BStage );
+}
 
 void StageGate::Init( IStage * now, IStage * next, const CVector3 & pos, const CQuaternion& rot ){
 	SetAStage( now );

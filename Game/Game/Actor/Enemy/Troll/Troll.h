@@ -20,6 +20,10 @@ public:
 	void Update() override;
 	void OnDeath() override;
 
+	void SetDeathFunc( std::function<void()> func ){
+		m_deathFunc = func;
+	}
+
 	//—ñ‹“
 	enum class AnimState{
 		Walk,
@@ -57,4 +61,6 @@ private:
 
 	BarGauge m_hpBar; //HPƒo[
 	FontRender m_nameFont;
+
+	std::function<void()> m_deathFunc;
 };

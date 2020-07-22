@@ -61,8 +61,9 @@ bossTobira( L"Assets/modelData/BossTobira.cmo" )
 
 		} else if( wcscmp( objData.name, L"BossRoom" ) == 0 ){
 			std::function<void()> f = [&](){
-				Actor* t = NewGO<Troll>( 0, this );
+				Troll* t = NewGO<Troll>( 0, this );
 				t->SetPos( trollPos );
+				t->SetDeathFunc( [&](){bossTobira.StartClear(); } );
 				enemyArray.push_back( t );
 
 				m_bgm.Stop();
@@ -102,6 +103,7 @@ Stage1::~Stage1(){
 	if( bossRoomTrigger )
 		DeleteGO( bossRoomTrigger );
 	DeleteGO( bigDoor );
+	DeleteGO( stageGate );
 }
 
 void Stage1::Update(){
@@ -128,8 +130,7 @@ void Stage1::Update(){
 }
 
 void Stage1::EndStage(){
-	//isEndStage = true;
-	bossTobira.StartClear();
+	isEndStage = true;
 }
 
 void Stage1::SetStageStencilRef( int ref ){
