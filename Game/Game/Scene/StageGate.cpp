@@ -4,7 +4,7 @@
 
 StageGate::StageGate(){}
 
-StageGate::~StageGate(){
+void StageGate::Destroy(){
 	DeleteGO( m_AStage );
 	DeleteGO( m_BStage );
 }

@@ -34,7 +34,9 @@ private:
 class Stage1 : public IStage {
 public:
 	Stage1();
-	~Stage1();
+
+	void Destroy();
+
 	void Update();
 
 	void EndStage() override;

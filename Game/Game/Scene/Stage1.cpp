@@ -99,7 +99,7 @@ bossTobira( L"Assets/modelData/BossTobira.cmo" )
 	Fade::Out();
 }
 
-Stage1::~Stage1(){
+void Stage1::Destroy(){
 	if( bossRoomTrigger )
 		DeleteGO( bossRoomTrigger );
 	DeleteGO( bigDoor );

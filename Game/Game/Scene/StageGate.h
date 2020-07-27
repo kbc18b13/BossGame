@@ -6,7 +6,8 @@ class IStage;
 class StageGate : public IGameObject{
 public:
 	StageGate();
-	~StageGate();
+
+	void Destroy();
 
 	void Init( IStage* now, IStage* next, const CVector3& pos, const CQuaternion& rot );
 

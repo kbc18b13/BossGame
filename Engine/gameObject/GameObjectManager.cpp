@@ -63,7 +63,10 @@ void GameObjectManager::Update() {
 }
 
 void GameObjectManager::DeleteGO(IGameObject * go) {
-	if(go&&!appEnd)go->isRemoved = true;
+	if( !appEnd && go && !go->isRemoved ){
+		go->isRemoved = true;
+		go->Destroy();
+	}
 }
 
 void InitGameObjectManager(UINT defaultArraySize, UINT defaultPrioSize) {
