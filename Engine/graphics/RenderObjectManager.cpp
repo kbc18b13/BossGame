@@ -25,7 +25,7 @@ void RenderObjectManager::Init(){
     
 	//深度ステンシルステート
 	{
-		//2D用深度無しステート
+		//2D用深度無しステンシル無しステート
 		D3D11_DEPTH_STENCIL_DESC dpDesc{};
 		dpDesc.DepthEnable = false;
 		dpDesc.StencilEnable = false;
@@ -77,45 +77,38 @@ void RenderObjectManager::Init(){
 void RenderObjectManager::Render(){
     ID3D11DeviceContext* dc = g_graphicsEngine->GetD3DDeviceContext();
 
-	//ブレンドステートをデフォルトに戻す。
-	dc->OMSetBlendState( nullptr, nullptr, 0xffffffff );
-
     //シャドウマップの描画。
+	dc->OMSetBlendState( nullptr, nullptr, 0xffffffff );
     m_shadowMap.RenderToShadowMap( dc );
 
     //描画先を通常ターゲットへ。
     m_defaultTarget.SetToContext( dc );
     m_defaultTarget.Clear(CVector4(0, 54.f/255, 106.f/255, 1));
 	
-	////ステンシルスバッファを描画
+	//ステンシルスバッファを描画
 	dc->OMSetDepthStencilState( m_stencilStateW.Get(), 1 );
 	m_stencilRender.Render();
 
-	////深度ステンシルステートを設定
-	dc->OMSetDepthStencilState( m_stencilStateR.Get(), 0 );
+	//空を描画
+	m_skyRender.Render();
 
     //通常描画オブジェクトの描画
+	dc->OMSetDepthStencilState( m_stencilStateR.Get(), 0 );
     m_defaultRender.Render();
 
-	//アルファ有効ブレンドに変更。
-	dc->OMSetBlendState( m_alphaBlend.Get(), nullptr, 0xffffffff );
-
-
 	//半透明描画オブジェクトの描画
+	dc->OMSetBlendState( m_alphaBlend.Get(), nullptr, 0xffffffff );
 	m_translucentRender.Render();
 
-	g_graphicsEngine->ResetDepthStencilState();
-
 	//エフェクト描画
+	g_graphicsEngine->ResetDepthStencilState();
 	g_effectManager->Draw();
 
     //物理ワイヤーフレーム
     g_physics.DebugDraw();
 
-	//ブレンドステートをデフォルトに戻す。
-	dc->OMSetBlendState( nullptr, nullptr, 0xffffffff );
-
 	//ブルーム
+	dc->OMSetBlendState( nullptr, nullptr, 0xffffffff );
 	m_bloom.SetSource( m_defaultTarget.GetRenderTargetSRV() );
 	m_bloom.SetTarget( &m_defaultTarget );
 	m_bloom.ApplyEffect( m_postEffect );
@@ -126,19 +119,15 @@ void RenderObjectManager::Render(){
     //メインターゲットをフレームバッファへ
     m_postEffect.DrawScreenRect(m_defaultTarget.GetRenderTargetSRV() , (ID3D11PixelShader*)m_monoShader.GetBody());
 
-	//アルファ有効ブレンドに変更。
-	dc->OMSetBlendState( m_alphaBlend.Get(), nullptr, 0xffffffff );
-	//深度ステートをリセット
-	g_graphicsEngine->ResetDepthStencilState();
-
     //HUD描画オブジェクトの描画。
+	dc->OMSetBlendState( m_alphaBlend.Get(), nullptr, 0xffffffff );
+	g_graphicsEngine->ResetDepthStencilState();
     m_HUDRender.Render();
 
 	if( m_fadeRender )
 		m_fadeRender->Render();
 
-	//深度ステートをデフォルトに戻す
+	//ステートをデフォルトに戻す
 	dc->OMSetDepthStencilState( nullptr, 0 );
-	//ブレンドステートをデフォルトに戻す。
 	dc->OMSetBlendState( nullptr, nullptr, 0 );
 }

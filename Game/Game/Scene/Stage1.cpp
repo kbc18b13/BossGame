@@ -79,7 +79,7 @@ bossTobira( L"Assets/modelData/BossTobira.cmo" )
 		return true;
 	} );
 
-	m_wall.Init( L"Assets/modelData/FirstStageWall.cmo" );
+	m_wall.Init( L"Assets/modelData/FirstStageWall.cmo", COFlag::CF_Ray);
 
 	opener.SetDoor( bigDoor );
 
@@ -91,6 +91,8 @@ bossTobira( L"Assets/modelData/BossTobira.cmo" )
 
 	g_graphicsEngine->GetAmbientLight().SetColor( { 0.5f,0.5f,0.5f,1 } );
 	g_graphicsEngine->GetAmbientLight().Apply();
+
+	sky.Init(L"Assets/modelData/sky.cmo");
 
 	m_bossBGM.Init( L"Assets/sound/bossBGM.wav" );
 	m_bgm.Init( L"Assets/sound/stageBGM.wav" );
@@ -138,6 +140,7 @@ void Stage1::SetStageStencilRef( int ref ){
 	bossTobira.GetColModel().GetModel()->GetModel().SetStencilRef( ref );
 	carriage.GetModel()->GetModel().SetStencilRef( ref );
 	bigDoor->SetStencilRef(ref);
+	sky.SetStencilRef( ref );
 	for( Actor* a : enemyArray ){
 		a->SetStencilRef( ref );
 	}

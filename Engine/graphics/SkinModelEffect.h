@@ -6,6 +6,7 @@
 enum class EnRenderMode {
     Default,
     ShadowMap,
+	Sky,
     Num
 };
 
@@ -21,6 +22,10 @@ protected:
 
     Shader m_vsShadow;		//シャドウマップ生成用の頂点シェーダー。
     Shader m_psShadow;		//シャドウマップ生成用のピクセルシェーダー。
+
+	Shader m_vsSky;//空用頂点シェーダー
+	Shader m_psSky; //空用ピクセルシェーダー
+
 	bool isSkining;
 	ID3D11ShaderResourceView* m_albedoTex = nullptr;
 	ID3D11ShaderResourceView* m_specularTex = nullptr;
@@ -69,6 +74,8 @@ public:
 	{
         m_vsShader.Load("Assets/shader/model.fx", "VSMain", Shader::EnType::VS);
         m_vsShadow.Load("Assets/shader/shadowMap.fx", "VSMain", Shader::EnType::VS);
+		m_vsSky.Load( "Assets/shader/sky.fx", "VSSky", Shader::EnType::VS );
+		m_psSky.Load( "Assets/shader/sky.fx", "PSSky", Shader::EnType::PS );
         isSkining = false;
 	}
 };

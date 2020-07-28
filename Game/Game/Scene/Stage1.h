@@ -5,6 +5,8 @@
 #include "IStage.h"
 #include "WayPoint/WayPointManager.h"
 #include "Ground/ClearDoor.h"
+#include "Ground/SkyBox.h"
+
 class Troll;
 class Player;
 class StageGate;
@@ -59,6 +61,9 @@ private:
 	ClearDoor bossTobira;
 	CollisionModel carriage;
 	DoorOpener opener;
+	SkyBox sky;
+
+
 	BigDoor* bigDoor = nullptr;
 
 	StageGate* stageGate;

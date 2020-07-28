@@ -28,6 +28,7 @@
 //BulletPhysics
 #include "btBulletDynamicsCommon.h"
 #include "BulletCollision\CollisionDispatch\btGhostObject.h"
+using COFlag = btCollisionObject::CollisionFlags;
 
 //DirectXTKのインクルードファイル。
 #include "DirectXTK/Inc/Model.h"

@@ -13,8 +13,8 @@ bool CanGo( CVector3 from, CVector3 to){
 	from.y += upCorrect;
 	to.y += upCorrect;
 	btCollisionWorld::ClosestRayResultCallback cb( from, to );
-	cb.m_collisionFilterGroup = btCollisionObject::CollisionFlags::CF_Ray;
-	cb.m_collisionFilterMask = btCollisionObject::CollisionFlags::CF_Ground;
+	cb.m_collisionFilterGroup = COFlag::CF_Ray;
+	cb.m_collisionFilterMask = COFlag::CF_Ground;
 
 	g_physics.GetDynamicWorld()->rayTest( from, to, cb );
 

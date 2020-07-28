@@ -29,7 +29,7 @@ public:
 	*@param[in]	filePath		ロードするcmoファイルのファイルパス。
 	*@param[in] enFbxUpAxis		fbxの上軸。デフォルトはenFbxUpAxisZ。
 	*/
-	void Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis = enFbxUpAxisZ);
+	void Init(const wchar_t* filePath, EnFbxUpAxis enFbxUpAxis = enFbxUpAxisY);
 	/*!
 	*@brief	モデルをワールド座標系に変換するためのワールド行列を更新する。
 	*@param[in]	position	モデルの座標。
@@ -46,6 +46,11 @@ public:
 		m_worldMatrix = worldMat;
 		m_skeleton.Update(m_worldMatrix);
 	}
+
+	CMatrix GetWorldMatrix() const{
+		return m_worldMatrix;
+	}
+
 	/*!
 	*@brief	ボーンを検索。
 	*@param[in]		boneName	ボーンの名前。

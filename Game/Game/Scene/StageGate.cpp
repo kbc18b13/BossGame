@@ -61,18 +61,36 @@ void StageGate::StencilUpdate(){
 
 	float dot = gateToC.Dot( m_toB );
 
-	float thresholdCos = cosf(CMath::DegToRad( 10 ));
+	float threshold = g_camera3D.GetNear();
 
-	if( dot < -thresholdCos ){
-		m_AStage->SetStageStencilRef( 0 );
-		m_BStage->SetStageStencilRef( 1 );
+	bool gateModelActive = true;
 
-	} else if( dot > thresholdCos ){
-		m_AStage->SetStageStencilRef( 1 );
-		m_BStage->SetStageStencilRef( 0 );
+	//カメラ視点がゲートのどちら側にあるかを判定。
+	if( dot < -threshold){
+		ShowA();
+	} else if( dot > threshold){
+		ShowB();
 
 	} else{
-		m_AStage->SetStageStencilRef( 0 );
-		m_BStage->SetStageStencilRef( 0 );
+		//カメラがゲートと近い位置にある場合、カメラがゲートのどちら側を向いているかを判定。
+		if( m_toB.Dot(g_camera3D.GetFront()) < 0 ){
+			ShowA();
+		} else{
+			ShowB();
+		}
+		//カメラがゲートと近い位置にある場合、ステンシルへの書き込みは行わない。
+		gateModelActive = false;
 	}
+
+	m_gateModel.SetActive( gateModelActive );
+}
+
+void StageGate::ShowA(){
+	m_AStage->SetStageStencilRef( 0 );
+	m_BStage->SetStageStencilRef( 1 );
+}
+
+void StageGate::ShowB(){
+	m_AStage->SetStageStencilRef( 1 );
+	m_BStage->SetStageStencilRef( 0 );
 }

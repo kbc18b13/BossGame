@@ -164,18 +164,18 @@ void ModelMesh::PrepareForRendering(
         if (pmalpha)
         {
             blendState = states.AlphaBlend();
-            depthStencilState = states.DepthRead();
+            //depthStencilState = states.DepthRead();
         }
         else
         {
             blendState = states.NonPremultiplied();
-            depthStencilState = states.DepthRead();
+            //depthStencilState = states.DepthRead();
         }
     }
     else
     {
         blendState = states.Opaque();
-        depthStencilState = states.DepthDefault();
+        //depthStencilState = states.DepthDefault();
     }
 
     //deviceContext->OMSetBlendState(blendState, nullptr, 0xFFFFFFFF);

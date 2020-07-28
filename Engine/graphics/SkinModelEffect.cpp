@@ -30,5 +30,10 @@ void __cdecl ModelEffect::Apply(ID3D11DeviceContext* deviceContext)
         deviceContext->VSSetShader((ID3D11VertexShader*)m_vsShadow.GetBody(), NULL, 0);
         deviceContext->PSSetShader((ID3D11PixelShader*) m_psShadow.GetBody(), NULL, 0);
         break;
+	case EnRenderMode::Sky:
+		deviceContext->PSSetShaderResources( enSkinModelSRVReg_AlbedoTexture, 1, &m_albedoTex );
+		deviceContext->VSSetShader( (ID3D11VertexShader*)m_vsSky.GetBody(), NULL, 0 );
+		deviceContext->PSSetShader( (ID3D11PixelShader*)m_psSky.GetBody(), NULL, 0 );
+		break;
     }
 }

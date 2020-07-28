@@ -118,10 +118,9 @@ public:
 
 	BT_DECLARE_ALIGNED_ALLOCATOR();
 
-	enum CollisionFlags
-	{
-		CF_STATIC_OBJECT= 1,
-		CF_KINEMATIC_OBJECT= 2,
+	enum CollisionFlags{
+		CF_STATIC_OBJECT = 1,
+		CF_KINEMATIC_OBJECT = 2,
 		CF_NO_CONTACT_RESPONSE = 4,
 		CF_CUSTOM_MATERIAL_CALLBACK = 8,//this allows per-triangle material (friction/restitution)
 		CF_CHARACTER_OBJECT = 16,
@@ -131,8 +130,9 @@ public:
 		//以下ユーザー定義
 		CF_Enemy = 128,
 		CF_Player = 256,
-		CF_Ground  = 512,
-		CF_Ray = 1024
+		CF_Ground = 512,
+		CF_Ray = 1024,
+		CF_Camera = 2048,
 	};
 
 	enum	CollisionObjectTypes

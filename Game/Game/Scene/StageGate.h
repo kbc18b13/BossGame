@@ -1,5 +1,6 @@
 #pragma once
 #include "Ground/TriggerCollision.h"
+#include "Ground/GhostCollision.h"
 
 class IStage;
 
@@ -23,6 +24,8 @@ public:
 
 private:
 	void StencilUpdate();
+	void ShowA();
+	void ShowB();
 
 	CVector3 m_pos;
 	CVector3 m_toB;

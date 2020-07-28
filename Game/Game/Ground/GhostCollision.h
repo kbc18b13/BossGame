@@ -7,8 +7,8 @@ public:
 	GhostCollision();
 	~GhostCollision();
 
-	void Init( const wchar_t* filepath , const CVector3& pos = CVector3::Zero(),
-			   const CQuaternion& rot = CQuaternion::Identity());
+	void Init( const wchar_t* filepath, short flag, const CVector3& pos = CVector3::Zero(),
+			   const CQuaternion& rot = CQuaternion::Identity() );
 
 private:
 	CollisionObject m_collision;

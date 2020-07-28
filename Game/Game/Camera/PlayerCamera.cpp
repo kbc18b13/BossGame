@@ -15,7 +15,7 @@ void PlayerCamera::UpdateGCamera( const CVector3& pos, const CVector3& look){
 	btCollisionWorld::ClosestRayResultCallback cb(look, pos);
 	cb.m_collisionFilterMask = 0xffffffff;
 	cb.m_collisionFilterMask ^= btCollisionObject::CollisionFlags::CF_Player;
-
+	cb.m_collisionFilterGroup = btCollisionObject::CollisionFlags::CF_Camera;
 
 	g_physics.GetDynamicWorld()->rayTest( look, pos, cb );
 

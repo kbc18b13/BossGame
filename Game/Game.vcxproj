@@ -168,6 +168,7 @@
     <ClCompile Include="Game\Scene\Stage2.cpp" />
     <ClCompile Include="Game\Scene\StageGate.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\JumpAtk.cpp" />
+    <ClCompile Include="Game\Ground\SkyBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Ground\ClearDoor.h" />
@@ -227,6 +228,7 @@
     <ClInclude Include="Game\Scene\Stage2.h" />
     <ClInclude Include="Game\Scene\StageGate.h" />
     <ClInclude Include="Game\Actor\Player\Act\JumpAtk.h" />
+    <ClInclude Include="Game\Ground\SkyBox.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\BigDoor.fbx" />
@@ -242,6 +244,7 @@
     <MeshContentTask Include="Assets\modelData\Skeleton.fbx" />
     <MeshContentTask Include="Assets\modelData\SkeSword.fbx" />
     <MeshContentTask Include="Assets\modelData\sky.fbx" />
+    <MeshContentTask Include="Assets\modelData\sky2.fbx" />
     <MeshContentTask Include="Assets\modelData\Slime.fbx" />
     <MeshContentTask Include="Assets\modelData\StageGatge.fbx" />
     <MeshContentTask Include="Assets\modelData\StageGatgeBOX.fbx" />

@@ -67,6 +67,7 @@
     <ClCompile Include="Game\Scene\Stage2.cpp" />
     <ClCompile Include="Game\Scene\StageGate.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\JumpAtk.cpp" />
+    <ClCompile Include="Game\Ground\SkyBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -126,6 +127,7 @@
     <ClInclude Include="Game\Scene\Stage2.h" />
     <ClInclude Include="Game\Scene\StageGate.h" />
     <ClInclude Include="Game\Actor\Player\Act\JumpAtk.h" />
+    <ClInclude Include="Game\Ground\SkyBox.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">
@@ -150,6 +152,7 @@
     <MeshContentTask Include="Assets\modelData\StageGatgeBOX.fbx" />
     <MeshContentTask Include="Assets\modelData\GateOut.fbx" />
     <MeshContentTask Include="Assets\modelData\sky.fbx" />
+    <MeshContentTask Include="Assets\modelData\sky2.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Title_back.png" />

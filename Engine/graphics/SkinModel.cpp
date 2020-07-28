@@ -115,6 +115,7 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 
 	ID3D11DeviceContext* dc = g_graphicsEngine->GetD3DDeviceContext();
 
+	//ステンシル参照値の設定
 	{
 		ComPtr<ID3D11DepthStencilState> s;
 		UINT r;

@@ -27,13 +27,6 @@ Texture2D<float4> shadowMap4 : register(t7);
 sampler Sampler : register(s0);
 SamplerComparisonState compSampler : register(s2);
 
-SamplerState msan
-{
-    Filter = MIN_MAG_MIP_LINEAR;
-    AddressU = Wrap;
-    AddressV = Wrap;
-};
-
 /////////////////////////////////////////////////////////////
 // 定数バッファ。
 /////////////////////////////////////////////////////////////
