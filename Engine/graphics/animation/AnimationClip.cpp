@@ -5,7 +5,7 @@
 #include "stdafx.h"
 #include "graphics/animation/AnimationClip.h"
 #include "graphics/skeleton.h"
-
+#include <functional>
 
 AnimationClip::~AnimationClip()
 {

@@ -16,30 +16,28 @@ struct AnimClipHeader {
 };
 /*!
 *@brief	アニメーションイベント
-*@アニメーションイベントは未対応。
-* やりたかったら自分で実装するように。
 */
 struct AnimationEventData {
 	float	invokeTime;					//!<アニメーションイベントが発生する時間(単位:秒)
-	const char* eventName;
+	std::unique_ptr<char> eventName;
 
 	AnimationEventData(float time, char* name) : invokeTime(time), eventName(name) {}
 
 	AnimationEventData( const AnimationEventData& data ) = delete;
 
-	AnimationEventData( AnimationEventData&& data ) noexcept : invokeTime( data.invokeTime ), eventName( data.eventName ){
+	AnimationEventData( AnimationEventData&& data ) noexcept
+		: invokeTime( data.invokeTime ), eventName( std::move(data.eventName) ){
 		data.eventName = nullptr;
 	}
 
 	AnimationEventData& operator=( AnimationEventData&& data ) noexcept{
 		invokeTime = data.invokeTime;
-		eventName = data.eventName;
+		eventName = std::move( data.eventName);
 		data.eventName = nullptr;
 		return *this;
 	}
 
 	~AnimationEventData() {
-		delete[] eventName;
 	}
 };
 /*!
@@ -123,8 +121,18 @@ public:
 	const AnimationEventData& GetEvent(int index) const {
 		return m_eventList[index];
 	}
+
+	//アニメーションの通し番号を設定。Animationクラスが使用。
+	void SetNo(int no){
+		animNo = no;
+	}
+
+	int GetNo() const{
+		return animNo;
+	}
 private:
-	
+	int animNo = 0;
+
 	bool m_isLoop = false;									//!<ループフラグ。
 	std::vector<Keyframe*> m_keyframes;						//全てのキーフレーム。
 	std::vector<keyFramePtrList> m_keyFramePtrListArray;	//ボーンごとのキーフレームのリストを管理するための配列。

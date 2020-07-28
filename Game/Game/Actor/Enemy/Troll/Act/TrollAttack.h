@@ -8,12 +8,14 @@ namespace EnemySpace{
 class TrollAttack : public EnemyAct{
 public:
 	TrollAttack( ArmWeapon& arm );
+
+	void Init( SkinModelRender* model, CharaConEx* chara, Actor* target )override;
+
 	void SubStart(Actor* a) override;
 	void Update( Actor* a ) override;
 
 private:
 	bool m_isAttack = false;
-	float m_timer = 0.0f;
 	ArmWeapon& m_arm;
 };
 

@@ -83,7 +83,9 @@ void AnimationPlayController::NormalUpdate(float deltaTime, Animation* animation
 		const AnimationEventData& nowEvent = m_animationClip->GetEvent(m_nextEventNumber);
 		if (nowEvent.invokeTime < m_time) {
 			for (auto ev : animation->GetEventList()) {
-				if (strcmp(ev.name, nowEvent.eventName) == 0) {
+				int aNo = ev.animNo;
+				if ((aNo == -1 || aNo == m_animationClip->GetNo() ) &&
+					 strcmp(ev.name, nowEvent.eventName.get()) == 0) {
 					ev.func();
 				}
 			}
@@ -153,7 +155,7 @@ void AnimationPlayController::ReverseUpdate( float deltaTime, Animation * animat
 		const AnimationEventData& nowEvent = m_animationClip->GetEvent( m_nextEventNumber );
 		if( nowEvent.invokeTime >= m_time ){
 			for( auto ev : animation->GetEventList() ){
-				if( strcmp( ev.name, nowEvent.eventName ) == 0 ){
+				if( strcmp( ev.name, nowEvent.eventName.get() ) == 0 ){
 					ev.func();
 				}
 			}

@@ -8,8 +8,15 @@ namespace EnemySpace{
 
 TrollAttack::TrollAttack( ArmWeapon& arm ) : m_arm( arm ){}
 
+void TrollAttack::Init( SkinModelRender * model, CharaConEx * chara, Actor * target ){
+	EnemyAct::Init( model, chara, target );
+	model->AddEventFunc( "Attack", [&](){
+		m_arm.AttackStart();
+		m_isAttack = true;
+	}, int(AnimState::Attack) );
+}
+
 void TrollAttack::SubStart( Actor* t ){
-	m_timer = 1.5f;
 	m_isAttack = false;
 }
 
@@ -19,17 +26,11 @@ void TrollAttack::Update( Actor* t ){
 	m_model->Play( int( AnimState::Attack ), 0.2f );
 	m_model->SetPos( m_chara->Excecute( CVector3::Zero(), false ) );
 
-	if( m_timer > 1.0f ){
+	if( !m_isAttack ){
 		m_model->SetRot( Util::LookRotXZ( toP ) );
 	}
 
-	if( !m_isAttack && m_timer < 1.0f ){
-		m_arm.AttackStart();
-		m_isAttack = true;
-	}
-
-	m_timer -= GameTime::GetDeltaTime();
-	if( m_timer < 0 ){
+	if( !m_model->IsPlaying() ){
 		m_arm.AttackEnd();
 		ActEnd( int( ActState::Wait ) );
 	}

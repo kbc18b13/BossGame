@@ -156,8 +156,8 @@ public:
 	/// <summary>
 	/// イベントファンクションを設定
 	/// </summary>
-	void AddEventFunc( const char* name,const std::function<void()>& func ){
-		m_animation.AddEventFunc( name, func );
+	void AddEventFunc( const char* name, const std::function<void()>& func, int animNo = -1){
+		m_animation.AddEventFunc( name, func, animNo);
 	}
 
 	//スペキュラマップを設定

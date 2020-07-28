@@ -19,7 +19,8 @@ class Animation{
 	struct EventFunc{
 		const char* name;
 		std::function<void()> func;
-		EventFunc( const char* n, std::function<void()> f ) : name( n ), func( f ){}
+		int animNo;
+		EventFunc( const char* n, std::function<void()> f , int animNo) : name( n ), func( f ), animNo(animNo){}
 	};
 public:
 	Animation();
@@ -33,8 +34,8 @@ public:
 	void Init( SkinModel& skinModel, AnimationClip animClipList[], int numAnimClip );
 
 
-	void AddEventFunc( const char* name, std::function<void()> func ){
-		m_eventFuncList.emplace_back( name, func );
+	void AddEventFunc( const char* name, std::function<void()> func, int animNo = -1){
+		m_eventFuncList.emplace_back( name, func , animNo);
 	}
 
 	const std::vector<EventFunc>& GetEventList(){

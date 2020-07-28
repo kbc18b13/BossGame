@@ -31,6 +31,7 @@ void Animation::Init(SkinModel& skinModel, AnimationClip animClipList[], int num
 	m_skeleton = &skinModel.GetSkeleton();
 
 	for (int i = 0; i < numAnimClip; i++) {
+		animClipList[i].SetNo( i );
 		m_animationClips.push_back(&animClipList[i]);
 	}
 	for (auto& ctr : m_animationPlayController) {
