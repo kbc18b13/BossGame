@@ -21,6 +21,7 @@ Troll::Troll(IStage* stage) : Actor(100, stage ){
 	{
 		m_animClip[int(AnimState::Walk)].Load(L"Assets/animData/Troll_Walk.tka", true);
 		m_animClip[int(AnimState::Attack)].Load(L"Assets/animData/Troll_Attack.tka", false);
+		m_animClip[int( AnimState::Attack2 )].Load( L"Assets/animData/Troll_Attack2.tka", false );
 		m_animClip[int(AnimState::JumpUp)].Load(L"Assets/animData/Troll_Jump.tka", false);
 		m_animClip[int(AnimState::JumpDown)].Load(L"Assets/animData/Troll_Fall.tka", false);
 		m_animClip[int(AnimState::Idle)].Load(L"Assets/animData/Troll_Idle.tka", true);

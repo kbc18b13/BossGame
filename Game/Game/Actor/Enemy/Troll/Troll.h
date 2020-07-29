@@ -28,6 +28,7 @@ public:
 	enum class AnimState{
 		Walk,
 		Attack,
+		Attack2,
 		JumpUp,
 		JumpDown,
 		Idle,

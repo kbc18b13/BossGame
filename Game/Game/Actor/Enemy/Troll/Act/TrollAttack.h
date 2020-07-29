@@ -13,9 +13,10 @@ public:
 
 	void SubStart(Actor* a) override;
 	void Update( Actor* a ) override;
+	void End( Actor* a ) override;
 
 private:
-	bool m_isAttack = false;
+	bool m_isSecond = false;
 	ArmWeapon& m_arm;
 };
 
