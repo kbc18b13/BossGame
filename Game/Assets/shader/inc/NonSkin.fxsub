@@ -1,0 +1,7 @@
+struct VSInputNonSkin
+{
+    float4 Position : SV_Position;			//頂点座標。
+    float3 Normal   : NORMAL;				//法線。
+    float3 Tangent  : TANGENT;				//接ベクトル。
+    float2 TexCoord : TEXCOORD0;			//UV座標。
+};

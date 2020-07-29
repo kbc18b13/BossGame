@@ -1,0 +1,59 @@
+//シャドウマップの数
+static const int shadowMapNum = 5;
+
+//カスケードシャドウマップ
+Texture2D<float4> shadowMap0 : register(t3);
+Texture2D<float4> shadowMap1 : register(t4);
+Texture2D<float4> shadowMap2 : register(t5);
+Texture2D<float4> shadowMap3 : register(t6);
+Texture2D<float4> shadowMap4 : register(t7);
+
+//深度比較サンプラー
+SamplerComparisonState compSampler : register(s2);
+
+//シャドウマップ用行列
+cbuffer ShadowCamera : register(b4) {
+    float4x4 shadowVP[shadowMapNum];
+}
+cbuffer ShadowCameraFar : register(b5) {
+    float4 shadowFar[(shadowMapNum+3)/4];
+}
+
+float CalcShadow(float4 shadowPos[shadowMapNum], float posW){
+     float shadow = 1;
+    
+    if(posW < shadowFar[0].x){
+        //プロジェクション行列を経た座標をテクスチャ座標に変換する。
+        float3 shadowPos2 = shadowPos[0].xyz / shadowPos[0].w;
+        shadowPos2.xy *= float2(0.5f, -0.5f);
+        shadowPos2.xy += 0.5f;
+        //シャドウマップと比較して影の強さを決める。(0が影、1がひなた)。
+        shadow = shadowMap0.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z - 0.003f);
+            
+    }else if(posW < shadowFar[0].y){
+        float3 shadowPos2 = shadowPos[1].xyz / shadowPos[1].w;
+        shadowPos2.xy *= float2(0.5f, -0.5f);
+        shadowPos2.xy += 0.5f;
+        shadow = shadowMap1.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z - 0.003f);
+            
+    }else if(posW < shadowFar[0].z){
+        float3 shadowPos2 = shadowPos[2].xyz / shadowPos[2].w;
+        shadowPos2.xy *= float2(0.5f, -0.5f);
+        shadowPos2.xy += 0.5f;
+        shadow = shadowMap2.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z - 0.003f);
+            
+    }else if(posW < shadowFar[0].w){
+        float3 shadowPos2 = shadowPos[3].xyz / shadowPos[3].w;
+        shadowPos2.xy *= float2(0.5f, -0.5f);
+        shadowPos2.xy += 0.5f;
+        shadow = shadowMap3.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z - 0.003f);
+            
+    }else if(posW < shadowFar[1].x){
+        float3 shadowPos2 = shadowPos[4].xyz / shadowPos[4].w;
+        shadowPos2.xy *= float2(0.5f, -0.5f);
+        shadowPos2.xy += 0.5f;
+        shadow = shadowMap4.SampleCmp(compSampler, shadowPos2.xy, shadowPos2.z - 0.003f);
+    }
+    
+    return shadow;
+}

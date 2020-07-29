@@ -1,0 +1,29 @@
+//ボーン行列
+StructuredBuffer<float4x4> boneMatrix : register(t1);
+
+//スキンありモデルの頂点構造体。
+struct VSInputSkin
+{
+    float4 Position : SV_Position;			//頂点座標。
+    float3 Normal   : NORMAL;				//法線。
+    float2 TexCoord	: TEXCOORD0;			//UV座標。
+    float3 Tangent	: TANGENT;				//接ベクトル。
+    uint4  Indices  : BLENDINDICES0;		//この頂点に関連付けされているボーン番号。x,y,z,wの要素に入っている。4ボーンスキニング。
+    float4 Weights  : BLENDWEIGHT0;			//この頂点に関連付けされているボーンへのスキンウェイト。x,y,z,wの要素に入っている。4ボーンスキニング。
+};
+
+//スキン行列を計算。
+float4x4 CalcSkinMatrix(VSInputSkin In)
+{
+	float4x4 skinning = 0;	
+	float w = 0.0f;
+	[unroll]
+    for (int i = 0; i < 3; i++)
+    {
+        skinning += boneMatrix[In.Indices[i]] * In.Weights[i];
+        w += In.Weights[i];
+    }
+    
+    skinning += boneMatrix[In.Indices[3]] * (1.0f - w);
+    return skinning;
+}
