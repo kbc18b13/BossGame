@@ -128,6 +128,7 @@
     <ClInclude Include="graphics\CascadePart.h" />
     <ClInclude Include="Effekseer\Effect.h" />
     <ClInclude Include="math\VecOpInc.h" />
+    <ClInclude Include="math\CVecVariable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="character\CharacterController.cpp">

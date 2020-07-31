@@ -181,6 +181,7 @@
     <ClInclude Include="HID\Pad.h" />
     <ClInclude Include="level\Level.h" />
     <ClInclude Include="level\MapChip.h" />
+    <ClInclude Include="math\CVecVariable.h" />
     <ClInclude Include="math\kMath.h" />
     <ClInclude Include="math\Matrix.h" />
     <ClInclude Include="math\Pow.h" />

@@ -1,386 +1,185 @@
 #pragma once
 #include "kMath.h"
-
+#include "CVecVariable.h"
 
 class CMatrix;
 
-class CVector2{
+template<int N>
+class CVector : public CVecVariable<N>{
 public:
-	static constexpr char This_is_Vector = 0;
+	CVector(){}
+	CVector(const CVecVariable<N>& value) : CVecVariable(value){}
+	CVector(const CVector<N>& vec) : CVecVariable( vec ){}
 
-	CVector2() : x( 0 ), y( 0 ){}
-
-	CVector2( float x, float y ) : x( x ), y( y ){}
-
-	CVector2( const CVector2& v ) : x( v.x ), y( v.y ){}
+	//XMVECTORに変換
+	DirectX::XMVECTOR toXM() const{
+		return LoadXM<N>(this->vec);
+	}
 
 	//代入演算子
-	CVector2& operator=( const CVector2& v ){
-		this->x = v.x;
-		this->y = v.y;
+	const CVector<N>& operator=( const CVector<N>& v ){
+		this->vec = v.vec;
+	}
+	//複合代入演算子
+	const CVector<N>& operator+=( const CVector<N>& param ){
+		DirectX::XMVECTOR r = LoadXM<N>( this->vec );
+		DirectX::XMVECTOR l = LoadXM<N>( param.vec );
+		DirectX::XMVECTOR a = DirectX::XMVectorAdd( r, l );
+		StoreXM<N>( &this->vec , a );
 		return *this;
 	}
-
-	union{
-		DirectX::XMFLOAT2 vec;
-		struct{ float x, y; };
-		float v[2];
-	};
-
-	//四則演算子と代入演算子の定義
-#define VEC_TYPE 2
-#include "VecOpInc.h"
-#undef VEC_TYPE
-
-	DirectX::XMVECTOR toXM() const{
-		return DirectX::XMLoadFloat2( &vec );
-	}
-
-	float LengthSq(){
-		return x * x + y * y;
-	}
-
-	float Length(){
-		return sqrt( LengthSq() );
-	}
-
-	float Dot( const CVector2& _v ){
-		return x * _v.x + y * _v.y;
-	}
-
-	void Normalize(){
-		*this /= Length();
-	}
-
-	//線形補間。
-	void Lerp( float t, const CVector2& v0, const CVector2& v1 ){
-		x = v0.x + ( v1.x - v0.x ) * t;
-		y = v0.y + ( v1.y - v0.y ) * t;
-	}
-	static CVector2 Zero(){
-		static const CVector2 zero = { 0.0f,  0.0f };
-		return zero;
-	}
-
-	static CVector2 One(){
-		static const CVector2 one = { 1.0f,  1.0f };
-		return one;
-	}
-};
-//ベクトル。
-class CVector3{
-public:
-	static constexpr char This_is_Vector = 0;
-
-	union{
-		DirectX::XMFLOAT3 vec;
-		float v[3];
-		struct{ float x, y, z; };
-	};
-
-public:
-	//四則演算子と代入演算子の定義
-#define VEC_TYPE 3
-#include "VecOpInc.h"
-#undef VEC_TYPE
-
-	//XMVECTORへの変換。
-	DirectX::XMVECTOR toXM() const{
-		return DirectX::XMLoadFloat3( &vec );
-	}
-
-	//btVector3への変換。
-	btVector3 toBT() const{
-		return btVector3( x, y, z );
-	}
-
-	//operator D3DXVECTOR3(void) { return s_cast<D3DXVECTOR3>(*this); }
-
-	//代入演算子。
-	CVector3& operator=( const CVector3& _v ){
-		vec = _v.vec;
+	const CVector<N>& operator-=( const CVector<N>& param ){
+		DirectX::XMVECTOR r = LoadXM<N>( this->vec );
+		DirectX::XMVECTOR l = LoadXM<N>( param.vec );
+		DirectX::XMVECTOR a = DirectX::XMVectorSubtract( r, l );
+		StoreXM<N>( &this->vec, a );
 		return *this;
 	}
-
-	CVector3& operator=( const btVector3& _v ){
-		x = _v.x(); y = _v.y(); z = _v.z();
+	const CVector<N>& operator*=( const float& param ){
+		DirectX::XMVECTOR r = LoadXM<N>( this->vec );
+		DirectX::XMVECTOR a = DirectX::XMVectorScale( r, param );
+		StoreXM<N>( &this->vec, a );
 		return *this;
 	}
-
-	//コンストラクタ。
-	CVector3() : x( 0 ), y( 0 ), z( 0 ){}
-
-	CVector3( float x, float y, float z ){
-		Set( x, y, z );
+	const CVector<N>& operator/=( const float& param ){
+		return *this *= (1.0f / param);
 	}
 
-	CVector3( const btVector3& v ){
-		Set( v.x(), v.y(), v.z() );
-	}
-
-	//線形補間。
-	void Lerp( float t, const CVector3& v0, const CVector3& v1 ){
-		DirectX::XMVECTOR _v = DirectX::XMVectorLerp(
-			DirectX::XMLoadFloat3( &v0.vec ),
-			DirectX::XMLoadFloat3( &v1.vec ),
-			t );
-		DirectX::XMStoreFloat3( &vec, _v );
-	}
-	template<class TVector>
-	void CopyTo( TVector& dst ) const{
-		dst.x = x;
-		dst.y = y;
-		dst.z = z;
-	}
-	//ベクトルの各要素を設定。
-	void Set( float _x, float _y, float _z ){
-		vec.x = _x;
-		vec.y = _y;
-		vec.z = _z;
-	}
-	template<class TVector>
-	void Set( TVector& _v ){
-		Set( _v.x, _v.y, _v.z );
-	}
-	template<>
-	void Set( btVector3& _v ){
-		Set( _v.x(), _v.y(), _v.z() );
-	}
-
-	//内積。
-	float Dot( const CVector3& _v ) const{
-		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat3( &vec );
-		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat3( &_v.vec );
-		return DirectX::XMVector3Dot( xmv0, xmv1 ).m128_f32[0];
-	}
-	//外積。
-	void Cross( const CVector3& _v ){
-		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat3( &vec );
-		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat3( &_v.vec );
-		DirectX::XMVECTOR xmvr = DirectX::XMVector3Cross( xmv0, xmv1 );
-		DirectX::XMStoreFloat3( &vec, xmvr );
-	}
-	static CVector3 Cross( const CVector3& v0, const CVector3& v1 ){
-		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat3( &v0.vec );
-		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat3( &v1.vec );
-		DirectX::XMVECTOR xmvr = DirectX::XMVector3Cross( xmv0, xmv1 );
-		CVector3 temp;
-		DirectX::XMStoreFloat3( &temp.vec, xmvr );
+	//四則演算子
+	const CVector<N> operator+( const CVector<N>& param )const{
+		CVector<N> temp = *this;
+		temp += param;
 		return temp;
 	}
-	//長さを取得
-
-	float Length() const{
-		DirectX::XMVECTOR xmv = DirectX::XMLoadFloat3( &vec );
-		return DirectX::XMVector3Length( xmv ).m128_f32[0];
+	const CVector<N> operator-( const CVector<N>& param )const{
+		CVector<N> temp = *this;
+		temp -= param;
+		return temp;
 	}
-	//長さの二乗を取得
-
-	float LengthSq() const{
-		DirectX::XMVECTOR xmv = DirectX::XMLoadFloat3( &vec );
-		return DirectX::XMVector3LengthSq( xmv ).m128_f32[0];
+	const CVector<N> operator*( const float& param )const{
+		CVector<N> temp = *this;
+		temp *= param;
+		return temp;
 	}
-
-	//法線を正規化。
-	void Normalize(){
-		DirectX::XMVECTOR xmv = DirectX::XMLoadFloat3( &vec );
-		xmv = DirectX::XMVector3Normalize( xmv );
-		DirectX::XMStoreFloat3( &vec, xmv );
+	const CVector<N> operator/( const float& param )const{
+		CVector<N> temp = *this;
+		temp /= param;
+		return temp;
 	}
 
-	//最大値を設定。
-	void Max( const CVector3& vMax ){
-		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat3( &vec );
-		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat3( &vMax.vec );
-		DirectX::XMStoreFloat3( &vec, DirectX::XMVectorMax( xmv0, xmv1 ) );
+	//長さ
+	float Length(){
+		DirectX::XMVECTOR t = LoadXM<N>( this->vec );
+		DirectX::XMVECTOR a = XMVectorLength<N>( t );
+		return DirectX::XMVectorGetX( a );
 	}
-	//最小値を設定。
-	void Min( const CVector3& vMin ){
-		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat3( &vec );
-		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat3( &vMin.vec );
-		DirectX::XMStoreFloat3( &vec, DirectX::XMVectorMin( xmv0, xmv1 ) );
+	//長さの2乗
+	float LengthSq(){
+		DirectX::XMVECTOR t = LoadXM<N>( this->vec );
+		DirectX::XMVECTOR a = XMVectorLengthSq<N>( t );
+		return DirectX::XMVectorGetX( a );
 	}
-
-	//CVector2を生成
-	CVector2 xy() const{
-		return CVector2( x, y );
-	}
-	CVector2 xz() const{
-		return CVector2( x, z );
-	}
-	CVector2 yx() const{
-		return CVector2( y, x );
-	}
-	CVector2 yz() const{
-		return CVector2( y, z );
-	}
-	CVector2 zx() const{
-		return CVector2( z, x );
-	}
-	CVector2 zy() const{
-		return CVector2( z, y );
-	}
-
-public:
-	static CVector3 Zero(){
-		static const CVector3 zero = { 0.0f,  0.0f,  0.0f };
-		return zero;
-	}
-	static CVector3 Right(){
-		static const CVector3 right = { 1.0f,  0.0f,  0.0f };
-		return right;
-	}
-	static CVector3 Left(){
-		static const CVector3 left = { -1.0f,  0.0f,  0.0f };
-		return left;
-	}
-	static CVector3 Up(){
-		static const CVector3 up = { 0.0f,  1.0f,  0.0f };
-		return up;
-	}
-	static CVector3 Down(){
-		static const CVector3 down = { 0.0f, -1.0f,  0.0f };
-		return down;
-	}
-	static CVector3 Front(){
-		static const CVector3 front = { 0.0f,   0.0f,  1.0f };
-		return front;
-	}
-	static CVector3 Back(){
-		static const CVector3 back = { 0.0f,   0.0f, -1.0f };
-		return back;
-	}
-	static CVector3 AxisX(){
-		static const CVector3 axisX = { 1.0f,  0.0f,  0.0f };
-		return axisX;
-	}
-	static CVector3 AxisY(){
-		static const CVector3 axisY = { 0.0f,  1.0f,  0.0f };
-		return axisY;
-	}
-	static CVector3 AxisZ(){
-		static const CVector3 axisZ = { 0.0f,  0.0f,  1.0f };
-		return axisZ;
-	}
-	static CVector3 One(){
-		static const CVector3 one = { 1.0f, 1.0f, 1.0f };
-		return one;
-	}
-};
-
-//4要素のベクトルクラス。
-class CVector4{
-public:
-	static constexpr char This_is_Vector = 0;
-
-	union{
-		DirectX::XMFLOAT4 vec;
-		struct{ float x, y, z, w; };
-		float v[4];
-	};
-public:
-	//四則演算子と代入演算子の定義
-#define VEC_TYPE 4
-#include "VecOpInc.h"
-#undef VEC_TYPE
-
-	DirectX::XMVECTOR toXM() const{
-		return DirectX::XMLoadFloat4( &vec );
-	}
-
-	operator CVector3() const{
-		return CVector3( x, y, z );
-	}
-	//代入演算子。
-	CVector4& operator=( const CVector4& _v ){
-		vec = _v.vec;
-		return *this;
-	}
-
-	CVector4() : v{ 0,0,0,1 }{}
-	//コンストラクタ
-
-	CVector4( float x, float y, float z, float w ){
-		Set( x, y, z, w );
-	}
-
-	//コンストラクタ
-	//wには1.0が格納されます。
-	CVector4( const CVector3& v ){
-		Set( v );
-	}
-	//任意の値バージョン
-	CVector4( const CVector3& v , float _w){
-		x = v.x; y = v.y; z = v.z; w = _w;
-	}
-
-	//ベクトルの各要素を設定。
-	void Set( float _x, float _y, float _z, float _w ){
-		this->x = _x;
-		this->y = _y;
-		this->z = _z;
-		this->w = _w;
-	}
-	//法線を正規化。
-	void Normalize(){
-		DirectX::XMVECTOR xmv = DirectX::XMLoadFloat4( &vec );
-		xmv = DirectX::XMVector4Normalize( xmv );
-		DirectX::XMStoreFloat4( &vec, xmv );
-	}
-
-	//ベクトルを設定。
-	void Set( const CVector4& _v ){
-		*this = _v;
-	}
-
-	//ベクトルを設定。
-	//wには1.0が格納されます。
-	void Set( const CVector3& _v ){
-		this->x = _v.x;
-		this->y = _v.y;
-		this->z = _v.z;
-		this->w = 1.0f;
-	}
-
 	//内積
-	float Dot( const CVector4& _v ){
-		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat4( &vec );
-		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat4( &_v.vec );
-		return DirectX::XMVector4Dot( xmv0, xmv1 ).m128_f32[0];
+	float Dot( const CVector<N>& param ){
+		DirectX::XMVECTOR l = LoadXM<N>( this->vec );
+		DirectX::XMVECTOR r = LoadXM<N>( param.vec );
+		DirectX::XMVECTOR a = XMVectorDot<N>( l, r );
+		return DirectX::XMVectorGetX( a );
 	}
 
-	//長さを取得
-	float Length() const{
-		DirectX::XMVECTOR xmv = DirectX::XMLoadFloat4( &vec );
-		return DirectX::XMVector4Length( xmv ).m128_f32[0];
+//========================ここからベクトルの次元ごとに用意しなければならなかった関数=================
+private:
+	//XMFloatNからXMVECTORへの変換関数
+	template<int N>
+	static DirectX::XMVECTOR LoadXM(DirectX::XMFLOAT2& p){
+		return DirectX::XMLoadFloat2( &p );
 	}
-
-	//長さの二乗を取得
-	float LengthSq() const{
-		DirectX::XMVECTOR xmv = DirectX::XMLoadFloat4( &vec );
-		return DirectX::XMVector4LengthSq( xmv ).m128_f32[0];
+	template<>
+	static DirectX::XMVECTOR LoadXM<3>( DirectX::XMFLOAT3& p ){
+		return DirectX::XMLoadFloat3( &p );
 	}
-
-	//CVector2を生成
-	CVector2 xy() const{
-		return CVector2( x, y );
+	template<>
+	static DirectX::XMVECTOR LoadXM<4>( DirectX::XMFLOAT4& p ){
+		return DirectX::XMLoadFloat4( &p );
 	}
-
-	static CVector4 White(){
-		static const CVector4 white = { 1.0f, 1.0f, 1.0f, 1.0f };
-		return white;
-
+	//XMVECTORからXMFloatNへ保存する関数
+	template<int N>
+	static DirectX::XMVECTOR StoreXM( DirectX::XMFLOAT2* store, DirectX::XMVECTOR& p ){
+		return DirectX::XMStoreFloat2( store, p );
+	}
+	template<>
+	static DirectX::XMVECTOR StoreXM<3>( DirectX::XMFLOAT3* store, DirectX::XMVECTOR& p ){
+		return DirectX::XMStoreFloat3( store, p );
+	}
+	template<>
+	static DirectX::XMVECTOR StoreXM<4>( DirectX::XMFLOAT4* store, DirectX::XMVECTOR& p ){
+		return DirectX::XMStoreFloat4( store, p );
+	}
+	//長さを返す関数
+	template<int N>
+	static DirectX::XMVECTOR XMVectorLength( DirectX::XMVECTOR p ){
+		return DirectX::XMVector2Length( p );
+	}
+	template<>
+	static DirectX::XMVECTOR XMVectorLength<3>( DirectX::XMVECTOR p ){
+		return DirectX::XMVector3Length( p );
+	}
+	template<>
+	static DirectX::XMVECTOR XMVectorLength<4>( DirectX::XMVECTOR p ){
+		return DirectX::XMVector4Length( p );
+	}
+	//長さの2乗を返す関数
+	template<int N>
+	static DirectX::XMVECTOR XMVectorLengthSq( DirectX::XMVECTOR p ){
+		return DirectX::XMVector2LengthSq( p );
+	}
+	template<>
+	static DirectX::XMVECTOR XMVectorLengthSq<3>( DirectX::XMVECTOR p ){
+		return DirectX::XMVector3LengthSq( p );
+	}
+	template<>
+	static DirectX::XMVECTOR XMVectorLengthSq<4>( DirectX::XMVECTOR p ){
+		return DirectX::XMVector4LengthSq( p );
+	}
+	//内積
+	template<int N>
+	static DirectX::XMVECTOR XMVectorDot( DirectX::XMVECTOR l , DirectX::XMVECTOR r ){
+		return DirectX::XMVector2Dot( l, r );
+	}
+	template<>
+	static DirectX::XMVECTOR XMVectorDot<3>( DirectX::XMVECTOR l, DirectX::XMVECTOR r ){
+		return DirectX::XMVector3Dot( l, r );
+	}
+	template<>
+	static DirectX::XMVECTOR XMVectorDot<4>( DirectX::XMVECTOR l, DirectX::XMVECTOR r ){
+		return DirectX::XMVector4Dot( l, r );
+	}
+	//外積
+	template<int N>
+	static DirectX::XMVECTOR XMVectorCross( DirectX::XMVECTOR l, DirectX::XMVECTOR r ){
+		return DirectX::XMVector2Cross( l, r );
+	}
+	template<>
+	static DirectX::XMVECTOR XMVectorCross<3>( DirectX::XMVECTOR l, DirectX::XMVECTOR r ){
+		return DirectX::XMVector3Cross( l, r );
+	}
+	template<>
+	static DirectX::XMVECTOR XMVectorCross<4>( DirectX::XMVECTOR l, DirectX::XMVECTOR r ){
+		return DirectX::XMVector4Cross( l, r );
 	}
 };
+
+using CVector2 = CVector<2>;
+using CVector3 = CVector<3>;
+using CVector4 = CVector<4>;
 
 class CQuaternion : public CVector4{
 public:
 	CQuaternion(){}
-	CQuaternion( float x, float y, float z, float w ) :
-		CVector4( x, y, z, w ){}
+	CQuaternion( const CVecVariable<4>& value ) : CVector4( value ){}
 
-	 btQuaternion toBT() const{
-		return btQuaternion( x, y, z, w );
+	btQuaternion toBT() const{
+		return btQuaternion( this->x, this->y, this->z, this->w );
 	}
 
 	//任意の軸周りの回転クォータニオンを作成。
@@ -393,114 +192,8 @@ public:
 		y = axis.y * s;
 		z = axis.z * s;
 	}
-	void SetRotationDeg( const CVector3& axis, float angle ){
-		float s;
-		float halfAngle = CMath::DegToRad( angle ) * 0.5f;
-		s = sin( halfAngle );
-		w = cos( halfAngle );
-		x = axis.x * s;
-		y = axis.y * s;
-		z = axis.z * s;
-	}
-	void SetRotationVec( CVector3 from, CVector3 to );
-
-	//クォータニオンに回転をプラス。
-	void AddRotation( const CVector3& axis, float angle ){
-		CQuaternion rot;
-		rot.SetRotation( axis, angle );
-		Multiply( rot );
-	}
-	void AddRotationDeg( const CVector3& axis, float angle ){
-		CQuaternion rot;
-		rot.SetRotationDeg( axis, angle );
-		Multiply( rot );
-	}
-
-	//行列からクォータニオンを作成。
-	void SetRotation( const CMatrix& m );
-	//球面線形補完。
-	void Slerp( float t, CQuaternion q1, CQuaternion q2 ){
-		DirectX::XMVECTOR xmv = DirectX::XMQuaternionSlerp(
-			DirectX::XMLoadFloat4( &q1.vec ),
-			DirectX::XMLoadFloat4( &q2.vec ),
-			t
-		);
-		DirectX::XMStoreFloat4( &vec, xmv );
-	}
-	//クォータニオン同士の積。
-	void Multiply( const CQuaternion& rot ){
-		float pw, px, py, pz;
-		float qw, qx, qy, qz;
-
-		pw = w; px = x; py = y; pz = z;
-		qw = rot.w; qx = rot.x; qy = rot.y; qz = rot.z;
-
-		w = pw * qw - px * qx - py * qy - pz * qz;
-		x = pw * qx + px * qw + py * qz - pz * qy;
-		y = pw * qy - px * qz + py * qw + pz * qx;
-		z = pw * qz + px * qy - py * qx + pz * qw;
-
-	}
-
-	//クォータニオン同士の乗算。
-	void Multiply( const CQuaternion& rot0, const CQuaternion& rot1 ){
-		float pw, px, py, pz;
-		float qw, qx, qy, qz;
-
-		pw = rot0.w; px = rot0.x; py = rot0.y; pz = rot0.z;
-		qw = rot1.w; qx = rot1.x; qy = rot1.y; qz = rot1.z;
-
-		w = pw * qw - px * qx - py * qy - pz * qz;
-		x = pw * qx + px * qw + py * qz - pz * qy;
-		y = pw * qy - px * qz + py * qw + pz * qx;
-		z = pw * qz + px * qy - py * qx + pz * qw;
-	}
-
-	//ベクトルにクォータニオンを適用する。
-	void Multiply( CVector4& _v ) const{
-		DirectX::XMVECTOR xmv = DirectX::XMVector3Rotate( _v.toXM(), this->toXM() );
-		DirectX::XMStoreFloat4( &_v.vec, xmv );
-	}
-	void Multiply( CVector3& _v ) const{
-		DirectX::XMVECTOR xmv = DirectX::XMVector3Rotate( _v.toXM(), this->toXM() );
-		DirectX::XMStoreFloat3( &_v.vec, xmv );
-	}
-
-	static CQuaternion Identity(){
-		static const CQuaternion identity = { 0.0f,  0.0f, 0.0f, 1.0f };
-		return identity;
-	}
-
-	//クラスから直接、任意の軸周りの回転クォータニオンを作成。
-	static CQuaternion CreateRot( const CVector3& axis, float angle ){
-		CQuaternion q;
-		q.SetRotation( axis, angle );
-		return q;
-	}
-	static CQuaternion CreateRotDeg( const CVector3& axis, float angle ){
-		CQuaternion q;
-		q.SetRotationDeg( axis, angle );
-		return q;
-	}
-
-	static CQuaternion CreateRotVec(const CVector3& from, const CVector3& to ){
-		CQuaternion q;
-		q.SetRotationVec( from, to );
-		return q;
-	}
 
 };
-//整数型のベクトルクラス。
-__declspec( align( 16 ) ) class CVector4i{
-public:
-	static constexpr char This_is_Vector = 0;
-
-	union{
-		struct{ int x, y, z, w; };
-		int v[4];
-	};
-};
-
 
 static inline const CVector2 operator*( float lhs , const CVector2& rhs ){
 	return rhs * lhs;
