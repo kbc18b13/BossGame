@@ -28,7 +28,7 @@ TriggerCollision::~TriggerCollision(){
 
 void TriggerCollision::Init( std::function<void()> func, const CVector3& halfExtents,
 							 const CVector3& pos, const CQuaternion& rot ){
-	m_boxShape.Create( halfExtents );
+	m_boxShape.Create( halfExtents.toBT() );
 	m_coll.Create( m_boxShape, pos, rot );
 	m_coll.SetMask( 0 );
 	m_func = func;

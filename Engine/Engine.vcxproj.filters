@@ -58,6 +58,7 @@
     <ClCompile Include="system\system.cpp" />
     <ClCompile Include="util\Util.cpp" />
     <ClCompile Include="graphics\CascadePart.cpp" />
+    <ClCompile Include="Effekseer\Effect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Effekseer\Effekseer.h" />
@@ -125,9 +126,8 @@
     <ClInclude Include="system\system.h" />
     <ClInclude Include="util\Util.h" />
     <ClInclude Include="graphics\CascadePart.h" />
-    <ClInclude Include="Effekseer\Effect.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
+    <ClInclude Include="Effekseer\Effect.h" />
+    <ClInclude Include="math\VecOpInc.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="character\CharacterController.cpp">
@@ -293,9 +293,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="sound\SoundOverlap.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Effekseer\Effect.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

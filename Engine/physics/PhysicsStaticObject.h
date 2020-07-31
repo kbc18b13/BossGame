@@ -42,13 +42,13 @@ public:
 	//ˆÊ’u‚ðÝ’è
 	void SetPos(const CVector3& pos) {
 		btTransform trans = m_rigidBody.GetBody()->getWorldTransform();
-		trans.setOrigin(pos);
+		trans.setOrigin(pos.toBT() );
 		m_rigidBody.GetBody()->setWorldTransform(trans);
 	}
 
 	void SetRot( const CQuaternion& rot ){
 		btTransform trans = m_rigidBody.GetBody()->getWorldTransform();
-		trans.setRotation( rot );
+		trans.setRotation( rot.toBT() );
 		m_rigidBody.GetBody()->setWorldTransform( trans );
 	}
 

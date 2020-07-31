@@ -40,12 +40,12 @@ void ActorHitCollision::Init(ICollider & collider, EnCollisionAttr target, void*
 std::vector<Actor*>& ActorHitCollision::ContactTest() {
     //ˆÊ’uXV
     {
-        m_collision.GetBody()->getWorldTransform().setRotation(m_rot);
+        m_collision.GetBody()->getWorldTransform().setRotation(m_rot.toBT() );
 
         CVector3 offset = m_offset;
         m_rot.Multiply(offset);
         CVector3 position = m_pos + offset;
-        m_collision.GetBody()->getWorldTransform().setOrigin(position);
+        m_collision.GetBody()->getWorldTransform().setOrigin(position.toBT() );
     }
 
     //”»’è

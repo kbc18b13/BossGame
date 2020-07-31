@@ -12,7 +12,7 @@ ArmWeapon::~ArmWeapon(){
 
 void ArmWeapon::Init( Bone* handBone, Actor* master , const CVector3& halfExtents,bool playersArmWeapon){
 
-    m_collider.Create( halfExtents );
+    m_collider.Create( halfExtents.toBT() );
 
 	EnCollisionAttr target = playersArmWeapon ? enCollisionAttr_Enemy : enCollisionAttr_Player;
 

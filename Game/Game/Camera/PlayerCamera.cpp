@@ -12,12 +12,12 @@ PlayerCamera::PlayerCamera(){
 void PlayerCamera::UpdateGCamera( const CVector3& pos, const CVector3& look){
 
 	//レイキャストを使った壁に当たるカメラ
-	btCollisionWorld::ClosestRayResultCallback cb(look, pos);
+	btCollisionWorld::ClosestRayResultCallback cb(look.toBT(), pos.toBT() );
 	cb.m_collisionFilterMask = 0xffffffff;
 	cb.m_collisionFilterMask ^= btCollisionObject::CollisionFlags::CF_Player;
 	cb.m_collisionFilterGroup = btCollisionObject::CollisionFlags::CF_Camera;
 
-	g_physics.GetDynamicWorld()->rayTest( look, pos, cb );
+	g_physics.GetDynamicWorld()->rayTest( look.toBT(), pos.toBT(), cb );
 
 	if( cb.hasHit() ){
 		//例が当たったから少し押しもどす。

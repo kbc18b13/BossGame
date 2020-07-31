@@ -81,14 +81,14 @@ public:
 	{
 		DirectX::XMStoreFloat3(
 			&vOut.vec, 
-			DirectX::XMVector3Transform(vOut, *this)
+			DirectX::XMVector3Transform(vOut.toXM(), *this)
 		);
 	}
 	void Mul(CVector4& vOut) const
 	{
 		DirectX::XMStoreFloat4( 
 			&vOut.vec, 
-			DirectX::XMVector4Transform(vOut, *this) 
+			DirectX::XMVector4Transform(vOut.toXM(), *this)
 		);
 	}
 	/*!
@@ -98,7 +98,7 @@ public:
 	{
 		DirectX::XMStoreFloat4x4( 
 			&mat, 
-			DirectX::XMMatrixTranslationFromVector(trans)
+			DirectX::XMMatrixTranslationFromVector(trans.toXM() )
 		);
 	}
 	/*!
@@ -142,7 +142,7 @@ public:
 	{
 		DirectX::XMStoreFloat4x4(
 			&mat,
-			DirectX::XMMatrixRotationQuaternion(q)
+			DirectX::XMMatrixRotationQuaternion(q.toXM() )
 		);
 	}
 	/*!
@@ -154,7 +154,7 @@ public:
 	{
 		DirectX::XMStoreFloat4x4(
 			&mat,
-			DirectX::XMMatrixRotationAxis(axis, angle)
+			DirectX::XMMatrixRotationAxis(axis.toXM(), angle)
 		);
 	}
 	/*!
@@ -165,7 +165,7 @@ public:
 	{
 		DirectX::XMStoreFloat4x4(
 			&mat,
-			DirectX::XMMatrixScalingFromVector(scale)
+			DirectX::XMMatrixScalingFromVector(scale.toXM() )
 		);
 	}
 	/*!
@@ -211,7 +211,7 @@ public:
 	{
 		DirectX::XMStoreFloat4x4(
 			&mat,
-			DirectX::XMMatrixLookAtLH(position, target, up)
+			DirectX::XMMatrixLookAtLH(position.toXM(), target.toXM(), up.toXM() )
 		);
 	}
 	/*!

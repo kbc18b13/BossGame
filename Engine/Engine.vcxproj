@@ -146,7 +146,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-
     <ClInclude Include="graphics\CascadePart.h" />
     <ClInclude Include="Effekseer\Effect.h" />
     <ClInclude Include="Effekseer\Effekseer.h" />
@@ -185,6 +184,7 @@
     <ClInclude Include="math\kMath.h" />
     <ClInclude Include="math\Matrix.h" />
     <ClInclude Include="math\Pow.h" />
+    <ClInclude Include="math\VecOpInc.h" />
     <ClInclude Include="math\Vector.h" />
     <ClInclude Include="physics\BoxCollider.h" />
     <ClInclude Include="physics\CapsuleCollider.h" />

@@ -12,11 +12,11 @@ bool CanGo( CVector3 from, CVector3 to){
 	constexpr float upCorrect = 20.0f;
 	from.y += upCorrect;
 	to.y += upCorrect;
-	btCollisionWorld::ClosestRayResultCallback cb( from, to );
+	btCollisionWorld::ClosestRayResultCallback cb( from.toBT(), to.toBT() );
 	cb.m_collisionFilterGroup = COFlag::CF_Ray;
 	cb.m_collisionFilterMask = COFlag::CF_Ground;
 
-	g_physics.GetDynamicWorld()->rayTest( from, to, cb );
+	g_physics.GetDynamicWorld()->rayTest( from.toBT(), to.toBT(), cb );
 
 	//障害物にヒットしたら通行不可。ただし法線が上向きなら通す。
 	return !cb.hasHit();

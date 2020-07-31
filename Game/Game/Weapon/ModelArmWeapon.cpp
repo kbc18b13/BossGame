@@ -13,7 +13,7 @@ void ModelArmWeapon::Init( Bone* handBone, Actor* master, const CVector3& halfEx
 					  const wchar_t* modelpath, bool playersModelArmWeapon ){
 	m_model.Init( { modelpath } );
 
-	m_collider.Create( halfExtents );
+	m_collider.Create( halfExtents.toBT() );
 
 	EnCollisionAttr target = playersModelArmWeapon ? enCollisionAttr_Enemy : enCollisionAttr_Player;
 

@@ -1,12 +1,6 @@
-/*ベクトル
- * @details
- * DirectMathを使いやすくしたベクトルクラス。 */
-
-
 #pragma once
-
-
 #include "kMath.h"
+
 
 class CMatrix;
 
@@ -33,30 +27,13 @@ public:
 		float v[2];
 	};
 
-	operator DirectX::XMVECTOR() const{
+	//四則演算子と代入演算子の定義
+#define VEC_TYPE 2
+#include "VecOpInc.h"
+#undef VEC_TYPE
+
+	DirectX::XMVECTOR toXM() const{
 		return DirectX::XMLoadFloat2( &vec );
-	}
-
-	//-------------代入演算子--------------------//
-
-	const CVector2& operator+=( const CVector2& _v ){
-		x += _v.x; y += _v.y;
-		return *this;
-	}
-
-	const CVector2& operator-=( const CVector2& _v ){
-		x -= _v.x; y -= _v.y;
-		return *this;
-	}
-
-	const CVector2& operator*=( float _v ){
-		x *= _v; y *= _v;
-		return *this;
-	}
-
-	const CVector2& operator/=( float _v ){
-		x /= _v; y /= _v;
-		return *this;
 	}
 
 	float LengthSq(){
@@ -102,13 +79,18 @@ public:
 	};
 
 public:
-	//XMVECTORへの暗黙の変換。
-	operator DirectX::XMVECTOR() const{
+	//四則演算子と代入演算子の定義
+#define VEC_TYPE 3
+#include "VecOpInc.h"
+#undef VEC_TYPE
+
+	//XMVECTORへの変換。
+	DirectX::XMVECTOR toXM() const{
 		return DirectX::XMLoadFloat3( &vec );
 	}
 
-	//btVector3への暗黙の変換。
-	operator btVector3() const{
+	//btVector3への変換。
+	btVector3 toBT() const{
 		return btVector3( x, y, z );
 	}
 
@@ -163,40 +145,6 @@ public:
 	template<>
 	void Set( btVector3& _v ){
 		Set( _v.x(), _v.y(), _v.z() );
-	}
-
-	//加算代入演算子。
-	const CVector3& operator+=( const CVector3& _v ){
-		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat3( &vec );
-		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat3( &_v.vec );
-		DirectX::XMVECTOR xmvr = DirectX::XMVectorAdd( xmv0, xmv1 );
-		DirectX::XMStoreFloat3( &vec, xmvr );
-		return *this;
-	}
-
-
-	//減算代入演算子。
-	const CVector3& operator-=( const CVector3& _v ){
-		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat3( &vec );
-		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat3( &_v.vec );
-		DirectX::XMVECTOR xmvr = DirectX::XMVectorSubtract( xmv0, xmv1 );
-		DirectX::XMStoreFloat3( &vec, xmvr );
-		return *this;
-	}
-
-
-	//拡大代入演算子。
-	const CVector3& operator*=( float s ){
-		DirectX::XMVECTOR xmv = DirectX::XMLoadFloat3( &vec );
-		xmv = DirectX::XMVectorScale( xmv, s );
-		DirectX::XMStoreFloat3( &vec, xmv );
-		return *this;
-	}
-
-	//除算代入演算子
-	const CVector3& operator/=( float d ){
-		float scale = 1.0f / d;
-		return operator*=( scale );
 	}
 
 	//内積。
@@ -319,6 +267,7 @@ public:
 		return one;
 	}
 };
+
 //4要素のベクトルクラス。
 class CVector4{
 public:
@@ -330,7 +279,12 @@ public:
 		float v[4];
 	};
 public:
-	operator DirectX::XMVECTOR() const{
+	//四則演算子と代入演算子の定義
+#define VEC_TYPE 4
+#include "VecOpInc.h"
+#undef VEC_TYPE
+
+	DirectX::XMVECTOR toXM() const{
 		return DirectX::XMLoadFloat4( &vec );
 	}
 
@@ -387,37 +341,6 @@ public:
 		this->z = _v.z;
 		this->w = 1.0f;
 	}
-	//加算代入演算子。
-	const CVector4& operator+=( const CVector4& _v ){
-		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat4( &vec );
-		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat4( &_v.vec );
-		DirectX::XMVECTOR xmvr = DirectX::XMVectorAdd( xmv0, xmv1 );
-		DirectX::XMStoreFloat4( &vec, xmvr );
-		return *this;
-	}
-
-	//減算代入演算子。
-	const CVector4& operator-=( const CVector4& _v ){
-		DirectX::XMVECTOR xmv0 = DirectX::XMLoadFloat4( &vec );
-		DirectX::XMVECTOR xmv1 = DirectX::XMLoadFloat4( &_v.vec );
-		DirectX::XMVECTOR xmvr = DirectX::XMVectorSubtract( xmv0, xmv1 );
-		DirectX::XMStoreFloat4( &vec, xmvr );
-		return *this;
-	}
-
-	//拡大代入演算子。
-	const CVector4& operator*=( float s ){
-		DirectX::XMVECTOR xmv = DirectX::XMLoadFloat4( &vec );
-		xmv = DirectX::XMVectorScale( xmv, s );
-		DirectX::XMStoreFloat4( &vec, xmv );
-		return *this;
-	}
-
-	//除算代入演算子。
-	const CVector4& operator/=( float s ){
-		float div = 1.0f / s;
-		return operator*=( div );
-	}
 
 	//内積
 	float Dot( const CVector4& _v ){
@@ -456,13 +379,8 @@ public:
 	CQuaternion( float x, float y, float z, float w ) :
 		CVector4( x, y, z, w ){}
 
-	operator btQuaternion() const{
+	 btQuaternion toBT() const{
 		return btQuaternion( x, y, z, w );
-	}
-
-	//単項マイナス演算子
-	const CQuaternion operator-(){
-		return CQuaternion(-x, -y, -z, -w);
 	}
 
 	//任意の軸周りの回転クォータニオンを作成。
@@ -540,11 +458,11 @@ public:
 
 	//ベクトルにクォータニオンを適用する。
 	void Multiply( CVector4& _v ) const{
-		DirectX::XMVECTOR xmv = DirectX::XMVector3Rotate( _v, *this );
+		DirectX::XMVECTOR xmv = DirectX::XMVector3Rotate( _v.toXM(), this->toXM() );
 		DirectX::XMStoreFloat4( &_v.vec, xmv );
 	}
 	void Multiply( CVector3& _v ) const{
-		DirectX::XMVECTOR xmv = DirectX::XMVector3Rotate( _v, *this );
+		DirectX::XMVECTOR xmv = DirectX::XMVector3Rotate( _v.toXM(), this->toXM() );
 		DirectX::XMStoreFloat3( &_v.vec, xmv );
 	}
 
@@ -582,28 +500,14 @@ public:
 		int v[4];
 	};
 };
-//ベクトル同士の加算。
-template<class TVector>
-static inline decltype( TVector::This_is_Vector, std::declval<TVector>() ) operator+( const TVector& v0, const TVector& v1 ){
-	TVector result = v0;
-	return result += v1;
-}
-//ベクトルのスケール倍。
-template<class TVector>
-static inline decltype( TVector::This_is_Vector, std::declval<TVector>() ) operator*( const TVector& v, float s ){
-	TVector result = v;
-	return result *= s;
-}
-//ベクトルの除算。
-template<class TVector>
-static inline decltype( TVector::This_is_Vector, std::declval<TVector>() ) operator/( const TVector& v, float s ){
-	TVector result = v;
-	return result /= s;
-}
-//ベクトル同士の減算。
-template<class TVector>
-static inline decltype( TVector::This_is_Vector, std::declval<TVector>() ) operator-( const TVector& v0, const TVector& v1 ){
-	TVector result = v0;
-	return result -= v1;
-}
 
+
+static inline const CVector2 operator*( float lhs , const CVector2& rhs ){
+	return rhs * lhs;
+}
+static inline const CVector3 operator*( float lhs, const CVector3& rhs ){
+	return rhs * lhs;
+}
+static inline const CVector4 operator*( float lhs, const CVector4& rhs ){
+	return rhs * lhs;
+}

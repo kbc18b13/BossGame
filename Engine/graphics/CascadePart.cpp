@@ -36,7 +36,7 @@ void CascadePart::RenderToShadowMap( ID3D11DeviceContext * dc, std::vector<SkinM
 	}
 
 	//とりあえず位置を無視してライトビュー行列を作成
-	CMatrix lightViewMatrix = DirectX::XMMatrixLookToLH( CVector4(0,0,0,1), m_dir, CVector3::Up() );
+	CMatrix lightViewMatrix = DirectX::XMMatrixLookToLH( CVector4(0,0,0,1).toXM(), m_dir.toXM(), CVector3::Up().toXM() );
 
 	//ライトのビュー行列で変換
 	for( CVector3& v : verts ){

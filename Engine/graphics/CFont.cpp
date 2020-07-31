@@ -36,6 +36,6 @@ void CFont::DrawStr(const wchar_t * str) {
     pivot.x *= m_pivot.x;
     pivot.y *= m_pivot.y;
 
-	m_font.DrawString(GetSpriteBatch(), str, pos, m_color, 0.0f, pivot, m_scale,
+	m_font.DrawString(GetSpriteBatch(), str, pos.toXM(), m_color.toXM(), 0.0f, pivot.toXM(), m_scale.toXM(),
 					   DirectX::SpriteEffects_None, 0.5f);
 }

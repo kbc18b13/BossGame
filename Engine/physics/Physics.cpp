@@ -97,5 +97,5 @@ void PhysicsWorld::RemoveCollision(ICollision & cl) {
 }
 
 void PhysicsWorld::DrawLine(const CVector3& from, const CVector3& to, const CVector3& color){
-	st_debugWire->drawLine( from, to, color );
+	st_debugWire->drawLine( from.toBT(), to.toBT(), color.toBT() );
 }
