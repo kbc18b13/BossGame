@@ -51,7 +51,7 @@ public:
 	 */
 	CVector3 GetUp()
 	{
-		CVector3 v( m_viewMatrix._12, m_viewMatrix._22, m_viewMatrix._32 );
+		CVector3 v{ m_viewMatrix._12, m_viewMatrix._22, m_viewMatrix._32 };
 		return v;
 	}
 

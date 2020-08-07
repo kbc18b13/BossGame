@@ -156,7 +156,7 @@ public:
 	/// スティック入力をベクトルで返す
 	/// </summary>
 	CVector2 GetLStickVec() const {
-		return CVector2(m_lStickX, m_lStickY);
+		return CVector2( { m_lStickX, m_lStickY } );
 	}
 
 	bool IsTriggerLStick() const {
@@ -193,8 +193,8 @@ public:
 	/// <summary>
 	/// スティック入力をベクトルで返す
 	/// </summary>
-	CVector2 GetRStickVec() const {
-		return CVector2(m_rStickX, m_rStickY);
+	CVector2 GetRStickVec() const{
+		return CVector2({ m_rStickX, m_rStickY} );
 	}
 
 	bool IsTriggerRStick() const{

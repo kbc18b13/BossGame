@@ -115,7 +115,7 @@ public:
 	/// ‘O•ûŒü‚ðŽæ“¾
 	/// </summary>
 	CVector3 GetFront(){
-		CVector3 v(0, 0, 1);
+		CVector3 v{ 0, 0, 1 };
 		m_rot.Multiply( v );
 		return v;
 	}

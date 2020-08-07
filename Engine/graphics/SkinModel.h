@@ -178,7 +178,7 @@ private:
 	//スペキュラマップ
 	ComPtr<ID3D11ShaderResourceView> m_specTex = nullptr;
 
-	CVector3 m_emissionColor = CVector3( 0, 0, 0);
+	CVector3 m_emissionColor;
 	float m_alpha = 1;
 
 	int m_stencilRef = 0;
