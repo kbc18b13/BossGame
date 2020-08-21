@@ -170,9 +170,9 @@ private:
 
     Animation m_animation; //アニメーションを操作するクラス
 
-    CVector3 m_pos = CVector3::Zero();           //位置
-    CVector3 m_scale = CVector3::One();          //大きさ
-    CQuaternion m_rot = CQuaternion::Identity(); //回転
+    CVector3 m_pos = CVector3::Zero;           //位置
+    CVector3 m_scale = CVector3::One;          //大きさ
+    CQuaternion m_rot = CQuaternion::Identity; //回転
 
     bool m_isShadowReceive = false;
     bool m_isShadowCaster = false;

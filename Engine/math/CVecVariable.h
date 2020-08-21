@@ -45,13 +45,13 @@ struct CVecVariable<4>{
 
 //========================ベクトルの次元ごとに用意しなければならなかった関数=================
 //XMFloatNからXMVECTORへの変換関数
-static inline DirectX::XMVECTOR LoadXM( DirectX::XMFLOAT2& p ){
+static inline DirectX::XMVECTOR LoadXM( const DirectX::XMFLOAT2& p ){
 	return DirectX::XMLoadFloat2( &p );
 }
-static inline DirectX::XMVECTOR LoadXM( DirectX::XMFLOAT3& p ){
+static inline DirectX::XMVECTOR LoadXM( const DirectX::XMFLOAT3& p ){
 	return DirectX::XMLoadFloat3( &p );
 }
-static inline DirectX::XMVECTOR LoadXM( DirectX::XMFLOAT4& p ){
+static inline DirectX::XMVECTOR LoadXM( const DirectX::XMFLOAT4& p ){
 	return DirectX::XMLoadFloat4( &p );
 }
 
@@ -153,6 +153,14 @@ static inline CVecVariable<N> VariableAxisZ(){
 	CVecVariable<N> v;
 	if constexpr( N >= 3 ){
 		v.z = 1;
+	}
+	return v;
+}
+template<int N>
+static inline CVecVariable<N> VariableOne(){
+	CVecVariable<N> v;
+	for( int i = 0; i < N; i++ ){
+		v.v[i] = 1;
 	}
 	return v;
 }

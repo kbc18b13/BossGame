@@ -126,11 +126,11 @@ public:
 	CVector4 GetProjectedPos(const CVector3& pos );
 
 private:
-	CMatrix	m_viewMatrix = CMatrix::Identity();		//ビュー行列。
-	CMatrix m_projMatrix = CMatrix::Identity();		//プロジェクション行列。
-	CVector3 m_target = CVector3::Zero();			//注視点。
-	CVector3 m_position = CVector3::Zero();			//視点。
-	CVector3 m_up = CVector3::Up();					//上方向。
+	CMatrix	m_viewMatrix = CMatrix::Identity;		//ビュー行列。
+	CMatrix m_projMatrix = CMatrix::Identity;		//プロジェクション行列。
+	CVector3 m_target = CVector3::Zero;			//注視点。
+	CVector3 m_position = CVector3::Zero;			//視点。
+	CVector3 m_up = CVector3::Up;					//上方向。
 	float m_viewAngle = CMath::DegToRad(60.0f);		//画角。
 	float m_far = 2000.0f;							//遠い平面までの距離。
 	float m_near = 1.0f;							//近平面までの距離。

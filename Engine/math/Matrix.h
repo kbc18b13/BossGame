@@ -41,10 +41,12 @@ public:
 		mat(m00, m01, m02, m03,
 			m10, m11, m12, m13,
 			m20, m21, m22, m23,
-			m30, m31, m32, m33)
-	{
+			m30, m31, m32, m33){}
 
+	CMatrix( const CMatrix& m ){
+		this->mat = m.mat;
 	}
+
 	CMatrix(const DirectX::XMFLOAT4X4& m) 
 	{
 		mat = m;
@@ -254,14 +256,5 @@ public:
 		}
 	}
 
-	static const CMatrix Identity()
-	{
-		static const CMatrix identity(
-			1.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, 1.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 1.0f
-		);
-		return identity;
-	}
+	static const CMatrix Identity;
 };

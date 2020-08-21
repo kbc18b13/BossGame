@@ -6,15 +6,16 @@
 #include "Vector.h"
 #include "Matrix.h"
 
+namespace CVectorTemplates{
 //定数
-static const CQuaternion Identity( 0, 0, 0, 1 );
+const CQuaternion CQuaternion::Identity( 0, 0, 0, 1 );
 
 //行列からクォータニオンを作成。(インクルードの関係でヘッダには書けない)
-void CVectorTemplates::CQuaternion::SetRotation( const CMatrix & m ){
+void CQuaternion::SetRotation( const CMatrix & m ){
 	DirectX::XMStoreFloat4( &vec, DirectX::XMQuaternionRotationMatrix( m ) );
 }
 
-void CQuaternion::SetRotation( const CVector3 & axis, float angle ){
+void CQuaternion::SetRotation( const CVector<3> & axis, float angle ){
 	float s;
 	float halfAngle = angle * 0.5f;
 	s = sin( halfAngle );
@@ -24,7 +25,7 @@ void CQuaternion::SetRotation( const CVector3 & axis, float angle ){
 	z = axis.z * s;
 }
 
-void CQuaternion::SetRotationVec( CVector3 from, CVector3 to ){
+void CQuaternion::SetRotationVec( CVector<3> from, CVector<3> to ){
 	from.Normalize();
 	to.Normalize();
 	float angle = acosf( from.Dot( to ) );
@@ -32,4 +33,20 @@ void CQuaternion::SetRotationVec( CVector3 from, CVector3 to ){
 	from.Normalize();
 
 	SetRotation( from, angle );
+}
+
+void CQuaternion::Multiply( const CQuaternion & rot ){
+	float pw, px, py, pz;
+	float qw, qx, qy, qz;
+
+	pw = w; px = x; py = y; pz = z;
+	qw = rot.w; qx = rot.x; qy = rot.y; qz = rot.z;
+
+	w = pw * qw - px * qx - py * qy - pz * qz;
+	x = pw * qx + px * qw + py * qz - pz * qy;
+	y = pw * qy - px * qz + py * qw + pz * qx;
+	z = pw * qz + px * qy - py * qx + pz * qw;
+
+}
+
 }

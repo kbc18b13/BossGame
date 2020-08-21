@@ -17,11 +17,11 @@ template<int N>
 class CVector : public CVecVariable<N>{
 public:
 	CVector(){}
-	CVector( const CVecVariable<N>& value ) : CVecVariable( value ){}
-	CVector( const CVector<N>& vec ) : CVecVariable( vec ){}
+	CVector( const CVecVariable<N>& value ) : CVecVariable<N>( value ){}
+	CVector( const CVector<N>& vec ) : CVecVariable<N>( vec ){}
 	template<typename ...T>
-	CVector(/* typename std::enable_if<is_all_float<T...> && sizeof...( T ) == N-1, float>::type p1, */T ...p2 )
-	: CVecVariable( p2... ){}
+	CVector(typename std::enable_if<is_all_float<T...> && sizeof...( T ) == N-1, float>::type p1, T ...p2 )
+	: CVecVariable<N>( p2... ){}
 
 	//XMVECTORに変換
 	DirectX::XMVECTOR toXM() const{
@@ -124,6 +124,9 @@ public:
 	static const CVector<N> AxisX;
 	static const CVector<N> AxisY;
 	static const CVector<N> AxisZ;
+	static const CVector<N> One;
+	static const CVector<N> Up;
+	static const CVector<N> Zero;
 };
 
 template<int N>
@@ -132,13 +135,21 @@ template<int N>
 const CVector<N> CVector<N>::AxisY = VariableAxisY<N>();
 template<int N>
 const CVector<N> CVector<N>::AxisZ = VariableAxisZ<N>();
-
+template <int N>
+const CVector<N> CVector<N>::One = VariableOne<N>();
+template<int N>
+const CVector<N> CVector<N>::Up = VariableAxisY<N>();
+template<int N>
+const CVector<N> CVector<N>::Zero;
 
 //クォータニオン
 class CQuaternion : public CVector<4>{
 public:
 	CQuaternion(){}
 	CQuaternion( const CVecVariable<4>& value ) : CVector<4>( value ){}
+	template<typename ...T>
+	CQuaternion(/* typename std::enable_if<is_all_float<T...> && sizeof...( T ) == N-1, float>::type p1, */T ...p2 )
+		: CVector<4>( p2... ){}
 
 	btQuaternion toBT() const{
 		return btQuaternion( this->x, this->y, this->z, this->w );
@@ -146,12 +157,14 @@ public:
 
 	//任意の軸周りの回転クォータニオンを作成。
 	void SetRotation( const CMatrix& m );
-	void SetRotation( const CVector3& axis, float angle );
+	void SetRotation( const CVector<3>& axis, float angle );
 	//ベクトルからベクトルへの回転クォータニオンを作成。
-	void SetRotationVec( CVector3 from, CVector3 to );
-};
+	void SetRotationVec( CVector<3> from, CVector<3> to );
+	//クォータニオン同士の積
+	void Multiply( const CQuaternion& rot );
 
-static const CQuaternion Identity;
+	static const CQuaternion Identity;
+};
 
 }
 
