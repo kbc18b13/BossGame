@@ -17,7 +17,7 @@ void TrollStep::SubStart( Actor* t ){
 
 void TrollStep::Update( Actor* t ){
 	const CVector3 pVec = m_target->GetPos() - m_chara->GetPosition();
-	CVector3 sideVec = CVector3::Cross( pVec, CVector3::Up() );
+	CVector3 sideVec = pVec.Cross( CVector3::Up() );
 
 	sideVec.Normalize();
 

@@ -7,15 +7,13 @@
 #include "Matrix.h"
 
 namespace CVectorTemplates{
-//定数
-const CQuaternion CQuaternion::Identity( 0, 0, 0, 1 );
 
-//行列からクォータニオンを作成。(インクルードの関係でヘッダには書けない)
+//関数
 void CQuaternion::SetRotation( const CMatrix & m ){
 	DirectX::XMStoreFloat4( &vec, DirectX::XMQuaternionRotationMatrix( m ) );
 }
 
-void CQuaternion::SetRotation( const CVector<3> & axis, float angle ){
+void CQuaternion::SetRotation( const CVector3 & axis, float angle ){
 	float s;
 	float halfAngle = angle * 0.5f;
 	s = sin( halfAngle );
@@ -25,11 +23,11 @@ void CQuaternion::SetRotation( const CVector<3> & axis, float angle ){
 	z = axis.z * s;
 }
 
-void CQuaternion::SetRotationVec( CVector<3> from, CVector<3> to ){
+void CQuaternion::SetRotationVec( CVector3 from, CVector3 to ){
 	from.Normalize();
 	to.Normalize();
 	float angle = acosf( from.Dot( to ) );
-	from.Cross( to );
+	from = from.Cross( to );
 	from.Normalize();
 
 	SetRotation( from, angle );
@@ -47,6 +45,11 @@ void CQuaternion::Multiply( const CQuaternion & rot ){
 	y = pw * qy - px * qz + py * qw + pz * qx;
 	z = pw * qz + px * qy - py * qx + pz * qw;
 
+}
+
+void CQuaternion::Multiply( CVector3 & pVec ) const{
+	DirectX::XMVECTOR xmv = DirectX::XMVector3Rotate( pVec.toXM(), this->toXM() );
+	StoreXM( &pVec.vec, xmv );
 }
 
 }

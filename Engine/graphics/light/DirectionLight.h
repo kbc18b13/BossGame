@@ -24,7 +24,7 @@ public:
 	/// ƒ‰ƒCƒg‚Ì•ûŒü‚ğİ’è
 	/// </summary>
 	void SetDirection(UINT lightNum ,const CVector3& v) {
-		m_cbStruct.m_vec[lightNum] = v;
+		m_cbStruct.m_vec[lightNum] = CVector4(v, 1);
 	}
 
 	/// <summary>

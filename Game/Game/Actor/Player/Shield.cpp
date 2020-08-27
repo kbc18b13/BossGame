@@ -16,7 +16,7 @@ void Shield::Update(){
 	{
 		const CMatrix& worldMat = m_hand->GetWorldMatrix();
 
-		//CQuaternion::CreateRotDeg( 90, CVector3::AxisY );
+		//CQuaternion::CreateRotDeg( 90, CVector3::AxisY() );
 		//m_collision.GetBody()->getWorldTransform().setRotation( rot );
 
 		///*CVector3 offset = m_offset;

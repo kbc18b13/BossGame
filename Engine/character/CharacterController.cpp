@@ -32,8 +32,8 @@ namespace {
 			//上方向と法線のなす角度を求める。
 			float angle = hitNormalTmp.Dot(CVector3::Up());
 			angle = fabsf(acosf(angle));
-			if (angle < CMath::DegToRad(60)		//地面の傾斜が80度より小さいので地面とみなす。
-				|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Ground //もしくはコリジョン属性が地面と指定されている。
+			if (angle < CMath::DegToRad(20)		//傾斜が基準以下なら地面とみなす
+				//|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Ground //もしくはコリジョン属性が地面と指定されている。
 				) {
 				//衝突している。
 				isHit = true;
@@ -73,8 +73,8 @@ namespace {
 			hitNormalTmp.Set(convexResult.m_hitNormalLocal);
 			//上方向と衝突点の法線のなす角度を求める。
 			float angle = fabsf(acosf(hitNormalTmp.Dot(CVector3::Up())));
-			if (angle >= CMath::DegToRad( 80 )		//地面の傾斜が54度以上なので壁とみなす。
-				|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Character	//もしくはコリジョン属性がキャラクタなので壁とみなす。
+			if (angle >= CMath::DegToRad( 20 )//傾斜が基準以上なら壁とみなす
+				//|| convexResult.m_hitCollisionObject->getUserIndex() == enCollisionAttr_Character	//もしくはコリジョン属性がキャラクタなので壁とみなす。
 				) {
 				isHit = true;
 				CVector3 hitPosTmp;
@@ -271,7 +271,7 @@ const CVector3& CharacterController::Execute(float deltaTime, CVector3& moveSpee
 				moveSpeed.y = 0.0f;
 				m_isJump = false;
 				m_isOnGround = true;
-				nextPosition.y = callback.hitPos.y;
+				nextPosition.y = callback.hitPos.y+1;
 			}
 			else {
 				//地面上にいない。

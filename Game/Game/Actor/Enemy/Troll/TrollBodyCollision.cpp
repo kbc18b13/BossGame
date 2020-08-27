@@ -17,7 +17,7 @@ void TrollBodyCollision::Init( Troll * troll){
 
 void TrollBodyCollision::Update(){
 	CMatrix mat;
-	mat.v[3] = m_master->GetPos();
+	mat.v[3] = CVector4(m_master->GetPos(), 1);
 	m_weapon.UpdateWorldMatrix( mat );
 	m_weapon.Update();
 }

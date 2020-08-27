@@ -34,7 +34,7 @@ void SkyBox::Render(){
 	dc->OMSetDepthStencilState( m_depthState.Get(), 0 );
 
 	CMatrix mat = m_model.GetWorldMatrix();
-	mat.v[3] = g_camera3D.GetPosition();
+	mat.v[3] = CVector4(g_camera3D.GetPosition(), 1);
 	m_model.UpdateWorldMatrix( mat );
 
 	m_model.Draw( EnRenderMode::Sky, g_camera3D.GetViewMatrix(), g_camera3D.GetProjectionMatrix() );

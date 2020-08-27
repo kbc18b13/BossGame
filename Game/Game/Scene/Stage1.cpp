@@ -109,6 +109,7 @@ void Stage1::Destroy(){
 }
 
 void Stage1::Update(){
+	g_graphicsEngine->GetDirectionLight().Apply();
 	if( g_pad->IsTrigger( enButtonUp ) ){
 		bigDoor->Open();
 	}

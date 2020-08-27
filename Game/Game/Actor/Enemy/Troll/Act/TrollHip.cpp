@@ -55,9 +55,7 @@ void TrollHip::Update( Actor* t ){
 		}
 	} else if( m_chara->OnGround() ){
 		waitTime -= GameTime::GetDeltaTime();
-		if( waitTime <= 1.8f ){
-			bodyCol.EndAttack();
-		}
+		bodyCol.EndAttack();
 		if( waitTime <= 0 ){
 			ActEnd( int( ActState::Wait ));
 		}

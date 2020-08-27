@@ -58,7 +58,7 @@ public:
 	/// <returns></returns>
 	CVector3 GetRightVec() {
 		CVector3 right = CVector3::AxisY();
-		right.Cross(-m_vec);
+		right = right.Cross(-m_vec);
 		right.Normalize();
 		return right;
 	}

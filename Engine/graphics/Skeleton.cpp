@@ -15,7 +15,7 @@ void Bone::CalcWorldTRS(CVector3& trans, CQuaternion& rot, CVector3& scale)
 	scale.z = mWorld.v[2].Length();
 	m_scale = scale;
 	//行列から平行移動量を取得する。
-	trans.Set(mWorld.v[3]);
+	trans = mWorld.v[3];
 	m_positoin = trans;
 	//行列から拡大率と平行移動量を除去して回転量を取得する。
 	mWorld.v[0].Normalize();
