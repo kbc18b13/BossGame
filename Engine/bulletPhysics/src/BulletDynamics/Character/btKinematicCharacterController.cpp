@@ -67,7 +67,7 @@ class btKinematicClosestNotMeConvexResultCallback : public btCollisionWorld::Clo
 {
 public:
 	btKinematicClosestNotMeConvexResultCallback (btCollisionObject* me, const btVector3& up, btScalar minSlopeDot)
-	: btCollisionWorld::ClosestConvexResultCallback(btVector3(0.0, 0.0, 0.0), btVector3(0.0, 0.0, 0.0))
+	: btCollisionWorld::ClosestConvexResultCallback()
 	, m_me(me)
 	, m_up(up)
 	, m_minSlopeDot(minSlopeDot)

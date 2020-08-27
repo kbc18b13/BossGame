@@ -49,8 +49,8 @@ void DebugWireframe::DrawBegin() {
 
 void DebugWireframe::drawLine(const btVector3 & from, const btVector3 & to, const btVector3 & color) {
     //配列に頂点構造体をストックしていく
-    stockVertex[stockLineCount * 2] = Vertex{ from, color };
-    stockVertex[stockLineCount * 2 + 1] = Vertex{ to, color };
+    stockVertex[stockLineCount * 2] = Vertex{ CVector3(from), CVector3( color) };
+    stockVertex[stockLineCount * 2 + 1] = Vertex{ CVector3( to), CVector3( color) };
     stockLineCount++;
     if( stockLineCount >= maxLine ){
         DrawEnd();

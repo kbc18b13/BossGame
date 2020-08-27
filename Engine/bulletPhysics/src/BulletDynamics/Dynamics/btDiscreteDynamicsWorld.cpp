@@ -802,7 +802,7 @@ public:
 
 public:
 	btClosestNotMeConvexResultCallback (btCollisionObject* me,const btVector3& fromA,const btVector3& toA,btOverlappingPairCache* pairCache,btDispatcher* dispatcher) :
-	  btCollisionWorld::ClosestConvexResultCallback(fromA,toA),
+	  btCollisionWorld::ClosestConvexResultCallback(),
 		m_me(me),
 		m_allowedPenetration(0.0f),
 		m_pairCache(pairCache),

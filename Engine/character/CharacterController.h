@@ -8,6 +8,10 @@
 #include "Physics/RigidBody.h"
 #include "physics/CollisionAttr.h"
 
+namespace CharacterControllerCallBack{
+struct SweepResult;
+}
+
 /*!
 * @brief	キャラクタコントローラー。
 */

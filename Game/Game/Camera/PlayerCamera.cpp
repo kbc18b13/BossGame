@@ -21,7 +21,7 @@ void PlayerCamera::UpdateGCamera( const CVector3& pos, const CVector3& look){
 
 	if( cb.hasHit() ){
 		//ó·Ç™ìñÇΩÇ¡ÇΩÇ©ÇÁè≠ÇµâüÇµÇ‡Ç«Ç∑ÅB
-		CVector3 hitPos = cb.m_hitPointWorld;
+		CVector3 hitPos(cb.m_hitPointWorld);
 		CVector3 toL = look - pos;
 		toL.Normalize();
 		hitPos += toL * 2;

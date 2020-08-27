@@ -373,16 +373,10 @@ public:
 
 	struct	ClosestConvexResultCallback : public ConvexResultCallback
 	{
-		ClosestConvexResultCallback(const btVector3&	convexFromWorld,const btVector3&	convexToWorld)
-		:m_convexFromWorld(convexFromWorld),
-		m_convexToWorld(convexToWorld),
-		m_hitCollisionObject(0)
-		{
-		}
+		ClosestConvexResultCallback():m_hitCollisionObject(0){}
 
-		btVector3	m_convexFromWorld;//used to calculate hitPointWorld from hitFraction
 		btVector3	m_convexToWorld;
-
+		btVector3	m_convexFromWorld;
 		btVector3	m_hitNormalWorld;
 		btVector3	m_hitPointWorld;
 		const btCollisionObject*	m_hitCollisionObject;

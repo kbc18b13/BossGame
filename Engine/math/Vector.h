@@ -162,7 +162,7 @@ public:
 	CVector3() : v{}{}
 	CVector3( const CVector3& vec ) : vec( vec.vec ){}
 	CVector3( float x, float y, float z ) : v{ x, y, z }{}
-	CVector3( const btVector3& _v ) : v{ _v.x(), _v.y(), _v.z() }{}
+	explicit CVector3( const btVector3& _v ) : v{ _v.x(), _v.y(), _v.z() }{}
 
 	//XMVECTOR‚É•ÏŠ·
 	DirectX::XMVECTOR toXM() const{
@@ -311,6 +311,9 @@ public:
 	}
 	static CVector3 Up(){
 		static CVector3 cv( 0, 1, 0 ); return cv;
+	}
+	static CVector3 Down(){
+		static CVector3 cv( 0, -1, 0 ); return cv;
 	}
 	static CVector3 One(){
 		static CVector3 cv( 1, 1, 1 ); return cv;

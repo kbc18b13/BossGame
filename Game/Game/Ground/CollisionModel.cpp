@@ -45,7 +45,7 @@ public:
 		const btCollisionObject* co = colObj0Wrap->getCollisionObject();
 		if( co->getUserIndex() == enCollisionAttr_Enemy || co->getUserIndex() == enCollisionAttr_Player ){
 			Actor* a = static_cast<Actor*>( co->getUserPointer() );
-			CVector3 rebound = -cp.m_normalWorldOnB * cp.getDistance();
+			CVector3 rebound = -CVector3(cp.m_normalWorldOnB) * cp.getDistance();
 			a->SetPos( a->GetPos() + rebound );
 		}
 
