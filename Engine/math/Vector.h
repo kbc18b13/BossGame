@@ -248,6 +248,13 @@ public:
 		DirectX::XMVECTOR a = DirectX::XMVector3Normalize( t );
 		StoreXM( &this->vec, a );
 	}
+
+	CVector3 GetNormalized() const{
+		CVector3 temp = *this;
+		temp.Normalize();
+		return temp;
+	}
+
 	//“àÏ
 	float Dot( const CVector3& param )const{
 		DirectX::XMVECTOR l = LoadXM( this->vec );

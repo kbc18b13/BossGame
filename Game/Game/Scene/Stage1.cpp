@@ -43,21 +43,21 @@ bossTobira( L"Assets/modelData/BossTobira.cmo" )
 			bigDoor->SetPos( objData.position );
 
 		} else if( wcscmp( objData.name, L"Skeleton" ) == 0 ){
-			/*Actor* t = NewGO<SkeletonEnemy>( 0, this );
+			Actor* t = NewGO<SkeletonEnemy>( 0, this );
 			t->SetPos( objData.position );
-			enemyArray.push_back( t );*/
+			enemyArray.push_back( t );
 
 		} else if( wcscmp( objData.name, L"Yowai" ) == 0 ){
-			/*Yowai* t = NewGO<Yowai>( 0, this );
+			Yowai* t = NewGO<Yowai>( 0, this );
 			t->SetPos( objData.position );
 			t->SetOpener( &opener );
 			opener.AddEnemyCount();
-			enemyArray.push_back( t );*/
+			enemyArray.push_back( t );
 
 		} else if( wcscmp( objData.name, L"Slime" ) == 0){
-			/*Actor* a = NewGO<Slime>( 0, this );
+			Actor* a = NewGO<Slime>( 0, this );
 			a->SetPos( objData.position );
-			enemyArray.push_back( a );*/
+			enemyArray.push_back( a );
 
 		} else if( wcscmp( objData.name, L"BossRoom" ) == 0 ){
 			std::function<void()> f = [&](){

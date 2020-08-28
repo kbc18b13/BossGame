@@ -72,3 +72,46 @@ static constexpr T CPow( T base, unsigned int exp ){
 	}
 	return ans;
 }
+
+template<typename T>
+class IndicesContainer{
+public:
+	IndicesContainer( T& container ) : container( container ){}
+
+	class Itr{
+	public:
+		Itr( int now ) : n( now ){}
+		Itr( const Itr& itr ) : n( itr.n ){}
+
+		int operator*(){
+			return n;
+		}
+
+		Itr operator++(){
+			n++; return *this;
+		}
+
+		bool operator !=( Itr& itr ){
+			return itr.n != n;
+		}
+
+	private:
+		int n;
+	};
+
+	Itr begin() const{
+		return Itr( 0 );
+	}
+
+	Itr end() const{
+		return Itr( container.size() );
+	}
+
+private:
+	T& container;
+};
+
+template<typename T>
+IndicesContainer<T> Indices( T& container ){
+	return IndicesContainer<T>( container );
+}
