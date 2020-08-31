@@ -104,8 +104,6 @@ public:
 	}
 
 private:
-	void SweepTest( const CVector3& start, const CVector3& end, SweepResult& callback );
-
 	CVector3 			m_position = CVector3::Zero();	//座標。
 	bool 				m_isJump = false;				//ジャンプ中？
 	bool				m_isOnGround = true;			//地面の上にいる？

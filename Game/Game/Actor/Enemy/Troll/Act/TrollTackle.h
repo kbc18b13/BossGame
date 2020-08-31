@@ -14,9 +14,10 @@ public:
 	void Update( Actor* t ) override;
 
 private:
-	CVector3 playerPos;
-	float m_timer = 0.0f;
+	CVector3 playerVec;//プレイヤーへ向かうベクトル
 	TrollBodyCollision& bodyCol;
+	float m_timer;
+	bool m_isRun;
 };
 
 }

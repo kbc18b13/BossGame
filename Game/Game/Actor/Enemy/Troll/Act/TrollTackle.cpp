@@ -14,28 +14,35 @@ TrollTackle::TrollTackle( TrollBodyCollision& body ) : bodyCol( body ){
 }
 
 void TrollTackle::SubStart( Actor* t ){
-	bodyCol.StartAttack();
-	playerPos = m_target->GetPos();
-	m_timer = 8.0f;
+	m_model->Play( int( AnimState::PrepareTackle ), 0.2f );
+	m_isRun = false;
+	m_timer = 2;
 }
 
 void TrollTackle::Update( Actor* t ){
-	//プレイヤーへ向かって走らせる
-	CVector3 move = playerPos - m_chara->GetPosition();
-
+	//プレイヤーへ向かうベクトル
+	CVector3 move = m_target->GetPos() - m_chara->GetPosition();
 	move.y = 0;
-	float moveLength = move.Length();
 
-	if(moveLength < 10 ){
-		m_timer = 0;
+	//準備中。
+	if( !m_isRun && m_model->GetAnim().IsPlaying() ){
+		m_chara->Excecute();
+		m_model->SetRot( Util::LookRotXZ( move ) );
+		return;
+	}
+	
+	//走り出し。
+	if( !m_model->GetAnim().IsPlaying() ){
+		m_model->Play( int( AnimState::Tackle ), 0.2f );
+		bodyCol.StartAttack();
+		playerVec = move;
+		playerVec.Normalize();
+		m_isRun = true;
 	}
 
-	move /= moveLength;
-	move *= 5;
-
-	m_model->Play( int( AnimState::Tackle ), 0.2f );
-	m_model->SetPos( m_chara->Excecute( move, 4, 0.5f, false ) );
-	m_model->SetRot( Util::LookRotXZ( move ) );
+	//移動
+	m_model->SetPos( m_chara->Excecute( playerVec, 4, 0.5f, false ) );
+	m_model->SetRot( Util::LookRotXZ( playerVec ) );
 
 	//タイマーが0を下回ったら終了
 	if( m_timer <= 0 ){

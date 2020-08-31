@@ -4,8 +4,6 @@
 
 #include "stdafx.h"
 #include "character/CharacterController.h"
-#include <numeric>
-#include <iostream>
 
 using bcw = btCollisionWorld;
 
@@ -13,12 +11,12 @@ using bcw = btCollisionWorld;
 struct SweepResult : public bcw::ClosestConvexResultCallback{
 	const btCollisionObject* me = nullptr;		//自分自身。自分自身との衝突を除外するためのメンバ。
 
-	virtual	btScalar	addSingleResult( btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace ){
+	virtual	btScalar	addSingleResult( bcw::LocalConvexResult& convexResult, bool normalInWorldSpace ){
 		if( convexResult.m_hitCollisionObject == me ){
 
 			return 1.0f;
 		}
-		return btCollisionWorld::ClosestConvexResultCallback::addSingleResult( convexResult, normalInWorldSpace );
+		return bcw::ClosestConvexResultCallback::addSingleResult( convexResult, normalInWorldSpace );
 	}
 };
 
@@ -47,25 +45,6 @@ void CharacterController::Init( float radius, float height, const CVector3& posi
 
 }
 
-
-void CharacterController::SweepTest( const CVector3& start, const CVector3& end, SweepResult& callback ){
-	//衝突判定。
-	//SweepTest用の始点と終点
-	btTransform btStart;
-	btTransform btEnd;
-	btStart.setIdentity();
-	btEnd.setIdentity();
-	btStart.setOrigin( start.toBT() );
-	btEnd.setOrigin( end.toBT() );
-
-	//コールバックの設定
-	callback.me = m_rigidBody.GetBody();
-	callback.m_collisionFilterGroup = m_rigidBody.GetBody()->getCollisionFlags();
-
-	//判定
-	g_physics.ConvexSweepTest( (const btConvexShape*)m_collider.GetBody(), btStart, btEnd, callback );
-}
-
 const CVector3& CharacterController::Execute( float deltaTime, CVector3& moveSpeed ){
 
 	if( moveSpeed.LengthSq() < 0.00001f ){
@@ -87,7 +66,7 @@ const CVector3& CharacterController::Execute( float deltaTime, CVector3& moveSpe
 	bool frameOnGround = false;
 
 	//衝突判定。
-	for( int i = 0 ; i < 4; i++ ){
+	for( int i = 0 ; i < 10; i++ ){
 
 		//動きが少なすぎたら判定せず終了。
 		CVector3 addVec = nextPos - startPos;
@@ -97,7 +76,22 @@ const CVector3& CharacterController::Execute( float deltaTime, CVector3& moveSpe
 
 		//衝突判定。
 		SweepResult sweepResult;
-		SweepTest( startPos, nextPos, sweepResult );
+		{
+			//SweepTest用の始点と終点
+			btTransform btStart;
+			btTransform btEnd;
+			btStart.setIdentity();
+			btEnd.setIdentity();
+			btStart.setOrigin( startPos.toBT() );
+			btEnd.setOrigin( nextPos.toBT() );
+
+			//コールバックの設定
+			sweepResult.me = m_rigidBody.GetBody();
+			sweepResult.m_collisionFilterGroup = m_rigidBody.GetBody()->getCollisionFlags();
+
+			//判定
+			g_physics.ConvexSweepTest( (const btConvexShape*)m_collider.GetBody(), btStart, btEnd, sweepResult );
+		}
 
 		//当たらなかったら終了。
 		if( !sweepResult.hasHit() ){

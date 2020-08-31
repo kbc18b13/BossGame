@@ -32,6 +32,7 @@ public:
 		JumpUp,
 		JumpDown,
 		Idle,
+		PrepareTackle,
 		Tackle,
 		Hip,
 		Num
