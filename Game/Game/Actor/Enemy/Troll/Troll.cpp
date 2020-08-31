@@ -66,6 +66,9 @@ Troll::Troll(IStage* stage) : Actor(100, stage ){
 
 	m_nameFont.SetText( L"BOSSEnemy" );
 	m_nameFont.SetPos( CVector2( 150, 500 ) );
+
+	//ロックオン時の角度設定
+	m_lockOnAngle = 10;
 }
 
 Troll::~Troll() {

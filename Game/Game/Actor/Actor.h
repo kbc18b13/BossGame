@@ -75,6 +75,10 @@ public:
 		m_model.GetModel().SetStencilRef( ref );
 	}
 
+	float GetLockOnAngle(){
+		return m_lockOnAngle;
+	}
+
 protected:
 	void ChangeAct( int index ){
 		m_nowAct->End( this );
@@ -102,4 +106,6 @@ protected:
 
 	SkinModelRender m_model;
 	CharaConEx m_chara;
+
+	float m_lockOnAngle = 20; //このActorをロックオンした時の角度
 };

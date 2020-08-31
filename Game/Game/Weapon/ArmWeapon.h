@@ -43,6 +43,10 @@ public:
 		return m_weapon.IsAttacking();
 	}
 
+	void SetBone(Bone* bone){
+		m_hand = bone;
+	}
+
 private:
 
 	Bone* m_hand; //è‚Ìƒ{[ƒ“

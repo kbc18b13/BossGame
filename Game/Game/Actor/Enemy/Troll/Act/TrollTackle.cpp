@@ -16,7 +16,7 @@ TrollTackle::TrollTackle( TrollBodyCollision& body ) : bodyCol( body ){
 void TrollTackle::SubStart( Actor* t ){
 	m_model->Play( int( AnimState::PrepareTackle ), 0.2f );
 	m_isRun = false;
-	m_timer = 2;
+	m_timer = 1.0f;
 }
 
 void TrollTackle::Update( Actor* t ){
@@ -41,7 +41,7 @@ void TrollTackle::Update( Actor* t ){
 	}
 
 	//移動
-	m_model->SetPos( m_chara->Excecute( playerVec, 4, 0.5f, false ) );
+	m_model->SetPos( m_chara->Excecute( playerVec, 5, 1.5f, false ) );
 	m_model->SetRot( Util::LookRotXZ( playerVec ) );
 
 	//タイマーが0を下回ったら終了

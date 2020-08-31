@@ -48,7 +48,7 @@ void TrollHip::Update( Actor* t ){
 
 	m_model->SetPos( m_chara->Excecute( CVector3::Zero(), false ) );
 
-	//ジャンプ後に着地したら5秒待って次へ
+	//ジャンプ後に着地したら一定秒待って次へ。
 	if( !onJump ){
 		if( !m_chara->OnGround() ){
 			onJump = true;

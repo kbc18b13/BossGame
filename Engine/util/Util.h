@@ -56,6 +56,11 @@ public:
 	static constexpr size_t AlignSize(size_t size , UINT multiple ){
 		return ( ( ( size - 1 ) / multiple ) + 1 ) * multiple;
 	}
+
+	template<typename T>
+	static constexpr T clamp( T v, T min, T max ){
+		return v < min ? min : ( v > max  ? max : v);
+	}
 };
 
 //2èÊ

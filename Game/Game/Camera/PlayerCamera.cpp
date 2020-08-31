@@ -69,7 +69,7 @@ void PlayerCamera::Update(){
 		m_vec.y = 0;
 		m_vec.Normalize();
 
-		CQuaternion::CreateRotDeg( GetRightVec(), 30 ).Multiply( m_vec );
+		CQuaternion::CreateRotDeg( GetRightVec(), m_lockOnEnemy->GetLockOnAngle() ).Multiply( m_vec );
 
 		m_vec *= CtoPLength;
 		m_pos = m_springPPos + m_vec;
