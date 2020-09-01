@@ -107,6 +107,7 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Actor\Enemy\Archer\Archer.cpp" />
     <ClCompile Include="Game\Ground\ClearDoor.cpp" />
     <ClCompile Include="Game\Ground\BigDoor.cpp" />
     <ClCompile Include="Game\Actor\Act\Act.cpp" />
@@ -169,8 +170,11 @@
     <ClCompile Include="Game\Scene\StageGate.cpp" />
     <ClCompile Include="Game\Actor\Player\Act\JumpAtk.cpp" />
     <ClCompile Include="Game\Ground\SkyBox.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Archer\Act\Shot.cpp" />
+    <ClCompile Include="Game\Actor\Enemy\Archer\Act\Idle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Actor\Enemy\Archer\Archer.h" />
     <ClInclude Include="Game\Ground\ClearDoor.h" />
     <ClInclude Include="Game\Ground\BigDoor.h" />
     <ClInclude Include="Game\Actor\Act\Act.h" />
@@ -229,8 +233,11 @@
     <ClInclude Include="Game\Scene\StageGate.h" />
     <ClInclude Include="Game\Actor\Player\Act\JumpAtk.h" />
     <ClInclude Include="Game\Ground\SkyBox.h" />
+    <ClInclude Include="Game\Actor\Enemy\Archer\Act\Shot.h" />
+    <ClInclude Include="Game\Actor\Enemy\Archer\Act\Idle.h" />
   </ItemGroup>
   <ItemGroup>
+    <MeshContentTask Include="Assets\modelData\Archer.fbx" />
     <MeshContentTask Include="Assets\modelData\BigDoor.fbx" />
     <MeshContentTask Include="Assets\modelData\BossTobira.fbx" />
     <MeshContentTask Include="Assets\modelData\Carriage.fbx" />

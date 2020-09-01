@@ -10,6 +10,7 @@
 #include "Util/Fade.h"
 #include "Stage2.h"
 #include "StageGate.h"
+#include "Actor/Enemy/Archer/Archer.h"
 
 //’nŒ`‚È‚Ç‚Ì“Ç‚Ýž‚Ý
 Stage1::Stage1() : ground( L"Assets/modelData/FirstStage.cmo" ),
@@ -43,7 +44,7 @@ bossTobira( L"Assets/modelData/BossTobira.cmo" )
 			bigDoor->SetPos( objData.position );
 
 		} else if( wcscmp( objData.name, L"Skeleton" ) == 0 ){
-			Actor* t = NewGO<SkeletonEnemy>( 0, this );
+			Actor* t = NewGO</*SkeletonEnemy*/EnemySpace::Archer>( 0, this );
 			t->SetPos( objData.position );
 			enemyArray.push_back( t );
 
