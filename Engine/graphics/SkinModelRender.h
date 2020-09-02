@@ -72,7 +72,7 @@ public:
     /// ˆÊ’u‚ðŽæ“¾
     /// </summary>
     /// <returns></returns>
-    CVector3 GetPos(){
+    CVector3 GetPos() const{
         return m_pos;
     }
 
@@ -88,7 +88,7 @@ public:
     /// ‘å‚«‚³‚ðŽæ“¾
     /// </summary>
     /// <returns></returns>
-    CVector3 GetScale(){
+    CVector3 GetScale() const{
         return m_scale;
     }
 
@@ -107,14 +107,14 @@ public:
     /// <summary>
     /// ‰ñ“]‚ðŽæ“¾
     /// </summary>
-    CQuaternion GetRot(){
+    CQuaternion GetRot() const{
         return m_rot;
     }
 
 	/// <summary>
 	/// ‘O•ûŒü‚ðŽæ“¾
 	/// </summary>
-	CVector3 GetFront(){
+	CVector3 GetFront() const{
 		CVector3 v{ 0, 0, 1 };
 		m_rot.Multiply( v );
 		return v;

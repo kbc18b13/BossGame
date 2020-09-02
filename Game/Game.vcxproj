@@ -107,6 +107,7 @@
     </MeshContentTask>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Weapon\Arrow.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Archer\Archer.cpp" />
     <ClCompile Include="Game\Ground\ClearDoor.cpp" />
     <ClCompile Include="Game\Ground\BigDoor.cpp" />
@@ -174,6 +175,7 @@
     <ClCompile Include="Game\Actor\Enemy\Archer\Act\Idle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Weapon\Arrow.h" />
     <ClInclude Include="Game\Actor\Enemy\Archer\Archer.h" />
     <ClInclude Include="Game\Ground\ClearDoor.h" />
     <ClInclude Include="Game\Ground\BigDoor.h" />
@@ -238,6 +240,7 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Archer.fbx" />
+    <MeshContentTask Include="Assets\modelData\Arrow.fbx" />
     <MeshContentTask Include="Assets\modelData\BigDoor.fbx" />
     <MeshContentTask Include="Assets\modelData\BossTobira.fbx" />
     <MeshContentTask Include="Assets\modelData\Carriage.fbx" />

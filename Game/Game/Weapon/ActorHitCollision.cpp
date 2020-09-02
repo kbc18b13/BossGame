@@ -16,6 +16,9 @@ btScalar	ActorContactResult::addSingleResult(btManifoldPoint& cp, const btCollis
         Actor* hited = static_cast<Actor*>(co->getUserPointer());
         hits.push_back(hited);
     }
+	if( co->getUserIndex() == EnCollisionAttr::enCollisionAttr_Ground ){
+
+	}
     return 0.0f;
 }
 

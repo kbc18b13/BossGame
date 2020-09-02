@@ -10,13 +10,13 @@ GameObjectManager::GameObjectManager() {
 
 
 GameObjectManager::~GameObjectManager() {
-	appEnd = true;
+	/*appEnd = true;
 	for( std::vector<IGameObject*>& prioArray : m_goArray ){
 		for( IGameObject*& go : prioArray ){
 			delete go;
 			go = nullptr;
 		}
-	}
+	}*/
 }
 
 void GameObjectManager::Init(UINT defArraySize, UINT defPrioSize) {

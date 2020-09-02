@@ -15,10 +15,14 @@ public:
     std::vector<Actor*>& getHits() {
         return hits;
     }
-
+	
     void eraseHits() {
         hits.clear();
     }
+
+	bool isGroundHit() const{
+		return groundHit;
+	}
 
     btScalar	addSingleResult(btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap,
                                 int partId0, int index0, const btCollisionObjectWrapper* colObj1Wrap,
@@ -26,6 +30,7 @@ public:
 private:
     std::vector<Actor*> hits;
     int target;
+	bool groundHit = false;
 };
 
 #include "physics/ICollider.h"

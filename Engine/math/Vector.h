@@ -299,6 +299,10 @@ public:
 		Set( _v.x(), _v.y(), _v.z() );
 	}
 
+	bool isZero(){
+		return x == 0 && y == 0 && z == 0;
+	}
+
 	CVector2 xy() const{
 		return CVector2( x, y );
 	}

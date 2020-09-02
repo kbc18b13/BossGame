@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Idle.h"
 #include "..\Archer.h"
+#include "Weapon/Arrow.h"
 
 namespace EnemySpace{
 
@@ -13,7 +14,16 @@ void Idle::Update( Actor * s ){
 	m_chara->Excecute();
 
 	if( toP.LengthSq() < pow2( 400 ) ){
-		ActEnd( int( Archer::ActE::Shot ) );
+		CVector3 myPos = s->GetPos();
+		myPos.y += s->GetHeight() / 2;
+		CVector3 yourPos = m_target->GetPos();
+		yourPos.y += m_target->GetHeight() / 2;
+
+		CVector3 v = Arrow::CalcShotVec( myPos, yourPos, 400 );
+
+		if( !v.isZero() ){
+			ActEnd( int( Archer::ActE::Shot ) );
+		}
 	}
 }
 }

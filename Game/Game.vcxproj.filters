@@ -71,6 +71,7 @@
     <ClCompile Include="Game\Actor\Enemy\Archer\Archer.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Archer\Act\Shot.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Archer\Act\Idle.cpp" />
+    <ClCompile Include="Game\Weapon\Arrow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -134,6 +135,7 @@
     <ClInclude Include="Game\Actor\Enemy\Archer\Archer.h" />
     <ClInclude Include="Game\Actor\Enemy\Archer\Act\Shot.h" />
     <ClInclude Include="Game\Actor\Enemy\Archer\Act\Idle.h" />
+    <ClInclude Include="Game\Weapon\Arrow.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">
@@ -160,6 +162,7 @@
     <MeshContentTask Include="Assets\modelData\sky.fbx" />
     <MeshContentTask Include="Assets\modelData\sky2.fbx" />
     <MeshContentTask Include="Assets\modelData\Archer.fbx" />
+    <MeshContentTask Include="Assets\modelData\Arrow.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Title_back.png" />
