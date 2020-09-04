@@ -10,41 +10,34 @@
 #include "Util/Fade.h"
 #include "Stage2.h"
 #include "StageGate.h"
-#include "Actor/Enemy/Archer/Archer.h"
 
 //地形などの読み込み
-Stage1::Stage1() : ground( L"Assets/modelData/FirstStage.cmo" ),
+Stage1::Stage1( StageManager* manager ) : ground( L"Assets/modelData/FirstStage.cmo" ),
 carriage( L"Assets/modelData/Carriage.cmo", L"Assets/modelData/Carriage_col.cmo" ),
-bossTobira( L"Assets/modelData/BossTobira.cmo" )
+bossTobira( L"Assets/modelData/BossTobira.cmo" ),IStage(manager)
 {
-
-	//各種オブジェクトの配置。
 	Level level;
 	level.Init( L"Assets/level/level.tkl", [&]( LevelObjectData& objData ) -> bool{
 		if( wcscmp( objData.name, L"Stage" ) == 0 ){
 			ground.SetPos( objData.position );
+			ground.SetUserIndex( EnCollisionAttr::enCollisionAttr_Ground );
 			bossTobira.SetPos( objData.position );
-		} else if( wcscmp( objData.name, L"StageGate" ) == 0 ){
-			stageGate = NewGO<StageGate>( 0 );
-			stageGate->Init( this, NewGO<Stage2>( 0 ), objData.position, objData.rotation );
 		} else if( wcscmp( objData.name, L"Chara" ) == 0 ){
-			player = NewGO<Player>( 0, this );
-			player->SetPos( objData.position );
-			player->SetStage( this );
-
+			m_playerSpawn = objData.position;
 		} else if( wcscmp( objData.name, L"Troll" ) == 0 ){
 			trollPos = objData.position;
 
 		} else if( wcscmp( objData.name, L"Carriage" ) == 0 ){
 			carriage.SetPos( objData.position );
 			carriage.SetRot( objData.rotation );
+			carriage.SetUserIndex( EnCollisionAttr::enCollisionAttr_Ground );
 
 		} else if( wcscmp( objData.name, L"BigDoor" ) == 0 ){
 			bigDoor = NewGO<BigDoor>( 0 );
 			bigDoor->SetPos( objData.position );
 
 		} else if( wcscmp( objData.name, L"Skeleton" ) == 0 ){
-			Actor* t = NewGO</*SkeletonEnemy*/EnemySpace::Archer>( 0, this );
+			Actor* t = NewGO<SkeletonEnemy>( 0, this );
 			t->SetPos( objData.position );
 			enemyArray.push_back( t );
 
@@ -106,7 +99,6 @@ void Stage1::Destroy(){
 	if( bossRoomTrigger )
 		DeleteGO( bossRoomTrigger );
 	DeleteGO( bigDoor );
-	DeleteGO( stageGate );
 }
 
 void Stage1::Update(){
@@ -119,22 +111,6 @@ void Stage1::Update(){
 	}
 
 	bossTobira.Update();
-
-	//ステージ終了処理
-	if( isEndStage ){
-		endTime += GameTime::GetDeltaTime();
-
-		if( endTime >= 6 ){
-			Fade::In( [&](){
-				DeleteGO( this );
-				NewGO<Title>( 0 );
-			} );
-		}
-	}
-}
-
-void Stage1::EndStage(){
-	isEndStage = true;
 }
 
 void Stage1::SetStageStencilRef( int ref ){

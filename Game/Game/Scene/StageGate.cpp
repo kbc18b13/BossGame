@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "StageGate.h"
 #include "IStage.h"
+#include "Actor/Player/Player.h"
 
 StageGate::StageGate(){}
 
@@ -9,10 +10,12 @@ void StageGate::Destroy(){
 	DeleteGO( m_BStage );
 }
 
-void StageGate::Init( IStage * now, IStage * next, const CVector3 & pos, const CQuaternion& rot ){
+void StageGate::Init( IStage * now, IStage * next,Player* p, const CVector3 & pos, const CQuaternion& rot ){
 	SetAStage( now );
 	SetBStage( next );
 	m_pos = pos;
+
+	m_player = p;
 
 	m_toB = CVector3( 1, 0, 0 );
 	rot.Multiply( m_toB );
@@ -86,11 +89,13 @@ void StageGate::StencilUpdate(){
 }
 
 void StageGate::ShowA(){
+	m_player->SetStage( m_AStage );
 	m_AStage->SetStageStencilRef( 0 );
 	m_BStage->SetStageStencilRef( 1 );
 }
 
 void StageGate::ShowB(){
+	m_player->SetStage( m_BStage );
 	m_AStage->SetStageStencilRef( 1 );
 	m_BStage->SetStageStencilRef( 0 );
 }

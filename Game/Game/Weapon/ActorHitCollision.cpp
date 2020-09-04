@@ -1,26 +1,40 @@
 #include "stdafx.h"
 #include "ActorHitCollision.h"
 
-ActorContactResult::ActorContactResult(){
-}
-
-ActorContactResult::~ActorContactResult() {
-}
-
-btScalar	ActorContactResult::addSingleResult(btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap,
-                            int partId0, int index0, const btCollisionObjectWrapper* colObj1Wrap,
-                            int partId1, int index1) {
-    //敵のコリジョンに当たった時、その敵のポインタを記憶する。
-    const btCollisionObject* co = colObj1Wrap->getCollisionObject();
-    if (co->getUserIndex() == target) {
-        Actor* hited = static_cast<Actor*>(co->getUserPointer());
-        hits.push_back(hited);
-    }
-	if( co->getUserIndex() == EnCollisionAttr::enCollisionAttr_Ground ){
-
+class AHCCallback : public btCollisionWorld::ContactResultCallback{
+public:
+	AHCCallback(){
+		m_collisionFilterGroup = btCollisionObject::CF_NO_CONTACT_RESPONSE;
 	}
-    return 0.0f;
-}
+	~AHCCallback(){}
+
+	void setTarget( int targetFlag ){
+		target = targetFlag;
+	}
+
+	const ActorHitResult& getResult(){
+		return result;
+	}
+
+	btScalar addSingleResult( btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap,
+								int partId0, int index0, const btCollisionObjectWrapper* colObj1Wrap,
+								int partId1, int index1 ){
+		//敵のコリジョンに当たった時、その敵のポインタを記憶する。
+		const btCollisionObject* co = colObj1Wrap->getCollisionObject();
+		if( co->getUserIndex() == target ){
+			Actor* hited = static_cast<Actor*>( co->getUserPointer() );
+			result.actors.push_back( hited );
+		}
+		if( co->getCollisionFlags() == btCollisionObject::CF_Ground ){
+			result.groundHit = true;
+		}
+		return 0.0f;
+	}
+
+private:
+	ActorHitResult result;
+	int target;
+};
 
 ActorHitCollision::ActorHitCollision() {
 }
@@ -36,11 +50,10 @@ void ActorHitCollision::Init(ICollider & collider, EnCollisionAttr target, void*
     m_collision.SetUserIndex(enCollisionAttr_Ghost);
     m_collision.SetUserPointer(userPointer);
     g_physics.AddCollision(m_collision);
-    contactCB.setTarget(target);
-	contactCB.m_collisionFilterGroup = btCollisionObject::CF_NO_CONTACT_RESPONSE;
+	m_targetIndex = target;
 }
 
-std::vector<Actor*>& ActorHitCollision::ContactTest() {
+ActorHitResult ActorHitCollision::ContactTest() {
     //位置更新
     {
         m_collision.GetBody()->getWorldTransform().setRotation(m_rot.toBT() );
@@ -52,9 +65,10 @@ std::vector<Actor*>& ActorHitCollision::ContactTest() {
     }
 
     //判定
-    contactCB.eraseHits();
+	AHCCallback contactCB;
+	contactCB.setTarget( m_targetIndex );
     g_physics.ContactTest(m_collision.GetBody(), contactCB);
-    return contactCB.getHits();
+	return contactCB.getResult();
 }
 
 void ActorHitCollision::SetActive( bool active ){

@@ -3,13 +3,16 @@
 
 namespace PlayerSpace{
 
-Walker::Walker(){}
+Walker::Walker(LongPressButton* dash){
+	m_dash = dash;
+}
 
 Walker::~Walker(){}
 
 void Walker::Update( Actor* p ){
+
 	//ローリング
-	if( g_pad->IsTrigger( enButtonB ) && m_stamina->CanDo() ){
+	if( m_dash->isTrigger() && m_stamina->CanDo() ){
 		ActEnd( int( Player::Act::Roll ) );
 		return;
 	}
@@ -37,9 +40,14 @@ void Walker::Update( Actor* p ){
 
 		//キャラコンの操作
 		CVector3 move = m_camera->GetPadVec();
-		float speed = ( g_pad->IsPress( enButtonX ) && m_stamina->Consume( GameTime::GetDeltaTime() * 2 ) ) ? 1.5f : 1;
+		bool dash = ( m_dash->isLongPress() && m_stamina->Consume( GameTime::GetDeltaTime() * 2 ) );
+		float speed = dash ? 1.5f : 1;
 
 		m_chara->Excecute( move, speed, 1 / ( speed * 2 ), g_pad->IsTrigger( enButtonA ) );
+
+		if( g_pad->IsTrigger(enButtonA) &&  dash ){
+			m_chara->AddVelocity( m_model->GetFront() * 50 );
+		}
 
 		//モデルの向き
 		m_model->SetRot( CQuaternion::CreateRotVec( CVector3::AxisZ(), move ) );

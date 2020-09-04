@@ -43,7 +43,7 @@ CVector3 Arrow::CalcShotVec( const CVector3 & start, const CVector3 & target, fl
 		const float _tan = std::min( _tan1, _tan2 );
 
 		const float _cos = sqrt( 1 / ( 1 + pow2( _tan ) ) );
-		const float _sin = sqrt( 1 - pow2(_cos) );
+		const float _sin = sqrt( 1 - pow2(_cos) ) * Util::Sign(_tan);
 
 		CVector3 calcV = toT.GetNormalized() * (speed * _cos);
 		calcV.y = speed * _sin;
@@ -52,18 +52,36 @@ CVector3 Arrow::CalcShotVec( const CVector3 & start, const CVector3 & target, fl
 }
 
 void Arrow::Update(){
+	//時間で消滅
+	m_timer -= GameTime::GetDeltaTime();
+	if( m_timer <= 0 ){
+		DeleteGO( this );
+	}
+
+	//刺さっているので動かない
+	if( isStop ){
+		return;
+	}
+
 	CVector3 nextPos = GetPos() + m_vec * GameTime::GetDeltaTime();
 
 	//位置と角度の更新
 	SetPos(nextPos);
 	SetRot( Util::LookRot( m_vec ) );
 
-	auto actors = m_collision.ContactTest();
-	if( !actors.empty() ){
+	auto result = m_collision.ContactTest();
+
+	//プレイヤーにダメージ
+	if( !result.actors.empty() ){
 		DeleteGO( this );
+		for( Actor* a : result.actors ){
+			a->Damage( 2, owner );
+		}
 	}
-	for( Actor* a : actors ){
-		a->Damage( 2 , owner);
+
+	//障害物に刺さった。
+	if( result.groundHit ){
+		isStop = true;
 	}
 
 	//重力を適用

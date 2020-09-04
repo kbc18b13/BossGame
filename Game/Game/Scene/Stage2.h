@@ -5,12 +5,10 @@
 
 class Stage2 : public IStage{
 public:
-	Stage2();
+	Stage2( StageManager* manager );
 	~Stage2();
 
 	void Update() override;
-
-	void EndStage() override{}
 
 	void SetStageStencilRef( int ref ) override;
 

@@ -8,7 +8,7 @@ namespace EnemySpace{
 void Shot::SubStart( Actor * s ){
 	m_model->Play( int( Archer::Anim::Shot ) , 0.3f, true);
 
-	m_model->AddEventFunc( "Shot", [&](){
+	m_model->AddEventFunc( "Shot", [&, s](){
 		CVector3 myPos = s->GetPos();
 		myPos.y += s->GetHeight() / 2;
 		CVector3 yourPos = m_target->GetPos();

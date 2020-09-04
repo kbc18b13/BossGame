@@ -16,7 +16,7 @@
 
 using namespace EnemySpace;
 
-Troll::Troll(IStage* stage) : Actor(100, stage ){
+Troll::Troll(IStage* stage) : Actor(200, stage ){
     //ƒ‚ƒfƒ‹
 	{
 		m_animClip[int(AnimState::Walk)].Load(L"Assets/animData/Troll_Walk.tka", true);

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Title.h"
 #include "graphics/SpriteRender.h"
-#include "Scene/Stage1.h"
+#include "Scene/StageManager.h"
 #include "Util/Fade.h"
 
 Title::Title() {
@@ -17,7 +17,7 @@ Title::~Title() {
 void Title::Update() {
 	if (g_pad->IsTrigger(enButtonA)) {
 		Fade::In( [&](){
-			NewGO<Stage1>( 0 );
+			NewGO<StageManager>( 0 );
 			DeleteGO( this );
 		} );
 	}

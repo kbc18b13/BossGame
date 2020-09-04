@@ -13,7 +13,7 @@ void Weapon::Update(){
 	}
 
 	//ÚGƒeƒXƒg
-	std::vector<Actor*> hits = m_collision.ContactTest();
+	std::vector<Actor*> hits = m_collision.ContactTest().actors;
 	CVector3 pos = m_master->GetPos();
 	for( Actor* a : hits ){
 

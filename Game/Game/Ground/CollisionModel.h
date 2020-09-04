@@ -26,6 +26,10 @@ public:
 		return &m_model;
 	}
 
+	void SetUserIndex(EnCollisionAttr index){
+		m_collider.SetUserIndex( index );
+	}
+
 	/// <summary>
 	/// ƒLƒƒƒ‰ƒRƒ“‚Ì‚ß‚è‚İ‚ğ‰ğŒˆ‚·‚é
 	/// </summary>

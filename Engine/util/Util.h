@@ -39,6 +39,12 @@ public:
 		return value;
 	}
 
+	//符号を返す
+	template<typename T>
+	static T Sign( T A ){
+		return ( A > 0 ) - ( A < 0 );
+	}
+
 	//ランダムなInt値を返す。範囲にendを含む。
 	static int RandomInt(int begine, int end);
 	//ランダムなfloat値を返す。範囲にendを含まない。

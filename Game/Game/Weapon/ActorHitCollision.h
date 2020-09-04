@@ -3,33 +3,8 @@
 
 class Actor;
 
-class ActorContactResult : public btCollisionWorld::ContactResultCallback {
-public:
-    ActorContactResult();
-    ~ActorContactResult();
-
-    void setTarget(int targetFlag) {
-        target = targetFlag;
-    }
-
-    std::vector<Actor*>& getHits() {
-        return hits;
-    }
-	
-    void eraseHits() {
-        hits.clear();
-    }
-
-	bool isGroundHit() const{
-		return groundHit;
-	}
-
-    btScalar	addSingleResult(btManifoldPoint& cp, const btCollisionObjectWrapper* colObj0Wrap,
-                                int partId0, int index0, const btCollisionObjectWrapper* colObj1Wrap,
-                                int partId1, int index1);
-private:
-    std::vector<Actor*> hits;
-    int target;
+struct ActorHitResult{
+	std::vector<Actor*> actors;
 	bool groundHit = false;
 };
 
@@ -61,16 +36,17 @@ public:
 		return mat;
 	}
 
-    std::vector<Actor*>& ContactTest();
+    ActorHitResult ContactTest();
 
 	void SetActive( bool active );
 
 private:
-    ActorContactResult contactCB;
     CollisionObject  m_collision;              //コリジョン。
     CVector3 m_pos; //位置
     CVector3 m_offset; //オフセット
     CQuaternion m_rot; //回転
+
+	EnCollisionAttr m_targetIndex;
 
 	bool m_isActive = true;
 };

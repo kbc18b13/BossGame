@@ -34,7 +34,7 @@ CVector3 CharaConEx::Excecute( const CVector3& _pad, float speedScale, float acc
 	//ã‰º
 	{
 		m_jumpSpeed -= m_gravity * GameTime::GetDeltaTime();
-		if( jump /*&& m_charaCon.IsOnGround()*/ ){
+		if( jump && m_charaCon.IsOnGround() ){
 			m_jumpSpeed += m_jumpPower;
 		}
 		if( m_timeMoveTime > 0 ){

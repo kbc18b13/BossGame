@@ -3,7 +3,8 @@
 #include <vector>
 namespace PlayerSpace{
 
-Guard::Guard(){}
+Guard::Guard(){
+}
 
 
 Guard::~Guard(){}

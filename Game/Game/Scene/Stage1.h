@@ -35,13 +35,11 @@ private:
 
 class Stage1 : public IStage {
 public:
-	Stage1();
+	Stage1( StageManager* manager );
 
-	void Destroy();
+	void Destroy() override;
 
-	void Update();
-
-	void EndStage() override;
+	void Update() override;
 
 	CVector3 GetShouldGo( const CVector3& from, const CVector3& to ) override{
 		return wpManager.GetShouldGo( from, to );
@@ -49,12 +47,11 @@ public:
 
 	void SetStageStencilRef( int ref ) override;
 
-private:
-	//ステージ終了までの時間
-	float endTime = 0.0f;
-	//ステージ終了フラグ
-	bool isEndStage = false;
+	CVector3 GetPlayerSpawn() const{
+		return m_playerSpawn;
+	}
 
+private:
 	TriggerCollision* bossRoomTrigger = nullptr;
 	CVector3 trollPos;
 	CollisionModel ground;
@@ -66,8 +63,6 @@ private:
 
 	BigDoor* bigDoor = nullptr;
 
-	StageGate* stageGate;
-
 	GhostCollision m_wall;
 
 	//ウェイポイントを管理
@@ -76,4 +71,6 @@ private:
 	//BGM
 	CSoundSource m_bgm;
 	CSoundSource m_bossBGM;
+
+	CVector3 m_playerSpawn;
 };

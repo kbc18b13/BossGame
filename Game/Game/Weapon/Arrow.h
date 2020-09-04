@@ -53,6 +53,10 @@ private:
 	ActorHitCollision m_collision;
 	SkinModelRender m_model;
 	static constexpr float m_gravity = 400;
+	bool isStop = false;
+
+	float m_timer = 10.0f;
+
 	CVector3 m_vec;
 };
 

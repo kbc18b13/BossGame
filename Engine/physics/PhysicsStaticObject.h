@@ -6,7 +6,7 @@
 
 #include "physics/MeshCollider.h"
 #include "physics/RigidBody.h"
-
+#include "physics/CollisionAttr.h"
 
 /*!
 * @brief	静的物理オブジェクト
@@ -69,6 +69,10 @@ public:
 	}
 
 	void SetActive( bool active );
+
+	void SetUserIndex(EnCollisionAttr index){
+		m_rigidBody.GetBody()->setUserIndex( index );
+	}
 
 private:
 	void CreateRigidBody( CVector3 pos, CQuaternion rot );

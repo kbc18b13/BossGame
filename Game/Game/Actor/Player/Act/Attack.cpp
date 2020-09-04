@@ -3,13 +3,14 @@
 
 namespace PlayerSpace{
 
-Attack::Attack( Player::Anim animation_, int combo, SkinModelRender* model ) : m_maxCombo( combo ){
+Attack::Attack( Player::Anim animation_, int combo, SkinModelRender* model, LongPressButton* dash ) : m_maxCombo( combo ){
 	m_animation = int( animation_ );
 	m_needStamina = 5;
 
 	model->AddEventFunc( "Combo", [&](){
 		m_canGoNext = true;
 	} );
+	m_dash = dash;
 }
 
 
@@ -19,11 +20,11 @@ void Attack::LocalStart( bool heavy ){
 	//m_sword->AttackStart() アニメーションイベントに移動。
 	if( !heavy ){
 		m_stamina->Consume( m_needStamina );
-		m_sword->SetDamage( 10*100 );
+		m_sword->SetDamage( 15 );
 		m_model->Play( int( m_animation + m_nowCombo ), 0.2f);
 	} else{
 		m_stamina->Consume( m_needStamina * 2);
-		m_sword->SetDamage( 20 );
+		m_sword->SetDamage( 40 );
 		m_model->Play( int( Player::Anim::HeavySlash ), 0.2f, true);
 		m_nowCombo = 0;
 	}
@@ -47,7 +48,7 @@ void Attack::SubStart( Actor* p ){
 
 void Attack::Update( Actor* p ){
 	//回避
-	if( g_pad->IsTrigger( enButtonB ) ){
+	if( m_dash->isTrigger()){
 		ActEnd( int( Player::Act::Roll ) );
 		return;
 	}

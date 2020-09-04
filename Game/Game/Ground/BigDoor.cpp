@@ -1,9 +1,12 @@
 #include "stdafx.h"
 #include "BigDoor.h"
+#include "physics/CollisionAttr.h"
 
 BigDoor::BigDoor() : m_doorL( L"Assets/modelData/BigDoor.cmo" ),
 						m_doorR( L"Assets/modelData/BigDoor.cmo" ){
 	m_doorR.SetRot( CQuaternion::CreateRotDeg( CVector3::AxisY(), 180 ) );
+	m_doorL.SetUserIndex( EnCollisionAttr::enCollisionAttr_Ground );
+	m_doorR.SetUserIndex( EnCollisionAttr::enCollisionAttr_Ground );
 }
 
 BigDoor::~BigDoor(){}

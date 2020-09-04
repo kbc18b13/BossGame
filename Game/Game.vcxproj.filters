@@ -72,6 +72,8 @@
     <ClCompile Include="Game\Actor\Enemy\Archer\Act\Shot.cpp" />
     <ClCompile Include="Game\Actor\Enemy\Archer\Act\Idle.cpp" />
     <ClCompile Include="Game\Weapon\Arrow.cpp" />
+    <ClCompile Include="Game\Scene\StageManager.cpp" />
+    <ClCompile Include="Game\Util\LongPressButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -136,6 +138,8 @@
     <ClInclude Include="Game\Actor\Enemy\Archer\Act\Shot.h" />
     <ClInclude Include="Game\Actor\Enemy\Archer\Act\Idle.h" />
     <ClInclude Include="Game\Weapon\Arrow.h" />
+    <ClInclude Include="Game\Scene\StageManager.h" />
+    <ClInclude Include="Game\Util\LongPressButton.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">

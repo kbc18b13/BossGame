@@ -7,6 +7,7 @@
 #include "Util/BarGauge.h"
 #include "Stamina.h"
 #include "graphics/FontRender.h"
+#include "util/LongPressButton.h"
 
 class SkinModelRender;
 
@@ -17,7 +18,7 @@ class PlayerAct;
 class Player : public Actor
 {
 public:
-	Player(IStage* stage);
+	Player();
 	~Player();
 
 	void Start() override;
@@ -94,5 +95,7 @@ private:
 	SoundOverlap m_se_guard;
 
 	bool m_fallDeath = false; //—Ž‰ºŽ€
+
+	LongPressButton dashButton;
 };
 

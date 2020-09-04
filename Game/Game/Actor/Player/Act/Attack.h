@@ -1,11 +1,12 @@
 #pragma once
 #include "PlayerAct.h"
+#include "util/LongPressButton.h"
 
 namespace PlayerSpace{
 
 class Attack : public PlayerAct{
 public:
-	Attack( Player::Anim animation1, int combo, SkinModelRender* model);
+	Attack( Player::Anim animation1, int combo, SkinModelRender* model , LongPressButton* dash);
 	~Attack();
 
 	void SubStart( Actor* p ) override;
@@ -31,6 +32,8 @@ private:
 	bool m_canGoNext = false;
 
 	void LocalStart( bool heavy);
+
+	LongPressButton* m_dash;
 };
 
 }

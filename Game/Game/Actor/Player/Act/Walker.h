@@ -5,10 +5,12 @@ namespace PlayerSpace{
 
 class Walker : public PlayerAct{
 public:
-	Walker();
+	Walker(LongPressButton* dash);
 	~Walker();
 
 	void Update( Actor* p ) override;
+private:
+	LongPressButton* m_dash;
 };
 
 }

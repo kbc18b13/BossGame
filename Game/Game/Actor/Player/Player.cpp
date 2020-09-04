@@ -14,7 +14,8 @@
 
 using namespace PlayerSpace;
 
-Player::Player( IStage* stage ) : Actor( 150, stage ){
+Player::Player() : Actor( 150, nullptr ){
+	dashButton.SetButton( enButtonB );
 	//音声初期化
 	{
 		m_se_swordSwing.Init( L"Assets/sound/sword_swing.wav" );
@@ -70,9 +71,9 @@ Player::Player( IStage* stage ) : Actor( 150, stage ){
 
 	//アクトステートの初期化
 	{
-		m_actArray[int( Act::Slash )].reset( new Attack( Anim::Slash1, 2, &m_model ) );
+		m_actArray[int( Act::Slash )].reset( new Attack( Anim::Slash1, 2, &m_model , &dashButton) );
 		m_actArray[int( Act::JumpAtk )].reset( new JumpAtk() );
-		m_actArray[int( Act::Walker )].reset( new Walker() );
+		m_actArray[int( Act::Walker )].reset( new Walker( &dashButton ) );
 		m_actArray[int( Act::Guard )].reset( new Guard() );
 		m_actArray[int( Act::Roll )].reset( new Roll() );
 		m_actArray[int( Act::Damage )].reset( new PlayerSpace::Damage() );
@@ -114,7 +115,7 @@ void Player::Update(){
 	if( m_isDeath ){
 		return;
 	}
-
+	dashButton.Update();
 	//ステートのアップデート
 	ActStateUpdate();
 

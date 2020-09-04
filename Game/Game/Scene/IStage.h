@@ -1,15 +1,17 @@
 #pragma once
+#include "graphics/SkinModelRender.h"
+#include "StageManager.h"
 #include <vector>
 class Actor;
 class Player;
-#include "graphics/SkinModelRender.h"
+
 class IStage : public IGameObject{
 public:
-	IStage();
+	IStage(StageManager* manager);
 	virtual ~IStage();
 
 	Player* GetPlayer(){
-		return player;
+		return manager->GetPlayer();
 	}
 
 	std::vector<Actor*>& GetEnemys(){
@@ -20,11 +22,13 @@ public:
 		return to;
 	}
 
-	virtual void EndStage() = 0;
+	void EndStage(){
+		manager->EndStage();
+	}
 
 	virtual void SetStageStencilRef(int ref) = 0;
 protected:
-	Player* player = nullptr;
+	StageManager* manager = nullptr;
 	std::vector<Actor*> enemyArray;
 };
 
