@@ -1,6 +1,6 @@
 #pragma once
 #include "IStage.h"
-#include "Ground/CollisionModel.h"
+#include "Ground/Ladder.h"
 #include "Ground/SkyBox.h"
 
 class Stage2 : public IStage{
@@ -15,5 +15,6 @@ public:
 private:
 	SkyBox sky;
 	CollisionModel ground;
+	Ladder ladders[3];
 };
 

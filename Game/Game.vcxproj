@@ -64,6 +64,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\Game\;$(SolutionDir)\Engine\;$(SolutionDir)\Engine\Effekseer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)%(RelativeDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -90,6 +91,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\Game\;$(SolutionDir)\Engine\;$(SolutionDir)\Engine\Effekseer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)%(RelativeDir)</AssemblerListingLocation>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -175,6 +177,7 @@
     <ClCompile Include="Game\Actor\Enemy\Archer\Act\Idle.cpp" />
     <ClCompile Include="Game\Scene\StageManager.cpp" />
     <ClCompile Include="Game\Util\LongPressButton.cpp" />
+    <ClCompile Include="Game\Ground\Ladder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Weapon\Arrow.h" />
@@ -241,6 +244,7 @@
     <ClInclude Include="Game\Actor\Enemy\Archer\Act\Idle.h" />
     <ClInclude Include="Game\Scene\StageManager.h" />
     <ClInclude Include="Game\Util\LongPressButton.h" />
+    <ClInclude Include="Game\Ground\Ladder.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\Archer.fbx" />
@@ -253,6 +257,8 @@
     <MeshContentTask Include="Assets\modelData\FirstStage.fbx" />
     <MeshContentTask Include="Assets\modelData\FirstStageWall.fbx" />
     <MeshContentTask Include="Assets\modelData\GateOut.fbx" />
+    <MeshContentTask Include="Assets\modelData\Ladder.fbx" />
+    <MeshContentTask Include="Assets\modelData\Ladder_Col.fbx" />
     <MeshContentTask Include="Assets\modelData\SecondStage.fbx" />
     <MeshContentTask Include="Assets\modelData\Shield.fbx" />
     <MeshContentTask Include="Assets\modelData\Skeleton.fbx" />

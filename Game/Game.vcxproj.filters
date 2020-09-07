@@ -74,6 +74,7 @@
     <ClCompile Include="Game\Weapon\Arrow.cpp" />
     <ClCompile Include="Game\Scene\StageManager.cpp" />
     <ClCompile Include="Game\Util\LongPressButton.cpp" />
+    <ClCompile Include="Game\Ground\Ladder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -140,6 +141,7 @@
     <ClInclude Include="Game\Weapon\Arrow.h" />
     <ClInclude Include="Game\Scene\StageManager.h" />
     <ClInclude Include="Game\Util\LongPressButton.h" />
+    <ClInclude Include="Game\Ground\Ladder.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">
@@ -167,6 +169,8 @@
     <MeshContentTask Include="Assets\modelData\sky2.fbx" />
     <MeshContentTask Include="Assets\modelData\Archer.fbx" />
     <MeshContentTask Include="Assets\modelData\Arrow.fbx" />
+    <MeshContentTask Include="Assets\modelData\Ladder.fbx" />
+    <MeshContentTask Include="Assets\modelData\Ladder_Col.fbx" />
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\Title_back.png" />

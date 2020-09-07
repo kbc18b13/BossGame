@@ -7,6 +7,7 @@
 
 Stage2::Stage2( StageManager* manager ) : ground( L"Assets/modelData/SecondStage.cmo" ), IStage(manager){
 	Level level;
+	int ladderNum = 0;
 	level.Init( L"Assets/level/level2.tkl", [&]( LevelObjectData& objData ) -> bool{
 		if( wcscmp( objData.name, L"Stage2" ) == 0 ){
 			ground.SetPos( objData.position );
@@ -25,7 +26,12 @@ Stage2::Stage2( StageManager* manager ) : ground( L"Assets/modelData/SecondStage
 			Actor* t = NewGO<Slime>( 0, this );
 			t->SetPos( objData.position );
 			enemyArray.push_back( t );
-
+		}
+		if( wcscmp( objData.name, L"Ladder" ) == 0 ){
+			ladders[ladderNum].SetPos( objData.position );
+			ladders[ladderNum].SetRot( objData.rotation );
+			ladderNum++;
+			int i = 0;
 		}
 
 		return true;
@@ -44,6 +50,9 @@ void Stage2::Update(){}
 void Stage2::SetStageStencilRef( int ref ){
 	ground.GetModel()->GetModel().SetStencilRef( ref );
 	sky.SetStencilRef( ref );
+	for( auto& l : ladders ){
+		l.SetStencilRef( ref );
+	}
 	for( auto e : enemyArray ){
 		e->SetStencilRef( ref );
 	}
