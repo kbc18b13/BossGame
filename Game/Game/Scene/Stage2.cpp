@@ -28,10 +28,8 @@ Stage2::Stage2( StageManager* manager ) : ground( L"Assets/modelData/SecondStage
 			enemyArray.push_back( t );
 		}
 		if( wcscmp( objData.name, L"Ladder" ) == 0 ){
-			ladders[ladderNum].SetPos( objData.position );
-			ladders[ladderNum].SetRot( objData.rotation );
+			ladders[ladderNum].FirstSetting(this, objData.position, objData.rotation );
 			ladderNum++;
-			int i = 0;
 		}
 
 		return true;
@@ -45,7 +43,11 @@ Stage2::Stage2( StageManager* manager ) : ground( L"Assets/modelData/SecondStage
 
 Stage2::~Stage2(){}
 
-void Stage2::Update(){}
+void Stage2::Update(){
+	for( auto& l : ladders ){
+		l.Update();
+	}
+}
 
 void Stage2::SetStageStencilRef( int ref ){
 	ground.GetModel()->GetModel().SetStencilRef( ref );

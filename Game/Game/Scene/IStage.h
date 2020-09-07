@@ -4,6 +4,7 @@
 #include <vector>
 class Actor;
 class Player;
+class Ladder;
 
 class IStage : public IGameObject{
 public:

@@ -75,6 +75,7 @@
     <ClCompile Include="Game\Scene\StageManager.cpp" />
     <ClCompile Include="Game\Util\LongPressButton.cpp" />
     <ClCompile Include="Game\Ground\Ladder.cpp" />
+    <ClCompile Include="Game\Actor\Player\Act\OnLadder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Actor\Player\Player.h" />
@@ -142,6 +143,7 @@
     <ClInclude Include="Game\Scene\StageManager.h" />
     <ClInclude Include="Game\Util\LongPressButton.h" />
     <ClInclude Include="Game\Ground\Ladder.h" />
+    <ClInclude Include="Game\Actor\Player\Act\OnLadder.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">

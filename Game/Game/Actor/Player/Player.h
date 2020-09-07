@@ -9,6 +9,7 @@
 #include "graphics/FontRender.h"
 #include "util/LongPressButton.h"
 
+class Ladder;
 class SkinModelRender;
 
 namespace PlayerSpace{
@@ -32,6 +33,13 @@ public:
 	/// <returns>クールタイム判定によるダメージの可否</returns>
 	bool Damage( UINT damage, Actor* source ) override;
 
+	//はしごを登るステートへ変更
+	void SetOnLadder(Ladder& ladder);
+
+	bool IsOnLadder(){
+		return NowActIs( int( Act::OnLadder ) );
+	}
+
 	enum class Anim{
 		Walk,
 		Idle,
@@ -54,22 +62,12 @@ public:
 		Guard,
 		Roll,
 		Damage,
+		OnLadder,
 		Num,
-		SlashEnd, //攻撃終了のためのダミー
 	};
 
 private:
 	::Act* GetAct( int index ) override;
-	/// <summary>
-	/// デフォルトのステート変更
-	/// </summary>
-	//void ChangeActDefault();
-
-	/// <summary>
-	/// ステート変更
-	/// </summary>
-	/// <returns>変更に成功したかどうか。スタミナが足りないと失敗する。</returns>
-	//bool ChangeAct( Anim act );
 
 	std::unique_ptr<PlayerSpace::PlayerAct> m_actArray[int(Act::Num)];
 

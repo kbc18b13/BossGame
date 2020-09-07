@@ -8,6 +8,7 @@
 #include "Act/Roll.h"
 #include "Act/Damage.h"
 #include "Act/JumpAtk.h"
+#include "Act/OnLadder.h"
 
 #include "Util/DisplayText.h"
 #include "Scene/IStage.h"
@@ -77,6 +78,7 @@ Player::Player() : Actor( 150, nullptr ){
 		m_actArray[int( Act::Guard )].reset( new Guard() );
 		m_actArray[int( Act::Roll )].reset( new Roll() );
 		m_actArray[int( Act::Damage )].reset( new PlayerSpace::Damage() );
+		m_actArray[int( Act::OnLadder )].reset( new PlayerSpace::OnLadder() );
 
 		//ïKóvÇ»Ç‡ÇÃÇíçì¸
 		for( auto& a : m_actArray ){
@@ -178,6 +180,13 @@ bool Player::Damage( UINT damage, Actor* source ){
 		ChangeAct( int( Act::Damage ) );
 	}
 	return Actor::Damage( damage, source );
+}
+
+void Player::SetOnLadder( Ladder& ladder ){
+	::Act* const a = GetAct( int( Act::OnLadder ) );
+	OnLadder* const ladderAct = static_cast<OnLadder*>( a );
+	ladderAct->SetLadder( ladder );
+	ChangeAct( int( Act::OnLadder ) );
 }
 
 Act* Player::GetAct( int index ){

@@ -25,6 +25,14 @@ public:
 	CVector3 GetPos() const{
 		return m_chara.GetPosition();
 	}
+
+	void SetRot( const CQuaternion& pos ){
+		m_model.SetRot( pos );
+	}
+	CQuaternion GetRot() const{
+		return m_model.GetRot();
+	}
+
 	void AddVelocity( const CVector3& v ){
 		m_chara.AddVelocity( v );
 	}

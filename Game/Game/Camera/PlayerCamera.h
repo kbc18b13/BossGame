@@ -38,7 +38,7 @@ public:
 	/// </summary>
 	void ReLockOn(){
 		UnLockOn();
-		LockOn();
+		LockOn( CVector2::Zero(), TARGET_RANGE / 2);
 	}
 
 	/// <summary>
@@ -84,7 +84,7 @@ public:
 	}
 
 private:
-	void LockOn(CVector2 pad = CVector2::Zero());
+	void LockOn(CVector2 pad = CVector2::Zero(), float targetLength = TARGET_RANGE );
 	void UnLockOn(){
 		m_lockOnEnemy->UnLockOn();
 		m_lockOnEnemy = nullptr;
@@ -94,7 +94,7 @@ private:
 
 	static constexpr float ROT_SPEED = 180;//カメラ回転スピード。度/秒。
 	static constexpr float LIMIT_UP_DOWN_ROT = 70;//上下回転の制限。度。0度～90度。
-	static constexpr int TARGET_RANGE = 400; //ターゲット可能な距離
+	static constexpr int TARGET_RANGE = 800; //ターゲット可能な距離
 	static constexpr float CtoPLength = 70; //プレイヤーからカメラへのベクトルの長さ
 
 	Actor* m_player = nullptr;

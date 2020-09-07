@@ -10,11 +10,15 @@ public:
 
 	void SetPos(const CVector3& pos);
 
-	CVector3 GetPos(){
+	CVector3 GetPos()const{
 		return m_model.GetPos();
 	}
 
 	void SetRot( const CQuaternion& rot );
+
+	CQuaternion GetRot() const{
+		return m_model.GetRot();
+	}
 
 	void SetScale( const CVector3& scale );
 

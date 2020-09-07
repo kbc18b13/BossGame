@@ -133,7 +133,7 @@ void PlayerCamera::Update(){
 	UpdateGCamera( m_springPPos + m_springVec, m_springPPos );
 }
 
-void PlayerCamera::LockOn(CVector2 pad ){
+void PlayerCamera::LockOn(CVector2 pad , float targetLength ){
 	float lockScore = std::numeric_limits<float>::max();
 	Actor* lockOn = nullptr;
 
@@ -156,7 +156,7 @@ void PlayerCamera::LockOn(CVector2 pad ){
 			float toEnemy = ( ePos - pPos ).Length();
 
 			//距離が範囲内の物だけを対象にする。
-			if( toEnemy < TARGET_RANGE && toScreenCenter.xy().Length() < 0.8f && toScreenCenter.w > 0){
+			if( toEnemy < targetLength && toScreenCenter.xy().Length() < 0.8f && toScreenCenter.w > 0){
 
 				float score = toScreenCenter.xy().Length() * 100 + toEnemy;
 				//2D、3D乗の距離から算出したスコアが一番小さいものを選ぶ。
