@@ -52,6 +52,7 @@ public:
 		Jump,
 		JumpAtkL,
 		JumpAtkH,
+		OnLadder,
 		Num,
 	};
 

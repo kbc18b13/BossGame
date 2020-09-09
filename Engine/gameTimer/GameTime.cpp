@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "GameTime.h"
 #include <chrono>
+#include <queue>
+
 using namespace std::chrono;
 namespace GameTime {
 

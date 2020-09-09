@@ -19,7 +19,7 @@ void GraphicsEngine::BegineRender()
 void GraphicsEngine::EndRender()
 {
 	//バックバッファとフロントバッファを入れ替える。
-	m_pSwapChain->Present(2, 0);
+	m_pSwapChain->Present(1, 0);
 }
 
 void GraphicsEngine::BegineFrameBuffer(){
@@ -76,7 +76,7 @@ void GraphicsEngine::Init(HWND hWnd)
 	sd.SampleDesc.Count = 1;							//1でいい。
 	sd.SampleDesc.Quality = 0;							//MSAAなし。0でいい。
 	sd.Windowed = TRUE;									//ウィンドウモード。TRUEでよい。
-
+	sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 														//利用するDirectXの機能セット。DirectX10以上に対応しているGPUを利用可能とする。
 														//この配列はD3D11CreateDeviceAndSwapChainの引数として使う。
 	D3D_FEATURE_LEVEL featureLevels[] =

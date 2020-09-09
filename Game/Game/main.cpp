@@ -36,13 +36,12 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
 	//エフェクシア初期化
 	InitEffekseer();
-
-#ifdef _DEBUG
+	
 	FontRender fpsRender;
 	fpsRender.SetPos( CVector2( 500, 500 ) );
 	wchar_t fpsText[20];
 	fpsRender.SetText( fpsText );
-#endif
+	fpsRender.SetActive( false );
 
 	bool debug = false;
 	NewGO<Title>( 0 );
@@ -61,6 +60,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 		if( g_pad->IsTrigger( enButtonY ) ){
 			debug = !debug;
 			g_physics.setDebugDraw( debug );
+			fpsRender.SetActive( debug );
 		}
 
 		//物理エンジンの更新。
@@ -68,10 +68,10 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
 		//ゲームオブジェクトマネージャーの更新。
 		GOManager().Update();
-
-#ifdef _DEBUG
-		swprintf( fpsText, L"FPS:%5f\n", GameTime::GetFPS() );
-#endif
+		
+		if( debug ){
+			swprintf( fpsText, L"FPS:%5f\n", GameTime::GetFPS() );
+		}
 
 		//描画開始。
 		g_graphicsEngine->BegineRender();

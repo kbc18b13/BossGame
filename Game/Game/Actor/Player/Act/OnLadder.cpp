@@ -22,6 +22,8 @@ void PlayerSpace::OnLadder::SubStart( Actor * p ){
 	toRot.AddRotationDeg( CVector3::AxisY(), 180 );
 
 	m_chara->SetVelocity( CVector3::Zero() );
+
+	m_model->Play( int( Player::Anim::OnLadder ) );
 }
 
 void PlayerSpace::OnLadder::Update( Actor * p ){

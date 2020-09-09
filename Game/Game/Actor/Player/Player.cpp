@@ -37,6 +37,8 @@ Player::Player() : Actor( 150, nullptr ){
 		m_animClip[int( Anim::Jump )].Load( L"Assets/animData/Chara_Jump.tka" );
 		m_animClip[int( Anim::JumpAtkL )].Load( L"Assets/animData/Chara_JumpAttackL.tka" );
 		m_animClip[int( Anim::JumpAtkH )].Load( L"Assets/animData/Chara_JumpAttackH.tka" );
+		m_animClip[int( Anim::OnLadder )].Load( L"Assets/animData/Chara_Ladder.tka" , true);
+
 
 		//cmoファイルの読み込み。
 		m_model.Init( { L"Assets/modelData/Chara.cmo", m_animClip, int( Anim::Num ) } );

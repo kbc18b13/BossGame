@@ -181,6 +181,7 @@
     <ClCompile Include="Game\Actor\Player\Act\OnLadder.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Util\DebugTimer.h" />
     <ClInclude Include="Game\Weapon\Arrow.h" />
     <ClInclude Include="Game\Actor\Enemy\Archer\Archer.h" />
     <ClInclude Include="Game\Ground\ClearDoor.h" />

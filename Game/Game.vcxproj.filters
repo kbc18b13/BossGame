@@ -144,6 +144,7 @@
     <ClInclude Include="Game\Util\LongPressButton.h" />
     <ClInclude Include="Game\Ground\Ladder.h" />
     <ClInclude Include="Game\Actor\Player\Act\OnLadder.h" />
+    <ClInclude Include="Game\Util\DebugTimer.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\TestChara.fbx">
