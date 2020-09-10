@@ -12,9 +12,7 @@ void CharaConEx::Init( const CharaConDesc& desc ){
 
 CVector3 CharaConEx::Excecute( const CVector3& _pad, float speedScale, float accelScale, bool jump ){
 	CVector2 pad( _pad.x, _pad.z );
-	if( pad.LengthSq() > 0.001f ){
-		pad.Normalize();
-	}
+	pad.Normalize();
 
 	//ï‡çs
 	{

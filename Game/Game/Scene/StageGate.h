@@ -41,7 +41,6 @@ private:
 	CVector3 m_pos;
 	CVector3 m_toB;
 
-	TriggerCollision m_col;
 	SkinModelRender m_gateModel;
 	SkinModelRender m_gateOutModel;
 

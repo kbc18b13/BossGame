@@ -242,6 +242,17 @@ public:
 		DirectX::XMVECTOR a = DirectX::XMVector3LengthSq( t );
 		return DirectX::XMVectorGetX( a );
 	}
+	
+	//2“_ŠÔ‚Ì‹——£
+	float Distance(const CVector3& point)const{
+		return operator-( point ).Length();
+	}
+
+	//2“_ŠÔ‚Ì‹——£‚Ì2æ
+	float DistanceSq( const CVector3& point )const{
+		return operator-( point ).LengthSq();
+	}
+	
 	//³‹K‰»
 	void Normalize(){
 		DirectX::XMVECTOR t = LoadXM( this->vec );

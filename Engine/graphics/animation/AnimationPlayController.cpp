@@ -104,6 +104,7 @@ void AnimationPlayController::ReverseUpdate( float deltaTime, Animation * animat
 	if( m_animationClip == nullptr ){
 		return;
 	}
+	
 	const auto& topBoneKeyFrameList = m_animationClip->GetTopBoneKeyFrameList();
 	m_time -= deltaTime;
 

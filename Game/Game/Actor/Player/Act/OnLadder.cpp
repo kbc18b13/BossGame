@@ -2,6 +2,8 @@
 #include "OnLadder.h"
 #include "Ground/Ladder.h"
 
+static float ladderSpeed = 3;
+
 PlayerSpace::OnLadder::OnLadder(){}
 
 PlayerSpace::OnLadder::~OnLadder(){}
@@ -9,6 +11,7 @@ PlayerSpace::OnLadder::~OnLadder(){}
 void PlayerSpace::OnLadder::SubStart( Actor * p ){
 	state = Grip;
 	oriru = false;
+	isUp = true;
 	gripTime = 0.0f;
 
 	firstPos = p->GetPos();
@@ -23,7 +26,8 @@ void PlayerSpace::OnLadder::SubStart( Actor * p ){
 
 	m_chara->SetVelocity( CVector3::Zero() );
 
-	m_model->Play( int( Player::Anim::OnLadder ) );
+	m_model->Play( int( Player::Anim::OnLadder ));
+	m_model->SetAnimSpeed( 0 );
 }
 
 void PlayerSpace::OnLadder::Update( Actor * p ){
@@ -39,6 +43,8 @@ void PlayerSpace::OnLadder::Update( Actor * p ){
 		p->SetPos( pos );
 		p->SetRot( rot );
 		if( gripTime > c_gripTime ){
+			p->SetRot( toRot );
+			p->SetPos( toPos );
 			state = Climb;
 		} else{
 			return;
@@ -48,8 +54,17 @@ void PlayerSpace::OnLadder::Update( Actor * p ){
 	//‚Í‚µ‚²‚ð“o‚Á‚Ä‚¢‚éÅ’†
 	if( state == Climb ){
 		float stickY = g_pad->GetLStickYF();
-		p->SetPos( p->GetPos() + CVector3::Up() * 10 * stickY );
+		if( isUp && stickY < 0 ){
+			m_model->Play( int( Player::Anim::OnLadder ), 0.3f, true, true );
+			isUp = false;
+		}
+		if( !isUp && stickY > 0 ){
+			m_model->Play( int( Player::Anim::OnLadder ), 0.3f, true, false );
+			isUp = true;
+		}
 
+		p->SetPos( p->GetPos() + CVector3::Up() * ladderSpeed * stickY );
+		m_model->SetAnimSpeed( std::fabsf(stickY) );
 		float nowHeight = p->GetPos().y - m_ladder->GetPos().y;
 
 		if( nowHeight <= 5 ){
@@ -67,6 +82,8 @@ void PlayerSpace::OnLadder::Update( Actor * p ){
 
 	//‚Í‚µ‚²‚ð—£‚µ‚Ä~‚è‚é‚Æ‚«
 	if( state == GetOff ){
+		m_model->Play( int( Player::Anim::Idle ) , 0.2f);
+
 		CQuaternion rot;
 		rot.Slerp( gripTime / c_gripTime, firstRot, toRot );
 		CVector3 pos;
@@ -76,6 +93,8 @@ void PlayerSpace::OnLadder::Update( Actor * p ){
 		p->SetRot( rot );
 
 		if( gripTime > c_gripTime ){
+			p->SetRot( toRot );
+			p->SetPos( toPos );
 			oriru = true;
 		}
 	}
@@ -86,8 +105,12 @@ void PlayerSpace::OnLadder::Update( Actor * p ){
 
 	if( g_pad->IsTrigger( enButtonA ) ){
 		oriru = true;
+		m_model->Play( int( Player::Anim::Jump ) );
+		m_model->SetAnimSpeed( 1.0f );
 		m_chara->AddVelocity( CVector3::Up() * 500 );
 	}                                                                                                                                                                                                                                                                                
 }
 
-void PlayerSpace::OnLadder::End( Actor * p ){}
+void PlayerSpace::OnLadder::End( Actor * p ){
+	m_model->SetAnimSpeed( 1.0f );
+}

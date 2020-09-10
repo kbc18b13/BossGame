@@ -39,6 +39,8 @@ private:
 
 	Ladder* m_ladder;
 	bool oriru = false;
+
+	bool isUp = true;
 };
 
 }

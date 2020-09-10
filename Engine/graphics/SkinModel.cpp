@@ -107,6 +107,11 @@ void SkinModel::UpdateWorldMatrix(CVector3 position, CQuaternion rotation, CVect
 	m_skeleton.Update(m_worldMatrix);
 }
 
+const DirectX::CommonStates& SkinModel::GetCommonState(){
+	static DirectX::CommonStates state( g_graphicsEngine->GetD3DDevice() );
+	return state;
+}
+
 void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMatrix)
 {
 	if (!m_isDraw) {
@@ -122,9 +127,6 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 		dc->OMGetDepthStencilState( &s, &r );
 		dc->OMSetDepthStencilState( s.Get() , m_stencilRef );
 	}
-
-	DirectX::CommonStates state(g_graphicsEngine->GetD3DDevice());
-
 
 	//定数バッファの内容を更新。
 	SVSConstantBuffer vsCb;
@@ -161,7 +163,7 @@ void SkinModel::Draw(EnRenderMode renderMode, CMatrix viewMatrix, CMatrix projMa
 	//描画。
 	m_modelDx->Draw(
 		dc,
-		state,
+		GetCommonState(),
 		m_worldMatrix,
 		viewMatrix,
 		projMatrix

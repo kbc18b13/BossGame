@@ -35,7 +35,7 @@ void SkinModelRender::Init(const SkinModelRenderInitParam&  p){
 
 void SkinModelRender::Update(){
 	if( m_isActive ){
-		m_animation.Update( GameTime::GetDeltaTime() );
+		m_animation.Update( GameTime::GetDeltaTime() * m_animSpeed );
 		m_skinModel.UpdateWorldMatrix( m_pos, m_rot, m_scale );
 	}
 }

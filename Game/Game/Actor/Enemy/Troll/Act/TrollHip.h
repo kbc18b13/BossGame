@@ -14,8 +14,8 @@ public:
 	void Update( Actor* t ) override;
 
 private:
-	bool first = true;
-	bool onJump = false;
+	bool isAttacked = true;
+	bool isLanded = false;
 	float waitTime;
 
 	TrollBodyCollision& bodyCol;

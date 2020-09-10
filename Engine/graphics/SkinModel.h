@@ -155,6 +155,8 @@ private:
 	void InitSkeleton(const wchar_t* filePath);
 
 private:
+	static const DirectX::CommonStates& GetCommonState();
+
 	//定数バッファ。
 	struct SVSConstantBuffer {
 		CMatrix mWorld;

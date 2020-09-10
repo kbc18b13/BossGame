@@ -20,8 +20,6 @@ void StageGate::Init( IStage * now, IStage * next,Player* p, const CVector3 & po
 	m_toB = CVector3( 1, 0, 0 );
 	rot.Multiply( m_toB );
 
-	m_col.Init( std::bind( &StageGate::StencilUpdate, this ), CVector3( 480, 355, 250 ), pos );
-
 	{
 		SkinModelRenderInitParam param;
 		param.filePath = L"Assets/modelData/StageGatge.cmo";
@@ -47,7 +45,9 @@ void StageGate::Init( IStage * now, IStage * next,Player* p, const CVector3 & po
 }
 
 void StageGate::Update(){
-	m_col.Update();
+	if( g_camera3D.GetPosition().DistanceSq( m_pos ) < pow2(700)){
+		StencilUpdate();
+	}
 
 	CQuaternion r = m_gateOutModel.GetRot();
 	r.Multiply( CQuaternion::CreateRotDeg( m_toB, GameTime::GetDeltaTime() * 180 ) );

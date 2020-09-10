@@ -165,6 +165,10 @@ public:
 		m_skinModel.LoadSpecularTex( filepath );
 	}
 
+	void SetAnimSpeed( float speed ){
+		m_animSpeed = speed;
+	}
+
 private:
     SkinModel m_skinModel; //ƒXƒLƒ“ƒ‚ƒfƒ‹
 
@@ -178,5 +182,7 @@ private:
     bool m_isShadowCaster = false;
 
 	bool m_isActive = true; //•`‰æ‚·‚é‚©‚Ç‚¤‚©
+
+	float m_animSpeed = 1.0f;
 };
 

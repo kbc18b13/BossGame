@@ -11,12 +11,7 @@ public:
 	Actor(UINT maxHP, IStage* stage);
 	virtual ~Actor();
 
-    void ActStateUpdate() {
-		m_nowAct->Update(this);
-		if( m_nowAct->isActEnd() ){
-			ChangeAct( m_nowAct->GetNextAct() );
-		}
-    }
+	void ActStateUpdate();
 
 	void SetPos( const CVector3& pos ){
 		m_chara.SetPosition( pos );

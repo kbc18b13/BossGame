@@ -9,56 +9,44 @@ using ActState = Troll::ActState;
 
 namespace EnemySpace{
 
-TrollHip::TrollHip( TrollBodyCollision& col ) : bodyCol(col){}
+TrollHip::TrollHip( TrollBodyCollision& col ) : bodyCol( col ){}
 
 void TrollHip::SubStart( Actor* t ){
-
-	onJump = false;
-	first = true;
+	isLanded = false;
+	isAttacked = false;
 	waitTime = 2.0f;
+
+	//ジャンプベクトル。ここにちょうどプレイヤー上に着地するように移動ベクトルを加える。
+	const float jumpPower = 600;
+	//滞空時間
+	float airTime = ( jumpPower / m_chara->GetGravity() );
+	//追加する速度を計算
+	CVector3 motion = m_target->GetPos() - m_chara->GetPosition();
+	motion /= airTime;
+	motion.y += jumpPower;
+	m_chara->SetVelocity( motion );
 }
 
 void TrollHip::Update( Actor* t ){
-	CVector3 motion;
-	float plength = 0;
-	//最初の一回だけ実行
-	if( first ){
-		//ジャンプベクトル。ここにちょうどプレイヤー上に着地するように移動ベクトルを加える。
-		const float jumpPower = 600;
 
-		CVector3 motion = m_target->GetPos() - m_chara->GetPosition();
-		plength = motion.Length();
-
-		//滞空時間
-		float airTime = ( jumpPower / m_chara->GetGravity());
-
-		motion /= airTime;
-
-		motion.y += jumpPower;
-
-		m_chara->SetVelocity( motion );
-
-		first = false;
-	}
-
-	if( m_chara->GetVelocity().y < 0 ){
+	if( m_chara->GetVelocity().y < 0 && !isAttacked){
 		bodyCol.StartAttack();
 		m_model->Play( int( AnimState::Hip ), 0.2f );
+		isAttacked = true;
 	}
 
 	m_model->SetPos( m_chara->Excecute( CVector3::Zero(), false ) );
 
 	//ジャンプ後に着地したら一定秒待って次へ。
-	if( !onJump ){
-		if( !m_chara->OnGround() ){
-			onJump = true;
-		}
-	} else if( m_chara->OnGround() ){
-		waitTime -= GameTime::GetDeltaTime();
+	if( m_chara->OnGround() && isAttacked ){
+		isLanded = true;
 		bodyCol.EndAttack();
-		if( waitTime <= 0 ){
-			ActEnd( int( ActState::Wait ));
-		}
+	}
+	if( isLanded ){
+		waitTime -= GameTime::GetDeltaTime();
+	}
+	if( waitTime <= 0 ){
+		ActEnd( int( ActState::Wait ) );
 	}
 }
 

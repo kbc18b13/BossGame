@@ -48,9 +48,11 @@ public:
 	/*!
 		* @brief	À•W‚ðÝ’èB
 		*/
-	void SetPosition(const CVector3& pos)
+	void SetPosition(CVector3 pos)
 	{
 		m_position = pos;
+		pos.y += GetHeight() / 2;
+		m_rigidBody.GetBody()->getWorldTransform().setOrigin( pos.toBT() );
 	}
 
 	/*!
